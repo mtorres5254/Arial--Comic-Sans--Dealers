@@ -26,6 +26,8 @@ Proyect made by:
 
 ##Credits
 
+For sharing sprites:
+-https://github.com/Rengrow/Street-Fighter-II-Gamusinos-Fighters
 
 ##License
 
