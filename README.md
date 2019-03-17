@@ -2,10 +2,10 @@
 
 -Street Fighter 2 Tribute-
 
-##Installation
+## Installation
 --Intructions to install--
 
-##Usage
+## Usage
 --How to/Controls--
 
 ##Contributing
@@ -21,16 +21,16 @@ Proyect made by:
 -https://github.com/mtorres5254
 
 
-##History
+## History
 
 
-##Credits
+## Credits
 
 For sharing sprites:
 
 -https://github.com/Rengrow/Street-Fighter-II-Gamusinos-Fighters-
 
-##License
+## License
 
 
-##Changelog
+## Changelog
