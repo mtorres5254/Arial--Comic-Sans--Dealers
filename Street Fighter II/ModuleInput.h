@@ -1,21 +1,25 @@
 #ifndef __ModuleInput_H__
 #define __ModuleInput_H__
 
-#include "Header files/Module.h"
+#include "Module.h"
 #include "Globals.h"
-#include "SDL/include/SDL.h"
 
 typedef unsigned char Uint8;
 
 class ModuleInput : public Module
 {
 public:
-	SDL_Event event;
+	
+	ModuleInput();
+	~ModuleInput();
 
 
 	bool Init();
-	update_status Update();
+	update_status PreUpdate();
 	bool CleanUp();
+
+public:
+	const Uint8 *keyboard = nullptr;
 };
 
 #endif // __ModuleInput_H__

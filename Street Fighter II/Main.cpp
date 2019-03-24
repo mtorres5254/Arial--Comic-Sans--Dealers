@@ -1,9 +1,8 @@
-#include "Header files/Globals.h"
-#include "Header files/Application.h"
-#include "Header files/MemLeaks.h"
+#include "Application.h"
+#include "Globals.h"
+#include "MemLeaks.h"
 
 #include "SDL/include/SDL.h"
-
 #pragma comment( lib, "SDL/libx86/SDL2.lib" )
 #pragma comment( lib, "SDL/libx86/SDL2main.lib" )
 
@@ -21,7 +20,7 @@ Application* App = nullptr;
 int main(int argc, char* argv[])
 {
 	ReportMemoryLeaks();
-	
+
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
 
@@ -81,7 +80,7 @@ int main(int argc, char* argv[])
 
 		}
 	}
-	
+
 	delete App;
 	LOG("Bye :)\n");
 	return main_return;

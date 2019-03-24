@@ -1,13 +1,24 @@
-#include "Header files/Application.h"
-#include "Header files/ModuleWindow.h"
-#include "Header files/ModuleRenderer.h"
+#include "Application.h"
+#include "ModuleWindow.h"
+#include "ModuleRender.h"
+#include "ModuleInput.h"
+#include "ModuleTextures.h"
+#include "ModuleAudio.h"
 
-Application::Application() {
-	modules[0] = win = new ModuleWindow;
-	modules[1] = rend = new ModuleRenderer;
-}
-Application::~Application() {
 
+Application::Application()
+{
+	modules[0] = window = new ModuleWindow();
+	modules[1] = render = new ModuleRender();
+	modules[2] = input = new ModuleInput();
+	modules[3] = textures = new ModuleTextures();
+	modules[4] = audio = new ModuleAudio();
+}	
+
+Application::~Application()
+{
+	for(int i = NUM_MODULES - 1; i >= 0; --i)
+		delete modules[i];
 }
 
 bool Application::Init()
