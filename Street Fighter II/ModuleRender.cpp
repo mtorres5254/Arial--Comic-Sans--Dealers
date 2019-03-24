@@ -42,11 +42,7 @@ update_status ModuleRender::PreUpdate()
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
 	
-	return update_status::UPDATE_CONTINUE;
-}
-
-update_status ModuleRender::Update() {
-	Blit(tex, 0, 0, nullptr);
+	Blit(tex, parallax, 0, Section);
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -86,8 +82,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section)
 	}
 	else
 	{
-		//SDL_QueryTexture(texture, nullptr, nullptr, &rect.w, &rect.h);
-		SDL_RenderCopy(renderer, texture, NULL, &rect);
+		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+		//SDL_RenderCopy(renderer, texture, section, &rect);
 	}
 
 	if(SDL_RenderCopy(renderer, texture, section, &rect) != 0)

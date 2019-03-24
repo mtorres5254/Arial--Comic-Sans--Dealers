@@ -13,9 +13,10 @@ public:
 	ModuleRender();
 	~ModuleRender();
 
+	int parallax = 0;
+
 	bool Init();
 	update_status PostUpdate();
-	update_status Update();
 	update_status PreUpdate();
 	bool CleanUp();
 

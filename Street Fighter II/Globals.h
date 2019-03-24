@@ -14,6 +14,7 @@ enum update_status
 	UPDATE_ERROR
 };
 
+#define PARALLAX 5;
 
 // Useful typedefs ---------
 typedef unsigned int uint;
