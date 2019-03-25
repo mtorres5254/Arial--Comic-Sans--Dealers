@@ -13,7 +13,6 @@ ModuleAudio::ModuleAudio() : Module()
 		audios[i] == nullptr;
 	}
 }
-
 // Destructor
 ModuleAudio::~ModuleAudio()
 {}
@@ -36,8 +35,8 @@ bool ModuleAudio::Init()
 
 	music = App->audio->Load("Assets/Ryumusic.OGG");
 
-	Mix_PlayChannel(-1, music, -1);
-	
+	Mix_PlayMusic(music, -1);
+
 	return ret;
 }
 
@@ -49,7 +48,7 @@ bool ModuleAudio::CleanUp()
 	for (int i = 0; i < MAX_AUDIOS; i++) {
 
 		if (audios[i] != nullptr) {
-			Mix_FreeChunk(audios[i]);
+			Mix_FreeMusic(audios[i]);
 		}
 	}
 	Mix_CloseAudio();
@@ -58,16 +57,16 @@ bool ModuleAudio::CleanUp()
 }
 
 
-Mix_Chunk* const ModuleAudio::Load(const char* path)
+Mix_Music* const ModuleAudio::Load(const char* path)
 {
 
 	LOG("Loading Music");
-	Mix_Chunk *music;
-	music = Mix_LoadWAV(path);	
+	Mix_Music *music;
+	music = Mix_LoadMUS(path);
 
 	for (int i = 0; i < MAX_AUDIOS; i++) {
 
-		if (audios[i] == nullptr) {
+		if (audios[i] = nullptr) {
 			audios[i] = music;
 			i = MAX_AUDIOS;
 		}

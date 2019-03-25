@@ -3,8 +3,7 @@
 
 #include "Module.h"
 #include "Globals.h"
-
-struct Mix_Chunk;
+#include "SDL_mixer/include/SDL_mixer.h"
 
 #define MAX_AUDIOS 50
 
@@ -17,11 +16,11 @@ public:
 	bool Init();
 	bool CleanUp();
 
-	Mix_Chunk* const Load(const char* path);
+	Mix_Music* const Load(const char* path);
 
 public:
-	Mix_Chunk *music;
-	Mix_Chunk *audios[MAX_AUDIOS];
+	Mix_Music *music;
+	Mix_Music *audios[MAX_AUDIOS];
 };
 
 #endif // __ModuleAudios_H__

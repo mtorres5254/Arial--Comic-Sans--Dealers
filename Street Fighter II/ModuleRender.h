@@ -2,10 +2,10 @@
 #define __ModuleRenderer_H__
 
 #include "Module.h"
-
-struct SDL_Renderer;
+#include "SDL/include/SDL.h"
+/*struct SDL_Renderer;
 struct SDL_Texture;
-struct SDL_Rect;
+struct SDL_Rect;*/
 
 class ModuleRender : public Module
 {

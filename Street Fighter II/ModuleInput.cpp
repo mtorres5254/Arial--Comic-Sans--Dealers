@@ -39,14 +39,10 @@ update_status ModuleInput::PreUpdate()
 		return update_status::UPDATE_STOP;
 	}
 	if (keyboard[SDL_SCANCODE_D]) {
-	//	if (App->render->Section->x > 0) {
 		App->render->parallax -= PARALLAX;
-	//	}
 	}
 	if (keyboard[SDL_SCANCODE_A]) {
-		//if (App->render->Section->x + SCREEN_WIDTH < 1316) {
 			App->render->parallax += PARALLAX;
-		//}
 	}
 
 	return update_status::UPDATE_CONTINUE;
