@@ -1,11 +1,11 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
-#include "ModuleRender.h"
 #include "SDL/include/SDL.h"
 
 ModuleInput::ModuleInput() : Module()
-{}
+{
+}
 
 // Destructor
 ModuleInput::~ModuleInput()
@@ -34,16 +34,8 @@ update_status ModuleInput::PreUpdate()
 
 	keyboard = SDL_GetKeyboardState(NULL);
 
-	if (keyboard[SDL_SCANCODE_ESCAPE]) {
-
+	if(keyboard[SDL_SCANCODE_ESCAPE])
 		return update_status::UPDATE_STOP;
-	}
-	if (keyboard[SDL_SCANCODE_D]) {
-		App->render->parallax -= PARALLAX;
-	}
-	if (keyboard[SDL_SCANCODE_A]) {
-			App->render->parallax += PARALLAX;
-	}
 
 	return update_status::UPDATE_CONTINUE;
 }
