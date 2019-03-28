@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "SDL\include\SDL_scancode.h"
+#include "SDL/include/SDL_events.h"
 
 typedef unsigned char Uint8;
 

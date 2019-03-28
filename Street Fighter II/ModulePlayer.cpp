@@ -74,8 +74,6 @@ update_status ModulePlayer::Update()
 	Animation* current_animation = &idle;
 
 	int speed = 1;
-	
-	
 	if(App->input->keyboard[SDL_SCANCODE_D] == 1)
 	{
 		current_animation = &forward;
@@ -86,11 +84,11 @@ update_status ModulePlayer::Update()
 		current_animation = &backward;
 		position.x -= speed;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_P] == 1)
+	if (App->input->keyboard[SDL_SCANCODE_P] == 1);
 	{
 		current_animation = &punch;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
+	/*if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
 	{
 		if (jumpcount < 5) {
 			current_animation = &jump;
@@ -107,7 +105,7 @@ update_status ModulePlayer::Update()
 			position.y -= speed * 0.2;
 			jumpcount++;
 		}
-	}
+	}*/
 
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
