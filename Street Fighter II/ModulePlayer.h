@@ -16,7 +16,6 @@ public:
 
 	bool Start();
 	update_status Update();
-	int jumpcount = 0;
 
 public:
 
@@ -24,8 +23,6 @@ public:
 	Animation idle;
 	Animation forward;
 	Animation backward;
-	Animation punch;
-	Animation jump;
 	iPoint position;
 
 };
