@@ -8,15 +8,19 @@
 
 ModuleAudio::ModuleAudio()
 {
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) 
+	{
+		LOG("Mix_OpenAudio: %s\n", Mix_GetError());
+	}
 	for (uint i = 0; i < MAX_AUDIOS; ++i) {
-		musics[i] = nullptr;
-		effects[i] = nullptr;
+			musics[i] = nullptr;
+			effects[i] = nullptr;
 	}
 }
 
 // Destructor
 ModuleAudio::~ModuleAudio() {
-
+	Mix_CloseAudio();
 }
 
 // Called before render is available
@@ -48,7 +52,7 @@ bool ModuleAudio::CleanUp()
 {
 	LOG("Freeing Musics and Audio effects");
 
-	for (uint i = 0; i < MAX_AUDIOS; ++i) {
+	for (uint i = MAX_AUDIOS; i < 0; i--) {
 		if (musics[i] != nullptr)
 			Mix_FreeMusic(musics[i]);
 		if (effects[i] != nullptr)
@@ -56,6 +60,26 @@ bool ModuleAudio::CleanUp()
 	}
 
 	Mix_Quit();
+	return true;
+}
+
+bool ModuleAudio::PlayMusic(Mix_Music * music, int delay) {
+
+	Mix_FadeInMusic(music, -1, delay);
+
+	return true;
+}
+
+bool ModuleAudio::StopMusic(int delay) {
+	Mix_FadeOutMusic(delay);
+
+	return true;
+}
+
+bool ModuleAudio::PlayChunk(Mix_Chunk * chunk, int repeats) {
+
+	Mix_PlayChannel(-1, chunk, repeats);
+
 	return true;
 }
 
@@ -78,6 +102,9 @@ Mix_Music* const ModuleAudio::LoadMusic(const char* path)
 bool ModuleAudio::UnloadMusic(Mix_Music *music)
 {
 	bool ret = false;
+	if (Mix_PlayingMusic() == 1) {
+		StopMusic(1);
+	}
 
 	if (music != nullptr)
 	{

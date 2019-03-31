@@ -5,6 +5,8 @@
 #include "Animation.h"
 #include "Globals.h"
 
+#include "SDL_mixer/include/SDL_mixer.h"
+
 struct SDL_Texture;
 
 class ModuleSceneHonda : public Module
@@ -25,6 +27,7 @@ public:
 	SDL_Rect foreground;
 	SDL_Rect background;
 	Animation water;
+	Mix_Music* music;
 };
 
 #endif // __MODULESCENEHONDA_H__

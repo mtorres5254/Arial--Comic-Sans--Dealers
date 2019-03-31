@@ -61,7 +61,7 @@ bool ModuleSceneKen::Start()
 	
 	graphics = App->textures->Load("ken_stage.png");
 	music = App->audio->LoadMusic("ken.ogg");
-	Mix_FadeInMusic(music, -1, 12);
+	App->audio->PlayMusic(music, 5000);
 	App->player->Enable();	
 
 	return true;
@@ -73,6 +73,7 @@ bool ModuleSceneKen::CleanUp()
 	LOG("Unloading ken scene");	
 	
 	App->textures->Unload(graphics);
+	App->audio->UnloadMusic(music);
 	App->scene_ken->Disable();
 
 	return true;
@@ -106,6 +107,7 @@ update_status ModuleSceneKen::Update()
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
 		
 		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, 2.0f);
+		App->audio->StopMusic(3000);
 		
 	}
 

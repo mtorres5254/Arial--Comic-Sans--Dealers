@@ -28,6 +28,15 @@ ModulePlayer::ModulePlayer()
 	forward.PushBack({352, 128, 54, 91});
 	forward.PushBack({432, 131, 50, 89});
 	forward.speed = 0.1f;
+
+	// walk backward animation
+	backward.PushBack({ 542,127,61,91 });
+	backward.PushBack({ 628,127,60,91 });
+	backward.PushBack({ 713,127,58,91 });
+	backward.PushBack({ 797,127,58,91 });
+	backward.PushBack({ 883,127,57,91 });
+	backward.PushBack({ 974,127,57,91 });
+	backward.speed = 0.05f;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -53,6 +62,11 @@ update_status ModulePlayer::Update()
 	{
 		current_animation = &forward;
 		position.x += speed;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_A] == 1)
+	{
+		current_animation = &backward;
+		position.x -= speed;
 	}
 
 	// Draw everything --------------------------------------

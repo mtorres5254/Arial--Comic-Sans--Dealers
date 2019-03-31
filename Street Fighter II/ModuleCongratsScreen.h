@@ -5,6 +5,8 @@
 #include "Animation.h"
 #include "Globals.h"
 
+#include "SDL_mixer/include/SDL_mixer.h"
+
 struct SDL_Texture;
 
 class ModuleCongratsScreen : public Module
@@ -21,6 +23,7 @@ public:
 
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect background;
+	Mix_Music* music;
 
 };
 

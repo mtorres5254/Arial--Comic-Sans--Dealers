@@ -7,6 +7,7 @@
 #include "ModuleInput.h"
 #include "ModuleFadeToBlack.h"
 #include "Module.h"
+#include "ModuleAudio.h"
 
 #include "ModuleSceneKen.h"
 #include "ModuleCongratsScreen.h"
@@ -42,8 +43,8 @@ bool ModuleSceneHonda::Start()
 	LOG("Loading background assets");
 	
 	graphics = App->textures->Load("honda_stage2.png");
-
-	// TODO 1: Enable (and properly disable) the player module
+	music = App->audio->LoadMusic("honda.ogg");
+	App->audio->PlayMusic(music, 3000);
 	App->player->Enable();
 
 	return true;
@@ -52,10 +53,11 @@ bool ModuleSceneHonda::Start()
 // Load assets
 bool ModuleSceneHonda::CleanUp()
 {
-	// TODO 5: Remove all memory leaks
+
 	LOG("Unloading honda stage");
 	
 	App->textures->Unload(graphics);	
+	App->audio->UnloadMusic(music);
 	App->player->Disable();
 
 	return true;
@@ -77,6 +79,7 @@ update_status ModuleSceneHonda::Update()
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
 
 		App->fade->FadeToBlack(App->scene_honda, App->congrats_screen, 2.0f);
+		App->audio->StopMusic(2000);
 
 	}
 	return UPDATE_CONTINUE;

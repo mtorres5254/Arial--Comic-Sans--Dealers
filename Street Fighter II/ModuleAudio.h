@@ -20,7 +20,10 @@ public:
 	Mix_Music* const LoadMusic(const char* path);
 	Mix_Chunk* const LoadChunk(const char* path);
 	bool UnloadMusic(Mix_Music * music);
-	bool UnloadChunk(Mix_Chunk * music);
+	bool UnloadChunk(Mix_Chunk * chunk);
+	bool PlayMusic(Mix_Music * music, int delay);
+	bool PlayChunk(Mix_Chunk * chunk, int repeats);
+	bool StopMusic(int delay);
 
 public:
 	Mix_Music* musics[MAX_AUDIOS];

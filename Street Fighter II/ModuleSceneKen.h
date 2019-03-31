@@ -31,7 +31,6 @@ public:
 	Animation flag;
 	Animation girl;
 	Mix_Music* music;
-	Mix_Chunk* chunk;
 
 	float foreground_pos;
 	bool forward;
