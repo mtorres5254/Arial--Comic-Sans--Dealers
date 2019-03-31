@@ -9,19 +9,22 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleWelcomePage.h"
 #include "ModuleCongratsScreen.h"
+#include "ModuleAudio.h"
 
 Application::Application()
 {
 	modules[0] = window = new ModuleWindow();
 	modules[1] = render = new ModuleRender();
 	modules[2] = input = new ModuleInput();
-	modules[3] = textures = new ModuleTextures();	
-	modules[4] = congrats_screen = new ModuleCongratsScreen();
-	modules[5] = scene_honda = new ModuleSceneHonda();
-	modules[6] = scene_ken = new ModuleSceneKen();
-	modules[7] = player = new ModulePlayer();
-	modules[8] = fade = new ModuleFadeToBlack();
-	modules[9] = welcome_page = new ModuleWelcomePage();
+	modules[3] = textures = new ModuleTextures();
+	modules[4] = audio = new ModuleAudio();
+	modules[5] = congrats_screen = new ModuleCongratsScreen();
+	modules[6] = scene_honda = new ModuleSceneHonda();
+	modules[7] = scene_ken = new ModuleSceneKen();
+	modules[8] = player = new ModulePlayer();
+	modules[9] = fade = new ModuleFadeToBlack();
+	modules[10] = welcome_page = new ModuleWelcomePage();
+	
 	
 }	
 

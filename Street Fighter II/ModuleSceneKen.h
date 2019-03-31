@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "Globals.h"
 
+#include "SDL_mixer/include/SDL_mixer.h"
 
 
 
@@ -29,6 +30,8 @@ public:
 	SDL_Rect background;
 	Animation flag;
 	Animation girl;
+	Mix_Music* music;
+	Mix_Chunk* chunk;
 
 	float foreground_pos;
 	bool forward;

@@ -8,6 +8,8 @@
 #include "ModuleFadeToBlack.h"
 #include "Module.h"
 #include "ModuleSceneHonda.h"
+#include "ModuleAudio.h"
+
 
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -33,15 +35,15 @@ ModuleSceneKen::ModuleSceneKen()
 	background.h = 176;
 
 	// flag animation
-	flag.PushBack({848, 208, 40, 40});
-	flag.PushBack({848, 256, 40, 40});
-	flag.PushBack({848, 304, 40, 40});
+	flag.PushBack({ 848, 208, 40, 40 });
+	flag.PushBack({ 848, 256, 40, 40 });
+	flag.PushBack({ 848, 304, 40, 40 });
 	flag.speed = 0.08f;
 
 	// Girl Animation
-	girl.PushBack({624, 16, 32, 56});
-	girl.PushBack({624, 80, 32, 56});
-	girl.PushBack({624, 144, 32, 56});
+	girl.PushBack({ 624, 16, 32, 56 });
+	girl.PushBack({ 624, 80, 32, 56 });
+	girl.PushBack({ 624, 144, 32, 56 });
 	girl.speed = 0.05f;
 
 	// for moving the foreground
@@ -58,8 +60,8 @@ bool ModuleSceneKen::Start()
 	LOG("Loading ken scene");
 	
 	graphics = App->textures->Load("ken_stage.png");
-	
-	
+	music = App->audio->LoadMusic("ken.ogg");
+	Mix_FadeInMusic(music, -1, 12);
 	App->player->Enable();	
 
 	return true;
