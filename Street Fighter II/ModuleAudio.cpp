@@ -108,7 +108,7 @@ bool ModuleAudio::UnloadMusic(Mix_Music *music)
 
 	if (music != nullptr)
 	{
-		for (int i = 0; i < MAX_AUDIOS; ++i)
+		for (int i = MAX_AUDIOS; i > 0; i--)
 		{
 			if (musics[i] == music)
 			{
