@@ -58,6 +58,7 @@ bool ModuleSceneHonda::CleanUp()
 	
 	App->textures->Unload(graphics);	
 	App->audio->UnloadMusic(music);
+	App->scene_honda->Disable();
 	App->player->Disable();
 
 	return true;

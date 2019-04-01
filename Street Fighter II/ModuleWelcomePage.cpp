@@ -35,12 +35,12 @@ bool ModuleWelcomePage::Start()
 
 bool ModuleWelcomePage::CleanUp()
 {
-	// TODO 5: Remove all memory leaks
 	LOG("Unloading WelcomePage");
 
 	App->textures->Unload(graphics);
 	App->audio->UnloadMusic(music);
 	App->welcome_page->Disable();
+	App->player->Disable();
 
 	return true;
 }
@@ -50,7 +50,6 @@ update_status ModuleWelcomePage::Update()
 	
 	App->render->Blit(graphics, 0, 0, &background);
 
-	// TODO 2: make so pressing SPACE the HONDA stage is loaded
 
 	if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) {
 

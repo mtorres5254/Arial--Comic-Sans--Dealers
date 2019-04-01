@@ -8,6 +8,7 @@
 #include "ModuleCongratsScreen.h"
 #include "ModuleWelcomePage.h"
 #include "ModuleAudio.h"
+#include "ModulePlayer.h"
 
 
 ModuleCongratsScreen::ModuleCongratsScreen()
@@ -40,6 +41,7 @@ bool ModuleCongratsScreen::CleanUp()
 	App->textures->Unload(graphics);
 	App->audio->UnloadMusic(music);
 	App->congrats_screen->Disable();
+	App->player->Disable();
 	return true;
 }
 

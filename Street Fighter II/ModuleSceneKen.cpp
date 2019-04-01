@@ -75,6 +75,7 @@ bool ModuleSceneKen::CleanUp()
 	App->textures->Unload(graphics);
 	App->audio->UnloadMusic(music);
 	App->scene_ken->Disable();
+	App->player->Disable();
 
 	return true;
 }
