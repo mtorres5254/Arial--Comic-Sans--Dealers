@@ -9,10 +9,11 @@ class Animation
 public:
 	float speed = 1.0f;
 	SDL_Rect frames[MAX_FRAMES];
+	bool loop = false;
 
 private:
 	float current_frame;
-	int last_frame = 0;
+	int last_frame = 0;	
 
 public:
 
@@ -28,6 +29,11 @@ public:
 			current_frame = 0;
 
 		return frames[(int)current_frame];
+	}
+
+	bool Finished()
+	{
+		return true;
 	}
 };
 

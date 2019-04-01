@@ -68,6 +68,11 @@ update_status ModulePlayer::Update()
 		current_animation = &backward;
 		position.x -= speed;
 	}
+	if (App->input->keyboard[SDL_SCANCODE_X] == 1)
+	{
+		App->particle->AddParticle(App->particle->laser, position.x, position.y + 25);
+		position.x -= speed;
+	}
 
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
