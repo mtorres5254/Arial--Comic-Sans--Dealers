@@ -3,6 +3,10 @@
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
+#include "ModuleWelcomePage.h"
+#include "ModuleCongratsScreen.h"
+#include "ModuleSceneKen.h"
+#include "ModuleSceneHonda.h"
 #include "SDL/include/SDL.h"
 
 ModuleRender::ModuleRender() : Module()
@@ -51,16 +55,16 @@ update_status ModuleRender::Update()
 {
 	int speed = 3;
 
-	if(App->input->keyboard[SDL_SCANCODE_UP] == 1)
+	if(App->input->keyboard[SDL_SCANCODE_UP] == 1 && App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false)
 		camera.y += speed;
 
-	if(App->input->keyboard[SDL_SCANCODE_DOWN] == 1)
+	if(App->input->keyboard[SDL_SCANCODE_DOWN] == 1 && App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false)
 		camera.y -= speed;
 
-	if(App->input->keyboard[SDL_SCANCODE_LEFT] == 1)
+	if(App->input->keyboard[SDL_SCANCODE_LEFT] == 1 && App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false)
 		camera.x += speed;
 
-	if(App->input->keyboard[SDL_SCANCODE_RIGHT] == 1)
+	if(App->input->keyboard[SDL_SCANCODE_RIGHT] == 1 && App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false)
 		camera.x -= speed;
 
 	return update_status::UPDATE_CONTINUE;

@@ -62,7 +62,8 @@ bool ModuleSceneKen::Start()
 	graphics = App->textures->Load("ken_stage.png");
 	music = App->audio->LoadMusic("ken.ogg");
 	App->audio->PlayMusic(music, 5000);
-	App->player->Enable();	
+	App->player->Enable();
+	App->render->camera.x = App->render->camera.y = 0;
 
 	return true;
 }

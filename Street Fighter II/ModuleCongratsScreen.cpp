@@ -28,7 +28,7 @@ bool ModuleCongratsScreen::Start()
 
 	graphics = App->textures->Load("CongratsScreen.png");	
 	music = App->audio->LoadMusic("congrats.ogg");
-	App->audio->PlayMusic(music, 2000);
+	App->audio->PlayMusic(music, 3000);
 
 	return true;
 }
@@ -41,7 +41,8 @@ bool ModuleCongratsScreen::CleanUp()
 	App->textures->Unload(graphics);
 	App->audio->UnloadMusic(music);
 	App->congrats_screen->Disable();
-	App->player->Disable();
+
+
 	return true;
 }
 
@@ -53,7 +54,7 @@ update_status ModuleCongratsScreen::Update()
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
 
 		App->fade->FadeToBlack(App->congrats_screen, App->welcome_page, 2.0f);
-		App->audio->StopMusic(2000);
+		App->audio->StopMusic(2500);
 	}
 
 	return UPDATE_CONTINUE;

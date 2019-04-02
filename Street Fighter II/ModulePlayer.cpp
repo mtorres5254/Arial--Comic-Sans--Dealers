@@ -51,6 +51,8 @@ bool ModulePlayer::Start()
 	return ret;
 }
 
+
+
 // Update: draw background
 update_status ModulePlayer::Update()
 {
@@ -70,7 +72,7 @@ update_status ModulePlayer::Update()
 	}
 	if (App->input->keyboard[SDL_SCANCODE_X] == 1)
 	{
-		App->particle->AddParticle(App->particle->laser, position.x, position.y + 25);
+		//App->particle->AddParticle(App->particle->laser, position.x, position.y + 25);
 		position.x -= speed;
 	}
 

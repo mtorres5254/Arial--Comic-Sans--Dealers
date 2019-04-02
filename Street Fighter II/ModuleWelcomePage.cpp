@@ -40,7 +40,7 @@ bool ModuleWelcomePage::CleanUp()
 	App->textures->Unload(graphics);
 	App->audio->UnloadMusic(music);
 	App->welcome_page->Disable();
-	App->player->Disable();
+
 
 	return true;
 }
