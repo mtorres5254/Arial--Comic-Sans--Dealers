@@ -14,11 +14,11 @@ ModulePlayer::ModulePlayer()
 	position.y = 220;
 
 	// idle animation (arcade sprite sheet)
-	idle.PushBack({7, 14, 60, 90});
-	idle.PushBack({95, 15, 60, 89});
+	idle.PushBack({65, 14, -60, -90});
+	/*idle.PushBack({95, 15, 60, 89});
 	idle.PushBack({184, 14, 60, 90});
 	idle.PushBack({276, 11, 60, 93});
-	idle.PushBack({366, 12, 60, 92});
+	idle.PushBack({366, 12, 60, 92});*/
 	idle.speed = 0.2f;
 
 	// walk forward animation (arcade sprite sheet)
