@@ -20,7 +20,7 @@ ModuleParticles::~ModuleParticles()
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
-	graphics = App->textures->Load("ryu.png");
+	graphics = App->textures->Load("Assets/ryu.png");
 
 	//Hadouken particle
 

@@ -60,8 +60,8 @@ bool ModuleSceneKen::Start()
 {
 	LOG("Loading ken scene");
 	
-	graphics = App->textures->Load("ken_stage.png");
-	music = App->audio->LoadMusic("ken.ogg");
+	graphics = App->textures->Load("Assets/ken_stage.png");
+	music = App->audio->LoadMusic("Assets/ken.ogg");
 	App->audio->PlayMusic(music, 5000);
 	App->player->Enable();
 	App->player2->Enable();
