@@ -30,6 +30,12 @@ ModulePlayer::ModulePlayer()
 	forward.PushBack({432, 131, 50, 89});
 	forward.speed = 0.1f;
 
+	//punch animation
+	punch.PushBack({ 19,272,64,91 });
+	punch.PushBack({ 108,272,91,91 });
+	//punch.PushBack({ 19,272,64,91 });
+	punch.speed = 0.05f;
+
 	// walk backward animation
 	backward.PushBack({ 542,127,61,91 });
 	backward.PushBack({ 628,127,60,91 });
@@ -62,6 +68,10 @@ update_status ModulePlayer::Update()
 
 	int speed = 1;
 
+	if (PunchFinish == false) {
+		goto punch;
+	}
+
 	if(App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT)
 	{
 		current_animation = &forward;
@@ -71,6 +81,18 @@ update_status ModulePlayer::Update()
 	{
 		current_animation = &backward;
 		position.x -= speed;
+	}
+	if ((App->input->keyboard[SDL_SCANCODE_P] == KEY_STATE::KEY_DOWN) && (PunchFinish == true))
+	{
+	punch:
+		current_animation = &punch;
+		if (punch.current_frame == 0) {
+			PunchFinish = false;
+		}
+		if (punch.current_frame != 0) {
+			PunchFinish = true;
+		}
+		
 	}
 	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN)
 	{
