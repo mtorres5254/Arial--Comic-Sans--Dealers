@@ -48,6 +48,7 @@ bool ModulePlayer::Start()
 	LOG("Loading player textures");
 	bool ret = true;
 	graphics = App->textures->Load("ryu.png"); // arcade version
+	position.x = 100; //Returns to its original position
 	return ret;
 }
 
