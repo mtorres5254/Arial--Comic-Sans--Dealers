@@ -10,7 +10,7 @@
 
 ModulePlayer2::ModulePlayer2()
 {
-	position.x = 150;
+	position.x = 300;
 	position.y = 220;
 
 	// idle animation (arcade sprite sheet)
@@ -30,6 +30,12 @@ ModulePlayer2::ModulePlayer2()
 	forward.PushBack({ 432, 131, 50, 89 });
 	forward.speed = 0.1f;
 
+	//punch animation
+	punch.PushBack({ 19,272,64,91 });
+	punch.PushBack({ 108,272,91,91 });
+	//punch.PushBack({ 19,272,64,91 });
+	punch.speed = 0.05f;
+
 	// walk backward animation
 	backward.PushBack({ 542,127,61,91 });
 	backward.PushBack({ 628,127,60,91 });
@@ -48,8 +54,8 @@ bool ModulePlayer2::Start()
 {
 	LOG("Loading player textures");
 	bool ret = true;
-	graphics = App->textures->Load("Assets/ryu2.png"); // arcade version
-	position.x = 100; //Returns to its original position
+	graphics = App->textures->Load("Assets/ryu.png"); // arcade version
+	position.x = 300; //Returns to its original position
 	return ret;
 }
 
@@ -61,22 +67,7 @@ update_status ModulePlayer2::Update()
 	Animation* current_animation = &idle;
 
 	int speed = 1;
-
-	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT)
-	{
-		current_animation = &forward;
-		position.x += speed;
-	}
-	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT)
-	{
-		current_animation = &backward;
-		position.x -= speed;
-	}
-	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN)
-	{
-		App->particle->AddParticle(App->particle->hadouken, position.x, position.y - 100);
-
-	}
+	
 
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
