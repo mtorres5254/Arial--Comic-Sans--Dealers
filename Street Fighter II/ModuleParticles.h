@@ -44,9 +44,7 @@ private:
 	uint last_particle = 0;
 
 public:
-
-	Particle explosion;
-	Particle laser;
+	Particle hadouken;
 };
 
 #endif // __MODULEPARTICLES_H__
