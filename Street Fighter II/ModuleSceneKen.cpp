@@ -9,6 +9,7 @@
 #include "Module.h"
 #include "ModuleSceneHonda.h"
 #include "ModuleAudio.h"
+#include "ModulePlayer2.h"
 
 
 
@@ -63,6 +64,7 @@ bool ModuleSceneKen::Start()
 	music = App->audio->LoadMusic("ken.ogg");
 	App->audio->PlayMusic(music, 5000);
 	App->player->Enable();
+	App->player2->Enable();
 	App->render->camera.x = App->render->camera.y = 0;
 
 	return true;
@@ -77,6 +79,7 @@ bool ModuleSceneKen::CleanUp()
 	App->audio->UnloadMusic(music);
 	App->scene_ken->Disable();
 	App->player->Disable();
+	App->player2->Disable();
 
 	return true;
 }

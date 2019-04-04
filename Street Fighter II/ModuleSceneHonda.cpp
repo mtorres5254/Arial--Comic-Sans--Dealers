@@ -8,6 +8,7 @@
 #include "ModuleFadeToBlack.h"
 #include "Module.h"
 #include "ModuleAudio.h"
+#include "ModulePlayer2.h"
 
 #include "ModuleSceneKen.h"
 #include "ModuleCongratsScreen.h"
@@ -45,6 +46,7 @@ bool ModuleSceneHonda::Start()
 	graphics = App->textures->Load("honda_stage2.png");
 	music = App->audio->LoadMusic("honda.ogg");
 	App->audio->PlayMusic(music, 3000);
+	App->player2->Enable();
 	App->player->Enable();
 	return true;
 }
@@ -59,6 +61,7 @@ bool ModuleSceneHonda::CleanUp()
 	App->audio->UnloadMusic(music);
 	App->scene_honda->Disable();
 	App->player->Disable();
+	App->player2->Disable();
 
 	return true;
 }
