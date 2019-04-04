@@ -46,7 +46,6 @@ bool ModuleSceneHonda::Start()
 	music = App->audio->LoadMusic("honda.ogg");
 	App->audio->PlayMusic(music, 3000);
 	App->player->Enable();
-
 	return true;
 }
 

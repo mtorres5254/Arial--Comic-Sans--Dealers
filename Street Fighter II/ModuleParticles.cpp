@@ -4,7 +4,7 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleParticles.h"
-
+#include "ModulePlayer.h"
 #include "SDL/include/SDL_timer.h"
 
 ModuleParticles::ModuleParticles()
@@ -20,21 +20,17 @@ ModuleParticles::~ModuleParticles()
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
-	graphics = App->textures->Load("particles.png");
+	graphics = App->textures->Load("ryu.png");
 
-	// Explosion particle
-	explosion.anim.PushBack({274, 296, 33, 30});
-	explosion.anim.PushBack({313, 296, 33, 30});
-	explosion.anim.PushBack({346, 296, 33, 30});
-	explosion.anim.PushBack({382, 296, 33, 30});
-	explosion.anim.PushBack({419, 296, 33, 30});
-	explosion.anim.PushBack({457, 296, 33, 30});
-	explosion.anim.loop = false;
-	explosion.anim.speed = 0.3f;
+	//Hadouken particle
 
-	// TODO 2: Create the template for a new particle "laser"
-	laser.anim.PushBack({ 135,154,81,15 });
-	laser.anim.PushBack({ 201,154,63,15 });
+	hadouken.anim.PushBack({ 493,  1563,  43 , 32 });
+	hadouken.anim.PushBack({ 550,1565, 56 ,28 });
+	hadouken.life = 3000;
+	hadouken.anim.loop = true;
+	hadouken.anim.speed = 0.05f;
+	hadouken.speed.create(3.5, 0);
+	
 	return true;
 }
 
@@ -73,7 +69,7 @@ update_status ModuleParticles::Update()
 		}
 		else if(SDL_GetTicks() >= p->born)
 		{
-			App->render->Blit(graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()));
+			App->render->Blit(graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()),0.05f);
 			if(p->fx_played == false)
 			{
 				p->fx_played = true;

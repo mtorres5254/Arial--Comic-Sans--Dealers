@@ -49,8 +49,11 @@ bool ModulePlayer::Start()
 	LOG("Loading player textures");
 	bool ret = true;
 	graphics = App->textures->Load("ryu.png"); // arcade version
+	position.x = 100; //Returns to its original position
 	return ret;
 }
+
+
 
 // Update: draw background
 update_status ModulePlayer::Update()
@@ -59,20 +62,20 @@ update_status ModulePlayer::Update()
 
 	int speed = 1;
 
-	if(App->input->keyboard[SDL_SCANCODE_D] == 1)
+	if(App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT)
 	{
 		current_animation = &forward;
 		position.x += speed;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_A] == 1)
+	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT)
 	{
 		current_animation = &backward;
 		position.x -= speed;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_X] == 1)
+	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN)
 	{
-		App->particle->AddParticle(App->particle->laser, position.x, position.y + 25);
-		position.x -= speed;
+		App->particle->AddParticle(App->particle->hadouken, position.x , position.y-100);	
+		
 	}
 
 	// Draw everything --------------------------------------
