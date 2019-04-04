@@ -6,6 +6,7 @@
 #include "SDL_mixer/include/SDL_mixer.h"
 
 #define MAX_AUDIOS 50
+#define MAX_EFFECTS 50
 
 
 class ModuleAudio : public Module
@@ -27,7 +28,7 @@ public:
 
 public:
 	Mix_Music* musics[MAX_AUDIOS];
-	Mix_Chunk* effects[MAX_AUDIOS];
+	Mix_Chunk* effects[MAX_EFFECTS];
 };
 
 #endif // __ModuleAudio_H__

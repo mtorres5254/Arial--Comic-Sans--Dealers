@@ -5,6 +5,8 @@
 #include "ModuleRender.h"
 #include "ModuleParticles.h"
 #include "ModulePlayer.h"
+#include "ModuleAudio.h"
+
 #include "SDL/include/SDL_timer.h"
 
 ModuleParticles::ModuleParticles()
@@ -30,6 +32,7 @@ bool ModuleParticles::Start()
 	hadouken.anim.loop = true;
 	hadouken.anim.speed = 0.05f;
 	hadouken.speed.create(3.5, 0);
+	hadouken.sound = App->audio->LoadChunk("Assets/Hadouken.wav");
 	
 	return true;
 }
@@ -74,6 +77,7 @@ update_status ModuleParticles::Update()
 			{
 				p->fx_played = true;
 				// Play particle fx here
+			
 			}
 		}
 	}

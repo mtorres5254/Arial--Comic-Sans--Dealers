@@ -5,6 +5,7 @@
 #include "ModuleRender.h"
 #include "ModulePlayer.h"
 #include "ModuleParticles.h"
+#include "ModuleAudio.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
@@ -81,11 +82,12 @@ update_status ModulePlayer::Update()
 	}
 	if (App->input->keyboard[SDL_SCANCODE_P] == KEY_STATE::KEY_DOWN)
 	{
-			current_animation = &punch;
+		current_animation = &punch;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN)
 	{
-		App->particle->AddParticle(App->particle->hadouken, position.x , position.y-100);	
+		App->particle->AddParticle(App->particle->hadouken, position.x + 10, position.y-100);	
+		App->audio->PlayChunk(App->particle->hadouken.sound, 0);
 		
 	}
 

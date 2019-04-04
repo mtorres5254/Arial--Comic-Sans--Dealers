@@ -8,6 +8,8 @@
 
 #define MAX_ACTIVE_PARTICLES 100
 
+#include "SDL_mixer/include/SDL_mixer.h"
+
 struct SDL_Texture;
 
 struct Particle
@@ -19,6 +21,7 @@ struct Particle
 	Uint32 born = 0;
 	Uint32 life = 0;
 	bool fx_played = false;
+	Mix_Chunk* sound = nullptr;
 
 	Particle();
 	Particle(const Particle& p);

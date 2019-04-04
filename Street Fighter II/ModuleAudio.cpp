@@ -8,11 +8,7 @@
 
 ModuleAudio::ModuleAudio()
 {
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) 
-	{
-		LOG("Mix_OpenAudio: %s\n", Mix_GetError());
-	}
-	for (uint i = 0; i < MAX_AUDIOS; ++i) {
+	for (int i = 0; i < MAX_AUDIOS; i++) {
 			musics[i] = nullptr;
 			effects[i] = nullptr;
 	}
@@ -39,9 +35,9 @@ bool ModuleAudio::Init()
 		ret = false;
 	}
 
-	for (int i = 0; i < MAX_AUDIOS; i++) {
-		musics[i] = nullptr;
-		effects[i] = nullptr;
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
+	{
+		LOG("Mix_OpenAudio: %s\n", Mix_GetError());
 	}
 
 	return ret;
@@ -52,12 +48,19 @@ bool ModuleAudio::CleanUp()
 {
 	LOG("Freeing Musics and Audio effects");
 
-	for (uint i = MAX_AUDIOS; i < 0; i--) {
-		if (musics[i] != nullptr)
+	for (int i = MAX_AUDIOS; i > 0; i--) {
+		if (musics[i] != nullptr) {
 			Mix_FreeMusic(musics[i]);
-		if (effects[i] != nullptr)
-			Mix_FreeChunk(effects[i]);
+		}
 	}
+	for (int i = MAX_EFFECTS; i > 0; i--) {
+		if (effects[i] != nullptr) {
+			//Mix_FreeChunk(effects[i]);
+		}
+	}
+	
+
+	Mix_CloseAudio();
 
 	Mix_Quit();
 	return true;
@@ -90,7 +93,7 @@ Mix_Music* const ModuleAudio::LoadMusic(const char* path)
 	music = Mix_LoadMUS(path);
 
 	for (int i = 0; i < MAX_AUDIOS; i++) {
-		if (music == nullptr) {
+		if (musics[i] == nullptr) {
 			musics[i] = music;
 			break;
 		}
@@ -102,9 +105,6 @@ Mix_Music* const ModuleAudio::LoadMusic(const char* path)
 bool ModuleAudio::UnloadMusic(Mix_Music *music)
 {
 	bool ret = false;
-	if (Mix_PlayingMusic() == 1) {
-		StopMusic(1);
-	}
 
 	if (music != nullptr)
 	{
@@ -117,7 +117,7 @@ bool ModuleAudio::UnloadMusic(Mix_Music *music)
 				break;
 			}
 		}
-		Mix_FreeMusic(music);
+		Mix_FadeOutMusic(3000);
 	}
 
 	return ret;
@@ -127,15 +127,15 @@ bool ModuleAudio::UnloadMusic(Mix_Music *music)
 Mix_Chunk* const ModuleAudio::LoadChunk(const char* path)
 {
 	Mix_Chunk* effect;
+
 	effect = Mix_LoadWAV(path);
 
 	for (int i = 0; i < MAX_AUDIOS; i++) {
-		if (effect == nullptr) {
+		if (effects[i] == nullptr) {
 			effects[i] = effect;
 			break;
 		}
 	}
-
 	return effect;
 }
 
