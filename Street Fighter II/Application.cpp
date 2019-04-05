@@ -12,6 +12,7 @@
 #include "ModuleAudio.h"
 #include "ModuleParticles.h"
 #include "ModulePlayer2.h"
+#include "ModuleCollision.h"
 
 Application::Application()
 {
@@ -23,12 +24,12 @@ Application::Application()
 	modules[5] = congrats_screen = new ModuleCongratsScreen();
 	modules[6] = scene_honda = new ModuleSceneHonda();
 	modules[7] = scene_ken = new ModuleSceneKen();
-	
 	modules[8] = player = new ModulePlayer();	
 	modules[9] = player2 = new ModulePlayer2();
 	modules[10] = fade = new ModuleFadeToBlack();
 	modules[11] = welcome_page = new ModuleWelcomePage();
 	modules[12] = particle = new ModuleParticles();
+	modules[13] = collision = new ModuleCollision();
 	
 }	
 

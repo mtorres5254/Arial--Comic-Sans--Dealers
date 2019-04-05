@@ -31,13 +31,6 @@ ModulePlayer::ModulePlayer()
 	forward.PushBack({432, 131, 50, 89});
 	forward.speed = 0.1f;
 
-	//punch animation
-	punch.PushBack({ 19,272,64,91 });
-	punch.PushBack({ 108,272,91,91 });
-	punch.PushBack({ 19,272,64,91 });
-	punch.loop = true;
-	punch.speed = 0.05f;
-
 	// walk backward animation
 	backward.PushBack({ 542,127,61,91 });
 	backward.PushBack({ 628,127,60,91 });
@@ -46,6 +39,22 @@ ModulePlayer::ModulePlayer()
 	backward.PushBack({ 883,127,57,91 });
 	backward.PushBack({ 974,127,57,91 });
 	backward.speed = 0.05f;
+
+	//punch animation
+	punch.PushBack({ 19,272,64,91 });
+	punch.PushBack({ 108,272,91,91 });
+	punch.PushBack({ 19,272,64,91 });
+	punch.speed = 0.2f;
+
+	//hadouken animation
+	hadouken.PushBack({ 34,1545,70,90 });
+	hadouken.PushBack({ 135,1551,85,84 });
+	hadouken.PushBack({ 244,1552,90,83 });
+	hadouken.PushBack({ 357,1557,106,78 });
+	hadouken.speed = 0.085;
+
+
+
 }
 
 ModulePlayer::~ModulePlayer()
@@ -70,38 +79,55 @@ update_status ModulePlayer::Update()
 
 	int speed = 1;
 
+	moving = false;
+
 	if(App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT)
 	{
 		current_animation = &forward;
 		position.x += speed;
+		moving = true;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT)
 	{
 		current_animation = &backward;
 		position.x -= speed;
+		moving = true;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_P] == KEY_STATE::KEY_DOWN)
+	if (App->input->keyboard[SDL_SCANCODE_P] == KEY_STATE::KEY_DOWN && moving == false)
 	{
 		current_animation = &punch;
 		PunchCount = 1;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN)
+	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN && moving == false)
 	{
-		App->particle->AddParticle(App->particle->hadouken, position.x + 10, position.y-100);	
-		App->audio->PlayChunk(App->particle->hadouken.sound, 0);
-		
+		current_animation = &hadouken;
+		HadoukenCount = 1;
 	}
-
 
 	//Punch
 
-	if (PunchCount < 60 && PunchCount != 0) {
+	if (PunchCount < 15 && PunchCount != 0) {
 		current_animation = &punch;
 		PunchCount++;
 	}
-	if (PunchCount == 60) {
+	if (PunchCount == 15) {
 		current_animation = &punch;
+		punch.current_frame = 0;
 		PunchCount = 0;
+	}
+
+	//Hadouken
+
+	if (HadoukenCount < 55 && HadoukenCount != 0) {
+		current_animation = &hadouken;
+		HadoukenCount++;
+	}
+	if (HadoukenCount == 55) {
+		current_animation = &hadouken;
+		App->particle->AddParticle(App->particle->hadouken, position.x + 55, position.y - 80);
+		App->audio->PlayChunk(App->particle->hadouken.sound, 0);
+		hadouken.current_frame = 0;
+		HadoukenCount = 0;
 	}
 
 	// Draw everything --------------------------------------

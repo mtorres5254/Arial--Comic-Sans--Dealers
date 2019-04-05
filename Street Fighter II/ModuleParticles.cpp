@@ -77,7 +77,6 @@ update_status ModuleParticles::Update()
 			{
 				p->fx_played = true;
 				// Play particle fx here
-			
 			}
 		}
 	}
