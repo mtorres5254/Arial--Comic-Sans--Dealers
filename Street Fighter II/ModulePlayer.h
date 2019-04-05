@@ -25,6 +25,7 @@ public:
 	Animation backward;
 	Animation punch;
 	iPoint position;
+	int PunchCount = 0;
 	
 
 };

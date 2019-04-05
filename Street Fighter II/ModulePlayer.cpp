@@ -34,8 +34,8 @@ ModulePlayer::ModulePlayer()
 	//punch animation
 	punch.PushBack({ 19,272,64,91 });
 	punch.PushBack({ 108,272,91,91 });
-	//punch.PushBack({ 19,272,64,91 });
-	punch.loop = false;
+	punch.PushBack({ 19,272,64,91 });
+	punch.loop = true;
 	punch.speed = 0.05f;
 
 	// walk backward animation
@@ -83,12 +83,25 @@ update_status ModulePlayer::Update()
 	if (App->input->keyboard[SDL_SCANCODE_P] == KEY_STATE::KEY_DOWN)
 	{
 		current_animation = &punch;
+		PunchCount = 1;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN)
 	{
 		App->particle->AddParticle(App->particle->hadouken, position.x + 10, position.y-100);	
 		App->audio->PlayChunk(App->particle->hadouken.sound, 0);
 		
+	}
+
+
+	//Punch
+
+	if (PunchCount < 60 && PunchCount != 0) {
+		current_animation = &punch;
+		PunchCount++;
+	}
+	if (PunchCount == 60) {
+		current_animation = &punch;
+		PunchCount = 0;
 	}
 
 	// Draw everything --------------------------------------
