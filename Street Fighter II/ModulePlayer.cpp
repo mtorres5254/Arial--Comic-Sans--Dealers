@@ -81,28 +81,37 @@ update_status ModulePlayer::Update()
 
 	moving = false;
 
-	if(App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT)
+	//Punch
+
+	if (App->input->keyboard[SDL_SCANCODE_P] == KEY_STATE::KEY_DOWN)
+	{
+		//current_animation = &punch;
+		PunchCount = 1;
+	}
+
+	//Hadouken
+
+	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN)
+	{
+		current_animation = &hadouken;
+		HadoukenCount = 1;
+	}
+
+	// Movement
+	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && (PunchCount == 0 && HadoukenCount == 0))
 	{
 		current_animation = &forward;
 		position.x += speed;
 		moving = true;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT)
+	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && (PunchCount == 0 && HadoukenCount==0))
 	{
 		current_animation = &backward;
 		position.x -= speed;
 		moving = true;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_P] == KEY_STATE::KEY_DOWN && moving == false)
-	{
-		current_animation = &punch;
-		PunchCount = 1;
-	}
-	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN && moving == false)
-	{
-		current_animation = &hadouken;
-		HadoukenCount = 1;
-	}
+	
+	
 
 	//Punch
 
