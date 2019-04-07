@@ -26,7 +26,9 @@ public:
 	Animation punch;
 	iPoint position;
 	bool PunchFinish = true;
+	
 
+	Collider* colliderplayer2;
 
 };
 

@@ -6,6 +6,9 @@
 #include "ModulePlayer.h"
 #include "ModuleParticles.h"
 #include "ModuleAudio.h"
+#include "ModuleCollision.h"
+#include "ModulePlayer2.h"
+
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
@@ -67,6 +70,11 @@ bool ModulePlayer::Start()
 	bool ret = true;
 	graphics = App->textures->Load("Assets/ryu.png"); // arcade version
 	position.x = 100; //Returns to its original position
+	
+	//Add a collider to the player
+	colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER);
+	
+
 	return ret;
 }
 
@@ -93,6 +101,8 @@ update_status ModulePlayer::Update()
 
 	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN)
 	{
+		
+		
 		current_animation = &hadouken;
 		HadoukenCount = 1;
 	}
@@ -128,12 +138,13 @@ update_status ModulePlayer::Update()
 	//Hadouken
 
 	if (HadoukenCount < 55 && HadoukenCount != 0) {
+		
 		current_animation = &hadouken;
 		HadoukenCount++;
 	}
 	if (HadoukenCount == 55) {
 		current_animation = &hadouken;
-		App->particle->AddParticle(App->particle->hadouken, position.x + 55, position.y - 80);
+		App->particle->AddParticle(App->particle->hadouken, position.x + 55, position.y - 80, COLLIDER_PLAYER_SHOT);
 		App->audio->PlayChunk(App->particle->hadouken.sound, 0);
 		hadouken.current_frame = 0;
 		HadoukenCount = 0;
@@ -142,7 +153,16 @@ update_status ModulePlayer::Update()
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
 
+	//Update collider position to player position
+
+	colliderplayer->SetPos(position.x, position.y);
+
+	OnCollision(App->particle->hadouken.collider, App->player2->colliderplayer2);
+
 	App->render->Blit(graphics, position.x, position.y - r.h, &r);
+
+	
+	
 	
 	return UPDATE_CONTINUE;
 }

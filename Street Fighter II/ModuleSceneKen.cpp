@@ -65,7 +65,7 @@ bool ModuleSceneKen::Start()
 	App->audio->PlayMusic(music, 5000);
 	App->player->Enable();
 	App->player2->Enable();
-	App->render->camera.x = App->render->camera.y = 0;
+	
 
 	return true;
 }

@@ -56,6 +56,10 @@ bool ModulePlayer2::Start()
 	bool ret = true;
 	graphics = App->textures->Load("Assets/ryu.png"); // arcade version
 	position.x = 300; //Returns to its original position
+
+	//Add a collider to the player
+	colliderplayer2 = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER);
+
 	return ret;
 }
 
@@ -71,6 +75,10 @@ update_status ModulePlayer2::Update()
 
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
+
+	//Update collider position to player position
+
+	colliderplayer2->SetPos(position.x, position.y);
 
 	App->render->Blit(graphics, position.x, position.y - r.h, &r);
 

@@ -6,6 +6,7 @@
 #include "ModuleParticles.h"
 #include "ModulePlayer.h"
 #include "ModuleAudio.h"
+#include "ModuleCollision.h"
 
 #include "SDL/include/SDL_timer.h"
 
@@ -27,10 +28,10 @@ bool ModuleParticles::Start()
 	//Hadouken particle
 
 	hadouken.anim.PushBack({ 493,  1563,  43 , 32 });
-	hadouken.anim.PushBack({ 550,1565, 56 ,28 });
+	hadouken.anim.PushBack({ 550, 1565, 56 ,28 });
 	hadouken.life = 3000;
 	hadouken.anim.loop = true;
-	hadouken.anim.speed = 0.05f;
+	hadouken.anim.speed = 0.15f;
 	hadouken.speed.create(3.5, 0);
 	hadouken.sound = App->audio->LoadChunk("Assets/Hadouken.wav");
 	
@@ -60,7 +61,7 @@ update_status ModuleParticles::Update()
 {
 	for(uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
-		Particle* p = active[i];
+		Particle* p = active[i];		
 
 		if(p == nullptr)
 			continue;
@@ -79,19 +80,43 @@ update_status ModuleParticles::Update()
 				// Play particle fx here
 			}
 		}
+	
 	}
 
 	return UPDATE_CONTINUE;
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Uint32 delay)
+void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay)
 {
-	Particle* p = new Particle(particle);
-	p->born = SDL_GetTicks() + delay;
-	p->position.x = x;
-	p->position.y = y;
+	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
+	{
+		if (active[i] == nullptr)
+		{
+			Particle* p = new Particle(particle);
+			p->born = SDL_GetTicks() + delay;
+			p->position.x = x;
+			p->position.y = y;
+			if (collider_type != COLLIDER_NONE)
+				p->collider = App->collision->AddCollider(p->anim.GetCurrentFrame(), collider_type, this);
+			active[i] = p;
+			break;
+		}
+	}
+}
 
-	active[last_particle++] = p;
+// TODO 5: Make so every time a particle hits a wall it triggers an explosion particle
+void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
+{
+	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
+	{
+		// Always destroy particles that collide
+		if (active[i] != nullptr && active[i]->collider == c1)
+		{
+			delete active[i];
+			active[i] = nullptr;
+			break;
+		}
+	}
 }
 
 // -------------------------------------------------------------
@@ -103,26 +128,36 @@ Particle::Particle()
 	speed.SetToZero();
 }
 
-Particle::Particle(const Particle& p) : 
-anim(p.anim), position(p.position), speed(p.speed),
-fx(p.fx), born(p.born), life(p.life)
+Particle::Particle(const Particle& p) :
+	anim(p.anim), position(p.position), speed(p.speed),
+	fx(p.fx), born(p.born), life(p.life)
 {}
+
+Particle::~Particle()
+{
+	if (collider != nullptr)
+		collider->to_delete = true;
+}
 
 bool Particle::Update()
 {
 	bool ret = true;
 
-	if(life > 0)
+	if (life > 0)
 	{
-		if((SDL_GetTicks() - born) > life)
+		if ((SDL_GetTicks() - born) > life)
 			ret = false;
 	}
 	else
-		if(anim.Finished())
+		if (anim.Finished())
 			ret = false;
 
 	position.x += speed.x;
 	position.y += speed.y;
 
+	if (collider != nullptr)
+		collider->SetPos(position.x, position.y);
+
 	return ret;
 }
+

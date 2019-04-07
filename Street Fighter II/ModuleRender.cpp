@@ -55,9 +55,9 @@ update_status ModuleRender::Update()
 {
 	int speed = 3;
 
-	if(App->input->keyboard[SDL_SCANCODE_UP] == KEY_STATE::KEY_REPEAT
-	&& App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false)
-		camera.y += speed;
+	if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_STATE::KEY_REPEAT
+		&& App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false)
+		camera.y += speed;		
 
 	if(App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_STATE::KEY_REPEAT
 		&& App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false)

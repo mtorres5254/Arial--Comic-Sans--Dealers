@@ -30,7 +30,7 @@ public:
 	int HadoukenCount = 0;
 	bool moving = false;
 	
-
+	Collider* colliderplayer;	
 };
 
 #endif
