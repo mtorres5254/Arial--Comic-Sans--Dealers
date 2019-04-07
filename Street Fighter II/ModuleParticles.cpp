@@ -30,9 +30,8 @@ bool ModuleParticles::Start()
 	hadouken.anim.PushBack({ 493,  1563,  43 , 32 });
 	hadouken.anim.PushBack({ 550, 1565, 56 ,28 });
 	hadouken.life = 3000;
-	hadouken.anim.loop = true;
 	hadouken.anim.speed = 0.15f;
-	hadouken.speed.create(3.5, 0);
+	hadouken.speed.x = 4;
 	hadouken.sound = App->audio->LoadChunk("Assets/Hadouken.wav");
 	
 	return true;
@@ -73,11 +72,11 @@ update_status ModuleParticles::Update()
 		}
 		else if(SDL_GetTicks() >= p->born)
 		{
-			App->render->Blit(graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()),0.05f);
+			App->render->Blit(graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()));
 			if(p->fx_played == false)
 			{
 				p->fx_played = true;
-				// Play particle fx here
+				
 			}
 		}
 	

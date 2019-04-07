@@ -29,6 +29,8 @@ bool ModuleWelcomePage::Start()
 	graphics = App->textures->Load("Assets/TitleScreen.png");
 	music = App->audio->LoadMusic("Assets/start_music.ogg");
 	App->audio->PlayMusic(music, 3000);
+
+	App->render->camera.x = App->render->camera.y = 0;
 	   
 	return true;
 }
