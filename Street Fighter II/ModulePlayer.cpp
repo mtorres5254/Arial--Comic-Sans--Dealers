@@ -154,11 +154,8 @@ update_status ModulePlayer::Update()
 	SDL_Rect r = current_animation->GetCurrentFrame();
 
 	//Update collider position to player position
-
 	colliderplayer->SetPos(position.x, position.y);
-
 	OnCollision(App->particle->hadouken.collider, App->player2->colliderplayer2);
-
 	App->render->Blit(graphics, position.x, position.y - r.h, &r);
 
 	
