@@ -79,6 +79,7 @@ update_status ModulePlayer2::Update()
 	//Update collider position to player position
 
 	colliderplayer2->SetPos(position.x, position.y);
+	OnCollision(colliderplayer2, App->particle->hadouken.collider);
 
 	App->render->Blit(graphics, position.x, position.y - r.h, &r);
 

@@ -49,6 +49,14 @@ ModulePlayer::ModulePlayer()
 	punch.PushBack({ 19,272,64,91 });
 	punch.speed = 0.2f;
 
+	//kick animation
+
+	kick.PushBack({ 607,269,59,94 });
+	kick.PushBack({ 689,267,66,92 });
+	kick.PushBack({ 777,265,114,94 });
+	kick.PushBack({ 689,267,66,92 });
+	kick.speed = 0.2f;
+
 	//hadouken animation
 	hadouken.PushBack({ 34,1545,70,90 });
 	hadouken.PushBack({ 135,1551,85,84 });
@@ -106,44 +114,57 @@ update_status ModulePlayer::Update()
 		PunchCount = 1;
 	}
 
-	//Hadouken
-
-	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN)
-	{
-		
-		
-		current_animation = &hadouken;
-		HadoukenCount = 1;
-	}
-
-	// Movement
-	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && (PunchCount == 0 && HadoukenCount == 0))
-	{
-		current_animation = &forward;
-		position.x += speed;
-		moving = true;
-	}
-	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && (PunchCount == 0 && HadoukenCount==0))
-	{
-		current_animation = &backward;
-		position.x -= speed;
-		moving = true;
-	}
-	
-	
-
-	//Punch
-
 	if (PunchCount < 15 && PunchCount != 0) {
 		current_animation = &punch;
 		PunchCount++;
 	}
+
 	if (PunchCount == 15) {
 		current_animation = &punch;
 		punch.current_frame = 0;
 		PunchCount = 0;
 	}
 
+	//Kick
+
+	if (App->input->keyboard[SDL_SCANCODE_K] == KEY_STATE::KEY_DOWN)
+	{
+		KickCount = 1;
+	}
+
+	if (KickCount < 25 && KickCount != 0) {
+		current_animation = &kick;
+		KickCount++;
+	}
+
+	if (KickCount == 25) {
+		current_animation = &kick;
+		kick.current_frame = 0;
+		KickCount = 0;
+	}
+
+	//Hadouken
+
+	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN){	
+		
+		current_animation = &hadouken;
+		HadoukenCount = 1;
+	}
+
+	// Movement
+	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && (PunchCount == 0 && HadoukenCount == 0 && KickCount==0))
+	{
+		current_animation = &forward;
+		position.x += speed;
+		moving = true;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && (PunchCount == 0 && HadoukenCount==0 && KickCount == 0 ))
+	{
+		current_animation = &backward;
+		position.x -= speed;
+		moving = true;
+	}
+	
 	//Hadouken
 
 	if (HadoukenCount < 55 && HadoukenCount != 0) {
@@ -164,7 +185,7 @@ update_status ModulePlayer::Update()
 
 	//Update collider position to player position
 	colliderplayer->SetPos(position.x, position.y);
-	OnCollision(App->particle->hadouken.collider, App->player2->colliderplayer2);
+	
 	App->render->Blit(graphics, position.x, position.y - r.h, &r);
 
 	

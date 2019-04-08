@@ -26,9 +26,11 @@ public:
 	Animation forward;
 	Animation backward;
 	Animation punch;
+	Animation kick;
 	Animation hadouken;
 	iPoint position;
 	int PunchCount = 0;
+	int KickCount = 0;
 	int HadoukenCount = 0;
 	bool moving = false;
 	
