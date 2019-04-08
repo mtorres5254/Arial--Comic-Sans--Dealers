@@ -9,7 +9,7 @@
 #include "Module.h"
 #include "ModuleAudio.h"
 #include "ModulePlayer2.h"
-
+#include "ModuleCollision.h"
 #include "ModuleSceneKen.h"
 #include "ModuleCongratsScreen.h"
 // Reference at https://youtu.be/6OlenbCC4WI?t=382
@@ -48,6 +48,7 @@ bool ModuleSceneHonda::Start()
 	App->audio->PlayMusic(music, 3000);
 	App->player2->Enable();
 	App->player->Enable();
+	App->collision->Enable();
 	return true;
 }
 
@@ -62,6 +63,7 @@ bool ModuleSceneHonda::CleanUp()
 	App->scene_honda->Disable();
 	App->player->Disable();
 	App->player2->Disable();
+	App->collision->Disable();
 
 	return true;
 }
@@ -77,7 +79,6 @@ update_status ModuleSceneHonda::Update()
 	App->render->Blit(graphics, 305, 136, &(water.GetCurrentFrame())); // water animation
 	App->render->Blit(graphics, 0, -16, &roof, 0.75f);
 
-	// TODO 2: make so pressing SPACE the KEN stage is loaded
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
 

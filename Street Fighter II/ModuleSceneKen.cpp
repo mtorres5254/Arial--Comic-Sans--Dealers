@@ -10,6 +10,7 @@
 #include "ModuleSceneHonda.h"
 #include "ModuleAudio.h"
 #include "ModulePlayer2.h"
+#include "ModuleCollision.h"
 
 
 
@@ -65,6 +66,7 @@ bool ModuleSceneKen::Start()
 	App->audio->PlayMusic(music, 5000);
 	App->player->Enable();
 	App->player2->Enable();
+	App->collision->Enable();
 	
 	
 	return true;
@@ -80,6 +82,7 @@ bool ModuleSceneKen::CleanUp()
 	App->scene_ken->Disable();
 	App->player->Disable();
 	App->player2->Disable();
+	App->collision->Disable();
 
 	return true;
 }

@@ -50,6 +50,7 @@ bool Application::Init()
 	scene_honda->Disable();
 	scene_ken->Disable();
 	congrats_screen->Disable();
+	collision->Disable();
 
 	for(int i = 0; i < NUM_MODULES && ret == true; ++i)
 		ret = modules[i]->Init();

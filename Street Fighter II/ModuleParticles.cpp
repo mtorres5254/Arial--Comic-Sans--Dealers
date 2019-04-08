@@ -33,6 +33,12 @@ bool ModuleParticles::Start()
 	hadouken.anim.speed = 0.15f;
 	hadouken.speed.x = 4;
 	hadouken.sound = App->audio->LoadChunk("Assets/Hadouken.wav");
+
+	hadoukenFinish.anim.PushBack({});
+	hadoukenFinish.life = 200;
+	hadoukenFinish.anim.speed = 0.15f;
+	hadoukenFinish.speed.x = 0;
+	hadoukenFinish.anim.loop = false;
 	
 	return true;
 }
@@ -77,6 +83,7 @@ update_status ModuleParticles::Update()
 			{
 				p->fx_played = true;
 				
+				//
 			}
 		}
 	
@@ -103,7 +110,6 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLID
 	}
 }
 
-// TODO 5: Make so every time a particle hits a wall it triggers an explosion particle
 void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
