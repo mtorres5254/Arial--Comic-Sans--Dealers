@@ -81,6 +81,7 @@ bool ModulePlayer::Start()
 	
 	//Add a collider to the player
 	colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER);
+	colliderplayer->callback = this;
 	
 
 	return ret;
@@ -105,6 +106,8 @@ update_status ModulePlayer::Update()
 	int speed = 1;
 
 	moving = false;
+	movef = false;
+	moveb = false;
 
 	//Punch
 
@@ -154,11 +157,19 @@ update_status ModulePlayer::Update()
 	// Movement
 	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && (PunchCount == 0 && HadoukenCount == 0 && KickCount==0))
 	{
+		movef = true;
+	}
+	if(movef == true)
+	{
 		current_animation = &forward;
 		position.x += speed;
 		moving = true;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && (PunchCount == 0 && HadoukenCount==0 && KickCount == 0 ))
+	{
+		moveb = true;
+	}
+	if (moveb == true)
 	{
 		current_animation = &backward;
 		position.x -= speed;
@@ -192,4 +203,10 @@ update_status ModulePlayer::Update()
 	
 	
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
+		moveb = false;
+		movef = false;
+		LOG("colision detected");
 }

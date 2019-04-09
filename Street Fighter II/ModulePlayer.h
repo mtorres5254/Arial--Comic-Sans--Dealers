@@ -17,7 +17,7 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
-
+	void OnCollision(Collider*, Collider*);
 
 public:
 
@@ -33,6 +33,8 @@ public:
 	int KickCount = 0;
 	int HadoukenCount = 0;
 	bool moving = false;
+	bool movef = false;
+	bool moveb = false;
 	
 	Collider* colliderplayer;	
 };

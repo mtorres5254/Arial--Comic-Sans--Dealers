@@ -28,7 +28,7 @@ ModuleSceneHonda::ModuleSceneHonda()
 	// Background / sky
 	background = {120, 128, 671, 199};
 
-	// flag animation
+	// water animation
 	water.PushBack({8, 447, 283, 9});
 	water.PushBack({296, 447, 283, 12});
 	water.PushBack({588, 447, 283, 18});
