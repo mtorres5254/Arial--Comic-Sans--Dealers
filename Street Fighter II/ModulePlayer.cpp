@@ -10,6 +10,7 @@
 #include "ModulePlayer2.h"
 
 
+
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModulePlayer::ModulePlayer()
@@ -101,10 +102,11 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	Animation* current_animation = &idle;
-
+	
+	
+	
 	int speed = 1;
-
+	/*
 	moving = false;
 	movef = false;
 	moveb = false;
@@ -189,24 +191,188 @@ update_status ModulePlayer::Update()
 		App->audio->PlayChunk(App->particle->hadouken.sound, 0);
 		hadouken.current_frame = 0;
 		HadoukenCount = 0;
-	}
+	}*/
 
-	// Draw everything --------------------------------------
-	SDL_Rect r = current_animation->GetCurrentFrame();
+	Animation* current_animation = &idle;
+	p2Qeue<ryu_inputs> inputs;
+	ryu_states current_state = ST_UNKNOWN;
+	
+	while (external_input(inputs))
+	{
+		
+		internal_input(inputs);
 
-	//Update collider position to player position
-	colliderplayer->SetPos(position.x, position.y);
-	
-	App->render->Blit(graphics, position.x, position.y - r.h, &r);
+		ryu_states state = process_fsm(inputs);
+		
+		if (state != current_state)
+		{
+			switch (state)
+			{
+			case ST_IDLE:
+				current_animation = &idle;
+				LOG("IDLE\n");
+				break;
+			case ST_WALK_FORWARD:
+				current_animation = &forward;
+				position.x += speed;
+				LOG("FORWARD >>>\n");
+				break;
+			case ST_WALK_BACKWARD:
+				current_animation = &backward;
+				position.x -= speed;
+				LOG("BACKWARD <<<\n");
+				break;
+			case ST_JUMP_NEUTRAL:
+				LOG("JUMPING NEUTRAL ^^^^\n");
+				break;
+			case ST_JUMP_FORWARD:
+				LOG("JUMPING FORWARD ^^>>\n");
+				break;
+			case ST_JUMP_BACKWARD:
+				LOG("JUMPING BACKWARD ^^<<\n");
+				break;
+			case ST_CROUCH:
+				LOG("CROUCHING ****\n");
+				break;
+			case ST_PUNCH_CROUCH:
+				LOG("PUNCH CROUCHING **++\n");
+				break;
+			case ST_PUNCH_STANDING:
+				current_animation = &punch;
+				LOG("PUNCH STANDING ++++\n");
+				break;
+			case ST_PUNCH_NEUTRAL_JUMP:
+				LOG("PUNCH JUMP NEUTRAL ^^++\n");
+				break;
+			case ST_PUNCH_FORWARD_JUMP:
+				LOG("PUNCH JUMP FORWARD ^>>+\n");
+				break;
+			case ST_PUNCH_BACKWARD_JUMP:
+				LOG("PUNCH JUMP BACKWARD ^<<+\n");
+				break;
+			}
+		}
 
+		current_state = state;
+
+		// Draw everything --------------------------------------
+
+		SDL_Rect r = current_animation->GetCurrentFrame();
+		App->render->Blit(graphics, position.x, position.y - r.h, &r);
+
+		//Update collider position to player position
+		colliderplayer->SetPos(position.x, position.y);
+
+		return UPDATE_CONTINUE;
+	}	
 	
 	
 	
-	return UPDATE_CONTINUE;
 }
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
 		moveb = false;
 		movef = false;
 		LOG("colision detected");
+}
+
+bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
+{
+	static bool left = false;
+	static bool right = false;
+	static bool down = false;
+	static bool up = false;
+
+	SDL_Event event;
+	
+	while (SDL_PollEvent(&event) != 0)
+	{
+		if (event.type == SDL_KEYUP && event.key.repeat == 0)
+		{
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_p:
+				return false;
+				break;
+			case SDLK_s:
+				inputs.Push(IN_CROUCH_UP);
+				down = false;
+				break;
+			case SDLK_w:
+				up = false;
+				break;
+			case SDLK_a:
+				inputs.Push(IN_LEFT_UP);
+				left = false;
+				break;
+			case SDLK_d:
+				inputs.Push(IN_RIGHT_UP);
+				right = false;
+				break;
+			}
+		}
+		if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
+		{
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_p:
+				inputs.Push(IN_X);
+				break;
+			case SDLK_w:
+				up = true;
+				break;
+			case SDLK_s:
+				down = true;
+				break;
+			case SDLK_a:
+				left = true;
+				break;
+			case SDLK_d:
+				right = true;
+				break;
+			}
+		}
+	}
+
+	if (left && right)
+		inputs.Push(IN_LEFT_AND_RIGHT);
+	{
+		if (left)
+			inputs.Push(IN_LEFT_DOWN);
+		if (right)
+			inputs.Push(IN_RIGHT_DOWN);
+	}
+
+	if (up && down)
+		inputs.Push(IN_JUMP_AND_CROUCH);
+	else
+	{
+		if (down)
+			inputs.Push(IN_CROUCH_DOWN);
+		if (up)
+			inputs.Push(IN_JUMP);
+	}
+
+	return true;
+}
+
+void ModulePlayer::internal_input(p2Qeue<ryu_inputs>& inputs)
+{
+	if (jump_timer > 0)
+	{
+		if (SDL_GetTicks() - jump_timer > JUMP_TIME)
+		{
+			inputs.Push(IN_JUMP_FINISH);
+			jump_timer = 0;
+		}
+	}
+
+	if (punch_timer > 0)
+	{
+		if (SDL_GetTicks() - punch_timer > PUNCH_TIME)
+		{
+			inputs.Push(IN_PUNCH_FINISH);
+			punch_timer = 0;
+		}
+	}
 }
