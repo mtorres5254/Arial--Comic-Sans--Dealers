@@ -85,6 +85,7 @@ ModulePlayer::ModulePlayer()
 	//crouch punch
 	Crouch_punch.PushBack({ 24,1344,68,55 });
 	Crouch_punch.PushBack({ 118,1344,94,55 });
+	Crouch_punch.speed = 0.2f;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -254,7 +255,7 @@ update_status ModulePlayer::Update()
 				current_animation = &crouch;
 				break;
 			case ST_PUNCH_CROUCH:
-				
+				current_animation = &Crouch_punch;
 				break;
 			case ST_PUNCH_STANDING:
 				current_animation = &punch;

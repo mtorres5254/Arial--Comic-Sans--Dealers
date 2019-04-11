@@ -216,8 +216,6 @@ public:
 			{
 				switch (last_input)
 				{
-					// TODO: Add Links
-
 				case IN_CROUCH_UP: state = ST_IDLE; break;
 				case IN_JUMP_AND_CROUCH: state = ST_IDLE; break;
 				case IN_X: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
@@ -226,15 +224,11 @@ public:
 			break;
 			case ST_PUNCH_CROUCH:
 			{
-				if (IN_CROUCH_DOWN)
-				{
-
-				}
 				switch (last_input)
 				{
-					// TODO: Add Links
-				case IN_PUNCH_FINISH: state = ST_IDLE; break;
-				}
+				case IN_CROUCH_DOWN: state = ST_CROUCH; break;
+				case IN_X: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
+				}						
 			}
 			break;
 			}
