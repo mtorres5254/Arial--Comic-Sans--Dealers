@@ -37,6 +37,7 @@ public:
 	Animation hadouken;
 	Animation crouch;
 	Animation jump_neutral;
+	Animation Crouch_punch;
 	iPoint position;
 	/*int PunchCount = 0;
 	int KickCount = 0;
@@ -225,6 +226,10 @@ public:
 			break;
 			case ST_PUNCH_CROUCH:
 			{
+				if (IN_CROUCH_DOWN)
+				{
+
+				}
 				switch (last_input)
 				{
 					// TODO: Add Links

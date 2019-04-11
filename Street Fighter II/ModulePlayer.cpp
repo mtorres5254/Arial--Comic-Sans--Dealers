@@ -82,8 +82,9 @@ ModulePlayer::ModulePlayer()
 	jump_neutral.PushBack({ 464,819,55,109 });
 	jump_neutral.speed = 0.1f;
 	
-	
-
+	//crouch punch
+	Crouch_punch.PushBack({ 24,1344,68,55 });
+	Crouch_punch.PushBack({ 118,1344,94,55 });
 }
 
 ModulePlayer::~ModulePlayer()
@@ -283,8 +284,6 @@ update_status ModulePlayer::Update()
 
 		return UPDATE_CONTINUE;
 	}	
-	
-	
 	
 }
 
