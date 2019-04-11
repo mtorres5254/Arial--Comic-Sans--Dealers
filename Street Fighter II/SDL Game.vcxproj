@@ -90,7 +90,6 @@
     <ClInclude Include="ModuleWelcomePage.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="p2Point.h" />
-    <ClInclude Include="p2Qeue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />

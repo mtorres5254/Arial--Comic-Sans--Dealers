@@ -54,7 +54,7 @@ bool ModulePlayer2::Start()
 {
 	LOG("Loading player textures");
 	bool ret = true;
-	graphics = App->textures->Load("Assets/Images/ryu.png"); // arcade version
+	graphics = App->textures->Load("Assets/ryu.png"); // arcade version
 	position.x = 300; //Returns to its original position
 
 	//Add a collider to the player
