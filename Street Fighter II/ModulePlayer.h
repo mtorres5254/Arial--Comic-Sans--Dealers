@@ -226,8 +226,7 @@ public:
 			{
 				switch (last_input)
 				{
-				case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-				case IN_X: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
+				case IN_PUNCH_FINISH: state = ST_CROUCH; break;
 				}						
 			}
 			break;
