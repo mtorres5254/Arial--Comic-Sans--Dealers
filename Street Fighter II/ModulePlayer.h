@@ -10,8 +10,8 @@
 #include "p2Qeue.h"
 #include "SDL\include\SDL.h"
 
-#define JUMP_TIME 3000
-#define PUNCH_TIME 1000
+#define JUMP_TIME 1500
+#define PUNCH_TIME 150
 
 struct SDL_Texture;
 
@@ -35,6 +35,8 @@ public:
 	Animation punch;
 	Animation kick;
 	Animation hadouken;
+	Animation crouch;
+	Animation jump_neutral;
 	iPoint position;
 	/*int PunchCount = 0;
 	int KickCount = 0;

@@ -65,7 +65,24 @@ ModulePlayer::ModulePlayer()
 	hadouken.PushBack({ 357,1557,106,78 });
 	hadouken.speed = 0.085;
 
+	//crouch animation
+	crouch.PushBack({ 32,1212,53,83 });
+	crouch.PushBack({115 ,1227,57,69 });
+	crouch.PushBack({ 197,1235, 61,61 });
+	crouch.speed = 0.1f;
+	crouch.loop = false;
 
+	//jump animation
+	jump_neutral.PushBack({ 17,847,55,85 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 177,805,49,89 });
+	jump_neutral.PushBack({ 251,798,54,77 });
+	jump_neutral.PushBack({ 327,813,48,70 });
+	jump_neutral.PushBack({ 397,810,48,89 });
+	jump_neutral.PushBack({ 464,819,55,109 });
+	jump_neutral.speed = 0.1f;
+	
+	
 
 }
 
@@ -104,8 +121,6 @@ update_status ModulePlayer::Update()
 {
 	
 	
-	
-	int speed = 1;
 	/*
 	moving = false;
 	movef = false;
@@ -197,6 +212,8 @@ update_status ModulePlayer::Update()
 	p2Qeue<ryu_inputs> inputs;
 	ryu_states current_state = ST_UNKNOWN;
 	
+	int speed = 1;
+
 	while (external_input(inputs))
 	{
 		
@@ -210,45 +227,46 @@ update_status ModulePlayer::Update()
 			{
 			case ST_IDLE:
 				current_animation = &idle;
-				LOG("IDLE\n");
+			
 				break;
 			case ST_WALK_FORWARD:
 				current_animation = &forward;
 				position.x += speed;
-				LOG("FORWARD >>>\n");
+			
 				break;
 			case ST_WALK_BACKWARD:
 				current_animation = &backward;
 				position.x -= speed;
-				LOG("BACKWARD <<<\n");
+				
 				break;
 			case ST_JUMP_NEUTRAL:
-				LOG("JUMPING NEUTRAL ^^^^\n");
+				current_animation = &jump_neutral;				
+				
 				break;
 			case ST_JUMP_FORWARD:
-				LOG("JUMPING FORWARD ^^>>\n");
+			
 				break;
 			case ST_JUMP_BACKWARD:
-				LOG("JUMPING BACKWARD ^^<<\n");
+				
 				break;
 			case ST_CROUCH:
-				LOG("CROUCHING ****\n");
+				current_animation = &crouch;
 				break;
 			case ST_PUNCH_CROUCH:
-				LOG("PUNCH CROUCHING **++\n");
+				
 				break;
 			case ST_PUNCH_STANDING:
 				current_animation = &punch;
-				LOG("PUNCH STANDING ++++\n");
+			
 				break;
 			case ST_PUNCH_NEUTRAL_JUMP:
-				LOG("PUNCH JUMP NEUTRAL ^^++\n");
+				
 				break;
 			case ST_PUNCH_FORWARD_JUMP:
-				LOG("PUNCH JUMP FORWARD ^>>+\n");
+				
 				break;
 			case ST_PUNCH_BACKWARD_JUMP:
-				LOG("PUNCH JUMP BACKWARD ^<<+\n");
+				
 				break;
 			}
 		}
