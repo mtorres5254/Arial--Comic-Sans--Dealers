@@ -26,8 +26,8 @@ bool ModuleCongratsScreen::Start()
 {
 	LOG("Loading CongratsScreen");
 
-	graphics = App->textures->Load("Assets/CongratsScreen.png");	
-	music = App->audio->LoadMusic("Assets/congrats.ogg");
+	graphics = App->textures->Load("Assets/Images/CongratsScreen.png");	
+	music = App->audio->LoadMusic("Assets/Audio/congrats.ogg");
 	App->audio->PlayMusic(music, 3000);
 
 	return true;

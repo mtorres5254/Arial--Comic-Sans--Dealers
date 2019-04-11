@@ -23,7 +23,7 @@ ModuleParticles::~ModuleParticles()
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
-	graphics = App->textures->Load("Assets/ryu.png");
+	graphics = App->textures->Load("Assets/Images/ryu.png");
 
 	//Hadouken particle
 
@@ -32,7 +32,7 @@ bool ModuleParticles::Start()
 	hadouken.life = 3000;
 	hadouken.anim.speed = 0.15f;
 	hadouken.speed.x = 4;
-	hadouken.sound = App->audio->LoadChunk("Assets/Hadouken.wav");
+	hadouken.sound = App->audio->LoadChunk("Assets/Sound/Hadouken.wav");
 
 	hadoukenFinish.anim.PushBack({});
 	hadoukenFinish.life = 200;

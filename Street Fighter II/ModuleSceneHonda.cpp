@@ -43,8 +43,8 @@ bool ModuleSceneHonda::Start()
 {
 	LOG("Loading background assets");
 	
-	graphics = App->textures->Load("Assets/honda_stage2.png");
-	music = App->audio->LoadMusic("Assets/honda.ogg");
+	graphics = App->textures->Load("Assets/Images/honda_stage2.png");
+	music = App->audio->LoadMusic("Assets/Sound/honda.ogg");
 	App->audio->PlayMusic(music, 3000);
 	App->player2->Enable();
 	App->player->Enable();

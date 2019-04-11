@@ -10,6 +10,7 @@
 #include "ModulePlayer2.h"
 
 
+
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModulePlayer::ModulePlayer()
@@ -64,8 +65,27 @@ ModulePlayer::ModulePlayer()
 	hadouken.PushBack({ 357,1557,106,78 });
 	hadouken.speed = 0.085;
 
+	//crouch animation
+	crouch.PushBack({ 32,1212,53,83 });
+	crouch.PushBack({115 ,1227,57,69 });
+	crouch.PushBack({ 197,1235, 61,61 });
+	crouch.speed = 0.1f;
+	crouch.loop = false;
 
-
+	//jump animation
+	jump_neutral.PushBack({ 17,847,55,85 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 177,805,49,89 });
+	jump_neutral.PushBack({ 251,798,54,77 });
+	jump_neutral.PushBack({ 327,813,48,70 });
+	jump_neutral.PushBack({ 397,810,48,89 });
+	jump_neutral.PushBack({ 464,819,55,109 });
+	jump_neutral.speed = 0.1f;
+	
+	//crouch punch
+	Crouch_punch.PushBack({ 24,1344,68,55 });
+	Crouch_punch.PushBack({ 118,1344,94,55 });
+	Crouch_punch.speed = 0.2f;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -76,7 +96,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player textures");
 	bool ret = true;
-	graphics = App->textures->Load("Assets/ryu.png"); // arcade version
+	graphics = App->textures->Load("Assets/Images/ryu.png"); // arcade version
 	position.x = 100; //Returns to its original position
 	
 	//Add a collider to the player
@@ -101,10 +121,9 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	Animation* current_animation = &idle;
-
-	int speed = 1;
-
+	
+	
+	/*
 	moving = false;
 	movef = false;
 	moveb = false;
@@ -189,24 +208,189 @@ update_status ModulePlayer::Update()
 		App->audio->PlayChunk(App->particle->hadouken.sound, 0);
 		hadouken.current_frame = 0;
 		HadoukenCount = 0;
-	}
+	}*/
 
-	// Draw everything --------------------------------------
-	SDL_Rect r = current_animation->GetCurrentFrame();
+	Animation* current_animation = &idle;
+	p2Qeue<ryu_inputs> inputs;
+	ryu_states current_state = ST_UNKNOWN;
+	
+	int speed = 1;
 
-	//Update collider position to player position
-	colliderplayer->SetPos(position.x, position.y);
-	
-	App->render->Blit(graphics, position.x, position.y - r.h, &r);
+	while (external_input(inputs))
+	{
+		
+		internal_input(inputs);
 
+		ryu_states state = process_fsm(inputs);
+		
+		if (state != current_state)
+		{
+			switch (state)
+			{
+			case ST_IDLE:
+				current_animation = &idle;
+			
+				break;
+			case ST_WALK_FORWARD:
+				current_animation = &forward;
+				position.x += speed;
+			
+				break;
+			case ST_WALK_BACKWARD:
+				current_animation = &backward;
+				position.x -= speed;
+				
+				break;
+			case ST_JUMP_NEUTRAL:
+				current_animation = &jump_neutral;				
+				
+				break;
+			case ST_JUMP_FORWARD:
+			
+				break;
+			case ST_JUMP_BACKWARD:
+				
+				break;
+			case ST_CROUCH:
+				current_animation = &crouch;
+				break;
+			case ST_PUNCH_CROUCH:
+				current_animation = &Crouch_punch;
+				break;
+			case ST_PUNCH_STANDING:
+				current_animation = &punch;
+			
+				break;
+			case ST_PUNCH_NEUTRAL_JUMP:
+				
+				break;
+			case ST_PUNCH_FORWARD_JUMP:
+				
+				break;
+			case ST_PUNCH_BACKWARD_JUMP:
+				
+				break;
+			}
+		}
+
+		current_state = state;
+
+		// Draw everything --------------------------------------
+
+		SDL_Rect r = current_animation->GetCurrentFrame();
+		App->render->Blit(graphics, position.x, position.y - r.h, &r);
+
+		//Update collider position to player position
+		colliderplayer->SetPos(position.x, position.y);
+
+		return UPDATE_CONTINUE;
+	}	
 	
-	
-	
-	return UPDATE_CONTINUE;
 }
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
 		moveb = false;
 		movef = false;
 		LOG("colision detected");
+}
+
+bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
+{
+	static bool left = false;
+	static bool right = false;
+	static bool down = false;
+	static bool up = false;
+
+	SDL_Event event;
+	
+	while (SDL_PollEvent(&event) != 0)
+	{
+		if (event.type == SDL_KEYUP && event.key.repeat == 0)
+		{
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_p:
+				return false;
+				break;
+			case SDLK_s:
+				inputs.Push(IN_CROUCH_UP);
+				down = false;
+				break;
+			case SDLK_w:
+				up = false;
+				break;
+			case SDLK_a:
+				inputs.Push(IN_LEFT_UP);
+				left = false;
+				break;
+			case SDLK_d:
+				inputs.Push(IN_RIGHT_UP);
+				right = false;
+				break;
+			}
+		}
+		if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
+		{
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_p:
+				inputs.Push(IN_X);
+				break;
+			case SDLK_w:
+				up = true;
+				break;
+			case SDLK_s:
+				down = true;
+				break;
+			case SDLK_a:
+				left = true;
+				break;
+			case SDLK_d:
+				right = true;
+				break;
+			}
+		}
+	}
+
+	if (left && right)
+		inputs.Push(IN_LEFT_AND_RIGHT);
+	{
+		if (left)
+			inputs.Push(IN_LEFT_DOWN);
+		if (right)
+			inputs.Push(IN_RIGHT_DOWN);
+	}
+
+	if (up && down)
+		inputs.Push(IN_JUMP_AND_CROUCH);
+	else
+	{
+		if (down)
+			inputs.Push(IN_CROUCH_DOWN);
+		if (up)
+			inputs.Push(IN_JUMP);
+	}
+
+	return true;
+}
+
+void ModulePlayer::internal_input(p2Qeue<ryu_inputs>& inputs)
+{
+	if (jump_timer > 0)
+	{
+		if (SDL_GetTicks() - jump_timer > JUMP_TIME)
+		{
+			inputs.Push(IN_JUMP_FINISH);
+			jump_timer = 0;
+		}
+	}
+
+	if (punch_timer > 0)
+	{
+		if (SDL_GetTicks() - punch_timer > PUNCH_TIME)
+		{
+			inputs.Push(IN_PUNCH_FINISH);
+			punch_timer = 0;
+		}
+	}
 }
