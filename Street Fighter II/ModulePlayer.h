@@ -43,6 +43,9 @@ public:
 	int KickCount = 0;
 	int HadoukenCount = 0;
 	bool moving = false;*/
+	int JumpCount = 0;
+	bool JumpMin = false;
+	bool JumpMax = false;
 	bool movef = false;
 	bool moveb = false;
 	

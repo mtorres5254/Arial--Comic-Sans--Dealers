@@ -101,7 +101,7 @@ bool ModulePlayer::Start()
 	
 	//Add a collider to the player
 	colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER);
-	colliderplayer->callback = this;
+	colliderplayer->callback = App->player;
 	
 
 	return ret;
@@ -242,7 +242,28 @@ update_status ModulePlayer::Update()
 				
 				break;
 			case ST_JUMP_NEUTRAL:
-				current_animation = &jump_neutral;				
+				current_animation = &jump_neutral;
+				JumpCount = 1;
+				if (JumpCount == 1) {
+					if (position.y == 220) {
+						JumpMax = false;
+						JumpMin = true;
+		
+					}
+					if (position.y == 174) {
+						JumpMin = false;
+						JumpMax = true;
+					}
+					
+					if (JumpMin == true) {
+						position.y -= speed;
+					}
+					if (JumpMax == true) {
+						position.y += speed;
+					}
+
+				}
+			
 				
 				break;
 			case ST_JUMP_FORWARD:
@@ -289,9 +310,10 @@ update_status ModulePlayer::Update()
 }
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
-		moveb = false;
-		movef = false;
 		LOG("colision detected");
+		if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY) {
+			movef = false;
+		}
 }
 
 bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
