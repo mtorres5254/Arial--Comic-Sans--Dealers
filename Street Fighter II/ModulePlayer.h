@@ -229,7 +229,12 @@ public:
 			{
 				switch (last_input)
 				{
-				case IN_PUNCH_FINISH: state = ST_CROUCH; break;
+				case IN_PUNCH_FINISH: 
+					if (IN_CROUCH_DOWN == true) 
+						state = ST_CROUCH; 
+					else 
+						state = ST_IDLE; 
+				break;
 				}						
 			}
 			break;
