@@ -277,8 +277,7 @@ update_status ModulePlayer::Update()
 					}
 
 				}
-			
-				
+								
 				break;
 			case ST_JUMP_FORWARD:
 			
