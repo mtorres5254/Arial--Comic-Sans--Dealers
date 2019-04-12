@@ -56,7 +56,7 @@ ModulePlayer::ModulePlayer()
 	kick.PushBack({ 689,267,66,92 });
 	kick.PushBack({ 777,265,114,94 });
 	kick.PushBack({ 689,267,66,92 });
-	kick.speed = 0.2f;
+	kick.speed = 0.175f;
 
 	//hadouken animation
 	hadouken.PushBack({ 34,1545,70,90 });
@@ -216,6 +216,20 @@ update_status ModulePlayer::Update()
 	
 	int speed = 1;
 
+	if (App->input->keyboard[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
+		if (GodMode == false) {
+			App->collision->DeleteCollider(colliderplayer);
+
+			GodMode = true;
+		}
+		else if (GodMode == true) {
+			colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER);
+			colliderplayer->callback = App->player;
+
+			GodMode = false;
+		}
+	}
+
 	while (external_input(inputs))
 	{
 		
@@ -291,6 +305,9 @@ update_status ModulePlayer::Update()
 			case ST_PUNCH_BACKWARD_JUMP:
 				
 				break;
+			case ST_KICK_STANDING:
+				current_animation = &kick;
+				break;
 			}
 		}
 
@@ -349,6 +366,9 @@ bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
 				inputs.Push(IN_RIGHT_UP);
 				right = false;
 				break;
+			case SDLK_k:
+				return false;
+				break;
 			}
 		}
 		if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
@@ -357,6 +377,9 @@ bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
 			{
 			case SDLK_p:
 				inputs.Push(IN_X);
+				break;
+			case SDLK_k:
+				inputs.Push(IN_K);
 				break;
 			case SDLK_w:
 				up = true;
@@ -413,6 +436,15 @@ void ModulePlayer::internal_input(p2Qeue<ryu_inputs>& inputs)
 		{
 			inputs.Push(IN_PUNCH_FINISH);
 			punch_timer = 0;
+		}
+	}
+
+	if (kick_timer > 0)
+	{
+		if (SDL_GetTicks() - kick_timer > KICK_TIME)
+		{
+			inputs.Push(IN_KICK_FINISH);
+			kick_timer = 0;
 		}
 	}
 }

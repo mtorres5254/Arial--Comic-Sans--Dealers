@@ -12,6 +12,7 @@
 
 #define JUMP_TIME 1500
 #define PUNCH_TIME 150
+#define KICK_TIME 400
 
 struct SDL_Texture;
 
@@ -48,7 +49,10 @@ public:
 	bool JumpMax = false;
 	bool movef = false;
 	bool moveb = false;
+
+	bool GodMode = false;
 	
+private:
 	Collider* colliderplayer;	
 
 	enum ryu_states
@@ -66,7 +70,8 @@ public:
 		ST_PUNCH_NEUTRAL_JUMP,
 		ST_PUNCH_FORWARD_JUMP,
 		ST_PUNCH_BACKWARD_JUMP,
-		ST_PUNCH_CROUCH
+		ST_PUNCH_CROUCH,
+		ST_KICK_STANDING
 	};
 
 	enum ryu_inputs
@@ -82,10 +87,13 @@ public:
 		IN_JUMP_AND_CROUCH,
 		IN_X,
 		IN_JUMP_FINISH,
-		IN_PUNCH_FINISH
+		IN_PUNCH_FINISH,
+		IN_KICK_FINISH,
+		IN_K
 	};
 	Uint32 jump_timer = 0;
 	Uint32 punch_timer = 0;
+	Uint32 kick_timer = 0;
 
 	bool external_input(p2Qeue<ryu_inputs>&);
 
@@ -109,6 +117,7 @@ public:
 				case IN_JUMP: state = ST_JUMP_NEUTRAL; jump_timer = SDL_GetTicks();  break;
 				case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 				case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
+				case IN_K: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -122,6 +131,7 @@ public:
 				case IN_JUMP: state = ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
 				case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 				case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
+				case IN_K: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -135,6 +145,7 @@ public:
 				case IN_JUMP: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
 				case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 				case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
+				case IN_K: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -233,6 +244,11 @@ public:
 				}						
 			}
 			break;
+			case ST_KICK_STANDING:
+				switch (last_input)
+				{
+				case IN_KICK_FINISH: state = ST_IDLE; break;
+				}
 			}
 		}
 
