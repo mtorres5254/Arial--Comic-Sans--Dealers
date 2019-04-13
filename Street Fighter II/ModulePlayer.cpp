@@ -223,8 +223,7 @@ update_status ModulePlayer::Update()
 			GodMode = true;
 		}
 		else if (GodMode == true) {
-			colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER);
-			colliderplayer->callback = App->player;
+			colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER,this);
 
 			GodMode = false;
 		}
@@ -293,7 +292,8 @@ update_status ModulePlayer::Update()
 				break;
 			case ST_PUNCH_STANDING:
 				current_animation = &punch;
-			
+				punchcollider = App->collision->AddCollider({position.x + 42,position.y - 85,51,19}, COLLIDER_PLAYER_SHOT, this);
+				App->collision->DeleteCollider(punchcollider);
 				break;
 			case ST_PUNCH_NEUTRAL_JUMP:
 				

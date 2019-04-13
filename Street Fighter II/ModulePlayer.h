@@ -54,6 +54,7 @@ public:
 	
 private:
 	Collider* colliderplayer;	
+	Collider* punchcollider;
 
 	enum ryu_states
 	{
