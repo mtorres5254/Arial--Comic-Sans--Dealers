@@ -13,6 +13,7 @@
 #define JUMP_TIME 1500
 #define PUNCH_TIME 150
 #define KICK_TIME 400
+#define HADOUKEN_TIME 1500
 
 struct SDL_Texture;
 
@@ -35,26 +36,32 @@ public:
 	Animation backward;
 	Animation punch;
 	Animation kick;
-	Animation hadouken;
+	Animation hadouken_pose;
 	Animation crouch;
 	Animation jump_neutral;
+	Animation neutral_falling;
 	Animation Crouch_punch;
 	iPoint position;
 	/*int PunchCount = 0;
 	int KickCount = 0;
+	*/
 	int HadoukenCount = 0;
+	int ActiveHadouken = 0;
+	/*
 	bool moving = false;*/
 	int JumpCount = 0;
 	bool JumpMin = false;
 	bool JumpMax = false;
-	bool movef = false;
-	bool moveb = false;
+	bool movef = true;
+	bool moveb = true;
 
 	bool GodMode = false;
-	
+
 private:
-	Collider* colliderplayer;	
+	Collider* colliderplayer;
 	Collider* punchcollider;
+	Collider* crouchpunchcollider;
+	Collider* kickcollider;
 
 	enum ryu_states
 	{
@@ -72,7 +79,8 @@ private:
 		ST_PUNCH_FORWARD_JUMP,
 		ST_PUNCH_BACKWARD_JUMP,
 		ST_PUNCH_CROUCH,
-		ST_KICK_STANDING
+		ST_KICK_STANDING,
+		ST_HADOUKEN,
 	};
 
 	enum ryu_inputs
@@ -86,15 +94,19 @@ private:
 		IN_CROUCH_UP,
 		IN_CROUCH_DOWN,
 		IN_JUMP_AND_CROUCH,
-		IN_X,
+		IN_P,
+		IN_K,
+		IN_H,
 		IN_JUMP_FINISH,
 		IN_PUNCH_FINISH,
 		IN_KICK_FINISH,
-		IN_K
+		IN_HADOUKEN_FINISH,
 	};
+	
 	Uint32 jump_timer = 0;
 	Uint32 punch_timer = 0;
 	Uint32 kick_timer = 0;
+	Uint32 hadouken_timer = 0;
 
 	bool external_input(p2Qeue<ryu_inputs>&);
 
@@ -117,8 +129,9 @@ private:
 				case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
 				case IN_JUMP: state = ST_JUMP_NEUTRAL; jump_timer = SDL_GetTicks();  break;
 				case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-				case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
+				case IN_P: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
 				case IN_K: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
+				case IN_H: state = ST_HADOUKEN; hadouken_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -131,8 +144,9 @@ private:
 				case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
 				case IN_JUMP: state = ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
 				case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-				case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
+				case IN_P: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
 				case IN_K: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
+				case IN_H: state = ST_HADOUKEN; hadouken_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -145,8 +159,9 @@ private:
 				case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
 				case IN_JUMP: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
 				case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-				case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
+				case IN_P: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
 				case IN_K: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
+				case IN_H: state = ST_HADOUKEN; hadouken_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -156,7 +171,7 @@ private:
 				switch (last_input)
 				{
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
-				case IN_X: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
+				case IN_P: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -167,7 +182,7 @@ private:
 				{
 					// TODO: Add links
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
-				case IN_X: state = ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+				case IN_P: state = ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -178,7 +193,7 @@ private:
 				{
 					// TODO: Add Links
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
-				case IN_X: state = ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+				case IN_P: state = ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -233,7 +248,7 @@ private:
 				{
 				case IN_CROUCH_UP: state = ST_IDLE; break;
 				case IN_JUMP_AND_CROUCH: state = ST_IDLE; break;
-				case IN_X: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
+				case IN_P: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -241,23 +256,34 @@ private:
 			{
 				switch (last_input)
 				{
-				case IN_PUNCH_FINISH: 
-					if (IN_CROUCH_DOWN == true) 
-						state = ST_CROUCH; 
-					else 
-						state = ST_IDLE; 
-				break;
-				}						
+				case IN_PUNCH_FINISH:
+					if (IN_CROUCH_DOWN == true)
+						state = ST_CROUCH;
+					else
+						state = ST_IDLE;
+					break;
+				}
 			}
 			break;
 			case ST_KICK_STANDING:
+			{
 				switch (last_input)
 				{
 				case IN_KICK_FINISH: state = ST_IDLE; break;
 				}
 			}
-		}
+			break;
+			case ST_HADOUKEN:
+			{
+				switch (last_input)
+				{
+				case IN_HADOUKEN_FINISH: state = ST_IDLE; break;
+				}
+				break;
+			}
 
+			}
+		}
 		return state;
 	}
 };

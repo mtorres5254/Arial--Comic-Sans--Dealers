@@ -24,7 +24,7 @@ ModulePlayer::ModulePlayer()
 	idle.PushBack({184, 14, 60, 90});
 	idle.PushBack({276, 11, 60, 93});
 	idle.PushBack({366, 12, 60, 92});
-	idle.speed = 0.2f;
+	idle.speed = 0.175f;
 
 	// walk forward animation (arcade sprite sheet)
 	//forward.frames.PushBack({9, 136, 53, 83});
@@ -33,7 +33,7 @@ ModulePlayer::ModulePlayer()
 	forward.PushBack({259, 128, 63, 90});
 	forward.PushBack({352, 128, 54, 91});
 	forward.PushBack({432, 131, 50, 89});
-	forward.speed = 0.1f;
+	forward.speed = 0.15f;
 
 	// walk backward animation
 	backward.PushBack({ 542,127,61,91 });
@@ -42,49 +42,68 @@ ModulePlayer::ModulePlayer()
 	backward.PushBack({ 797,127,58,91 });
 	backward.PushBack({ 883,127,57,91 });
 	backward.PushBack({ 974,127,57,91 });
-	backward.speed = 0.05f;
+	backward.speed = 0.1f;
 
 	//punch animation
 	punch.PushBack({ 19,272,64,91 });
-	punch.PushBack({ 108,272,91,91 });
+	punch.PushBack({ 108,272,92,91 });
 	punch.PushBack({ 19,272,64,91 });
 	punch.speed = 0.2f;
 
 	//kick animation
 
-	kick.PushBack({ 607,269,59,94 });
+	kick.PushBack({ 606,269,60,90 });
 	kick.PushBack({ 689,267,66,92 });
 	kick.PushBack({ 777,265,114,94 });
 	kick.PushBack({ 689,267,66,92 });
 	kick.speed = 0.175f;
 
 	//hadouken animation
-	hadouken.PushBack({ 34,1545,70,90 });
-	hadouken.PushBack({ 135,1551,85,84 });
-	hadouken.PushBack({ 244,1552,90,83 });
-	hadouken.PushBack({ 357,1557,106,78 });
-	hadouken.speed = 0.085;
+	hadouken_pose.PushBack({ 34,1545,74,90 });
+	hadouken_pose.PushBack({ 135,1551,85,83 });
+	hadouken_pose.PushBack({ 244,1552,91,83 });
+	hadouken_pose.PushBack({ 357,1558,106,77 });
+	hadouken_pose.speed = 0.1f;
+	hadouken_pose.loop = false;
 
 	//crouch animation
 	crouch.PushBack({ 32,1212,53,83 });
-	crouch.PushBack({115 ,1227,57,69 });
-	crouch.PushBack({ 197,1235, 61,61 });
-	crouch.speed = 0.1f;
+	crouch.PushBack({ 115,1227,57,69 });
+	crouch.PushBack({ 197,1235,61,61 });
 	crouch.loop = false;
+	crouch.speed = 0.3f;
 
-	//jump animation
+	//neutral jump animation
+	jump_neutral.PushBack({ 17,847,55,85 });
 	jump_neutral.PushBack({ 17,847,55,85 });
 	jump_neutral.PushBack({ 100,823,56,104 });
-	jump_neutral.PushBack({ 177,805,49,89 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 177,805,50,89 });
 	jump_neutral.PushBack({ 251,798,54,77 });
 	jump_neutral.PushBack({ 327,813,48,70 });
-	jump_neutral.PushBack({ 397,810,48,89 });
-	jump_neutral.PushBack({ 464,819,55,109 });
-	jump_neutral.speed = 0.1f;
+	jump_neutral.loop = false;
+	jump_neutral.speed = 0.175f;
+
+	//neutral jump falling animation
+
+	neutral_falling.PushBack({ 397,810,48,89 });
+	neutral_falling.PushBack({ 464,819,55,109 });
+	neutral_falling.PushBack({ 464,819,55,109 });
+	neutral_falling.PushBack({ 464,819,55,109 });
+	neutral_falling.PushBack({ 464,819,55,109 });
+	neutral_falling.PushBack({ 464,819,55,109 });
+	neutral_falling.PushBack({ 464,819,55,109 });
+	neutral_falling.PushBack({ 464,819,55,109 });
+	neutral_falling.PushBack({ 17,847,55,85 });
+	neutral_falling.loop = false;
+	neutral_falling.speed = 0.175f;
 	
+
 	//crouch punch
-	Crouch_punch.PushBack({ 24,1344,68,55 });
-	Crouch_punch.PushBack({ 118,1344,94,55 });
+	Crouch_punch.PushBack({ 24,1344,69,61 });
+	Crouch_punch.PushBack({ 118,1344,95,61 });
 	Crouch_punch.speed = 0.2f;
 }
 
@@ -103,7 +122,6 @@ bool ModulePlayer::Start()
 	colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER);
 	colliderplayer->callback = App->player;
 	
-
 	return ret;
 }
 
@@ -223,7 +241,7 @@ update_status ModulePlayer::Update()
 			GodMode = true;
 		}
 		else if (GodMode == true) {
-			colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER,this);
+			colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER, this);
 
 			GodMode = false;
 		}
@@ -242,26 +260,43 @@ update_status ModulePlayer::Update()
 			{
 			case ST_IDLE:
 				current_animation = &idle;
-			
+				forward.Reset();
+				backward.Reset();
+				crouch.Reset();
+				kick.Reset();
+				punch.Reset();
+				hadouken_pose.Reset();
+				HadoukenCount = 0;
+				ActiveHadouken = 0;
 				break;
 			case ST_WALK_FORWARD:
-				current_animation = &forward;
-				position.x += speed;
-			
+				if (movef == true) {
+					current_animation = &forward;
+					position.x += speed;
+					crouch.Reset();
+					kick.Reset();
+					punch.Reset();
+					hadouken_pose.Reset();
+					HadoukenCount = 0;
+					ActiveHadouken = 0;
+				}
 				break;
 			case ST_WALK_BACKWARD:
 				current_animation = &backward;
-				position.x -= speed;
-				
+				position.x -= (0.6 *speed);
+				crouch.Reset();
+				kick.Reset();
+				punch.Reset();
+				hadouken_pose.Reset();
+				HadoukenCount = 0;
+				ActiveHadouken = 0;
 				break;
 			case ST_JUMP_NEUTRAL:
-				current_animation = &jump_neutral;
 				JumpCount = 1;
 				if (JumpCount == 1) {
 					if (position.y == 220) {
 						JumpMax = false;
 						JumpMin = true;
-		
 					}
 					if (position.y == 174) {
 						JumpMin = false;
@@ -269,13 +304,18 @@ update_status ModulePlayer::Update()
 					}
 					
 					if (JumpMin == true) {
+						neutral_falling.Reset();
 						position.y -= speed;
+						current_animation = &jump_neutral;
 					}
 					if (JumpMax == true) {
+						jump_neutral.Reset();
 						position.y += speed;
+						current_animation = &neutral_falling;
 					}
-
+					
 				}
+				
 								
 				break;
 			case ST_JUMP_FORWARD:
@@ -287,16 +327,17 @@ update_status ModulePlayer::Update()
 			case ST_CROUCH:
 				current_animation = &crouch;
 				break;
-			case ST_PUNCH_CROUCH:
-				current_animation = &Crouch_punch;
-				break;
 			case ST_PUNCH_STANDING:
 				current_animation = &punch;
-				punchcollider = App->collision->AddCollider({position.x + 42,position.y - 85,51,19}, COLLIDER_PLAYER_SHOT, this);
+				punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, this);
 				App->collision->DeleteCollider(punchcollider);
 				break;
+			case ST_PUNCH_CROUCH:
+				current_animation = &Crouch_punch;
+				crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, this);
+				App->collision->DeleteCollider(crouchpunchcollider);
+				break;
 			case ST_PUNCH_NEUTRAL_JUMP:
-				
 				break;
 			case ST_PUNCH_FORWARD_JUMP:
 				
@@ -306,6 +347,21 @@ update_status ModulePlayer::Update()
 				break;
 			case ST_KICK_STANDING:
 				current_animation = &kick;
+				kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 47 }, COLLIDER_PLAYER_ATTACK, this);
+				App->collision->DeleteCollider(kickcollider);
+				break;
+			case ST_HADOUKEN:
+				current_animation = &hadouken_pose;
+				if (HadoukenCount < 35) {
+					HadoukenCount++;
+				}
+				if (HadoukenCount == 35 && ActiveHadouken == 0) {
+					App->particle->AddParticle(App->particle->hadouken, position.x + 65, position.y - 70, COLLIDER_PLAYER_ATTACK, 0);
+					App->audio->PlayChunk(App->particle->hadouken.sound, 0);
+					HadoukenCount = 0;
+					ActiveHadouken = 1;
+				}
+
 				break;
 			}
 		}
@@ -347,9 +403,6 @@ bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
 		{
 			switch (event.key.keysym.sym)
 			{
-			case SDLK_p:
-				return false;
-				break;
 			case SDLK_s:
 				inputs.Push(IN_CROUCH_UP);
 				down = false;
@@ -365,7 +418,13 @@ bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
 				inputs.Push(IN_RIGHT_UP);
 				right = false;
 				break;
+			case SDLK_p:
+				return false;
+				break;
 			case SDLK_k:
+				return false;
+				break;
+			case SDLK_h:
 				return false;
 				break;
 			}
@@ -375,10 +434,13 @@ bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_p:
-				inputs.Push(IN_X);
+				inputs.Push(IN_P);
 				break;
 			case SDLK_k:
 				inputs.Push(IN_K);
+				break;
+			case SDLK_h:
+				inputs.Push(IN_H);
 				break;
 			case SDLK_w:
 				up = true;
@@ -426,6 +488,7 @@ void ModulePlayer::internal_input(p2Qeue<ryu_inputs>& inputs)
 		{
 			inputs.Push(IN_JUMP_FINISH);
 			jump_timer = 0;
+			position.y = 220;
 		}
 	}
 
@@ -444,6 +507,15 @@ void ModulePlayer::internal_input(p2Qeue<ryu_inputs>& inputs)
 		{
 			inputs.Push(IN_KICK_FINISH);
 			kick_timer = 0;
+		}
+	}
+
+	if (hadouken_timer > 0)
+	{
+		if (SDL_GetTicks() - hadouken_timer > HADOUKEN_TIME)
+		{
+			inputs.Push(IN_HADOUKEN_FINISH);
+			hadouken_timer = 0;
 		}
 	}
 }

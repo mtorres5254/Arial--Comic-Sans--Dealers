@@ -27,12 +27,13 @@ bool ModuleParticles::Start()
 
 	//Hadouken particle
 
-	hadouken.anim.PushBack({ 493,  1563,  43 , 32 });
-	hadouken.anim.PushBack({ 550, 1565, 56 ,28 });
+	hadouken.anim.PushBack({ 493, 1563, 43, 32 });
+	hadouken.anim.PushBack({ 550, 1565, 56, 28 });
 	hadouken.life = 3000;
 	hadouken.anim.speed = 0.15f;
 	hadouken.speed.x = 4;
 	hadouken.sound = App->audio->LoadChunk("Assets/Sound/Hadouken.wav");
+
 
 	hadoukenFinish.anim.PushBack({});
 	hadoukenFinish.life = 200;
