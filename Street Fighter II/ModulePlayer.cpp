@@ -347,7 +347,7 @@ update_status ModulePlayer::Update()
 				break;
 			case ST_KICK_STANDING:
 				current_animation = &kick;
-				kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 47 }, COLLIDER_PLAYER_ATTACK, this);
+				kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 27 }, COLLIDER_PLAYER_ATTACK, this);
 				App->collision->DeleteCollider(kickcollider);
 				break;
 			case ST_HADOUKEN:
