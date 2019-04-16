@@ -13,6 +13,7 @@
 #include "ModuleParticles.h"
 #include "ModulePlayer2.h"
 #include "ModuleCollision.h"
+#include "ModuleUI.h"
 
 Application::Application()
 {
@@ -30,6 +31,7 @@ Application::Application()
 	modules[11] = welcome_page = new ModuleWelcomePage();
 	modules[12] = particle = new ModuleParticles();
 	modules[13] = collision = new ModuleCollision();
+	modules[14] = UI = new ModuleUI();
 	
 }	
 
@@ -51,6 +53,7 @@ bool Application::Init()
 	scene_ken->Disable();
 	congrats_screen->Disable();
 	collision->Disable();
+	UI->Disable();
 
 	for(int i = 0; i < NUM_MODULES && ret == true; ++i)
 		ret = modules[i]->Init();

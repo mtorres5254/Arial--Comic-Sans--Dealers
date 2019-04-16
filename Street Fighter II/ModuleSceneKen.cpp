@@ -11,6 +11,7 @@
 #include "ModuleAudio.h"
 #include "ModulePlayer2.h"
 #include "ModuleCollision.h"
+#include "ModuleUI.h"
 
 
 
@@ -67,6 +68,8 @@ bool ModuleSceneKen::Start()
 	App->player->Enable();
 	App->player2->Enable();
 	App->collision->Enable();
+	App->UI->Enable();
+	
 	
 	
 	return true;

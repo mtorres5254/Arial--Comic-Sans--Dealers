@@ -77,6 +77,9 @@
     <ClInclude Include="p2Qeue.h">
       <Filter>Containers</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleUI.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -129,6 +132,9 @@
     </ClCompile>
     <ClCompile Include="Application.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleUI.cpp">
+      <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
