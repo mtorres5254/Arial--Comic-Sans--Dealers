@@ -41,14 +41,10 @@ public:
 	Animation jump_neutral;
 	Animation neutral_falling;
 	Animation Crouch_punch;
+	Animation Death;
 	iPoint position;
-	/*int PunchCount = 0;
-	int KickCount = 0;
-	*/
 	int HadoukenCount = 0;
 	int ActiveHadouken = 0;
-	/*
-	bool moving = false;*/
 	int JumpCount = 0;
 	bool JumpMin = false;
 	bool JumpMax = false;
@@ -62,6 +58,12 @@ private:
 	Collider* punchcollider;
 	Collider* crouchpunchcollider;
 	Collider* kickcollider;
+
+	int life = 1000;
+	int healthbar = life / 10000;
+	bool death = false;
+
+
 
 	enum ryu_states
 	{

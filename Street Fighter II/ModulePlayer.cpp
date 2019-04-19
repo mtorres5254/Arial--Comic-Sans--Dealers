@@ -105,6 +105,14 @@ ModulePlayer::ModulePlayer()
 	Crouch_punch.PushBack({ 24,1344,69,61 });
 	Crouch_punch.PushBack({ 118,1344,95,61 });
 	Crouch_punch.speed = 0.2f;
+
+	//death animation
+	Death.PushBack({ 350,2233,124,48 });
+	Death.PushBack({ 849,2246,123,41 });
+	Death.PushBack({ 985,2265,127,31 });
+	Death.loop = false;
+	Death.speed = 0.5f;
+
 }
 
 ModulePlayer::~ModulePlayer()
@@ -139,95 +147,6 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	
-	
-	/*
-	moving = false;
-	movef = false;
-	moveb = false;
-
-	//Punch
-
-	if (App->input->keyboard[SDL_SCANCODE_P] == KEY_STATE::KEY_DOWN)
-	{
-		//current_animation = &punch;
-		PunchCount = 1;
-	}
-
-	if (PunchCount < 15 && PunchCount != 0) {
-		current_animation = &punch;
-		PunchCount++;
-	}
-
-	if (PunchCount == 15) {
-		current_animation = &punch;
-		punch.current_frame = 0;
-		PunchCount = 0;
-	}
-
-	//Kick
-
-	if (App->input->keyboard[SDL_SCANCODE_K] == KEY_STATE::KEY_DOWN)
-	{
-		KickCount = 1;
-	}
-
-	if (KickCount < 25 && KickCount != 0) {
-		current_animation = &kick;
-		KickCount++;
-	}
-
-	if (KickCount == 25) {
-		current_animation = &kick;
-		kick.current_frame = 0;
-		KickCount = 0;
-	}
-
-	//Hadouken
-
-	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_STATE::KEY_DOWN){	
-		
-		current_animation = &hadouken;
-		HadoukenCount = 1;
-	}
-
-	// Movement
-	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_STATE::KEY_REPEAT && (PunchCount == 0 && HadoukenCount == 0 && KickCount==0))
-	{
-		movef = true;
-	}
-	if(movef == true)
-	{
-		current_animation = &forward;
-		position.x += speed;
-		moving = true;
-	}
-	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_STATE::KEY_REPEAT && (PunchCount == 0 && HadoukenCount==0 && KickCount == 0 ))
-	{
-		moveb = true;
-	}
-	if (moveb == true)
-	{
-		current_animation = &backward;
-		position.x -= speed;
-		moving = true;
-	}
-	
-	//Hadouken
-
-	if (HadoukenCount < 55 && HadoukenCount != 0) {
-		
-		current_animation = &hadouken;
-		HadoukenCount++;
-	}
-	if (HadoukenCount == 55) {
-		current_animation = &hadouken;
-		App->particle->AddParticle(App->particle->hadouken, position.x + 55, position.y - 80, COLLIDER_PLAYER_SHOT);
-		App->audio->PlayChunk(App->particle->hadouken.sound, 0);
-		hadouken.current_frame = 0;
-		HadoukenCount = 0;
-	}*/
-
 	Animation* current_animation = &idle;
 	p2Qeue<ryu_inputs> inputs;
 	ryu_states current_state = ST_UNKNOWN;
@@ -247,137 +166,148 @@ update_status ModulePlayer::Update()
 		}
 	}
 
-	while (external_input(inputs))
-	{
-		
-		internal_input(inputs);
+	if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) {
+		life = 0;
+	}
 
-		ryu_states state = process_fsm(inputs);
-		
-		if (state != current_state)
+	if (life == 0) {
+		current_animation = &Death;
+		death = true;
+	}
+
+	if (death == false) {
+		while (external_input(inputs))
 		{
-			switch (state)
+
+			internal_input(inputs);
+
+			ryu_states state = process_fsm(inputs);
+
+			if (state != current_state)
 			{
-			case ST_IDLE:
-				current_animation = &idle;
-				forward.Reset();
-				backward.Reset();
-				crouch.Reset();
-				kick.Reset();
-				punch.Reset();
-				hadouken_pose.Reset();
-				HadoukenCount = 0;
-				ActiveHadouken = 0;
-				break;
-			case ST_WALK_FORWARD:
-				if (movef == true) {
-					current_animation = &forward;
-					position.x += speed;
+				switch (state)
+				{
+				case ST_IDLE:
+					current_animation = &idle;
+					forward.Reset();
+					backward.Reset();
 					crouch.Reset();
 					kick.Reset();
 					punch.Reset();
 					hadouken_pose.Reset();
 					HadoukenCount = 0;
 					ActiveHadouken = 0;
-				}
-				break;
-			case ST_WALK_BACKWARD:
-				current_animation = &backward;
-				position.x -= (0.6 *speed);
-				crouch.Reset();
-				kick.Reset();
-				punch.Reset();
-				hadouken_pose.Reset();
-				HadoukenCount = 0;
-				ActiveHadouken = 0;
-				break;
-			case ST_JUMP_NEUTRAL:
-				JumpCount = 1;
-				if (JumpCount == 1) {
-					if (position.y == 220) {
-						JumpMax = false;
-						JumpMin = true;
+					break;
+				case ST_WALK_FORWARD:
+					if (movef == true) {
+						current_animation = &forward;
+						position.x += speed;
+						crouch.Reset();
+						kick.Reset();
+						punch.Reset();
+						hadouken_pose.Reset();
+						HadoukenCount = 0;
+						ActiveHadouken = 0;
 					}
-					if (position.y == 174) {
-						JumpMin = false;
-						JumpMax = true;
-					}
-					
-					if (JumpMin == true) {
-						neutral_falling.Reset();
-						position.y -= speed;
-						current_animation = &jump_neutral;
-					}
-					if (JumpMax == true) {
-						jump_neutral.Reset();
-						position.y += speed;
-						current_animation = &neutral_falling;
-					}
-					
-				}
-				
-								
-				break;
-			case ST_JUMP_FORWARD:
-			
-				break;
-			case ST_JUMP_BACKWARD:
-				
-				break;
-			case ST_CROUCH:
-				current_animation = &crouch;
-				break;
-			case ST_PUNCH_STANDING:
-				current_animation = &punch;
-				punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, this);
-				App->collision->DeleteCollider(punchcollider);
-				break;
-			case ST_PUNCH_CROUCH:
-				current_animation = &Crouch_punch;
-				crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, this);
-				App->collision->DeleteCollider(crouchpunchcollider);
-				break;
-			case ST_PUNCH_NEUTRAL_JUMP:
-				break;
-			case ST_PUNCH_FORWARD_JUMP:
-				
-				break;
-			case ST_PUNCH_BACKWARD_JUMP:
-				
-				break;
-			case ST_KICK_STANDING:
-				current_animation = &kick;
-				kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 27 }, COLLIDER_PLAYER_ATTACK, this);
-				App->collision->DeleteCollider(kickcollider);
-				break;
-			case ST_HADOUKEN:
-				current_animation = &hadouken_pose;
-				if (HadoukenCount < 35) {
-					HadoukenCount++;
-				}
-				if (HadoukenCount == 35 && ActiveHadouken == 0) {
-					App->particle->AddParticle(App->particle->hadouken, position.x + 65, position.y - 70, COLLIDER_PLAYER_ATTACK, 0);
-					App->audio->PlayChunk(App->particle->hadouken.sound, 0);
+					break;
+				case ST_WALK_BACKWARD:
+					current_animation = &backward;
+					position.x -= (0.6 *speed);
+					crouch.Reset();
+					kick.Reset();
+					punch.Reset();
+					hadouken_pose.Reset();
 					HadoukenCount = 0;
-					ActiveHadouken = 1;
+					ActiveHadouken = 0;
+					break;
+				case ST_JUMP_NEUTRAL:
+					JumpCount = 1;
+					if (JumpCount == 1) {
+						if (position.y == 220) {
+							JumpMax = false;
+							JumpMin = true;
+						}
+						if (position.y == 174) {
+							JumpMin = false;
+							JumpMax = true;
+						}
+
+						if (JumpMin == true) {
+							neutral_falling.Reset();
+							position.y -= speed;
+							current_animation = &jump_neutral;
+						}
+						if (JumpMax == true) {
+							jump_neutral.Reset();
+							position.y += speed;
+							current_animation = &neutral_falling;
+						}
+
+					}
+
+
+					break;
+				case ST_JUMP_FORWARD:
+
+					break;
+				case ST_JUMP_BACKWARD:
+
+					break;
+				case ST_CROUCH:
+					current_animation = &crouch;
+					break;
+				case ST_PUNCH_STANDING:
+					current_animation = &punch;
+					punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, this);
+					App->collision->DeleteCollider(punchcollider);
+					break;
+				case ST_PUNCH_CROUCH:
+					current_animation = &Crouch_punch;
+					crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, this);
+					App->collision->DeleteCollider(crouchpunchcollider);
+					break;
+				case ST_PUNCH_NEUTRAL_JUMP:
+					break;
+				case ST_PUNCH_FORWARD_JUMP:
+
+					break;
+				case ST_PUNCH_BACKWARD_JUMP:
+
+					break;
+				case ST_KICK_STANDING:
+					current_animation = &kick;
+					kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 27 }, COLLIDER_PLAYER_ATTACK, this);
+					App->collision->DeleteCollider(kickcollider);
+					break;
+				case ST_HADOUKEN:
+					current_animation = &hadouken_pose;
+					if (HadoukenCount < 35) {
+						HadoukenCount++;
+					}
+					if (HadoukenCount == 35 && ActiveHadouken == 0) {
+						App->particle->AddParticle(App->particle->hadouken, position.x + 65, position.y - 70, COLLIDER_PLAYER_ATTACK, 0);
+						App->audio->PlayChunk(App->particle->hadouken.sound, 0);
+						HadoukenCount = 0;
+						ActiveHadouken = 1;
+					}
+
+					break;
 				}
-
-				break;
 			}
+
+			current_state = state;
+
+			// Draw everything --------------------------------------
+
+			SDL_Rect r = current_animation->GetCurrentFrame();
+			App->render->Blit(graphics, position.x, position.y - r.h, &r);
+
+			//Update collider position to player position
+			colliderplayer->SetPos(position.x, position.y);
+
+			return UPDATE_CONTINUE;
 		}
-
-		current_state = state;
-
-		// Draw everything --------------------------------------
-
-		SDL_Rect r = current_animation->GetCurrentFrame();
-		App->render->Blit(graphics, position.x, position.y - r.h, &r);
-
-		//Update collider position to player position
-		colliderplayer->SetPos(position.x, position.y);
-
-		return UPDATE_CONTINUE;
-	}	
+	}
 	
 }
 
