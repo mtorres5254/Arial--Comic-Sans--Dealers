@@ -179,7 +179,7 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 	///////////////COMPROBAR SI SIRVE////////////////
 	if (r.x < rect.x + rect.w && r.y > rect.y+rect.h) //Check x and y positions
 	{
-		LOG("Collision");
+		//LOG("Collision");
 		return true;
 	}
 	else  

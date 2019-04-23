@@ -119,7 +119,7 @@ update_status ModuleSceneKen::Update()
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
 		
-		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, 2.0f);
+		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, 2.0f);	
 		App->audio->StopMusic(3000);
 		
 	}
