@@ -199,20 +199,29 @@ update_status ModulePlayer::Update()
 					ActiveHadouken = 0;
 					break;
 				case ST_WALK_FORWARD:
-					if (movef == true) {
-						current_animation = &forward;
-						position.x += speed;
-						crouch.Reset();
-						kick.Reset();
-						punch.Reset();
-						hadouken_pose.Reset();
-						HadoukenCount = 0;
-						ActiveHadouken = 0;
+					if (-position.x-60 > App->render->camera.x - SCREEN_WIDTH)
+					{
+						LOG("Player posx: %d", -position.x);
+						//if (movef == true)
+						//{
+							position.x += speed;
+							current_animation = &forward;
+							crouch.Reset();
+							kick.Reset();
+							punch.Reset();
+							hadouken_pose.Reset();
+							HadoukenCount = 0;
+							ActiveHadouken = 0;
+						//}									
 					}
 					break;
 				case ST_WALK_BACKWARD:
 					current_animation = &backward;
-					position.x -= (0.6 *speed);
+					if (-position.x < App->render->camera.x)
+					{
+						position.x -= (0.6 *speed);
+						LOG("Player posx: %d",-position.x);
+					}		
 					crouch.Reset();
 					kick.Reset();
 					punch.Reset();

@@ -55,34 +55,68 @@ update_status ModuleRender::Update()
 {
 	int speed = 3;
 
-	if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_STATE::KEY_REPEAT
+	if (App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false)
+	{
+		/*if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_STATE::KEY_REPEAT)
+		{
+			camera.y += 0;
+		}
+		if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_STATE::KEY_REPEAT)
+		{
+			camera.y -= 0;
+		}*/
+		if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_STATE::KEY_REPEAT)
+		{
+			if (camera.x < 0)
+			{
+				camera.x += speed;
+				LOG("Cam posx: %d", camera.x);
+				LOG("Cam posxMax: %d", camera.x - SCREEN_WIDTH);
+			}
+		}
+		if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_STATE::KEY_REPEAT)
+		{
+			if (camera.x > -SCREEN_WIDTH * SCREEN_SIZE)
+			{
+				camera.x -= speed;
+				LOG("Cam posx: %d", camera.x);
+				LOG("Cam posxMax: %d", camera.x-SCREEN_WIDTH);
+			}
+		}
+	}
+	/*if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_STATE::KEY_REPEAT
 		&& App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false)
-		camera.y += 0;		
+		camera.y += 0;*/
 
-	if(App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_STATE::KEY_REPEAT
+	/*if(App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_STATE::KEY_REPEAT
 		&& App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false)
-		camera.y -= 0;
+		camera.y -= 0;*/
 
-	if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_STATE::KEY_REPEAT
-		&& App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false) {
-		if (camera.x < 0) {
+	/*if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_STATE::KEY_REPEAT
+		&& App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false) 
+	{
+		if (camera.x < 0) 
+		{
 			camera.x += speed;
 		}
-		else {
+		/*else 
+		{
 			camera.x = 0;
 		}
-	}
+	}*/
 		
 
-	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_STATE::KEY_REPEAT
+	/*if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_STATE::KEY_REPEAT
 		&& App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false) {
-		if (camera.x > -SCREEN_WIDTH*SCREEN_SIZE) {
+		if (camera.x > -SCREEN_WIDTH*SCREEN_SIZE) 
+		{
 			camera.x -= speed;
 		}
-		else {
+		/*else 
+		{
 			camera.x = -SCREEN_WIDTH*SCREEN_SIZE;
 		}
-	}
+	}*/
 		
 
 	return update_status::UPDATE_CONTINUE;
@@ -111,8 +145,6 @@ bool ModuleRender::CleanUp()
 // Blit to screen
 bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed, bool use_camera)
 {
-
-
 	bool ret = true;
 
 	SDL_Rect rect;
@@ -148,12 +180,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 		}
 
 	}
-
-	
-
 	rect.w *= SCREEN_SIZE;
 	rect.h *= SCREEN_SIZE;
-
 	
 	if(SDL_RenderCopy(renderer, texture, section, &rect) != 0)
 	{
