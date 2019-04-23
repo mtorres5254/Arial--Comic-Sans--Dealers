@@ -199,28 +199,42 @@ update_status ModulePlayer::Update()
 					ActiveHadouken = 0;
 					break;
 				case ST_WALK_FORWARD:
-					if (-position.x-60 > App->render->camera.x - SCREEN_WIDTH)
+					if (position.x < 825)
 					{
-						LOG("Player posx: %d", -position.x);
-						//if (movef == true)
-						//{
-							position.x += speed;
-							current_animation = &forward;
-							crouch.Reset();
-							kick.Reset();
-							punch.Reset();
-							hadouken_pose.Reset();
-							HadoukenCount = 0;
-							ActiveHadouken = 0;
-						//}									
+						position.x += speed;
+						if (-((position.x - 60)*2) <= App->render->camera.x - SCREEN_WIDTH)
+						{
+							if (App->render->camera.x > -1004)
+							{
+								App->render->camera.x -= 5;
+							}
+							//LOG("Cam posx: %d", camera.x);
+							LOG("Cam posxMax: %d",App->render->camera.x - SCREEN_WIDTH);
+						}
+						
 					}
+					//LOG("Player posx: %d", position.x);
+					current_animation = &forward;
+					crouch.Reset();
+					kick.Reset();
+					punch.Reset();
+					hadouken_pose.Reset();
+					HadoukenCount = 0;
+					ActiveHadouken = 0;													
 					break;
 				case ST_WALK_BACKWARD:
 					current_animation = &backward;
-					if (-position.x < App->render->camera.x)
+					if (position.x > 0)
 					{
 						position.x -= (0.6 *speed);
-						LOG("Player posx: %d",-position.x);
+						if (-(position.x*2) >= App->render->camera.x-5)
+						{
+							if (App->render->camera.x < 0)
+							{
+								App->render->camera.x += 5;
+							}
+						}						
+						//LOG("Player posx: %d",-position.x);
 					}		
 					crouch.Reset();
 					kick.Reset();

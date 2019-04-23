@@ -85,16 +85,16 @@ update_status ModuleRender::Update()
 		}
 	}
 
-	if (App->scene_ken->IsEnabled() == true)
+	/*if (App->scene_ken->IsEnabled() == true)
 	{
-		/*if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_STATE::KEY_REPEAT)
-		{
-			camera.y += 0;
-		}
-		if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_STATE::KEY_REPEAT)
-		{
-			camera.y -= 0;
-		}*/
+		//if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_STATE::KEY_REPEAT)
+		//{
+			//camera.y += 0;
+		//}
+		//if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_STATE::KEY_REPEAT)
+		//{
+			//camera.y -= 0;
+		//
 		if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_STATE::KEY_REPEAT)
 		{
 			if (camera.x < 0)
@@ -113,7 +113,7 @@ update_status ModuleRender::Update()
 				LOG("Cam posxMax: %d", camera.x - SCREEN_WIDTH);
 			}
 		}
-	}
+	}*/
 	/*if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_STATE::KEY_REPEAT
 		&& App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false)
 		camera.y += 0;*/
