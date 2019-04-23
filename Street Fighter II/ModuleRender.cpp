@@ -70,8 +70,8 @@ update_status ModuleRender::Update()
 			if (camera.x < 0)
 			{
 				camera.x += speed;
-				LOG("Cam posx: %d", camera.x);
-				LOG("Cam posxMax: %d", camera.x - SCREEN_WIDTH);
+				//LOG("Cam posx: %d", camera.x);
+				//LOG("Cam posxMax: %d", camera.x - SCREEN_WIDTH);
 			}
 		}
 		if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_STATE::KEY_REPEAT)
@@ -79,8 +79,8 @@ update_status ModuleRender::Update()
 			if (camera.x > -SCREEN_WIDTH * SCREEN_SIZE)
 			{
 				camera.x -= speed;
-				LOG("Cam posx: %d", camera.x);
-				LOG("Cam posxMax: %d", camera.x-SCREEN_WIDTH);
+				//LOG("Cam posx: %d", camera.x);
+				//LOG("Cam posxMax: %d", camera.x-SCREEN_WIDTH);
 			}
 		}
 	}

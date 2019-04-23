@@ -201,7 +201,7 @@ update_status ModulePlayer::Update()
 				case ST_WALK_FORWARD:
 					if (-position.x-60 > App->render->camera.x - SCREEN_WIDTH)
 					{
-						LOG("Player posx: %d", -position.x);
+						//LOG("Player posx: %d", -position.x);
 						//if (movef == true)
 						//{
 							position.x += speed;
@@ -220,7 +220,7 @@ update_status ModulePlayer::Update()
 					if (-position.x < App->render->camera.x)
 					{
 						position.x -= (0.6 *speed);
-						LOG("Player posx: %d",-position.x);
+						//LOG("Player posx: %d",-position.x);
 					}		
 					crouch.Reset();
 					kick.Reset();
