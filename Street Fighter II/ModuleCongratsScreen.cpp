@@ -9,6 +9,7 @@
 #include "ModuleWelcomePage.h"
 #include "ModuleAudio.h"
 #include "ModulePlayer.h"
+#include "ModuleUI.h"
 
 
 ModuleCongratsScreen::ModuleCongratsScreen()
@@ -29,6 +30,7 @@ bool ModuleCongratsScreen::Start()
 	graphics = App->textures->Load("Assets/Images/CongratsScreen.png");	
 	music = App->audio->LoadMusic("Assets/Audio/congrats.ogg");
 	App->audio->PlayMusic(music, 3000);
+	App->UI->Disable();
 
 	return true;
 }
