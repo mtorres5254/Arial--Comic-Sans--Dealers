@@ -67,20 +67,20 @@ update_status ModuleRender::Update()
 		}*/
 		if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_STATE::KEY_REPEAT)
 		{
-			if (camera.x < -153)
+			if (camera.x < -153)//Ryu Scene
 			{
 				camera.x += speed;
-				LOG("Cam posx: %d", camera.x);
-				LOG("Cam posxMax: %d", camera.x - SCREEN_WIDTH);
+				//LOG("Cam posx: %d", camera.x);
+				//LOG("Cam posxMax: %d", camera.x - SCREEN_WIDTH);
 			}
 		}
 		if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_STATE::KEY_REPEAT)
 		{
-			if (camera.x > -765)
+			if (camera.x > -765)//Ryu Scence
 			{
 				camera.x -= speed;
-				LOG("Cam posx: %d", camera.x);
-				LOG("Cam posxMax: %d", camera.x-SCREEN_WIDTH);
+				//LOG("Cam posx: %d", camera.x);
+				//LOG("Cam posxMax: %d", camera.x-SCREEN_WIDTH);
 			}
 		}
 	}

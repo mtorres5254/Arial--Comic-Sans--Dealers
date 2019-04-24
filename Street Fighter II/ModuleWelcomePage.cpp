@@ -53,7 +53,7 @@ update_status ModuleWelcomePage::Update()
 	App->render->Blit(graphics, 0, 0, &background);
 
 
-	if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) {
+	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
 
 		App->fade->FadeToBlack(App->welcome_page, App->scene_ken, 2.0f);
 		App->audio->StopMusic(2500);
