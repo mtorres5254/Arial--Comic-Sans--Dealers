@@ -4,6 +4,9 @@
 #include "Module.h"
 #include "Globals.h"
 #include "SDL\include\SDL_scancode.h"
+#include "SDL/include/SDL.h"
+#include <iostream>
+#include <list>
 
 #define MAX_KEYS 300
 
@@ -28,9 +31,7 @@ public:
 
 public:
 	KEY_STATE keyboard[MAX_KEYS];
-
-/*private:
-	SDL_Event event;*/
+	std::list<SDL_Event> eventList;
 };
 
 #endif // __ModuleInput_H__
