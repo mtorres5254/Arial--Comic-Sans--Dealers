@@ -133,6 +133,10 @@ ModulePlayer::ModulePlayer()
 	jump_backwards.PushBack({ 594,823,55,103 });
 	jump_backwards.speed = 0.175f;
 
+	//Jump neutral punch
+	jump_neutral_punch.PushBack({ 29,987,52,69 });
+	jump_neutral_punch.PushBack({ 97,985,81,71 });
+	jump_neutral_punch.speed = 0.1f;
 
 
 }
@@ -314,6 +318,8 @@ update_status ModulePlayer::Update()
 					App->collision->DeleteCollider(crouchpunchcollider);
 					break;
 				case ST_PUNCH_NEUTRAL_JUMP:
+
+					current_animation = &jump_neutral_punch;
 					break;
 				case ST_PUNCH_FORWARD_JUMP:
 

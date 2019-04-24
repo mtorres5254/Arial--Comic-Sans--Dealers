@@ -43,6 +43,7 @@ public:
 	Animation jump_forward;
 	Animation neutral_falling;
 	Animation Crouch_punch;
+	Animation jump_neutral_punch;
 	Animation Death;
 	iPoint position;
 	int HadoukenCount = 0;
