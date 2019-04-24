@@ -39,6 +39,8 @@ public:
 	Animation hadouken_pose;
 	Animation crouch;
 	Animation jump_neutral;
+	Animation jump_backwards;
+	Animation jump_forward;
 	Animation neutral_falling;
 	Animation Crouch_punch;
 	Animation Death;

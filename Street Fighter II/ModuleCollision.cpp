@@ -59,7 +59,7 @@ update_status ModuleCollision::PreUpdate()
 	Collider* c1;
 	Collider* c2;
 
-	for(int i = 0; i < MAX_COLLIDERS; ++i)
+	for(uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		// skip empty colliders
 		if(colliders[i] == nullptr)
@@ -68,7 +68,7 @@ update_status ModuleCollision::PreUpdate()
 		c1 = colliders[i];
 
 		// avoid checking collisions already checked
-		for(int k = i+1; k < MAX_COLLIDERS; ++k)
+		for(uint k = i+1; k < MAX_COLLIDERS; ++k)
 		{
 			// skip empty colliders
 			if(colliders[k] == nullptr)
@@ -176,19 +176,9 @@ Collider* ModuleCollision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, Module
 //SDL_IntersectRect(&Player, &Enemy1, &Collider) == SDL_TRUE)
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
-	///////////////COMPROBAR SI SIRVE////////////////
-	if (r.x < rect.x + rect.w && r.y > rect.y+rect.h) //Check x and y positions
-	{
-		//LOG("Collision");
-		return true;
-	}
-	else  
-	{
-		return false;
-	}
-	//return!((r.x + r.w < rect.x) || (r.x > rect.x + rect.w) || (r.y + r.h < rect.y) || (r.y > rect.y + rect.h));
+	
+	return!((r.x + r.w < rect.x) || (r.x > rect.x + rect.w) || (r.y + r.h < rect.y) || (r.y > rect.y + rect.h));
 
-	//return false;
 }
 
 //-----------------------------------------------------

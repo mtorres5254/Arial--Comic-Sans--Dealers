@@ -113,6 +113,28 @@ ModulePlayer::ModulePlayer()
 	Death.loop = false;
 	Death.speed = 0.5f;
 
+	//Jump forward animation
+	jump_forward.PushBack({ 594,823,55,103 });
+	jump_forward.PushBack({ 669,813,61,78 });
+	jump_forward.PushBack({ 744,811,104,42 });
+	jump_forward.PushBack({ 864,791,53,82 });
+	jump_forward.PushBack({ 927,808,122,44 });
+	jump_forward.PushBack({ 1064,806,71,87 });
+	jump_forward.PushBack({ 1149,802,55,109 });
+	jump_forward.speed = 0.175f;
+
+	//Jump backwards animation
+	jump_backwards.PushBack({ 1149,802,55,109 });
+	jump_backwards.PushBack({ 1064,806,71,87 });
+	jump_backwards.PushBack({ 927,808,122,44 });
+	jump_backwards.PushBack({ 864,791,53,82 });
+	jump_backwards.PushBack({ 744,811,104,42 });
+	jump_backwards.PushBack({ 669,813,61,78 });
+	jump_backwards.PushBack({ 594,823,55,103 });
+	jump_backwards.speed = 0.175f;
+
+
+
 }
 
 ModulePlayer::~ModulePlayer()
@@ -272,9 +294,11 @@ update_status ModulePlayer::Update()
 					break;
 				case ST_JUMP_FORWARD:
 
+					current_animation = &jump_forward;
 					break;
 				case ST_JUMP_BACKWARD:
-
+					
+					current_animation = &jump_backwards;
 					break;
 				case ST_CROUCH:
 					current_animation = &crouch;
