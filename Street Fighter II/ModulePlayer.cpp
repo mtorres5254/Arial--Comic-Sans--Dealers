@@ -196,11 +196,10 @@ update_status ModulePlayer::Update()
 	}
 
 	if (life == 0) {
-		current_animation = &Death;
-		death = true;
+		inputs.Push(IN_DEATH);
 	}
 
-	if (death == false) {
+
 		while (external_input(inputs))
 		{
 
@@ -292,8 +291,6 @@ update_status ModulePlayer::Update()
 						}
 
 					}
-
-
 					break;
 				case ST_JUMP_FORWARD:
 
@@ -308,12 +305,12 @@ update_status ModulePlayer::Update()
 					break;
 				case ST_PUNCH_STANDING:
 					current_animation = &punch;
-					punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, this);
+					punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, App->player);
 					App->collision->DeleteCollider(punchcollider);
 					break;
 				case ST_PUNCH_CROUCH:
 					current_animation = &Crouch_punch;
-					crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, this);
+					crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, App->player);
 					App->collision->DeleteCollider(crouchpunchcollider);
 					break;
 				case ST_PUNCH_NEUTRAL_JUMP:
@@ -342,7 +339,9 @@ update_status ModulePlayer::Update()
 						HadoukenCount = 0;
 						ActiveHadouken = 1;
 					}
-
+					break;
+				case ST_DEATH:
+					current_animation = &Death;
 					break;
 				}
 			}
@@ -361,7 +360,6 @@ update_status ModulePlayer::Update()
 		}
 	}
 	
-}
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
 		//LOG("colision detected");
