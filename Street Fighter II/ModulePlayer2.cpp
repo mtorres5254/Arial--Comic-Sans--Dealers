@@ -306,8 +306,9 @@ bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)
 
 	SDL_Event event;
 
-	while (SDL_PollEvent(&event) != 0)
+	while (SDL_PollEvent(&event) != 0) //Always find no events to poll why?
 	{
+		LOG("Events detected"); // Never enters
 		if (event.type == SDL_KEYUP && event.key.repeat == 0)
 		{
 			switch (event.key.keysym.sym)
@@ -393,7 +394,7 @@ bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)
 		if (up)
 			inputs.Push(IN_JUMP);
 	}
-
+	SDL_PushEvent(&event);
 	return true;
 }
 
