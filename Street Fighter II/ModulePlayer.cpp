@@ -153,8 +153,7 @@ bool ModulePlayer::Start()
 	position.x = 100; //Returns to its original position
 	
 	//Add a collider to the player
-	colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER);
-	colliderplayer->callback = App->player;
+	colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER,App->player);
 	
 	return ret;
 }
