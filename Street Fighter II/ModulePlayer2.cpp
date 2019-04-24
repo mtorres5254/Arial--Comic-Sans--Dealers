@@ -103,8 +103,8 @@ update_status ModulePlayer2::Update()
 
 	int speed = 1;
 
-	/*if (App->input->keyboard[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
-		if (GodMode == false) {
+	if (App->input->keyboard[SDL_SCANCODE_Y] == KEY_STATE::KEY_DOWN) {
+		/*if (GodMode == false) {
 			App->collision->DeleteCollider(colliderplayer);
 
 			GodMode = true;
@@ -113,8 +113,9 @@ update_status ModulePlayer2::Update()
 			colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER, this);
 
 			GodMode = false;
-		}
-	}*/
+		}*/
+		LOG("Detected");
+	}
 
 	/*if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) {
 		life = 0;
@@ -149,8 +150,8 @@ update_status ModulePlayer2::Update()
 					ActiveHadouken = 0;
 					break;
 				case ST_WALK_FORWARD:
-					/*if (position.x < 825)
-					{*/
+					if (position.x < 825)
+					{
 						position.x += speed;
 						if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH)
 						{
@@ -162,7 +163,7 @@ update_status ModulePlayer2::Update()
 							LOG("Cam posxMax: %d", App->render->camera.x - SCREEN_WIDTH);
 						}
 
-					//}
+					}
 					//LOG("Player posx: %d", position.x);
 					current_animation = &forward;
 					crouch.Reset();
@@ -174,8 +175,8 @@ update_status ModulePlayer2::Update()
 					break;
 				case ST_WALK_BACKWARD:
 					current_animation = &backward;
-					/*if (position.x > 0)
-					{*/
+					if (position.x > 0)
+					{
 						position.x -= (0.6 *speed);
 						if (-(position.x * 2) >= App->render->camera.x - 5)
 						{
@@ -185,7 +186,7 @@ update_status ModulePlayer2::Update()
 							}
 						}
 						//LOG("Player posx: %d",-position.x);
-					//}
+					}
 					crouch.Reset();
 					kick.Reset();
 					punch.Reset();
@@ -312,17 +313,21 @@ bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_n:
+				LOG("N");
 				inputs.Push(IN_CROUCH_UP);
 				down = false;
 				break;
 			case SDLK_j:
+				LOG("J");
 				up = false;
 				break;
 			case SDLK_b:
+				LOG("B");
 				inputs.Push(IN_LEFT_UP);
 				left = false;
 				break;
 			case SDLK_m:
+				LOG("B");
 				inputs.Push(IN_RIGHT_UP);
 				right = false;
 				break;
@@ -351,15 +356,19 @@ bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)
 				inputs.Push(IN_H);
 				break;
 			case SDLK_j:
+				LOG("J");
 				up = true;
 				break;
 			case SDLK_n:
+				LOG("N");
 				down = true;
 				break;
 			case SDLK_b:
+				LOG("B");
 				left = true;
 				break;
 			case SDLK_m:
+				LOG("M");
 				right = true;
 				break;
 			}
