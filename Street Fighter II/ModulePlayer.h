@@ -9,6 +9,7 @@
 #include <string.h>
 #include "p2Qeue.h"
 #include "SDL\include\SDL.h"
+#include "SDL_mixer/include/SDL_mixer.h"
 
 #define JUMP_TIME 1500
 #define PUNCH_TIME 150
@@ -31,6 +32,7 @@ public:
 public:
 
 	SDL_Texture* graphics = nullptr;
+	Mix_Chunk* deathSound;
 	Animation idle;
 	Animation forward;
 	Animation backward;

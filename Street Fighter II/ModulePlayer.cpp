@@ -111,7 +111,7 @@ ModulePlayer::ModulePlayer()
 	Death.PushBack({ 849,2246,123,41 });
 	Death.PushBack({ 985,2265,127,31 });
 	Death.loop = false;
-	Death.speed = 0.5f;
+	Death.speed = 0.05f;
 
 	//Jump forward animation
 	jump_forward.PushBack({ 594,823,55,103 });
@@ -138,6 +138,10 @@ ModulePlayer::ModulePlayer()
 	jump_neutral_punch.PushBack({ 97,985,81,71 });
 	jump_neutral_punch.speed = 0.1f;
 
+
+
+	//Sounds
+	//deathSound = App->audio->LoadChunk("Game/Assets/Sound/ryu-death.wav");
 
 }
 
@@ -342,6 +346,7 @@ update_status ModulePlayer::Update()
 					break;
 				case ST_DEATH:
 					current_animation = &Death;
+					App->audio->PlayChunk(deathSound, 0);
 					break;
 				}
 			}
