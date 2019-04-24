@@ -377,9 +377,12 @@ bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
 	static bool up = false;
 
 	SDL_Event event;
-	
-	while (SDL_PollEvent(&event) != 0)
-	{
+	int max = App->input->eventList.size();
+	//while (SDL_PollEvent(&event) != 0)
+	for(int a=0; a < max; ++a)
+	{		
+		event = App->input->eventList.front();
+		App->input->eventList.pop_front();
 		if (event.type == SDL_KEYUP && event.key.repeat == 0)
 		{
 			switch (event.key.keysym.sym)
@@ -437,6 +440,7 @@ bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
 				break;
 			}
 		}
+		App->input->eventList.push_back(event);
 	}
 
 	if (left && right)

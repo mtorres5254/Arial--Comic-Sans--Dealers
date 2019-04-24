@@ -305,30 +305,29 @@ bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)
 	static bool up = false;
 
 	SDL_Event event;
-
-	while (SDL_PollEvent(&event) != 0) //Always find no events to poll why?
+	int max = App->input->eventList.size();
+	//while (SDL_PollEvent(&event) != 0) //Always find no events to poll why?
+	for (int a = 0; a < max; ++a)
 	{
+		event = App->input->eventList.front();
+		App->input->eventList.pop_front();
 		LOG("Events detected"); // Never enters
 		if (event.type == SDL_KEYUP && event.key.repeat == 0)
 		{
 			switch (event.key.keysym.sym)
 			{
-			case SDLK_n:
-				LOG("N");
+			case SDLK_3://Crouch
 				inputs.Push(IN_CROUCH_UP);
 				down = false;
 				break;
-			case SDLK_j:
-				LOG("J");
+			case SDLK_4://Jump
 				up = false;
 				break;
-			case SDLK_b:
-				LOG("B");
+			case SDLK_1://Left
 				inputs.Push(IN_LEFT_UP);
 				left = false;
 				break;
-			case SDLK_m:
-				LOG("B");
+			case SDLK_2://Right
 				inputs.Push(IN_RIGHT_UP);
 				right = false;
 				break;
@@ -356,24 +355,21 @@ bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)
 			case SDLK_h:
 				inputs.Push(IN_H);
 				break;
-			case SDLK_j:
-				LOG("J");
+			case SDLK_4:
 				up = true;
 				break;
-			case SDLK_n:
-				LOG("N");
+			case SDLK_3:
 				down = true;
 				break;
-			case SDLK_b:
-				LOG("B");
+			case SDLK_1:
 				left = true;
 				break;
-			case SDLK_m:
-				LOG("M");
+			case SDLK_2:
 				right = true;
 				break;
 			}
 		}
+		App->input->eventList.push_back(event);
 	}
 
 	if (left && right)
@@ -394,7 +390,6 @@ bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)
 		if (up)
 			inputs.Push(IN_JUMP);
 	}
-	SDL_PushEvent(&event);
 	return true;
 }
 
