@@ -15,6 +15,7 @@
 #define PUNCH_TIME 150
 #define KICK_TIME 400
 #define HADOUKEN_TIME 1500
+#define MAX_LIFE 1000;
 
 struct SDL_Texture;
 
@@ -64,8 +65,8 @@ private:
 	Collider* crouchpunchcollider;
 	Collider* kickcollider;
 
-	int life = 1000;
-	int healthbar = life / 10000;
+	int life = MAX_LIFE;
+	int healthbar = life / MAX_LIFE;
 
 
 

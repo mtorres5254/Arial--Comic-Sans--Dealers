@@ -32,6 +32,7 @@ public:
 public:
 	KEY_STATE keyboard[MAX_KEYS];
 	std::list<SDL_Event> eventList;
+	bool camMoving,border;
 };
 
 #endif // __ModuleInput_H__

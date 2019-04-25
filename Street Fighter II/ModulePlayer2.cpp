@@ -157,7 +157,7 @@ update_status ModulePlayer2::Update()
 						{
 							if (App->render->camera.x > -1004)
 							{
-								App->render->camera.x -= 5;
+								App->render->camera.x -= speed*2;
 							}
 							//LOG("Cam posx: %d", camera.x);
 							//LOG("Cam posxMax: %d", App->render->camera.x - SCREEN_WIDTH);
@@ -182,7 +182,7 @@ update_status ModulePlayer2::Update()
 						{
 							if (App->render->camera.x < 0)
 							{
-								App->render->camera.x += 5;
+								App->render->camera.x += speed*2;
 							}
 						}
 						//LOG("Player posx: %d",-position.x);

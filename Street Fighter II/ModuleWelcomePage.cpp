@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
-#include "ModuleSceneKen.h"
+#include "ModuleSceneRyu.h"
 #include "ModulePlayer.h"
 #include "ModuleInput.h"
 #include "ModuleFadeToBlack.h"
@@ -55,7 +55,7 @@ update_status ModuleWelcomePage::Update()
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
 
-		App->fade->FadeToBlack(App->welcome_page, App->scene_ken, 2.0f);
+		App->fade->FadeToBlack(App->welcome_page, App->scene_ryu, 2.0f);
 		App->audio->StopMusic(2500);
 	}
 

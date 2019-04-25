@@ -152,11 +152,11 @@ bool ModulePlayer::Start()
 	position.x = 100; //Returns to its original position
 	
 	//Sounds
-	deathSound = App->audio->LoadChunk("Assets/Sound/ryu-death.wav");
+	//deathSound = App->audio->LoadChunk("Assets/Sound/ryu-death.wav");
 
 	//Add a collider to the player
 	colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER,App->player);
-	life = 1000;
+	life = MAX_LIFE;
 	death = false;
 	
 	return ret;
@@ -195,13 +195,12 @@ update_status ModulePlayer::Update()
 			GodMode = false;
 		}
 	}
-	if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) {
-		if (death == false) {
-			life = 0;
-		}
-		else if (death == true) {
-			life = 1000;
-			death = false;
+	if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) 
+	{
+		life = 0;
+		if (life == 0) 
+		{
+			inputs.Push(IN_DEATH);
 		}
 	}
 
@@ -232,11 +231,11 @@ update_status ModulePlayer::Update()
 					if (position.x < 825)
 					{
 						position.x += speed;
-						if (-((position.x - 60)*2) <= App->render->camera.x - SCREEN_WIDTH)
+						if (-((position.x - 60)*2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving==false)
 						{
 							if (App->render->camera.x > -1004)
 							{
-								App->render->camera.x -= 5;
+								App->render->camera.x -= speed*2;
 							}
 						}
 						
@@ -258,7 +257,7 @@ update_status ModulePlayer::Update()
 						{
 							if (App->render->camera.x < 0)
 							{
-								App->render->camera.x += 5;
+								App->render->camera.x += speed*2;
 							}
 						}						
 						//LOG("Player posx: %d",-position.x);
