@@ -7,7 +7,7 @@
 #include "ModuleInput.h"
 #include "ModuleFadeToBlack.h"
 #include "Module.h"
-#include "ModuleSceneHonda.h"
+#include "ModuleCongratsScreen.h"
 #include "ModuleAudio.h"
 #include "ModulePlayer2.h"
 #include "ModuleCollision.h"
@@ -115,9 +115,8 @@ update_status ModuleSceneKen::Update()
 
 	// TODO 2: make so pressing SPACE the HONDA stage is loaded
 
-	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
-		
-		App->fade->FadeToBlack(App->scene_ken, App->scene_honda, 2.0f);	
+	if (App->player->death == true) {
+		App->fade->FadeToBlack(App->scene_ken, App->congrats_screen, 2.0f);	
 		App->audio->StopMusic(3000);
 		
 	}

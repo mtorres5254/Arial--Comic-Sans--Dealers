@@ -158,6 +158,7 @@ bool ModulePlayer::Start()
 	
 	//Add a collider to the player
 	colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER,App->player);
+	life = MAX_LIFE;
 	
 	return ret;
 }
@@ -182,6 +183,7 @@ update_status ModulePlayer::Update()
 	
 	int speed = 1;
 
+	//Debug Commands
 	if (App->input->keyboard[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
 		if (GodMode == false) {
 			App->collision->DeleteCollider(colliderplayer);
@@ -194,16 +196,14 @@ update_status ModulePlayer::Update()
 			GodMode = false;
 		}
 	}
-
 	if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) {
 		life = 0;
 	}
 
+
 	if (life == 0) {
 		inputs.Push(IN_DEATH);
 	}
-
-
 		while (external_input(inputs))
 		{
 
@@ -347,6 +347,7 @@ update_status ModulePlayer::Update()
 				case ST_DEATH:
 					current_animation = &Death;
 					App->audio->PlayChunk(deathSound, 0);
+					death = true;
 					break;
 				}
 			}

@@ -342,7 +342,7 @@ bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)
 				break;
 			}
 		}
-		if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
+		/*if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
 		{
 			switch (event.key.keysym.sym)
 			{
@@ -368,7 +368,7 @@ bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)
 				right = true;
 				break;
 			}
-		}
+		}*/
 		App->input->eventList.push_back(event);
 	}
 
