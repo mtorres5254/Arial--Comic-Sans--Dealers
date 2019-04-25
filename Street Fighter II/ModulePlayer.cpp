@@ -138,11 +138,6 @@ ModulePlayer::ModulePlayer()
 	jump_neutral_punch.PushBack({ 97,985,81,71 });
 	jump_neutral_punch.speed = 0.1f;
 
-
-
-	//Sounds
-	//deathSound = App->audio->LoadChunk("Game/Assets/Sound/ryu-death.wav");
-
 }
 
 ModulePlayer::~ModulePlayer()
@@ -156,9 +151,13 @@ bool ModulePlayer::Start()
 	graphics = App->textures->Load("Assets/Images/ryu.png"); // arcade version
 	position.x = 100; //Returns to its original position
 	
+	//Sounds
+	//deathSound = App->audio->LoadChunk("Assets/Sound/ryu-death.wav");
+
 	//Add a collider to the player
 	colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER,App->player);
 	life = MAX_LIFE;
+	death = false;
 	
 	return ret;
 }
@@ -168,6 +167,7 @@ bool ModulePlayer::CleanUp()
 	LOG("Unloading Player textures");
 
 	App->textures->Unload(graphics);
+	App->audio->UnloadChunk(deathSound);
 
 	return true;
 }
@@ -196,15 +196,17 @@ update_status ModulePlayer::Update()
 			GodMode = false;
 		}
 	}
-	if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) 
+	{
 		life = 0;
+		if (life == 0) 
+		{
+			inputs.Push(IN_DEATH);
+		}
 	}
 
 
-	if (life == 0) {
-		inputs.Push(IN_DEATH);
-	}
-		while (external_input(inputs))
+	while (external_input(inputs))
 		{
 
 			internal_input(inputs);
@@ -230,18 +232,15 @@ update_status ModulePlayer::Update()
 					if (position.x < 825)
 					{
 						position.x += speed;
-						if (-((position.x - 60)*2) <= App->render->camera.x - SCREEN_WIDTH)
+						if (-((position.x - 60)*2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving==false)
 						{
 							if (App->render->camera.x > -1004)
 							{
-								App->render->camera.x -= 5;
+								App->render->camera.x -= speed*2;
 							}
-							//LOG("Cam posx: %d", camera.x);
-							LOG("Cam posxMax: %d",App->render->camera.x - SCREEN_WIDTH);
 						}
 						
 					}
-					//LOG("Player posx: %d", position.x);
 					current_animation = &forward;
 					crouch.Reset();
 					kick.Reset();
@@ -259,7 +258,7 @@ update_status ModulePlayer::Update()
 						{
 							if (App->render->camera.x < 0)
 							{
-								App->render->camera.x += 5;
+								App->render->camera.x += speed*2;
 							}
 						}						
 						//LOG("Player posx: %d",-position.x);
@@ -466,6 +465,10 @@ bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
 			inputs.Push(IN_CROUCH_DOWN);
 		if (up)
 			inputs.Push(IN_JUMP);
+	}
+
+	if (life == 0) {
+		inputs.Push(IN_DEATH);
 	}
 
 	return true;
