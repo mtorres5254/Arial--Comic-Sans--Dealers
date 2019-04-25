@@ -114,7 +114,7 @@ update_status ModulePlayer2::Update()
 
 			GodMode = false;
 		}*/
-		LOG("Detected");
+		//LOG("Detected");
 	}
 
 	/*if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) {
@@ -160,7 +160,7 @@ update_status ModulePlayer2::Update()
 								App->render->camera.x -= speed*2;
 							}
 							//LOG("Cam posx: %d", camera.x);
-							LOG("Cam posxMax: %d", App->render->camera.x - SCREEN_WIDTH);
+							//LOG("Cam posxMax: %d", App->render->camera.x - SCREEN_WIDTH);
 						}
 
 					}
@@ -311,7 +311,7 @@ bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)
 	{
 		event = App->input->eventList.front();
 		App->input->eventList.pop_front();
-		LOG("Events detected"); // Never enters
+		//LOG("Events detected"); // Never enters
 		if (event.type == SDL_KEYUP && event.key.repeat == 0)
 		{
 			switch (event.key.keysym.sym)
@@ -342,7 +342,7 @@ bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)
 				break;
 			}
 		}
-		if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
+		/*if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
 		{
 			switch (event.key.keysym.sym)
 			{
@@ -368,7 +368,7 @@ bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)
 				right = true;
 				break;
 			}
-		}
+		}*/
 		App->input->eventList.push_back(event);
 	}
 

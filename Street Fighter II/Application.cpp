@@ -14,6 +14,7 @@
 #include "ModulePlayer2.h"
 #include "ModuleCollision.h"
 #include "ModuleUI.h"
+#include "ModuleLoseScene.h"
 
 Application::Application()
 {
@@ -32,6 +33,7 @@ Application::Application()
 	modules[12] = particle = new ModuleParticles();
 	modules[13] = collision = new ModuleCollision();
 	modules[14] = UI = new ModuleUI();
+	modules[15] = lose_scene = new ModuleLoseScene();
 	
 }	
 
@@ -51,6 +53,7 @@ bool Application::Init()
 	// Disable the map that you do not start with
 	scene_honda->Disable();
 	scene_ken->Disable();
+	lose_scene->Disable();
 	congrats_screen->Disable();
 	collision->Disable();
 	UI->Disable();
