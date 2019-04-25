@@ -167,7 +167,6 @@ bool ModulePlayer::CleanUp()
 	LOG("Unloading Player textures");
 
 	App->textures->Unload(graphics);
-	App->audio->UnloadChunk(deathSound);
 
 	return true;
 }
@@ -384,7 +383,6 @@ bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
 
 	SDL_Event event;
 	int max = App->input->eventList.size();
-	//while (SDL_PollEvent(&event) != 0)
 	for(int a=0; a < max; ++a)
 	{		
 		event = App->input->eventList.front();
