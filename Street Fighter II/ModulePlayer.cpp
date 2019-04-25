@@ -152,11 +152,11 @@ bool ModulePlayer::Start()
 	position.x = 100; //Returns to its original position
 	
 	//Sounds
-	//deathSound = App->audio->LoadChunk("Assets/Sound/ryu-death.wav");
+	deathSound = App->audio->LoadChunk("Assets/Sound/ryu-death.wav");
 
 	//Add a collider to the player
 	colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER,App->player);
-	life = MAX_LIFE;
+	life = 1000;
 	death = false;
 	
 	return ret;
@@ -198,13 +198,12 @@ update_status ModulePlayer::Update()
 	if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) 
 	{
 		life = 0;
-		if (life == 0) 
-		{
-			inputs.Push(IN_DEATH);
-		}
 	}
 
-
+	if (life == 0)
+	{
+		inputs.Push(IN_DEATH);
+	}
 	while (external_input(inputs))
 		{
 
@@ -463,10 +462,6 @@ bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
 			inputs.Push(IN_CROUCH_DOWN);
 		if (up)
 			inputs.Push(IN_JUMP);
-	}
-
-	if (life == 0) {
-		inputs.Push(IN_DEATH);
 	}
 
 	return true;
