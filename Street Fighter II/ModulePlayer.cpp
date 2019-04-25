@@ -138,11 +138,6 @@ ModulePlayer::ModulePlayer()
 	jump_neutral_punch.PushBack({ 97,985,81,71 });
 	jump_neutral_punch.speed = 0.1f;
 
-
-
-	//Sounds
-	//deathSound = App->audio->LoadChunk("Game/Assets/Sound/ryu-death.wav");
-
 }
 
 ModulePlayer::~ModulePlayer()
@@ -156,9 +151,13 @@ bool ModulePlayer::Start()
 	graphics = App->textures->Load("Assets/Images/ryu.png"); // arcade version
 	position.x = 100; //Returns to its original position
 	
+	//Sounds
+	deathSound = App->audio->LoadChunk("Assets/Sound/ryu-death.wav");
+
 	//Add a collider to the player
 	colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER,App->player);
-	life = MAX_LIFE;
+	life = 1000;
+	death = false;
 	
 	return ret;
 }
@@ -168,6 +167,7 @@ bool ModulePlayer::CleanUp()
 	LOG("Unloading Player textures");
 
 	App->textures->Unload(graphics);
+	App->audio->UnloadChunk(deathSound);
 
 	return true;
 }
@@ -197,14 +197,17 @@ update_status ModulePlayer::Update()
 		}
 	}
 	if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) {
-		life = 0;
+		if (death == false) {
+			life = 0;
+		}
+		else if (death == true) {
+			life = 1000;
+			death = false;
+		}
 	}
 
 
-	if (life == 0) {
-		inputs.Push(IN_DEATH);
-	}
-		while (external_input(inputs))
+	while (external_input(inputs))
 		{
 
 			internal_input(inputs);
@@ -236,12 +239,9 @@ update_status ModulePlayer::Update()
 							{
 								App->render->camera.x -= 5;
 							}
-							//LOG("Cam posx: %d", camera.x);
-							LOG("Cam posxMax: %d",App->render->camera.x - SCREEN_WIDTH);
 						}
 						
 					}
-					//LOG("Player posx: %d", position.x);
 					current_animation = &forward;
 					crouch.Reset();
 					kick.Reset();
@@ -466,6 +466,10 @@ bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
 			inputs.Push(IN_CROUCH_DOWN);
 		if (up)
 			inputs.Push(IN_JUMP);
+	}
+
+	if (life == 0) {
+		inputs.Push(IN_DEATH);
 	}
 
 	return true;

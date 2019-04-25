@@ -113,7 +113,6 @@ update_status ModuleSceneKen::Update()
 	
 	App->render->Blit(graphics, 0, 170, &ground);
 
-	// TODO 2: make so pressing SPACE the HONDA stage is loaded
 
 	if (App->player->death == true) {
 		App->fade->FadeToBlack(App->scene_ken, App->congrats_screen, 2.0f);	
