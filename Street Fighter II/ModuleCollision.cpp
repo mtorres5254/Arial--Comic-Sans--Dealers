@@ -78,6 +78,7 @@ update_status ModuleCollision::PreUpdate()
 
 			if(c1->CheckCollision(c2->rect) == true)
 			{
+				LOG("NANI");
 				if(matrix[c1->type][c2->type] && c1->callback) 
 					c1->callback->OnCollision(c1, c2);
 				
@@ -173,11 +174,12 @@ Collider* ModuleCollision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, Module
 
 // -----------------------------------------------------
 
-//SDL_IntersectRect(&Player, &Enemy1, &Collider) == SDL_TRUE)
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
-	
-	return!((r.x + r.w < rect.x) || (r.x > rect.x + rect.w) || (r.y + r.h < rect.y) || (r.y > rect.y + rect.h));
+	return (rect.x < r.x + r.w &&
+		rect.x + rect.w > r.x &&
+		rect.y < r.y + r.h &&
+		rect.h + rect.y > r.y);
 
 }
 
