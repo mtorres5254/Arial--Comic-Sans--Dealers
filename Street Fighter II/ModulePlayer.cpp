@@ -368,10 +368,10 @@ update_status ModulePlayer::Update()
 	
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
-		//LOG("colision detected");
+		LOG("colision detected");
 		if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY) 
 		{
-			movef = false;
+			LOG("Fulgencious");
 		}
 }
 
