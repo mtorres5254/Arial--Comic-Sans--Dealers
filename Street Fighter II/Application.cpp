@@ -15,6 +15,7 @@
 #include "ModuleCollision.h"
 #include "ModuleUI.h"
 #include "ModuleLoseScene.h"
+#include "ModuleSceneRyu.h"
 
 Application::Application()
 {
@@ -26,14 +27,15 @@ Application::Application()
 	modules[5] = congrats_screen = new ModuleCongratsScreen();
 	modules[6] = scene_honda = new ModuleSceneHonda();
 	modules[7] = scene_ken = new ModuleSceneKen();
-	modules[8] = player = new ModulePlayer();	
-	modules[9] = player2 = new ModulePlayer2();
-	modules[10] = fade = new ModuleFadeToBlack();
-	modules[11] = welcome_page = new ModuleWelcomePage();
-	modules[12] = particle = new ModuleParticles();
-	modules[13] = collision = new ModuleCollision();
-	modules[14] = UI = new ModuleUI();
-	modules[15] = lose_scene = new ModuleLoseScene();
+	modules[8] = scene_ryu = new ModuleSceneRyu();
+	modules[9] = player = new ModulePlayer();	
+	modules[10] = player2 = new ModulePlayer2();
+	modules[11] = fade = new ModuleFadeToBlack();
+	modules[12] = welcome_page = new ModuleWelcomePage();
+	modules[13] = particle = new ModuleParticles();
+	modules[14] = collision = new ModuleCollision();
+	modules[15] = UI = new ModuleUI();
+	modules[16] = lose_scene = new ModuleLoseScene();
 	
 }	
 
@@ -53,6 +55,7 @@ bool Application::Init()
 	// Disable the map that you do not start with
 	scene_honda->Disable();
 	scene_ken->Disable();
+	scene_ryu->Disable();
 	lose_scene->Disable();
 	congrats_screen->Disable();
 	collision->Disable();
