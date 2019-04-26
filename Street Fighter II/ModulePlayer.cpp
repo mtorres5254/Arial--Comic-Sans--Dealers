@@ -222,7 +222,7 @@ update_status ModulePlayer::Update()
 
 		ryu_states state = process_fsm(inputs);
 
-		if (state != current_state)
+		if (state != current_state )
 		{
 			switch (state)
 			{
@@ -263,7 +263,9 @@ update_status ModulePlayer::Update()
 					movef = true;
 				}
 				break;
+
 			case ST_WALK_BACKWARD:
+				if (moveb == true) {
 					current_animation = &backward;
 					if (position.x > 0)
 					{
@@ -282,6 +284,10 @@ update_status ModulePlayer::Update()
 					hadouken_pose.Reset();
 					HadoukenCount = 0;
 					ActiveHadouken = 0;
+				}
+				else if (moveb == true) {
+					moveb = true;
+				}
 				break;
 			case ST_JUMP_NEUTRAL:
 				JumpCount = 1;
@@ -436,7 +442,7 @@ update_status ModulePlayer::Update()
 				break;
 			}
 
-			current_state = state;
+			
 
 			//Logic
 			healthbar = life * 0.153;
@@ -444,11 +450,27 @@ update_status ModulePlayer::Update()
 			if (life < 0) {
 				life = 0;
 			}
+			
 			if (life == 0)
 			{
 				current_animation = &Death;
-				App->audio->PlayChunk(deathSound, 0);
-				ResetPlayer();
+				if (DeathCount == 1) {
+					App->audio->PlayChunk(deathSound, 0);
+				}
+				if (DeathCount < 80)
+					DeathCount++;			
+				if (DeathCount == 80 && ActiveDeath == 0) {
+					DeathCount = 0;				
+					
+					ResetPlayer();
+					victorycount++;
+					ActiveDeath=1;
+					
+				}
+				
+				current_state = state;
+				
+				//ResetPlayer();
 			}
 
 			// Draw everything --------------------------------------
