@@ -167,7 +167,7 @@ bool ModulePlayer2::Start()
 	position.x = 300; //Returns to its original position
 
 	//Add a collider to the player
-	colliderplayer = App->collision->AddCollider({ position.x,position.y - 90, 60, 90 }, COLLIDER_ENEMY, App->player2);
+	colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
 
 	return ret;
 }
@@ -199,7 +199,7 @@ update_status ModulePlayer2::Update()
 			GodMode = true;
 		}
 		else if (GodMode == true) {
-			colliderplayer = App->collision->AddCollider({ position.x,position.y - 90, 60, 90 }, COLLIDER_ENEMY, App->player2);
+			colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
 
 			GodMode = false;
 		}
@@ -440,7 +440,7 @@ update_status ModulePlayer2::Update()
 			App->render->Blit(graphics, position.x, position.y - r.h, &r);
 
 			//Update collider position to player position
-			colliderplayer->SetPos(position.x, position.y - 90);
+			colliderplayer->SetPos(position.x + 7, position.y - 90);
 
 			return UPDATE_CONTINUE;
 		}
