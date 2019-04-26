@@ -172,7 +172,7 @@ bool ModulePlayer::Start()
 	deathSound = App->audio->LoadChunk("Assets/Sound/ryu-death.wav");
 
 	//Add a collider to the player
-	colliderplayer = App->collision->AddCollider({ position.x,position.y - 90,60,90 }, COLLIDER_PLAYER, App->player);
+	colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_PLAYER, App->player);
 	
 	return ret;
 }
@@ -205,7 +205,7 @@ update_status ModulePlayer::Update()
 			GodMode = true;
 		}
 		else if (GodMode == true) {
-			colliderplayer = App->collision->AddCollider({ position.x,position.y - 90, 60, 90 }, COLLIDER_PLAYER, this);
+			colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_PLAYER, this);
 
 			GodMode = false;
 		}
@@ -296,7 +296,7 @@ update_status ModulePlayer::Update()
 						JumpMax = false;
 						JumpMin = true;
 					}
-					if (position.y <= 110) {
+					if (position.y <= 105) {
 						JumpMin = false;
 						JumpMax = true;
 					}
@@ -316,7 +316,7 @@ update_status ModulePlayer::Update()
 			case ST_JUMP_FORWARD:
 				if (position.x < 825)
 				{
-					position.x += speed;
+					position.x += speed * 1.5;
 					if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving == false)
 					{
 						if (App->render->camera.x > -1004)
@@ -479,7 +479,7 @@ update_status ModulePlayer::Update()
 			App->render->Blit(graphics, position.x, position.y - r.h, &r);
 
 			//Update collider position to player position
-			colliderplayer->SetPos(position.x, position.y - 90);
+			colliderplayer->SetPos(position.x + 7, position.y - 90);
 
 			return UPDATE_CONTINUE;
 		}
