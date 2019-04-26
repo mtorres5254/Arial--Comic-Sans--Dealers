@@ -22,26 +22,27 @@ ModulePlayer2::ModulePlayer2()
 	idle.speed = 0.175f;
 
 	// walk forward animation (arcade sprite sheet)
-	forward.PushBack({ 180, 129, 57, 89 });
-	forward.PushBack({ 270, 128, 58, 91 });
-	forward.PushBack({ 259, 128, 63, 90 });//continuar aqui
-	forward.PushBack({ 352, 128, 54, 91 });
-	forward.PushBack({ 432, 131, 50, 89 });
+	forward.PushBack({ 729, 131, 50, 89 });
+	forward.PushBack({ 805, 128, 54, 91 });
+	forward.PushBack({ 889, 128, 63, 90 });
+	forward.PushBack({ 985, 128, 64, 92 });
+	forward.PushBack({ 1073, 131, 60, 88 });
+	forward.PushBack({ 1149, 136, 53, 83 });
 	forward.speed = 0.15f;
 
 	// walk backward animation
-	backward.PushBack({ 542,127,61,91 });
-	backward.PushBack({ 628,127,60,91 });
-	backward.PushBack({ 713,127,58,91 });
-	backward.PushBack({ 797,127,58,91 });
-	backward.PushBack({ 883,127,57,91 });
-	backward.PushBack({ 974,127,57,91 });
+	backward.PushBack({ 180, 129, 57, 89 });
+	backward.PushBack({ 270, 128, 58, 91 });
+	backward.PushBack({ 356, 127, 58, 90 });
+	backward.PushBack({ 441, 128, 57, 90 });
+	backward.PushBack({ 524, 129, 59, 90 });
+	backward.PushBack({ 608, 131, 61, 87 });
 	backward.speed = 0.1f;
 
 	//punch animation
-	punch.PushBack({ 19,272,64,91 });
-	punch.PushBack({ 108,272,92,91 });
-	punch.PushBack({ 19,272,64,91 });
+	punch.PushBack({ 1128,272,64,91 });
+	punch.PushBack({ 1011,272,92,91 });
+	punch.PushBack({ 1128,272,64,91 });
 	punch.speed = 0.2f;
 
 	//kick animation
@@ -145,7 +146,7 @@ bool ModulePlayer2::Start()
 	position.x = 300; //Returns to its original position
 
 	//Add a collider to the player
-	colliderplayer = App->collision->AddCollider({ position.x,position.y + 90,60,90 }, COLLIDER_ENEMY, App->player2);
+	colliderplayer = App->collision->AddCollider({ position.x,position.y - 90, 60, 90 }, COLLIDER_ENEMY, App->player2);
 
 	return ret;
 }
@@ -170,20 +171,20 @@ update_status ModulePlayer2::Update()
 
 	int speed = 1;
 
-	if (App->input->keyboard[SDL_SCANCODE_Y] == KEY_STATE::KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_F2] == KEY_STATE::KEY_DOWN) {
 		if (GodMode == false) {
 			App->collision->DeleteCollider(colliderplayer);
 
 			GodMode = true;
 		}
 		else if (GodMode == true) {
-			colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER, this);
+			colliderplayer = App->collision->AddCollider({ position.x,position.y - 90, 60, 90 }, COLLIDER_ENEMY, App->player2);
 
 			GodMode = false;
 		}
 	}
 
-	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN) { //Treu-re abans d'entregar
 		life = 0;
 	}
 
@@ -216,29 +217,28 @@ update_status ModulePlayer2::Update()
 					ActiveHadouken = 0;
 					break;
 				case ST_WALK_FORWARD:
-						if (position.x < 825)
+					current_animation = &backward;
+					if (position.x < 825)
+					{
+						position.x += speed;
+						if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH)
 						{
-							position.x += speed;
-							if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH)
+							if (App->render->camera.x > -1004)
 							{
-								if (App->render->camera.x > -1004)
-								{
-									App->render->camera.x -= speed * 2;
-								}
+								App->render->camera.x -= speed * 2;
 							}
-
 						}
-						current_animation = &forward;
-						crouch.Reset();
-						kick.Reset();
-						punch.Reset();
-						hadouken_pose.Reset();
-						HadoukenCount = 0;
-						ActiveHadouken = 0;
+					}
+					crouch.Reset();
+					kick.Reset();
+					punch.Reset();
+					hadouken_pose.Reset();
+					HadoukenCount = 0;
+					ActiveHadouken = 0;
 					break;
 				case ST_WALK_BACKWARD:
 					if (moveb == true) {
-						current_animation = &backward;
+						current_animation = &forward;
 						if (position.x > 0)
 						{
 							position.x -= (0.6 *speed);
@@ -299,12 +299,12 @@ update_status ModulePlayer2::Update()
 					break;
 				case ST_PUNCH_STANDING:
 					current_animation = &punch;
-					punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_ENEMY_SHOT, this);
+					punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_ENEMY_SHOT, App->player2, 50);
 					App->collision->DeleteCollider(punchcollider);
 					break;
 				case ST_PUNCH_CROUCH:
 					current_animation = &Crouch_punch;
-					crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_ENEMY_SHOT, this);
+					crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_ENEMY_SHOT, App->player2, 50);
 					App->collision->DeleteCollider(crouchpunchcollider);
 					break;
 				case ST_PUNCH_NEUTRAL_JUMP:
@@ -319,7 +319,7 @@ update_status ModulePlayer2::Update()
 					break;
 				case ST_KICK_STANDING:
 					current_animation = &kick;
-					kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 27 }, COLLIDER_ENEMY_SHOT, this);
+					kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 27 }, COLLIDER_ENEMY_SHOT, App->player2, 50);
 					App->collision->DeleteCollider(kickcollider);
 					break;
 				case ST_HADOUKEN:
@@ -328,8 +328,8 @@ update_status ModulePlayer2::Update()
 						HadoukenCount++;
 					}
 					if (HadoukenCount == 35 && ActiveHadouken == 0) {
-						App->particle->AddParticle(App->particle->hadouken, position.x + 65, position.y - 70, COLLIDER_ENEMY_SHOT, 0);
-						App->audio->PlayChunk(App->particle->hadouken.sound, 0);
+						App->particle->AddParticle(App->particle->hadoukenSym, position.x + 65, position.y - 70, COLLIDER_ENEMY_SHOT, 0);
+						App->audio->PlayChunk(App->particle->hadoukenSym.sound, 0);
 						HadoukenCount = 0;
 						ActiveHadouken = 1;
 					}
@@ -361,6 +361,11 @@ void ModulePlayer2::OnCollision(Collider* c1, Collider* c2) {
 	{
 		moveb = false;
 	}
+	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER_ATTACK) {
+		int aux = life;
+		life = aux - c2->damage;
+	}
+
 }
 
 bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)

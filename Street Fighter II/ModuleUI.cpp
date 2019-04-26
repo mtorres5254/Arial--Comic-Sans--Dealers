@@ -5,7 +5,6 @@
 #include "ModuleRender.h"
 #include "ModulePlayer.h"
 #include "ModulePlayer2.h"
-
 #include "ModuleUI.h"
 
 ModuleUI::ModuleUI() {
@@ -16,11 +15,21 @@ ModuleUI::ModuleUI() {
 	HealthBar1.w = 153;
 	HealthBar1.h = 19;
 
+	RedBar1.x = 43;
+	RedBar1.y = 54;
+	RedBar1.w = 153;
+	RedBar1.h = 19;
+
 	//HealthBar2
 	HealthBar2.x = 284;
 	HealthBar2.y = 24;
 	HealthBar2.w = 153;
 	HealthBar2.h = 19;
+
+	RedBar2.x = 284;
+	RedBar2.y = 54;
+	RedBar2.w = 153;
+	RedBar2.h = 19;
 
 	//KOBar
 
@@ -64,9 +73,11 @@ update_status ModuleUI:: Update(){
 	HealthBar2.w = App->player2->healthbar;
 
 	//Render
-	App->render->Blit(graphics1, SCREEN_WIDTH/2-HealthBar1.w -KObar.w/2, 20, &HealthBar1, false);
-	App->render->Blit(graphics2, SCREEN_WIDTH/2 + KObar.w/2, 20, &HealthBar2, false);
-	App->render->Blit(graphics1, SCREEN_WIDTH/2 - (KObar.w / 2), 15, &KObar, false);
+	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - RedBar1.w - KObar.w / 2, 20, &RedBar1, false);
+	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - HealthBar1.w - KObar.w / 2, 20, &HealthBar1, false);
+	App->render->Blit(graphics2, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &RedBar2, false);
+	App->render->Blit(graphics2, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &HealthBar2, false);
+	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - (KObar.w / 2), 15, &KObar, false);
 
 	
 	return UPDATE_CONTINUE;

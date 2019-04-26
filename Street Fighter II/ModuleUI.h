@@ -24,7 +24,9 @@ public:
 	SDL_Texture* graphics2 = nullptr;
 
 	SDL_Rect HealthBar1;
+	SDL_Rect RedBar1;
 	SDL_Rect HealthBar2;
+	SDL_Rect RedBar2;
 	SDL_Rect KObar;
 
 };

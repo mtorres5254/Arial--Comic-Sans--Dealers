@@ -25,6 +25,7 @@ struct Particle
 	Uint32 life = 0;
 	bool fx_played = false;
 	Mix_Chunk* sound = nullptr;
+	int damage = 0;
 
 	Particle();
 	Particle(const Particle& p);
@@ -54,6 +55,9 @@ public:
 
 	Particle hadouken;
 	Particle hadoukenFinish;
+	Particle hadoukenSym;
+	Particle hadoukenFinishSym;
+	
 	
 };
 
