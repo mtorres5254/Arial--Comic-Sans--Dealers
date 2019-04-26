@@ -5,10 +5,11 @@
 #include "Animation.h"
 #include "Globals.h"
 #include "p2Point.h"
-
 #include <string.h>
 #include "p2Qeue.h"
+
 #include "SDL\include\SDL.h"
+#include "SDL_mixer/include/SDL_mixer.h"
 
 #define JUMP_TIME 1500
 #define PUNCH_TIME 150
@@ -32,6 +33,7 @@ public:
 public:
 
 	SDL_Texture* graphics = nullptr;
+	Mix_Chunk* deathSound;
 	Animation idle;
 	Animation forward;
 	Animation backward;
@@ -47,7 +49,6 @@ public:
 	Animation jump_neutral_punch;
 	Animation Death;
 	iPoint position;
-	//bool PunchFinish = true;
 	int HadoukenCount = 0;
 	int ActiveHadouken = 0;
 	int JumpCount = 0;
@@ -55,19 +56,17 @@ public:
 	bool JumpMax = false;
 	bool movef = true;
 	bool moveb = true;
-
+	bool death = false;
 	bool GodMode = false;
 	
-////////////////////////////////////////////////////////
 private:
-	Collider* colliderplayer2;
+	Collider * colliderplayer;
 	Collider* punchcollider;
 	Collider* crouchpunchcollider;
 	Collider* kickcollider;
 
 	int life = 1000;
 	int healthbar = life / 10000;
-	bool death = false;
 
 	enum ryu2_states
 	{
@@ -186,7 +185,6 @@ private:
 			{
 				switch (last_input)
 				{
-					// TODO: Add links
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
 				case IN_P: state = ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 				}
@@ -197,7 +195,6 @@ private:
 			{
 				switch (last_input)
 				{
-					// TODO: Add Links
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
 				case IN_P: state = ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 				}
@@ -208,10 +205,8 @@ private:
 			{
 				switch (last_input)
 				{
-					// TODO: Add Links
 				case IN_PUNCH_FINISH: state = ST_JUMP_NEUTRAL; break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
-
 				}
 			}
 			break;
@@ -220,7 +215,6 @@ private:
 			{
 				switch (last_input)
 				{
-					// TODO: Add Links
 				case IN_PUNCH_FINISH: state = ST_JUMP_FORWARD; break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
 				}
@@ -231,10 +225,8 @@ private:
 			{
 				switch (last_input)
 				{
-					// TODO: Add Links
 				case IN_PUNCH_FINISH: state = ST_JUMP_BACKWARD; break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
-
 				}
 			}
 			break;
@@ -292,7 +284,6 @@ private:
 		}
 		return state;
 	}
-	//////////////////////////////////////
 };
 
 #endif

@@ -9,8 +9,6 @@
 #include "ModuleCollision.h"
 #include "ModulePlayer2.h"
 
-
-
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModulePlayer::ModulePlayer()
@@ -27,7 +25,6 @@ ModulePlayer::ModulePlayer()
 	idle.speed = 0.175f;
 
 	// walk forward animation (arcade sprite sheet)
-	//forward.frames.PushBack({9, 136, 53, 83});
 	forward.PushBack({78, 131, 60, 88});
 	forward.PushBack({162, 128, 64, 92});
 	forward.PushBack({259, 128, 63, 90});
@@ -179,7 +176,7 @@ update_status ModulePlayer::Update()
 	Animation* current_animation = &idle;
 	p2Qeue<ryu_inputs> inputs;
 	ryu_states current_state = ST_UNKNOWN;
-	
+
 	int speed = 1;
 
 	//Debug Commands
@@ -195,161 +192,157 @@ update_status ModulePlayer::Update()
 			GodMode = false;
 		}
 	}
-	if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) 
+	if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN)
 	{
 		life = 0;
 	}
 
-	if (life == 0)
-	{
-		inputs.Push(IN_DEATH);
-	}
+
 	while (external_input(inputs))
+	{
+
+		internal_input(inputs);
+
+		ryu_states state = process_fsm(inputs);
+
+		if (state != current_state)
 		{
-
-			internal_input(inputs);
-
-			ryu_states state = process_fsm(inputs);
-
-			if (state != current_state)
+			switch (state)
 			{
-				switch (state)
+			case ST_IDLE:
+				current_animation = &idle;
+				forward.Reset();
+				backward.Reset();
+				crouch.Reset();
+				kick.Reset();
+				punch.Reset();
+				hadouken_pose.Reset();
+				HadoukenCount = 0;
+				ActiveHadouken = 0;
+				break;
+			case ST_WALK_FORWARD:
+				if (position.x < 825)
 				{
-				case ST_IDLE:
-					current_animation = &idle;
-					forward.Reset();
-					backward.Reset();
-					crouch.Reset();
-					kick.Reset();
-					punch.Reset();
-					hadouken_pose.Reset();
-					HadoukenCount = 0;
-					ActiveHadouken = 0;
-					break;
-				case ST_WALK_FORWARD:
-					if (position.x < 825)
+					position.x += speed;
+					if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving == false)
 					{
-						position.x += speed;
-						if (-((position.x - 60)*2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving==false)
+						if (App->render->camera.x > -1004)
 						{
-							if (App->render->camera.x > -1004)
-							{
-								App->render->camera.x -= speed*2;
-							}
+							App->render->camera.x -= speed * 2;
 						}
-						
 					}
-					current_animation = &forward;
-					crouch.Reset();
-					kick.Reset();
-					punch.Reset();
-					hadouken_pose.Reset();
-					HadoukenCount = 0;
-					ActiveHadouken = 0;													
-					break;
-				case ST_WALK_BACKWARD:
-					current_animation = &backward;
-					if (position.x > 0)
-					{
-						position.x -= (0.6 *speed);
-						if (-(position.x*2) >= App->render->camera.x-5)
-						{
-							if (App->render->camera.x < 0)
-							{
-								App->render->camera.x += speed*2;
-							}
-						}						
-						//LOG("Player posx: %d",-position.x);
-					}		
-					crouch.Reset();
-					kick.Reset();
-					punch.Reset();
-					hadouken_pose.Reset();
-					HadoukenCount = 0;
-					ActiveHadouken = 0;
-					break;
-				case ST_JUMP_NEUTRAL:
-					JumpCount = 1;
-					if (JumpCount == 1) {
-						if (position.y == 220) {
-							JumpMax = false;
-							JumpMin = true;
-						}
-						if (position.y == 174) {
-							JumpMin = false;
-							JumpMax = true;
-						}
 
-						if (JumpMin == true) {
-							neutral_falling.Reset();
-							position.y -= speed;
-							current_animation = &jump_neutral;
-						}
-						if (JumpMax == true) {
-							jump_neutral.Reset();
-							position.y += speed;
-							current_animation = &neutral_falling;
-						}
-
-					}
-					break;
-				case ST_JUMP_FORWARD:
-
-					current_animation = &jump_forward;
-					break;
-				case ST_JUMP_BACKWARD:
-					
-					current_animation = &jump_backwards;
-					break;
-				case ST_CROUCH:
-					current_animation = &crouch;
-					break;
-				case ST_PUNCH_STANDING:
-					current_animation = &punch;
-					punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, App->player);
-					App->collision->DeleteCollider(punchcollider);
-					break;
-				case ST_PUNCH_CROUCH:
-					current_animation = &Crouch_punch;
-					crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, App->player);
-					App->collision->DeleteCollider(crouchpunchcollider);
-					break;
-				case ST_PUNCH_NEUTRAL_JUMP:
-
-					current_animation = &jump_neutral_punch;
-					break;
-				case ST_PUNCH_FORWARD_JUMP:
-
-					break;
-				case ST_PUNCH_BACKWARD_JUMP:
-
-					break;
-				case ST_KICK_STANDING:
-					current_animation = &kick;
-					kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 27 }, COLLIDER_PLAYER_ATTACK, this);
-					App->collision->DeleteCollider(kickcollider);
-					break;
-				case ST_HADOUKEN:
-					current_animation = &hadouken_pose;
-					if (HadoukenCount < 35) {
-						HadoukenCount++;
-					}
-					if (HadoukenCount == 35 && ActiveHadouken == 0) {
-						App->particle->AddParticle(App->particle->hadouken, position.x + 65, position.y - 70, COLLIDER_PLAYER_ATTACK, 0);
-						App->audio->PlayChunk(App->particle->hadouken.sound, 0);
-						HadoukenCount = 0;
-						ActiveHadouken = 1;
-					}
-					break;
-				case ST_DEATH:
-					current_animation = &Death;
-					App->audio->PlayChunk(deathSound, 0);
-					death = true;
-					break;
 				}
+				current_animation = &forward;
+				crouch.Reset();
+				kick.Reset();
+				punch.Reset();
+				hadouken_pose.Reset();
+				HadoukenCount = 0;
+				ActiveHadouken = 0;
+				break;
+			case ST_WALK_BACKWARD:
+				current_animation = &backward;
+				if (position.x > 0)
+				{
+					position.x -= (0.6 *speed);
+					if (-(position.x * 2) >= App->render->camera.x - 5)
+					{
+						if (App->render->camera.x < 0)
+						{
+							App->render->camera.x += speed * 2;
+						}
+					}
+				}
+				crouch.Reset();
+				kick.Reset();
+				punch.Reset();
+				hadouken_pose.Reset();
+				HadoukenCount = 0;
+				ActiveHadouken = 0;
+				break;
+			case ST_JUMP_NEUTRAL:
+				JumpCount = 1;
+				if (JumpCount == 1) {
+					if (position.y == 220) {
+						JumpMax = false;
+						JumpMin = true;
+					}
+					if (position.y == 174) {
+						JumpMin = false;
+						JumpMax = true;
+					}
+
+					if (JumpMin == true) {
+						neutral_falling.Reset();
+						position.y -= speed;
+						current_animation = &jump_neutral;
+					}
+					if (JumpMax == true) {
+						jump_neutral.Reset();
+						position.y += speed;
+						current_animation = &neutral_falling;
+					}
+
+				}
+				break;
+			case ST_JUMP_FORWARD:
+
+				current_animation = &jump_forward;
+				break;
+			case ST_JUMP_BACKWARD:
+
+				current_animation = &jump_backwards;
+				break;
+			case ST_CROUCH:
+				current_animation = &crouch;
+				break;
+			case ST_PUNCH_STANDING:
+				current_animation = &punch;
+				punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, App->player);
+				App->collision->DeleteCollider(punchcollider);
+				break;
+			case ST_PUNCH_CROUCH:
+				current_animation = &Crouch_punch;
+				crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, App->player);
+				App->collision->DeleteCollider(crouchpunchcollider);
+				break;
+			case ST_PUNCH_NEUTRAL_JUMP:
+
+				current_animation = &jump_neutral_punch;
+				break;
+			case ST_PUNCH_FORWARD_JUMP:
+
+				break;
+			case ST_PUNCH_BACKWARD_JUMP:
+
+				break;
+			case ST_KICK_STANDING:
+				current_animation = &kick;
+				kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 27 }, COLLIDER_PLAYER_ATTACK, this);
+				App->collision->DeleteCollider(kickcollider);
+				break;
+			case ST_HADOUKEN:
+				current_animation = &hadouken_pose;
+				if (HadoukenCount < 35) {
+					HadoukenCount++;
+				}
+				if (HadoukenCount == 35 && ActiveHadouken == 0) {
+					App->particle->AddParticle(App->particle->hadouken, position.x + 65, position.y - 70, COLLIDER_PLAYER_ATTACK, 0);
+					App->audio->PlayChunk(App->particle->hadouken.sound, 0);
+					HadoukenCount = 0;
+					ActiveHadouken = 1;
+				}
+				break;
 			}
 
 			current_state = state;
+
+			if (life == 0)
+			{
+				current_animation = &Death;
+				App->audio->PlayChunk(deathSound, 0);
+			}
 
 			// Draw everything --------------------------------------
 
@@ -362,6 +355,7 @@ update_status ModulePlayer::Update()
 			return UPDATE_CONTINUE;
 		}
 	}
+}
 	
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {

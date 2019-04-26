@@ -19,22 +19,15 @@ ModulePlayer2::ModulePlayer2()
 	idle.PushBack({ 184, 14, 60, 90 });
 	idle.PushBack({ 276, 11, 60, 93 });
 	idle.PushBack({ 366, 12, 60, 92 });
-	idle.speed = 0.2f;
+	idle.speed = 0.175f;
 
 	// walk forward animation (arcade sprite sheet)
-	//forward.frames.PushBack({9, 136, 53, 83});
 	forward.PushBack({ 78, 131, 60, 88 });
 	forward.PushBack({ 162, 128, 64, 92 });
 	forward.PushBack({ 259, 128, 63, 90 });
 	forward.PushBack({ 352, 128, 54, 91 });
 	forward.PushBack({ 432, 131, 50, 89 });
-	forward.speed = 0.1f;
-
-	//punch animation
-	punch.PushBack({ 19,272,64,91 });
-	punch.PushBack({ 108,272,91,91 });
-	//punch.PushBack({ 19,272,64,91 });
-	punch.speed = 0.05f;
+	forward.speed = 0.15f;
 
 	// walk backward animation
 	backward.PushBack({ 542,127,61,91 });
@@ -43,7 +36,101 @@ ModulePlayer2::ModulePlayer2()
 	backward.PushBack({ 797,127,58,91 });
 	backward.PushBack({ 883,127,57,91 });
 	backward.PushBack({ 974,127,57,91 });
-	backward.speed = 0.05f;
+	backward.speed = 0.1f;
+
+	//punch animation
+	punch.PushBack({ 19,272,64,91 });
+	punch.PushBack({ 108,272,92,91 });
+	punch.PushBack({ 19,272,64,91 });
+	punch.speed = 0.2f;
+
+	//kick animation
+
+	kick.PushBack({ 606,269,60,90 });
+	kick.PushBack({ 689,267,66,92 });
+	kick.PushBack({ 777,265,114,94 });
+	kick.PushBack({ 689,267,66,92 });
+	kick.speed = 0.175f;
+
+	//hadouken animation
+	hadouken_pose.PushBack({ 34,1545,74,90 });
+	hadouken_pose.PushBack({ 135,1551,85,83 });
+	hadouken_pose.PushBack({ 244,1552,91,83 });
+	hadouken_pose.PushBack({ 357,1558,106,77 });
+	hadouken_pose.speed = 0.1f;
+	hadouken_pose.loop = false;
+
+	//crouch animation
+	crouch.PushBack({ 32,1212,53,83 });
+	crouch.PushBack({ 115,1227,57,69 });
+	crouch.PushBack({ 197,1235,61,61 });
+	crouch.loop = false;
+	crouch.speed = 0.3f;
+
+	//neutral jump animation
+	jump_neutral.PushBack({ 17,847,55,85 });
+	jump_neutral.PushBack({ 17,847,55,85 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 177,805,50,89 });
+	jump_neutral.PushBack({ 251,798,54,77 });
+	jump_neutral.PushBack({ 327,813,48,70 });
+	jump_neutral.loop = false;
+	jump_neutral.speed = 0.175f;
+
+	//neutral jump falling animation
+
+	neutral_falling.PushBack({ 397,810,48,89 });
+	neutral_falling.PushBack({ 464,819,55,109 });
+	neutral_falling.PushBack({ 464,819,55,109 });
+	neutral_falling.PushBack({ 464,819,55,109 });
+	neutral_falling.PushBack({ 464,819,55,109 });
+	neutral_falling.PushBack({ 464,819,55,109 });
+	neutral_falling.PushBack({ 464,819,55,109 });
+	neutral_falling.PushBack({ 464,819,55,109 });
+	neutral_falling.PushBack({ 17,847,55,85 });
+	neutral_falling.loop = false;
+	neutral_falling.speed = 0.175f;
+
+
+	//crouch punch
+	Crouch_punch.PushBack({ 24,1344,69,61 });
+	Crouch_punch.PushBack({ 118,1344,95,61 });
+	Crouch_punch.speed = 0.2f;
+
+	//death animation
+	Death.PushBack({ 350,2233,124,48 });
+	Death.PushBack({ 849,2246,123,41 });
+	Death.PushBack({ 985,2265,127,31 });
+	Death.loop = false;
+	Death.speed = 0.05f;
+
+	//Jump forward animation
+	jump_forward.PushBack({ 594,823,55,103 });
+	jump_forward.PushBack({ 669,813,61,78 });
+	jump_forward.PushBack({ 744,811,104,42 });
+	jump_forward.PushBack({ 864,791,53,82 });
+	jump_forward.PushBack({ 927,808,122,44 });
+	jump_forward.PushBack({ 1064,806,71,87 });
+	jump_forward.PushBack({ 1149,802,55,109 });
+	jump_forward.speed = 0.175f;
+
+	//Jump backwards animation
+	jump_backwards.PushBack({ 1149,802,55,109 });
+	jump_backwards.PushBack({ 1064,806,71,87 });
+	jump_backwards.PushBack({ 927,808,122,44 });
+	jump_backwards.PushBack({ 864,791,53,82 });
+	jump_backwards.PushBack({ 744,811,104,42 });
+	jump_backwards.PushBack({ 669,813,61,78 });
+	jump_backwards.PushBack({ 594,823,55,103 });
+	jump_backwards.speed = 0.175f;
+
+	//Jump neutral punch
+	jump_neutral_punch.PushBack({ 29,987,52,69 });
+	jump_neutral_punch.PushBack({ 97,985,81,71 });
+	jump_neutral_punch.speed = 0.1f;
 }
 
 ModulePlayer2::~ModulePlayer2()
@@ -58,8 +145,8 @@ bool ModulePlayer2::Start()
 	position.x = 300; //Returns to its original position
 
 	//Add a collider to the player
-	colliderplayer2 = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_ENEMY);
-	colliderplayer2->callback = App->player2;
+	colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_ENEMY);
+	colliderplayer->callback = App->player2;
 
 	return ret;
 }
@@ -78,25 +165,6 @@ bool ModulePlayer2::CleanUp()
 // Update: draw background
 update_status ModulePlayer2::Update()
 {
-	/*Animation* current_animation = &idle;
-
-	int speed = 1;
-	
-
-	// Draw everything --------------------------------------
-	SDL_Rect r = current_animation->GetCurrentFrame();
-
-	//Update collider position to player position
-
-	colliderplayer2->SetPos(position.x, position.y);
-	OnCollision(colliderplayer2, App->particle->hadouken.collider);
-
-	App->render->Blit(graphics, position.x, position.y - r.h, &r);
-
-	return UPDATE_CONTINUE;*/
-
-
-	//////////////////////////////////
 	Animation* current_animation = &idle;
 	p2Qeue<ryu2_inputs> inputs;
 	ryu2_states current_state = ST_UNKNOWN;
@@ -104,7 +172,7 @@ update_status ModulePlayer2::Update()
 	int speed = 1;
 
 	if (App->input->keyboard[SDL_SCANCODE_Y] == KEY_STATE::KEY_DOWN) {
-		/*if (GodMode == false) {
+		if (GodMode == false) {
 			App->collision->DeleteCollider(colliderplayer);
 
 			GodMode = true;
@@ -113,18 +181,17 @@ update_status ModulePlayer2::Update()
 			colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER, this);
 
 			GodMode = false;
-		}*/
-		//LOG("Detected");
+		}
 	}
 
-	/*if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN) {
 		life = 0;
-	}*/
+	}
 
-	if (life == 0) {
+	/*if (life == 0) {
 		current_animation = &Death;
 		death = true;
-	}
+	}*/
 
 	if (death == false) {
 		while (external_input(inputs))
@@ -159,12 +226,9 @@ update_status ModulePlayer2::Update()
 							{
 								App->render->camera.x -= speed*2;
 							}
-							//LOG("Cam posx: %d", camera.x);
-							//LOG("Cam posxMax: %d", App->render->camera.x - SCREEN_WIDTH);
 						}
 
 					}
-					//LOG("Player posx: %d", position.x);
 					current_animation = &forward;
 					crouch.Reset();
 					kick.Reset();
@@ -182,10 +246,9 @@ update_status ModulePlayer2::Update()
 						{
 							if (App->render->camera.x < 0)
 							{
-								App->render->camera.x += speed*2;
+								App->render->camera.x += speed * 2;
 							}
 						}
-						//LOG("Player posx: %d",-position.x);
 					}
 					crouch.Reset();
 					kick.Reset();
@@ -218,8 +281,6 @@ update_status ModulePlayer2::Update()
 						}
 
 					}
-
-
 					break;
 				case ST_JUMP_FORWARD:
 
@@ -281,7 +342,7 @@ update_status ModulePlayer2::Update()
 			App->render->Blit(graphics, position.x, position.y - r.h, &r);
 
 			//Update collider position to player position
-			colliderplayer2->SetPos(position.x, position.y);
+			colliderplayer->SetPos(position.x, position.y);
 
 			return UPDATE_CONTINUE;
 		}
@@ -290,7 +351,6 @@ update_status ModulePlayer2::Update()
 }
 
 void ModulePlayer2::OnCollision(Collider* c1, Collider* c2) {
-	//LOG("colision detected");
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER)
 	{
 		movef = false;
@@ -306,69 +366,67 @@ bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)
 
 	SDL_Event event;
 	int max = App->input->eventList.size();
-	//while (SDL_PollEvent(&event) != 0) //Always find no events to poll why?
 	for (int a = 0; a < max; ++a)
 	{
 		event = App->input->eventList.front();
 		App->input->eventList.pop_front();
-		//LOG("Events detected"); // Never enters
 		if (event.type == SDL_KEYUP && event.key.repeat == 0)
 		{
 			switch (event.key.keysym.sym)
 			{
-			case SDLK_3://Crouch
+			case SDLK_DOWN://Crouch
 				inputs.Push(IN_CROUCH_UP);
 				down = false;
 				break;
-			case SDLK_4://Jump
+			case SDLK_UP://Jump
 				up = false;
 				break;
-			case SDLK_1://Left
+			case SDLK_LEFT://Left
 				inputs.Push(IN_LEFT_UP);
 				left = false;
 				break;
-			case SDLK_2://Right
+			case SDLK_RIGHT://Right
 				inputs.Push(IN_RIGHT_UP);
 				right = false;
 				break;
-			case SDLK_0:
+			case SDLK_b:
 				return false;
 				break;
-			case SDLK_k:
+			case SDLK_n:
 				return false;
 				break;
-			case SDLK_h:
+			case SDLK_m:
 				return false;
 				break;
 			}
 		}
-		/*if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
+		if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
 		{
 			switch (event.key.keysym.sym)
 			{
-			case SDLK_0:
+			case SDLK_b:
 				inputs.Push(IN_P);
 				break;
-			case SDLK_k:
+			case SDLK_n:
 				inputs.Push(IN_K);
 				break;
-			case SDLK_h:
+			case SDLK_m:
 				inputs.Push(IN_H);
 				break;
-			case SDLK_4:
+			case SDLK_UP:
 				up = true;
 				break;
-			case SDLK_3:
+			case SDLK_DOWN:
 				down = true;
 				break;
-			case SDLK_1:
+			case SDLK_LEFT:
 				left = true;
 				break;
-			case SDLK_2:
+			case SDLK_RIGHT:
 				right = true;
 				break;
 			}
-		}*/
+		}
 		App->input->eventList.push_back(event);
 	}
 
