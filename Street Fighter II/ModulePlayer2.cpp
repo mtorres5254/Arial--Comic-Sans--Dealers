@@ -70,31 +70,40 @@ ModulePlayer2::ModulePlayer2()
 	crouch.speed = 0.3f;
 
 	//neutral jump animation
-	jump_neutral.PushBack({ 17,847,55,85 });
-	jump_neutral.PushBack({ 17,847,55,85 });
-	jump_neutral.PushBack({ 100,823,56,104 });
-	jump_neutral.PushBack({ 100,823,56,104 });
-	jump_neutral.PushBack({ 100,823,56,104 });
-	jump_neutral.PushBack({ 100,823,56,104 });
-	jump_neutral.PushBack({ 177,805,50,89 });
-	jump_neutral.PushBack({ 251,798,54,77 });
-	jump_neutral.PushBack({ 327,813,48,70 });
+	jump_neutral.PushBack({ 1139,847,55,85 });
+	jump_neutral.PushBack({ 1055,823,56,104 });
+	jump_neutral.PushBack({ 1055,823,56,104 });
+	jump_neutral.PushBack({ 1055,823,56,104 });
+	jump_neutral.PushBack({ 1055,823,56,104 });
+	jump_neutral.PushBack({ 1055,823,56,104 });
+	jump_neutral.PushBack({ 1055,823,56,104 });
+	jump_neutral.PushBack({ 1055,823,56,104 });
+	jump_neutral.PushBack({ 985,805,50,89 });
+	jump_neutral.PushBack({ 985,805,50,89 });
+	jump_neutral.PushBack({ 985,805,50,89 });
+	jump_neutral.PushBack({ 985,805,50,89 });
+	jump_neutral.PushBack({ 906,798,54,77 });
+	jump_neutral.PushBack({ 836,813,48,70 });
 	jump_neutral.loop = false;
 	jump_neutral.speed = 0.175f;
 
 	//neutral jump falling animation
 
-	neutral_falling.PushBack({ 397,810,48,89 });
-	neutral_falling.PushBack({ 464,819,55,109 });
-	neutral_falling.PushBack({ 464,819,55,109 });
-	neutral_falling.PushBack({ 464,819,55,109 });
-	neutral_falling.PushBack({ 464,819,55,109 });
-	neutral_falling.PushBack({ 464,819,55,109 });
-	neutral_falling.PushBack({ 464,819,55,109 });
-	neutral_falling.PushBack({ 464,819,55,109 });
-	neutral_falling.PushBack({ 17,847,55,85 });
-	neutral_falling.loop = false;
-	neutral_falling.speed = 0.175f;
+	falling.PushBack({ 766,810,48,89 });
+	falling.PushBack({ 692,819,55,109 });
+	falling.PushBack({ 692,819,55,109 });
+	falling.PushBack({ 692,819,55,109 });
+	falling.PushBack({ 692,819,55,109 });
+	falling.PushBack({ 692,819,55,109 });
+	falling.PushBack({ 692,819,55,109 });
+	falling.PushBack({ 692,819,55,109 });
+	falling.PushBack({ 692,819,55,109 });
+	falling.PushBack({ 692,819,55,109 });
+	falling.PushBack({ 692,819,55,109 });
+	falling.PushBack({ 692,819,55,109 });
+	falling.PushBack({ 692,819,55,109 });
+	falling.loop = false;
+	falling.speed = 0.175f;
 
 
 	//crouch punch
@@ -110,23 +119,34 @@ ModulePlayer2::ModulePlayer2()
 	Death.speed = 0.05f;
 
 	//Jump forward animation
-	jump_forward.PushBack({ 594,823,55,103 });
-	jump_forward.PushBack({ 669,813,61,78 });
-	jump_forward.PushBack({ 744,811,104,42 });
-	jump_forward.PushBack({ 864,791,53,82 });
-	jump_forward.PushBack({ 927,808,122,44 });
-	jump_forward.PushBack({ 1064,806,71,87 });
-	jump_forward.PushBack({ 1149,802,55,109 });
+	jump_forward.PushBack({ 562,823,55,103 });
+	jump_forward.PushBack({ 562,823,55,103 });
+	jump_forward.PushBack({ 562,823,55,103 });
+	jump_forward.PushBack({ 562,823,55,103 });
+	jump_forward.PushBack({ 562,823,55,103 });
+	jump_forward.PushBack({ 562,823,55,103 });
+	jump_forward.PushBack({ 481,813,61,78 });
+	jump_forward.PushBack({ 363,811,104,42 });
+	jump_forward.PushBack({ 292,791,53,82 });
+	jump_forward.PushBack({ 162,808,122,44 });
+	jump_forward.PushBack({ 76,806,71,87 });
+	jump_forward.PushBack({ 7,802,55,109 });
+	jump_forward.loop = false;
 	jump_forward.speed = 0.175f;
 
 	//Jump backwards animation
-	jump_backwards.PushBack({ 1149,802,55,109 });
-	jump_backwards.PushBack({ 1064,806,71,87 });
-	jump_backwards.PushBack({ 927,808,122,44 });
-	jump_backwards.PushBack({ 864,791,53,82 });
-	jump_backwards.PushBack({ 744,811,104,42 });
-	jump_backwards.PushBack({ 669,813,61,78 });
-	jump_backwards.PushBack({ 594,823,55,103 });
+	jump_backwards.PushBack({ 76,806,71,87 });
+	jump_backwards.PushBack({ 76,806,71,87 });
+	jump_backwards.PushBack({ 76,806,71,87 });
+	jump_backwards.PushBack({ 76,806,71,87 });
+	jump_backwards.PushBack({ 76,806,71,87 });
+	jump_backwards.PushBack({ 76,806,71,87 });
+	jump_backwards.PushBack({ 162,808,122,44 });
+	jump_backwards.PushBack({ 292,791,53,82 });
+	jump_backwards.PushBack({ 363,811,104,42 });
+	jump_backwards.PushBack({ 481,813,61,78 });
+	jump_backwards.PushBack({ 562,823,55,103 });
+	jump_backwards.loop = false;
 	jump_backwards.speed = 0.175f;
 
 	//Jump neutral punch
@@ -264,31 +284,93 @@ update_status ModulePlayer2::Update()
 							JumpMax = false;
 							JumpMin = true;
 						}
-						if (position.y == 174) {
+						if (position.y <= 110) {
 							JumpMin = false;
 							JumpMax = true;
 						}
 
 						if (JumpMin == true) {
-							neutral_falling.Reset();
-							position.y -= speed;
+							falling.Reset();
+							position.y -= speed * 2;
 							current_animation = &jump_neutral;
 						}
 						if (JumpMax == true) {
 							jump_neutral.Reset();
-							position.y += speed;
-							current_animation = &neutral_falling;
+							position.y += speed * 3.2;
+							current_animation = &falling;
 						}
 
 					}
 					break;
 				case ST_JUMP_FORWARD:
+					if (position.x < 825)
+					{
+						position.x += speed;
+						if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving == false)
+						{
+							if (App->render->camera.x > -1004)
+							{
+								App->render->camera.x -= speed * 2;
+							}
+						}
+					}
+					JumpCount = 1;
+					if (JumpCount == 1) {
+						if (position.y == 220) {
+							JumpMax = false;
+							JumpMin = true;
+						}
+						if (position.y <= 110) {
+							JumpMin = false;
+							JumpMax = true;
+						}
 
-					current_animation = &jump_forward;
+						if (JumpMin == true) {
+							falling.Reset();
+							position.y -= (speed * 2);
+							current_animation = &jump_backwards;
+						}
+						if (JumpMax == true) {
+							jump_backwards.Reset();
+							position.y += (speed * 3.2);
+							current_animation = &falling;
+						}
+					}
 					break;
 				case ST_JUMP_BACKWARD:
+					if (position.x > 0)
+					{
+						position.x -= (0.6 *speed);
+						if (-(position.x * 2) >= App->render->camera.x - 5)
+						{
+							if (App->render->camera.x < 0)
+							{
+								App->render->camera.x += speed * 2;
+							}
+						}
+					}
+					JumpCount = 1;
+					if (JumpCount == 1) {
+						if (position.y == 220) {
+							JumpMax = false;
+							JumpMin = true;
+						}
+						if (position.y <= 110) {
+							JumpMin = false;
+							JumpMax = true;
+						}
 
-					current_animation = &jump_backwards;
+						if (JumpMin == true) {
+							falling.Reset();
+							position.y -= (speed * 2);
+							current_animation = &jump_forward;
+						}
+						if (JumpMax == true) {
+							jump_forward.Reset();
+							position.y += (speed * 3.2);
+							current_animation = &falling;
+						}
+					}
 					break;
 				case ST_CROUCH:
 					current_animation = &crouch;

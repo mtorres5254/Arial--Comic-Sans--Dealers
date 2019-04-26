@@ -43,7 +43,7 @@ public:
 	Animation jump_neutral;
 	Animation jump_backwards;
 	Animation jump_forward;
-	Animation neutral_falling;
+	Animation falling;
 	Animation Crouch_punch;
 	Animation jump_neutral_punch;
 	Animation ReceivedPunch;
