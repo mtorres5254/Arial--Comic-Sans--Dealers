@@ -11,7 +11,6 @@
 #include "ModulePlayer.h"
 #include "ModuleUI.h"
 
-
 ModuleCongratsScreen::ModuleCongratsScreen()
 {
 	background.x = 0;
@@ -37,8 +36,7 @@ bool ModuleCongratsScreen::Start()
 
 bool ModuleCongratsScreen::CleanUp()
 {
-	// TODO 5: Remove all memory leaks
-	LOG("Unloading CongratsScreen");
+	LOG("Unloading Congrats Screen");
 
 	App->textures->Unload(graphics);
 	App->audio->UnloadMusic(music);

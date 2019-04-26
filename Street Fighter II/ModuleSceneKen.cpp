@@ -114,11 +114,11 @@ update_status ModuleSceneKen::Update()
 	App->render->Blit(graphics, 0, 170, &ground);
 
 
-	if (App->player->death == true) {
+	/*if (App->player->death == true) {
 		App->fade->FadeToBlack(App->scene_ken, App->congrats_screen, 2.0f);	
 		App->audio->StopMusic(3000);
 		
-	}
+	}*/
 
 	return UPDATE_CONTINUE;
 }

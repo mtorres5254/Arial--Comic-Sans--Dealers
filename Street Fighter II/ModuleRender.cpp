@@ -53,9 +53,9 @@ update_status ModuleRender::PreUpdate()
 
 update_status ModuleRender::Update()	
 {
-	//int speed = 3;
+	int speed = 3;
 
-	/*if (App->scene_honda->IsEnabled() == true)
+	if (App->scene_honda->IsEnabled() == true)
 	{
 		if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_STATE::KEY_REPEAT)
 		{
@@ -72,7 +72,7 @@ update_status ModuleRender::Update()
 				camera.x -= speed;
 			}
 		}
-	}*/
+	}
 
 	return update_status::UPDATE_CONTINUE;
 }

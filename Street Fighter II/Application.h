@@ -3,7 +3,11 @@
 
 #include "Globals.h"
 
+<<<<<<< HEAD
 #define NUM_MODULES 19
+=======
+#define NUM_MODULES 17
+>>>>>>> parent of 9429e03... Working on win scene
 
 class ModuleWindow;
 class ModuleInput;
@@ -23,9 +27,12 @@ class ModuleParticles;
 class ModuleCollision;
 class ModuleUI;
 class ModuleSceneRyu;
+<<<<<<< HEAD
 class ModuleWinScene;
 class ModuleFont;
 
+=======
+>>>>>>> parent of 9429e03... Working on win scene
 
 class Application
 {
@@ -49,9 +56,12 @@ public:
 	ModuleUI* UI;
 	ModuleLoseScene* lose_scene;
 	ModuleSceneRyu* scene_ryu;
+<<<<<<< HEAD
 	ModuleWinScene* win_scene;
 	ModuleFont* font;
 
+=======
+>>>>>>> parent of 9429e03... Working on win scene
 
 public:
 

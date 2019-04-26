@@ -9,6 +9,7 @@
 #include "Module.h"
 #include "ModuleWelcomePage.h"
 #include "ModuleAudio.h"
+#include "ModuleLoseScene.h"
 
 
 ModuleWelcomePage::ModuleWelcomePage()
@@ -57,6 +58,11 @@ update_status ModuleWelcomePage::Update()
 
 		App->fade->FadeToBlack(App->welcome_page, App->scene_ryu, 2.0f);
 		App->audio->StopMusic(2500);
+	}
+	if (App->input->keyboard[SDL_SCANCODE_F9] == 1) {
+
+		App->fade->FadeToBlack(App->welcome_page, App->lose_scene, 2.0f);
+		App->audio->StopMusic(250);
 	}
 
 	return UPDATE_CONTINUE;
