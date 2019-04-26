@@ -62,6 +62,11 @@ public:
 	bool GodMode = false;
 
 
+	int DeathCount = 0;
+	int ActiveDeath = 0;
+	int victorycount = 0;
+
+
 	int life = 1000;
 	int healthbar;
 	

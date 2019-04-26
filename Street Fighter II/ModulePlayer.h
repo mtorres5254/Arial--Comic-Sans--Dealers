@@ -49,6 +49,7 @@ public:
 	Animation ReceivedPunch;
 	Animation Death;
 	iPoint position;
+
 	int HadoukenCount = 0;
 	int ActiveHadouken = 0;
 	int JumpCount = 0;
@@ -63,6 +64,11 @@ public:
 	bool colliderErese = false;
 	bool colliderErese2 = false;
 	bool colliderErese3 = false;
+	bool death = false;
+
+	int DeathCount = 0;
+	int ActiveDeath = 0;
+	int victorycount = 0;
 
 	int life = 1000;
 	int healthbar;

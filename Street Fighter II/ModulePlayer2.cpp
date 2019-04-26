@@ -166,6 +166,8 @@ bool ModulePlayer2::Start()
 	graphics = App->textures->Load("Assets/Images/ryu2.png"); // arcade version
 	position.x = 300; //Returns to its original position
 
+	deathSound = App->audio->LoadChunk("Assets/Sound/ryu-death.wav");
+
 	//Add a collider to the player
 	colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
 
@@ -231,6 +233,7 @@ update_status ModulePlayer2::Update()
 					hadouken_pose.Reset();
 					HadoukenCount = 0;
 					ActiveHadouken = 0;
+					ActiveDeath = 0;
 					break;
 				case ST_WALK_FORWARD:
 					current_animation = &backward;
@@ -272,6 +275,7 @@ update_status ModulePlayer2::Update()
 						hadouken_pose.Reset();
 						HadoukenCount = 0;
 						ActiveHadouken = 0;
+						ActiveDeath = 0;
 					}
 					else if (moveb == false) {
 						moveb = true;
@@ -420,19 +424,34 @@ update_status ModulePlayer2::Update()
 				}
 			}
 
+			//Logic
+			healthbar = life * 0.153;
+
 			if (life < 0) {
 				life = 0;
 			}
+
 			if (life == 0)
 			{
 				current_animation = &Death;
-				App->audio->PlayChunk(deathSound, 0);
-				ResetPlayer();
+				if (DeathCount == 1) {
+					App->audio->PlayChunk(deathSound, 0);
+				}
+				if (DeathCount < 80)
+					DeathCount++;
+				if (DeathCount == 80 && ActiveDeath == 0) {
+					DeathCount = 0;
+					Death.Reset();
+					victorycount++;
+					ActiveDeath = 1;
+					ResetPlayer();
+					
+
+				}
+
+
+				//ResetPlayer();
 			}
-
-			current_state = state;
-
-			healthbar = life * 0.153;
 
 			// Draw everything --------------------------------------
 
@@ -598,6 +617,7 @@ void ModulePlayer2::ResetPlayer() {
 	life = 1000;
 	position.x = 300; //Returns to its original position
 	if (App->player->position.x != 100 || App->player->life != 1000) {
+		ActiveDeath = 0;
 		App->player->ResetPlayer();
 	}
 }
