@@ -396,8 +396,17 @@ update_status ModulePlayer::Update()
 				break;
 			case ST_PUNCH_CROUCH:
 				current_animation = &Crouch_punch;
-				crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
-				App->collision->DeleteCollider(crouchpunchcollider);
+				if (CrPunchCol == false) {
+					crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
+					CrPunchCol = true;
+				}
+				else if (CrPunchCol == true) {
+					App->collision->DeleteCollider(crouchpunchcollider);
+				}
+				if (Crouch_punch.current_frame == 0 && colliderErese3 == true) {
+					CrPunchCol = false;
+				}
+				colliderErese3 = true;
 				break;
 			case ST_PUNCH_NEUTRAL_JUMP:
 				current_animation = &jump_neutral_punch;

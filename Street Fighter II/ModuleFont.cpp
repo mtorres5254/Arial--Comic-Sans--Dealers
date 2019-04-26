@@ -5,6 +5,8 @@
 #include "ModuleFont.h"
 #include <string.h>
 
+#include "SDL/include/SDL.h"
+
 // Constructor
 ModuleFont::ModuleFont() : Module()
 {}
@@ -13,10 +15,19 @@ ModuleFont::ModuleFont() : Module()
 ModuleFont::~ModuleFont()
 {}
 
+bool ModuleFont::Start() {
+	fonts[Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890")];
+
+	return true;
+}
+
 // Load new texture from file path
 int ModuleFont::Load(const char* texture_path, const char* characters, uint rows)
 {
 	int id = -1;
+
+	int width;
+	int height;
 
 	if (texture_path == nullptr || characters == nullptr || rows == 0)
 	{
@@ -43,16 +54,16 @@ int ModuleFont::Load(const char* texture_path, const char* characters, uint rows
 		return id;
 	}
 
+	SDL_QueryTexture(tex, NULL, NULL, &width, &height);
+
 	fonts[id].graphic = tex; // graphic: pointer to the texture
 	fonts[id].rows = rows; // rows: rows of characters in the texture
 	fonts[id].len = strlen(characters); // len: length of the table
-	strcpy_s(fonts[id].table, characters);// table: array of chars to have the list of characters
-	fonts[id].row_chars = strlen(characters);// row_chars: amount of chars per row of the texture
-	App->textures->GetSize(tex, fonts[id].char_w, fonts[id].char_h);	// char_w: width of each character
 
-	(fonts[id].char_w) / (fonts[id].row_chars); // char_h: height of each character
-	(fonts[id].char_h) / (fonts[id].rows);
-	
+	strcpy_s(fonts[id].table, characters);
+	fonts[id].row_chars = fonts[id].len;
+	fonts[id].char_h = height / rows;
+	fonts[id].char_w = width / strlen(characters);
 
 	LOG("Successfully loaded BMP font from %s", texture_path);
 

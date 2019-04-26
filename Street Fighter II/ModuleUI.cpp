@@ -48,6 +48,7 @@ ModuleUI::~ModuleUI()
 bool ModuleUI::Start()
 {
 	LOG("Loading UI textures");
+	App->font->Enable();
 	bool ret = true;
 
 	graphics1 = App->textures->Load("Assets/Images/Battle_HUD.png"); 
@@ -62,7 +63,6 @@ bool ModuleUI::CleanUp()
 
 	App->textures->Unload(graphics1);
 	App->textures->Unload(graphics2);
-	App->UI->Disable();
 
 	return true;
 }
@@ -75,6 +75,8 @@ update_status ModuleUI:: Update(){
 	HealthBar2.w = App->player2->healthbar;
 
 	//Render
+	App->font->BlitText(SCREEN_WIDTH / 2, 100, 1, "hola");
+
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - RedBar1.w - KObar.w / 2, 20, &RedBar1, false);
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - HealthBar1.w - KObar.w / 2, 20, &HealthBar1, false);
 	App->render->Blit(graphics2, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &RedBar2, false);

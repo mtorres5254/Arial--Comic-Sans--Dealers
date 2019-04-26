@@ -58,9 +58,11 @@ public:
 	bool moveb = true;
 	bool GodMode = false;
 	bool punchCol = false;
+	bool CrPunchCol = false;
 	bool kickCol = false;
 	bool colliderErese = false;
 	bool colliderErese2 = false;
+	bool colliderErese3 = false;
 
 	int life = 1000;
 	int healthbar;

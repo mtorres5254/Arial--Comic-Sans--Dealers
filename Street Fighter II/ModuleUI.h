@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Animation.h"
+#include "ModuleFont.h"
 #include "Globals.h"
 #include "p2Point.h"
 
@@ -30,7 +31,6 @@ public:
 	SDL_Rect KObar;
 
 	Animation KOanim;
-
 };
 
 #endif // !_MODULEUI_H
