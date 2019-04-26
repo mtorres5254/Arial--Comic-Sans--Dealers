@@ -62,6 +62,7 @@ public:
 	bool kickCol = false;
 	bool colliderErese = false;
 	bool colliderErese2 = false;
+	bool death = false;
 
 	int DeathCount = 0;
 	int ActiveDeath = 0;

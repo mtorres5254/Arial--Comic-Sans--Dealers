@@ -215,43 +215,22 @@ update_status ModulePlayer::Update()
 		life = 0;
 	}
 
- while (external_input(inputs))
-	{
-
-		internal_input(inputs);
-
-		ryu_states state = process_fsm(inputs);
-
-		if (state != current_state )
+	if (death == false) {
+		while (external_input(inputs))
 		{
-			switch (state)
+
+			internal_input(inputs);
+
+			ryu_states state = process_fsm(inputs);
+
+			if (state != current_state)
 			{
-			case ST_IDLE:
-				current_animation = &idle;
-				forward.Reset();
-				backward.Reset();
-				crouch.Reset();
-				kick.Reset();
-				punch.Reset();
-				hadouken_pose.Reset();
-				HadoukenCount = 0;
-				ActiveHadouken = 0;
-				break;
-			case ST_WALK_FORWARD:
-				if (movef == true ) {
-					current_animation = &forward;
-					if (position.x < 825)
-					{
-						position.x += speed;
-						if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving == false)
-						{
-							if (App->render->camera.x > -1004)
-							{
-								App->render->camera.x -= speed * 2;
-							}
-						}
-
-					}
+				switch (state)
+				{
+				case ST_IDLE:
+					current_animation = &idle;
+					forward.Reset();
+					backward.Reset();
 					crouch.Reset();
 					kick.Reset();
 					punch.Reset();
@@ -259,40 +238,63 @@ update_status ModulePlayer::Update()
 					HadoukenCount = 0;
 					ActiveHadouken = 0;
 					ActiveDeath = 0;
-				}
-				else if (movef == false){
-					movef = true;
-				}
-				break;
-
-			case ST_WALK_BACKWARD:
-				if (moveb == true) {
-					current_animation = &backward;
-					if (position.x > 0)
-					{
-						position.x -= (0.6 *speed);
-						if (-(position.x * 2) >= App->render->camera.x - 5)
+					break;
+				case ST_WALK_FORWARD:
+					if (movef == true) {
+						current_animation = &forward;
+						if (position.x < 825)
 						{
-							if (App->render->camera.x < 0)
+							position.x += speed;
+							if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving == false)
 							{
-								App->render->camera.x += speed * 2;
+								if (App->render->camera.x > -1004)
+								{
+									App->render->camera.x -= speed * 2;
+								}
+							}
+
+						}
+						crouch.Reset();
+						kick.Reset();
+						punch.Reset();
+						hadouken_pose.Reset();
+						HadoukenCount = 0;
+						ActiveHadouken = 0;
+						ActiveDeath = 0;
+					}
+					else if (movef == false) {
+						movef = true;
+					}
+					break;
+
+				case ST_WALK_BACKWARD:
+					if (moveb == true) {
+						current_animation = &backward;
+						if (position.x > 0)
+						{
+							position.x -= (0.6 *speed);
+							if (-(position.x * 2) >= App->render->camera.x - 5)
+							{
+								if (App->render->camera.x < 0)
+								{
+									App->render->camera.x += speed * 2;
+								}
 							}
 						}
+						crouch.Reset();
+						kick.Reset();
+						punch.Reset();
+						hadouken_pose.Reset();
+						HadoukenCount = 0;
+						ActiveHadouken = 0;
+						ActiveDeath = 0;
 					}
-					crouch.Reset();
-					kick.Reset();
-					punch.Reset();
-					hadouken_pose.Reset();
-					HadoukenCount = 0;
-					ActiveHadouken = 0;
-					ActiveDeath = 0;
-				}
-				else if (moveb == true) {
-					moveb = true;
-				}
-				break;
-			case ST_JUMP_NEUTRAL:
-				
+					else if (moveb == true) {
+						moveb = true;
+					}
+					break;
+				case ST_JUMP_NEUTRAL:
+
 					JumpCount = 1;
 					if (JumpCount == 1) {
 						if (position.y == 220) {
@@ -314,181 +316,181 @@ update_status ModulePlayer::Update()
 							position.y += (speed * 3.2);
 							current_animation = &falling;
 						}
-					
-				}
-				
-				break;
-			case ST_JUMP_FORWARD:
-				if (position.x < 825)
-				{
-					position.x += speed * 1.5;
-					if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving == false)
+
+					}
+
+					break;
+				case ST_JUMP_FORWARD:
+					if (position.x < 825)
 					{
-						if (App->render->camera.x > -1004)
+						position.x += speed * 1.5;
+						if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving == false)
 						{
-							App->render->camera.x -= speed * 2;
+							if (App->render->camera.x > -1004)
+							{
+								App->render->camera.x -= speed * 2;
+							}
 						}
 					}
-				}
-				JumpCount = 1;
-				if (JumpCount == 1) {
-					if (position.y == 220) {
-						JumpMax = false;
-						JumpMin = true;
-					}
-					if (position.y <= 110) {
-						JumpMin = false;
-						JumpMax = true;
-					}
+					JumpCount = 1;
+					if (JumpCount == 1) {
+						if (position.y == 220) {
+							JumpMax = false;
+							JumpMin = true;
+						}
+						if (position.y <= 110) {
+							JumpMin = false;
+							JumpMax = true;
+						}
 
-					if (JumpMin == true) {
-						falling.Reset();
-						position.y -= (speed * 2);
-						current_animation = &jump_forward;
-					}
-					if (JumpMax == true) {
-						jump_forward.Reset();
-						position.y += (speed * 3.2);
-						current_animation = &falling;
-					}
-				}
-				break;
-			case ST_JUMP_BACKWARD:
-				if (position.x > 0)
-				{
-					position.x -= (0.6 *speed);
-					if (-(position.x * 2) >= App->render->camera.x - 5)
-					{
-						if (App->render->camera.x < 0)
-						{
-							App->render->camera.x += speed * 2;
+						if (JumpMin == true) {
+							falling.Reset();
+							position.y -= (speed * 2);
+							current_animation = &jump_forward;
+						}
+						if (JumpMax == true) {
+							jump_forward.Reset();
+							position.y += (speed * 3.2);
+							current_animation = &falling;
 						}
 					}
-				}
-				JumpCount = 1;
-				if (JumpCount == 1) {
-					if (position.y == 220) {
-						JumpMax = false;
-						JumpMin = true;
+					break;
+				case ST_JUMP_BACKWARD:
+					if (position.x > 0)
+					{
+						position.x -= (0.6 *speed);
+						if (-(position.x * 2) >= App->render->camera.x - 5)
+						{
+							if (App->render->camera.x < 0)
+							{
+								App->render->camera.x += speed * 2;
+							}
+						}
 					}
-					if (position.y <= 110) {
-						JumpMin = false;
-						JumpMax = true;
+					JumpCount = 1;
+					if (JumpCount == 1) {
+						if (position.y == 220) {
+							JumpMax = false;
+							JumpMin = true;
+						}
+						if (position.y <= 110) {
+							JumpMin = false;
+							JumpMax = true;
+						}
+
+						if (JumpMin == true) {
+							falling.Reset();
+							position.y -= (speed * 2);
+							current_animation = &jump_backwards;
+						}
+						if (JumpMax == true) {
+							jump_backwards.Reset();
+							position.y += (speed * 3.2);
+							current_animation = &falling;
+						}
+					}
+					break;
+				case ST_CROUCH:
+					current_animation = &crouch;
+					break;
+				case ST_PUNCH_STANDING:
+					current_animation = &punch;
+					if (punchCol == false) {
+						punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
+						punchCol = true;
+					}
+					else if (punchCol == true) {
+						App->collision->DeleteCollider(punchcollider);
+					}
+					if (punch.current_frame == 0 && colliderErese == true) {
+						punchCol = false;
+					}
+					colliderErese = true;
+					break;
+				case ST_PUNCH_CROUCH:
+					current_animation = &Crouch_punch;
+					crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
+					App->collision->DeleteCollider(crouchpunchcollider);
+					break;
+				case ST_PUNCH_NEUTRAL_JUMP:
+					current_animation = &jump_neutral_punch;
+					break;
+				case ST_PUNCH_FORWARD_JUMP:
+
+					break;
+				case ST_PUNCH_BACKWARD_JUMP:
+
+					break;
+				case ST_KICK_STANDING:
+					current_animation = &kick;
+					if (kickCol == false) {
+						kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 27 }, COLLIDER_PLAYER_ATTACK, this, 50);
+						kickCol = true;
+					}
+					else if (kickCol == true) {
+						App->collision->DeleteCollider(kickcollider);
+					}
+					if (kick.current_frame == 0 && colliderErese2 == true) {
+						kickCol = true;
+					}
+					colliderErese2 = true;
+					break;
+				case ST_HADOUKEN:
+					current_animation = &hadouken_pose;
+					if (HadoukenCount < 35) {
+						HadoukenCount++;
+					}
+					if (HadoukenCount == 35 && ActiveHadouken == 0) {
+						App->particle->AddParticle(App->particle->hadouken, position.x + 65, position.y - 70, COLLIDER_PLAYER_ATTACK, 0);
+						App->audio->PlayChunk(App->particle->hadouken.sound, 0);
+						HadoukenCount = 0;
+						ActiveHadouken = 1;
+					}
+					break;
+
+				}
+
+
+
+				//Logic
+				healthbar = life * 0.153;
+
+				if (life < 0) {
+					life = 0;
+				}
+
+				if (life == 0)
+				{
+					current_animation = &Death;
+					if (DeathCount == 1) {
+						App->audio->PlayChunk(deathSound, 0);
+					}
+					if (DeathCount < 80)
+						DeathCount++;
+					if (DeathCount == 80 && ActiveDeath == 0) {
+						DeathCount = 0;
+						Death.Reset();
+						victorycount++;
+						ActiveDeath = 1;
+						ResetPlayer();
+
+
 					}
 
-					if (JumpMin == true) {
-						falling.Reset();
-						position.y -= (speed * 2);
-						current_animation = &jump_backwards;
-					}
-					if (JumpMax == true) {
-						jump_backwards.Reset();
-						position.y += (speed * 3.2);
-						current_animation = &falling;
-					}
-				}
-				break;
-			case ST_CROUCH:
-				current_animation = &crouch;
-				break;
-			case ST_PUNCH_STANDING:
-				current_animation = &punch;
-				if (punchCol == false) {
-					punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
-					punchCol = true;
-				}
-				else if (punchCol == true) {
-					App->collision->DeleteCollider(punchcollider);
-				}
-				if (punch.current_frame == 0 && colliderErese == true) {
-					punchCol = false;
-				}
-				colliderErese = true;
-				break;
-			case ST_PUNCH_CROUCH:
-				current_animation = &Crouch_punch;
-				crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
-				App->collision->DeleteCollider(crouchpunchcollider);
-				break;
-			case ST_PUNCH_NEUTRAL_JUMP:
-				current_animation = &jump_neutral_punch;
-				break;
-			case ST_PUNCH_FORWARD_JUMP:
 
-				break;
-			case ST_PUNCH_BACKWARD_JUMP:
+					//ResetPlayer();
+				}
 
-				break;
-			case ST_KICK_STANDING:
-				current_animation = &kick;
-				if (kickCol == false) {
-					kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 27 }, COLLIDER_PLAYER_ATTACK, this, 50);
-					kickCol = true;
-				}
-				else if (kickCol == true) {
-					App->collision->DeleteCollider(kickcollider);
-				}
-				if (kick.current_frame == 0 && colliderErese2 == true) {
-					kickCol = true;
-				}
-				colliderErese2 = true;
-				break;
-			case ST_HADOUKEN:
-				current_animation = &hadouken_pose;
-				if (HadoukenCount < 35) {
-					HadoukenCount++;
-				}
-				if (HadoukenCount == 35 && ActiveHadouken == 0) {
-					App->particle->AddParticle(App->particle->hadouken, position.x + 65, position.y - 70, COLLIDER_PLAYER_ATTACK, 0);
-					App->audio->PlayChunk(App->particle->hadouken.sound, 0);
-					HadoukenCount = 0;
-					ActiveHadouken = 1;
-				}
-				break;
-				
+				// Draw everything --------------------------------------
+
+				SDL_Rect r = current_animation->GetCurrentFrame();
+				App->render->Blit(graphics, position.x, position.y - r.h, &r);
+
+				//Update collider position to player position
+				colliderplayer->SetPos(position.x + 7, position.y - 90);
+
+				return UPDATE_CONTINUE;
 			}
-
-			
-
-			//Logic
-			healthbar = life * 0.153;
-
-			if (life < 0) {
-				life = 0;
-			}
-			
-			if (life == 0)
-			{
-				current_animation = &Death;
-				if (DeathCount == 1) {
-					App->audio->PlayChunk(deathSound, 0);
-				}
-				if (DeathCount < 80)
-					DeathCount++;			
-				if (DeathCount == 80 && ActiveDeath == 0) {
-					DeathCount = 0;				
-					Death.Reset();
-					victorycount++;
-					ActiveDeath = 1;
-					ResetPlayer();
-					
-					
-				}
-				
-				current_state = state;
-				
-				//ResetPlayer();
-			}
-
-			// Draw everything --------------------------------------
-
-			SDL_Rect r = current_animation->GetCurrentFrame();
-			App->render->Blit(graphics, position.x, position.y - r.h, &r);
-
-			//Update collider position to player position
-			colliderplayer->SetPos(position.x + 7, position.y - 90);
-
-			return UPDATE_CONTINUE;
 		}
 	}
 }
@@ -645,8 +647,9 @@ void ModulePlayer::ResetPlayer() {
 	life = 1000;
 	position.x = 100; //Returns to its original position
 	if (App->player2->position.x != 300 || App->player2->life != 1000) {
-		App->player2->ResetPlayer();
 		ActiveDeath = 0;
+		App->player2->ResetPlayer();
+		
 		
 	}
 }
