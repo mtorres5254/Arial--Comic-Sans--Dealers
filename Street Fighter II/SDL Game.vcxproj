@@ -93,7 +93,6 @@
     <ClInclude Include="ModuleUI.h" />
     <ClInclude Include="ModuleWelcomePage.h" />
     <ClInclude Include="ModuleWindow.h" />
-    <ClInclude Include="ModuleWinScene.h" />
     <ClInclude Include="p2Point.h" />
     <ClInclude Include="p2Qeue.h" />
   </ItemGroup>
@@ -119,7 +118,6 @@
     <ClCompile Include="ModuleUI.cpp" />
     <ClCompile Include="ModuleWelcomePage.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
-    <ClCompile Include="ModuleWinScene.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

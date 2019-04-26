@@ -16,8 +16,11 @@
 #include "ModuleUI.h"
 #include "ModuleLoseScene.h"
 #include "ModuleSceneRyu.h"
+<<<<<<< HEAD
 #include "ModuleWinScene.h"
 #include "ModuleFont.h"
+=======
+>>>>>>> parent of 9429e03... Working on win scene
 
 Application::Application()
 {
@@ -38,8 +41,11 @@ Application::Application()
 	modules[14] = collision = new ModuleCollision();
 	modules[15] = UI = new ModuleUI();
 	modules[16] = lose_scene = new ModuleLoseScene();
+<<<<<<< HEAD
 	modules[17] = win_scene = new ModuleWinScene();
 	modules[18] = font = new ModuleFont();
+=======
+>>>>>>> parent of 9429e03... Working on win scene
 	
 }	
 
@@ -64,7 +70,6 @@ bool Application::Init()
 	congrats_screen->Disable();
 	collision->Disable();
 	UI->Disable();
-	win_scene->Disable();
 
 	for(int i = 0; i < NUM_MODULES && ret == true; ++i)
 		ret = modules[i]->Init();

@@ -193,10 +193,10 @@ update_status ModulePlayer::Update()
 	}
 	if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) //Treu-re abans d'entregar
 	{
-		life = life - 100;
+		life = 0;
 	}
 
-	while (external_input(inputs))
+ while (external_input(inputs))
 	{
 
 		internal_input(inputs);
@@ -341,10 +341,15 @@ update_status ModulePlayer::Update()
 			//Logic
 			healthbar = life * 0.153;
 
+			if (life < 0) {
+				life = 0;
+			}
 			if (life == 0)
 			{
 				current_animation = &Death;
 				App->audio->PlayChunk(deathSound, 0);
+				reset_timer = SDL_GetTicks();
+				ResetPlayer();
 			}
 
 			// Draw everything --------------------------------------
@@ -506,4 +511,16 @@ void ModulePlayer::internal_input(p2Qeue<ryu_inputs>& inputs)
 			hadouken_timer = 0;
 		}
 	}
+}
+
+void ModulePlayer::ResetPlayer() {
+	if (reset_timer > 0)
+	{
+		if (SDL_GetTicks() - reset_timer > RESET_TIME) {
+			reset_timer = 0;
+		}
+	}
+	life = 1000;
+	position.x = 100; //Returns to its original position
+
 }
