@@ -58,6 +58,8 @@ public:
 	bool movef = true;
 	bool moveb = true;
 	bool GodMode = false;
+	bool punchCol = false;
+	bool colliderErese = false;
 
 	int life = 1000;
 	int healthbar;

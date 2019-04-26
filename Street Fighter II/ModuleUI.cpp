@@ -32,12 +32,14 @@ ModuleUI::ModuleUI() {
 	RedBar2.h = 19;
 
 	//KOBar
-
 	KObar.x = 205;
 	KObar.y = 18;
 	KObar.w = 27;
 	KObar.h = 24;
-
+	
+	KOanim.PushBack({205,18,27,24});
+	KOanim.PushBack({205,56,27,24});
+	KOanim.speed = 2.0f;
 }
 
 ModuleUI::~ModuleUI()
@@ -77,8 +79,12 @@ update_status ModuleUI:: Update(){
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - HealthBar1.w - KObar.w / 2, 20, &HealthBar1, false);
 	App->render->Blit(graphics2, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &RedBar2, false);
 	App->render->Blit(graphics2, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &HealthBar2, false);
-	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - (KObar.w / 2), 15, &KObar, false);
-
+	if (App->player->life > 250 && App->player2->life > 250) {
+		App->render->Blit(graphics1, SCREEN_WIDTH / 2 - (KObar.w / 2), 15, &KObar, false);
+	}
+	else {
+		App->render->Blit(graphics1, SCREEN_WIDTH / 2 - (KObar.w / 2), 15, &KOanim.GetCurrentFrame(), false);
+	}
 	
 	return UPDATE_CONTINUE;
 }

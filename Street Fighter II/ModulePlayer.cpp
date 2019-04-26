@@ -300,8 +300,17 @@ update_status ModulePlayer::Update()
 				break;
 			case ST_PUNCH_STANDING:
 				current_animation = &punch;
-				punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
-				App->collision->DeleteCollider(punchcollider);
+				if (punchCol == false) {
+					punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
+					punchCol = true;
+				}
+				else if (punchCol == true) {
+					App->collision->DeleteCollider(punchcollider);
+				}
+				if (punch.current_frame == 0 && colliderErese == true) {
+					punchCol = false;
+				}
+				colliderErese = true;
 				break;
 			case ST_PUNCH_CROUCH:
 				current_animation = &Crouch_punch;

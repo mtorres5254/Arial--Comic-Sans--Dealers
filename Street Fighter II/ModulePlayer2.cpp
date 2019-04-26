@@ -185,7 +185,7 @@ update_status ModulePlayer2::Update()
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN) { //Treu-re abans d'entregar
-		life = 0;
+		life = 200;
 	}
 
 	/*if (life == 0) {
@@ -299,12 +299,12 @@ update_status ModulePlayer2::Update()
 					break;
 				case ST_PUNCH_STANDING:
 					current_animation = &punch;
-					punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_ENEMY_SHOT, App->player2, 50);
+					punchcollider = App->collision->AddCollider({ position.x - 20, position.y - 79, 51, 13 }, COLLIDER_ENEMY_SHOT, App->player2, 25);
 					App->collision->DeleteCollider(punchcollider);
 					break;
 				case ST_PUNCH_CROUCH:
 					current_animation = &Crouch_punch;
-					crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_ENEMY_SHOT, App->player2, 50);
+					crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_ENEMY_SHOT, App->player2, 25);
 					App->collision->DeleteCollider(crouchpunchcollider);
 					break;
 				case ST_PUNCH_NEUTRAL_JUMP:

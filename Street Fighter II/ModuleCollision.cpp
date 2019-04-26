@@ -184,5 +184,7 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 //-----------------------------------------------------
 
 void ModuleCollision::DeleteCollider(Collider* collider) {
-	collider->to_delete = true;
+	if (collider != nullptr) {
+		collider->to_delete = true;
+	}
 }

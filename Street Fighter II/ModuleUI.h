@@ -29,6 +29,8 @@ public:
 	SDL_Rect RedBar2;
 	SDL_Rect KObar;
 
+	Animation KOanim;
+
 };
 
 #endif // !_MODULEUI_H
