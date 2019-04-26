@@ -329,7 +329,11 @@ update_status ModulePlayer2::Update()
 						HadoukenCount = 0;
 						ActiveHadouken = 1;
 					}
-
+				case ST_RECEIVED_PUNCH:
+					current_animation = &ReceivedPunch;
+					if (ReceivedPunch.current_frame == 3) {
+						break;
+					}
 					break;
 				}
 			}

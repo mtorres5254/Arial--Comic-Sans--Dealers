@@ -48,6 +48,7 @@ public:
 	Animation neutral_falling;
 	Animation Crouch_punch;
 	Animation jump_neutral_punch;
+	Animation ReceivedPunch;
 	Animation Death;
 	iPoint position;
 	int HadoukenCount = 0;
@@ -89,6 +90,7 @@ private:
 		ST_PUNCH_CROUCH,
 		ST_KICK_STANDING,
 		ST_HADOUKEN,
+		ST_RECEIVED_PUNCH,
 	};
 
 	enum ryu2_inputs
@@ -109,6 +111,7 @@ private:
 		IN_PUNCH_FINISH,
 		IN_KICK_FINISH,
 		IN_HADOUKEN_FINISH,
+		IN_RECEIVED_PUNCH,
 	};
 
 	Uint32 jump_timer = 0;
