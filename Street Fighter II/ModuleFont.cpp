@@ -83,28 +83,37 @@ void ModuleFont::UnLoad(int font_id)
 // Render text using a bitmap font
 void ModuleFont::BlitText(int x, int y, int font_id, const char* text) const
 {
-	if (text == nullptr || font_id < 0 || font_id >= MAX_FONTS || fonts[font_id].graphic == nullptr)
+	if (text == nullptr || font_id < 0 || font_id >= MAX_FONTS || App->font->fonts[font_id].graphic == nullptr)
 	{
 		LOG("Unable to render text with bmp font id %d", font_id);
 		return;
 	}
 
-	const Font* font = &fonts[font_id];
+	const Font* font = &App->font->fonts[font_id];
 	SDL_Rect rect;
 	uint len = strlen(text);
-	uint blitCount = 0;
-	
 
 	rect.w = font->char_w;
 	rect.h = font->char_h;
 
-	for (uint i = 0; i < len; ++i)
+	for (int i = 0; i < len; i++)
 	{
-		for (uint j = 0; j < font->len; j++) {
-			if (font->table[i] == text[j]) {
-				App->render->Blit(font->graphic, x + (blitCount * rect.w), y, &rect, false);
-				blitCount++;
+		bool foundCharacter = false;
+		int j = 0;
+		do
+		{
+			// TODO 2: Find the character in the table and its position in the texture, then Blit
+			if (font->table[j] == text[i]) {
+				rect.x = j * font->char_w;
+				rect.y = 0;
+				App->render->Blit(font->graphic, x, y, &rect, false);
+
+				x += font->char_w;
+				foundCharacter = true;
 			}
-		}
+			else
+				j++;
+
+		} while (!foundCharacter && j < font->len);
 	}
 }
