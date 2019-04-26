@@ -219,45 +219,50 @@ update_status ModulePlayer::Update()
 				ActiveHadouken = 0;
 				break;
 			case ST_WALK_FORWARD:
-				if (position.x < 825)
-				{
-					position.x += speed;
-					if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving == false)
+				if (movef == true) {
+					current_animation = &forward;
+					if (position.x < 825)
 					{
-						if (App->render->camera.x > -1004)
+						position.x += speed;
+						if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving == false)
 						{
-							App->render->camera.x -= speed * 2;
+							if (App->render->camera.x > -1004)
+							{
+								App->render->camera.x -= speed * 2;
+							}
 						}
-					}
 
+					}
+					crouch.Reset();
+					kick.Reset();
+					punch.Reset();
+					hadouken_pose.Reset();
+					HadoukenCount = 0;
+					ActiveHadouken = 0;
 				}
-				current_animation = &forward;
-				crouch.Reset();
-				kick.Reset();
-				punch.Reset();
-				hadouken_pose.Reset();
-				HadoukenCount = 0;
-				ActiveHadouken = 0;
+				else if (movef == false){
+					movef = true;
+				}
 				break;
 			case ST_WALK_BACKWARD:
-				current_animation = &backward;
-				if (position.x > 0)
-				{
-					position.x -= (0.6 *speed);
-					if (-(position.x * 2) >= App->render->camera.x - 5)
+					current_animation = &backward;
+					if (position.x > 0)
 					{
-						if (App->render->camera.x < 0)
+						position.x -= (0.6 *speed);
+						if (-(position.x * 2) >= App->render->camera.x - 5)
 						{
-							App->render->camera.x += speed * 2;
+							if (App->render->camera.x < 0)
+							{
+								App->render->camera.x += speed * 2;
+							}
 						}
 					}
-				}
-				crouch.Reset();
-				kick.Reset();
-				punch.Reset();
-				hadouken_pose.Reset();
-				HadoukenCount = 0;
-				ActiveHadouken = 0;
+					crouch.Reset();
+					kick.Reset();
+					punch.Reset();
+					hadouken_pose.Reset();
+					HadoukenCount = 0;
+					ActiveHadouken = 0;
 				break;
 			case ST_JUMP_NEUTRAL:
 				JumpCount = 1;
@@ -285,11 +290,9 @@ update_status ModulePlayer::Update()
 				}
 				break;
 			case ST_JUMP_FORWARD:
-
 				current_animation = &jump_forward;
 				break;
 			case ST_JUMP_BACKWARD:
-
 				current_animation = &jump_backwards;
 				break;
 			case ST_CROUCH:
@@ -306,7 +309,6 @@ update_status ModulePlayer::Update()
 				App->collision->DeleteCollider(crouchpunchcollider);
 				break;
 			case ST_PUNCH_NEUTRAL_JUMP:
-
 				current_animation = &jump_neutral_punch;
 				break;
 			case ST_PUNCH_FORWARD_JUMP:
@@ -336,6 +338,7 @@ update_status ModulePlayer::Update()
 
 			current_state = state;
 
+			//Logic
 			healthbar = life * 0.153;
 
 			if (life == 0)
