@@ -449,75 +449,8 @@ update_status ModulePlayer::Update()
 					break;
 
 				}
-				break;
-			case ST_CROUCH:
-				current_animation = &crouch;
-				break;
-			case ST_PUNCH_STANDING:
-				current_animation = &punch;
-				if (punchCol == false) {
-					punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
-					punchCol = true;
-				}
-				else if (punchCol == true) {
-					App->collision->DeleteCollider(punchcollider);
-				}
-				if (punch.current_frame == 0 && colliderErese == true) {
-					punchCol = false;
-				}
-				colliderErese = true;
-				break;
-			case ST_PUNCH_CROUCH:
-				current_animation = &Crouch_punch;
-				if (CrPunchCol == false) {
-					crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
-					CrPunchCol = true;
-				}
-				else if (CrPunchCol == true) {
-					App->collision->DeleteCollider(crouchpunchcollider);
-				}
-				if (Crouch_punch.current_frame == 0 && colliderErese3 == true) {
-					CrPunchCol = false;
-				}
-				colliderErese3 = true;
-				break;
-			case ST_PUNCH_NEUTRAL_JUMP:
-				current_animation = &jump_neutral_punch;
-				break;
-			case ST_PUNCH_FORWARD_JUMP:
-				break;
-			case ST_PUNCH_BACKWARD_JUMP:
 
-				break;
-			case ST_KICK_STANDING:
-				current_animation = &kick;
-				if (kickCol == false) {
-					kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 27 }, COLLIDER_PLAYER_ATTACK, this, 50);
-					kickCol = true;
-				}
-				else if (kickCol == true) {
-					App->collision->DeleteCollider(kickcollider);
-				}
-				if (kick.current_frame == 0 && colliderErese2 == true) {
-					kickCol = true;
-				}
-				colliderErese2 = true;
-				break;
-			case ST_HADOUKEN:
-				current_animation = &hadouken_pose;
-				if (HadoukenCount < 35) {
-					HadoukenCount++;
-				}
-				if (HadoukenCount == 35 && ActiveHadouken == 0) {
-					App->particle->AddParticle(App->particle->hadouken, position.x + 65, position.y - 70, COLLIDER_PLAYER_ATTACK, 0);
-					App->audio->PlayChunk(App->particle->hadouken.sound, 0);
-					HadoukenCount = 0;
-					ActiveHadouken = 1;
-				}
-				break;
-			}
-
-			current_state = state;
+				current_state = state;
 
 				//Logic
 				healthbar = life * 0.153;
@@ -560,6 +493,7 @@ update_status ModulePlayer::Update()
 			}
 		}
 	}
+}
 
 	
 
