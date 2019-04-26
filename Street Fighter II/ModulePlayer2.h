@@ -60,8 +60,12 @@ public:
 	bool moveb = true;
 	bool death = false;
 	bool GodMode = false;
-
-
+	bool punchCol = false;
+	bool CrPunchCol = false;
+	bool kickCol = false;
+	bool colliderErese = false;
+	bool colliderErese2 = false;
+	bool colliderErese3 = false;
 	int DeathCount = 0;
 	int ActiveDeath = 0;
 	int victorycount = 0;
