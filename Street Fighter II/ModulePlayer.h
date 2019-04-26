@@ -57,14 +57,15 @@ public:
 	bool death = false;
 	bool GodMode = false;
 
+	int life = 1000;
+	int healthbar;
+
 private:
 	Collider* colliderplayer;
 	Collider* punchcollider;
 	Collider* crouchpunchcollider;
 	Collider* kickcollider;
 
-	int life = 1000;
-	int healthbar = life / 10000;
 
 	enum ryu_states
 	{

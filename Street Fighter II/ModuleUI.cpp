@@ -3,6 +3,8 @@
 #include "ModuleTextures.h"
 #include "SDL/include/SDL.h"
 #include "ModuleRender.h"
+#include "ModulePlayer.h"
+#include "ModulePlayer2.h"
 
 #include "ModuleUI.h"
 
@@ -56,13 +58,17 @@ bool ModuleUI::CleanUp()
 
 update_status ModuleUI:: Update(){
 	
+	//Logic
+
+	HealthBar1.w = App->player->healthbar;
+	HealthBar2.w = App->player2->healthbar;
+
+	//Render
+	App->render->Blit(graphics1, SCREEN_WIDTH/2-HealthBar1.w -KObar.w/2, 20, &HealthBar1, true);
+	App->render->Blit(graphics2, SCREEN_WIDTH/2 + KObar.w/2, 20, &HealthBar2, true);
+	App->render->Blit(graphics1, SCREEN_WIDTH/2 - (KObar.w / 2), 15, &KObar, true);
+
 	
-	App->render->Blit(graphics1, SCREEN_WIDTH/2-HealthBar1.w -KObar.w/2, 20, &HealthBar1, false);
-	App->render->Blit(graphics2, SCREEN_WIDTH/2 + KObar.w/2, 20, &HealthBar2, false);
-	App->render->Blit(graphics1, SCREEN_WIDTH/2 - (KObar.w / 2), 15, &KObar, false);
-
-
-
 	return UPDATE_CONTINUE;
 }
 

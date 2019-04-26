@@ -145,8 +145,7 @@ bool ModulePlayer2::Start()
 	position.x = 300; //Returns to its original position
 
 	//Add a collider to the player
-	colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_ENEMY);
-	colliderplayer->callback = App->player2;
+	colliderplayer = App->collision->AddCollider({ position.x,position.y + 90,60,90 }, COLLIDER_ENEMY, App->player2);
 
 	return ret;
 }
@@ -336,13 +335,15 @@ update_status ModulePlayer2::Update()
 
 			current_state = state;
 
+			healthbar = life * 0.153;
+
 			// Draw everything --------------------------------------
 
 			SDL_Rect r = current_animation->GetCurrentFrame();
 			App->render->Blit(graphics, position.x, position.y - r.h, &r);
 
 			//Update collider position to player position
-			colliderplayer->SetPos(position.x, position.y);
+			colliderplayer->SetPos(position.x, position.y - 90);
 
 			return UPDATE_CONTINUE;
 		}

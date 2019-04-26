@@ -152,9 +152,7 @@ bool ModulePlayer::Start()
 	deathSound = App->audio->LoadChunk("Assets/Sound/ryu-death.wav");
 
 	//Add a collider to the player
-	colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER,App->player);
-	life = 1000;
-	death = false;
+	colliderplayer = App->collision->AddCollider({ position.x,position.y + 90,60,90 }, COLLIDER_PLAYER, App->player);
 	
 	return ret;
 }
@@ -194,7 +192,7 @@ update_status ModulePlayer::Update()
 	}
 	if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN)
 	{
-		life = 0;
+		life = life - 100;
 	}
 
 
@@ -338,6 +336,8 @@ update_status ModulePlayer::Update()
 
 			current_state = state;
 
+			healthbar = life * 0.153;
+
 			if (life == 0)
 			{
 				current_animation = &Death;
@@ -350,7 +350,7 @@ update_status ModulePlayer::Update()
 			App->render->Blit(graphics, position.x, position.y - r.h, &r);
 
 			//Update collider position to player position
-			colliderplayer->SetPos(position.x, position.y);
+			colliderplayer->SetPos(position.x, position.y - 90);
 
 			return UPDATE_CONTINUE;
 		}
@@ -359,10 +359,9 @@ update_status ModulePlayer::Update()
 	
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
-		LOG("colision detected");
 		if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY) 
 		{
-			LOG("Fulgencious");
+			movef = false;
 		}
 }
 

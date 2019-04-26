@@ -57,21 +57,12 @@ update_status ModuleRender::Update()
 
 	if (App->scene_honda->IsEnabled() == true)
 	{
-		/*if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_STATE::KEY_REPEAT)
-		{
-			camera.y += 0;
-		}
-		if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_STATE::KEY_REPEAT)
-		{
-			camera.y -= 0;
-		}*/
 		if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_STATE::KEY_REPEAT)
 		{
 			if (camera.x < -153)//Ryu Scene
 			{
 				camera.x += speed;
-				//LOG("Cam posx: %d", camera.x);
-				//LOG("Cam posxMax: %d", camera.x - SCREEN_WIDTH);
+
 			}
 		}
 		if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_STATE::KEY_REPEAT)
@@ -79,75 +70,9 @@ update_status ModuleRender::Update()
 			if (camera.x > -765)//Ryu Scence
 			{
 				camera.x -= speed;
-				//LOG("Cam posx: %d", camera.x);
-				//LOG("Cam posxMax: %d", camera.x-SCREEN_WIDTH);
 			}
 		}
 	}
-
-	/*if (App->scene_ken->IsEnabled() == true)
-	{
-		//if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_STATE::KEY_REPEAT)
-		//{
-			//camera.y += 0;
-		//}
-		//if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_STATE::KEY_REPEAT)
-		//{
-			//camera.y -= 0;
-		//
-		if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_STATE::KEY_REPEAT)
-		{
-			if (camera.x < 0)
-			{
-				camera.x += speed;
-				LOG("Cam posx: %d", camera.x);
-				LOG("Cam posxMax: %d", camera.x - SCREEN_WIDTH);
-			}
-		}
-		if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_STATE::KEY_REPEAT)
-		{
-			if (camera.x > -1002)
-			{
-				camera.x -= speed;
-				LOG("Cam posx: %d", camera.x);
-				LOG("Cam posxMax: %d", camera.x - SCREEN_WIDTH);
-			}
-		}
-	}*/
-	/*if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_STATE::KEY_REPEAT
-		&& App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false)
-		camera.y += 0;*/
-
-	/*if(App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_STATE::KEY_REPEAT
-		&& App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false)
-		camera.y -= 0;*/
-
-	/*if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_STATE::KEY_REPEAT
-		&& App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false) 
-	{
-		if (camera.x < 0) 
-		{
-			camera.x += speed;
-		}
-		/*else 
-		{
-			camera.x = 0;
-		}
-	}*/
-		
-
-	/*if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_STATE::KEY_REPEAT
-		&& App->welcome_page->IsEnabled() == false && App->congrats_screen->IsEnabled() == false) {
-		if (camera.x > -SCREEN_WIDTH*SCREEN_SIZE) 
-		{
-			camera.x -= speed;
-		}
-		/*else 
-		{
-			camera.x = -SCREEN_WIDTH*SCREEN_SIZE;
-		}
-	}*/
-		
 
 	return update_status::UPDATE_CONTINUE;
 }
