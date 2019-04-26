@@ -49,6 +49,7 @@ public:
 	Animation ReceivedPunch;
 	Animation Death;
 	iPoint position;
+
 	int HadoukenCount = 0;
 	int ActiveHadouken = 0;
 	int JumpCount = 0;

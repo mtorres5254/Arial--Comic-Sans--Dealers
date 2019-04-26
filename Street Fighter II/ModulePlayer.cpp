@@ -238,7 +238,7 @@ update_status ModulePlayer::Update()
 				ActiveHadouken = 0;
 				break;
 			case ST_WALK_FORWARD:
-				if (movef == true) {
+				if (movef == true ) {
 					current_animation = &forward;
 					if (position.x < 825)
 					{
@@ -258,6 +258,7 @@ update_status ModulePlayer::Update()
 					hadouken_pose.Reset();
 					HadoukenCount = 0;
 					ActiveHadouken = 0;
+					ActiveDeath = 0;
 				}
 				else if (movef == false){
 					movef = true;
@@ -284,34 +285,38 @@ update_status ModulePlayer::Update()
 					hadouken_pose.Reset();
 					HadoukenCount = 0;
 					ActiveHadouken = 0;
+					ActiveDeath = 0;
 				}
 				else if (moveb == true) {
 					moveb = true;
 				}
 				break;
 			case ST_JUMP_NEUTRAL:
-				JumpCount = 1;
-				if (JumpCount == 1) {
-					if (position.y == 220) {
-						JumpMax = false;
-						JumpMin = true;
-					}
-					if (position.y <= 105) {
-						JumpMin = false;
-						JumpMax = true;
-					}
+				
+					JumpCount = 1;
+					if (JumpCount == 1) {
+						if (position.y == 220) {
+							JumpMax = false;
+							JumpMin = true;
+						}
+						if (position.y <= 105) {
+							JumpMin = false;
+							JumpMax = true;
+						}
 
-					if (JumpMin == true) {
-						falling.Reset();
-						position.y -= (speed * 2);
-						current_animation = &jump_neutral;
-					}
-					if (JumpMax == true) {
-						jump_neutral.Reset();
-						position.y += (speed * 3.2);
-						current_animation = &falling;
-					}
+						if (JumpMin == true) {
+							falling.Reset();
+							position.y -= (speed * 2);
+							current_animation = &jump_neutral;
+						}
+						if (JumpMax == true) {
+							jump_neutral.Reset();
+							position.y += (speed * 3.2);
+							current_animation = &falling;
+						}
+					
 				}
+				
 				break;
 			case ST_JUMP_FORWARD:
 				if (position.x < 825)
@@ -440,6 +445,7 @@ update_status ModulePlayer::Update()
 					ActiveHadouken = 1;
 				}
 				break;
+				
 			}
 
 			
@@ -461,10 +467,11 @@ update_status ModulePlayer::Update()
 					DeathCount++;			
 				if (DeathCount == 80 && ActiveDeath == 0) {
 					DeathCount = 0;				
-					
-					ResetPlayer();
+					Death.Reset();
 					victorycount++;
-					ActiveDeath=1;
+					ActiveDeath = 1;
+					ResetPlayer();
+					
 					
 				}
 				
@@ -639,5 +646,7 @@ void ModulePlayer::ResetPlayer() {
 	position.x = 100; //Returns to its original position
 	if (App->player2->position.x != 300 || App->player2->life != 1000) {
 		App->player2->ResetPlayer();
+		ActiveDeath = 0;
+		
 	}
 }
