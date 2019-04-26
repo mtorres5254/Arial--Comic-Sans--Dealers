@@ -1,4 +1,4 @@
-#include "Globals.h"
+/*#include "Globals.h"
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
@@ -14,10 +14,12 @@
 
 ModuleWinScene::ModuleWinScene()
 {
-	background.x = 0;
-	background.y = 0;
-	background.h = SCREEN_HEIGHT;
-	background.w = SCREEN_WIDTH;
+	Y = { 46, 139, 848, 64 };
+	O = { 8, 376, 848, 64 };
+	U = { 8, 376, 848, 64 };
+	W = { 8, 376, 848, 64 };
+	I = { 8, 376, 848, 64 };
+	N = { 8, 376, 848, 64 };
 }
 
 ModuleWinScene::~ModuleWinScene()
@@ -26,8 +28,9 @@ ModuleWinScene::~ModuleWinScene()
 bool ModuleWinScene::Start()
 {
 	LOG("Loading CongratsScreen");
-	//App->render->
-	graphics = App->textures->Load("Assets/Images/CongratsScreen.png");
+	SDL_Color background = { 255, 255, 255 };
+	SDL_RenderClear(App->render->renderer);
+	graphics = App->textures->Load("Assets/Images/Battle_HUD.png");
 	music = App->audio->LoadMusic("Assets/Audio/congrats.ogg");
 	App->audio->PlayMusic(music, 3000);
 	App->UI->Disable();
@@ -60,4 +63,4 @@ update_status ModuleWinScene::Update()
 	}
 
 	return UPDATE_CONTINUE;
-}
+}*/

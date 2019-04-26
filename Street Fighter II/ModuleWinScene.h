@@ -1,4 +1,4 @@
-#ifndef __MODULEWINSCENE_H__
+/*#ifndef __MODULEWINSCENE_H__
 #define __MODULEWINSCENE_H__
 
 #include "Module.h"
@@ -24,6 +24,8 @@ public:
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect background;
 	Mix_Music* music;
+
+	SDL_Rect Y,O,U,W,I,N;
 };
 
-#endif // __MODULEWINSCENE_H__
+#endif // __MODULEWINSCENE_H__*/

@@ -31,7 +31,7 @@ bool ModuleRender::Init()
 	{
 		flags |= SDL_RENDERER_PRESENTVSYNC;
 	}
-
+	
 	renderer = SDL_CreateRenderer(App->window->window, -1, flags);
 	
 	if(renderer == NULL)
@@ -46,7 +46,7 @@ bool ModuleRender::Init()
 // Called every draw update
 update_status ModuleRender::PreUpdate()
 {
-	SDL_RenderClear(renderer);
+	SDL_RenderClear(renderer); 
 
 	return update_status::UPDATE_CONTINUE;
 }
