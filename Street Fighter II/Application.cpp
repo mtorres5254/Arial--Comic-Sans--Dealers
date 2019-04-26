@@ -16,6 +16,7 @@
 #include "ModuleUI.h"
 #include "ModuleLoseScene.h"
 #include "ModuleSceneRyu.h"
+#include "ModuleWinScene.h"
 
 Application::Application()
 {
@@ -36,6 +37,7 @@ Application::Application()
 	modules[14] = collision = new ModuleCollision();
 	modules[15] = UI = new ModuleUI();
 	modules[16] = lose_scene = new ModuleLoseScene();
+	modules[17] = win_scene = new ModuleWinScene();
 	
 }	
 
@@ -60,6 +62,7 @@ bool Application::Init()
 	congrats_screen->Disable();
 	collision->Disable();
 	UI->Disable();
+	win_scene->Disable();
 
 	for(int i = 0; i < NUM_MODULES && ret == true; ++i)
 		ret = modules[i]->Init();

@@ -57,6 +57,12 @@ update_status ModuleInput::PreUpdate()
 	if (keyboard[SDL_SCANCODE_ESCAPE])
 		return update_status::UPDATE_STOP;
 
+	if (keyboard[SDL_SCANCODE_F11] && App->win_scene->isEnabled()==true)
+	{
+		App->fade->FadeToBlack(App->scene_ryu, App->win_scene, 1.0f);
+		App->audio->StopMusic(2500);
+	}
+
 	while (SDL_PollEvent(&event) != 0)
 	{
 		if (event.type == SDL_QUIT) { return update_status::UPDATE_STOP; }
