@@ -136,6 +136,11 @@ ModulePlayer::ModulePlayer()
 	jump_neutral_punch.PushBack({ 97,985,81,71 });
 	jump_neutral_punch.speed = 0.1f;
 
+	//Received Punch
+	ReceivedPunch.PushBack({ 842,2091,72,88 });
+	ReceivedPunch.PushBack({ 936,2091,69,88 });
+	ReceivedPunch.PushBack({ 1032,2090,62,90 });
+
 }
 
 ModulePlayer::~ModulePlayer()
@@ -357,7 +362,6 @@ update_status ModulePlayer::Update()
 			{
 				current_animation = &Death;
 				App->audio->PlayChunk(deathSound, 0);
-				reset_timer = SDL_GetTicks();
 				ResetPlayer();
 			}
 
@@ -523,13 +527,9 @@ void ModulePlayer::internal_input(p2Qeue<ryu_inputs>& inputs)
 }
 
 void ModulePlayer::ResetPlayer() {
-	if (reset_timer > 0)
-	{
-		if (SDL_GetTicks() - reset_timer > RESET_TIME) {
-			reset_timer = 0;
-		}
-	}
 	life = 1000;
 	position.x = 100; //Returns to its original position
-
+	if (App->player2->position.x != 300 || App->player2->life != 1000) {
+		App->player2->ResetPlayer();
+	}
 }

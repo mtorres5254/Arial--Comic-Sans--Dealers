@@ -29,6 +29,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void OnCollision(Collider*, Collider*);
+	void ResetPlayer();
 
 public:
 

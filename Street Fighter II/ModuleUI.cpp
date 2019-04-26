@@ -39,7 +39,7 @@ ModuleUI::ModuleUI() {
 	
 	KOanim.PushBack({205,18,27,24});
 	KOanim.PushBack({205,56,27,24});
-	KOanim.speed = 2.0f;
+	KOanim.speed = 0.1f;
 }
 
 ModuleUI::~ModuleUI()

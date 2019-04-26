@@ -4,6 +4,7 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModulePlayer2.h"
+#include "ModulePlayer.h"
 #include "ModuleParticles.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -185,13 +186,8 @@ update_status ModulePlayer2::Update()
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN) { //Treu-re abans d'entregar
-		life = 200;
+		life = life - 200;
 	}
-
-	/*if (life == 0) {
-		current_animation = &Death;
-		death = true;
-	}*/
 
 	if (death == false) {
 		while (external_input(inputs))
@@ -336,6 +332,16 @@ update_status ModulePlayer2::Update()
 
 					break;
 				}
+			}
+
+			if (life < 0) {
+				life = 0;
+			}
+			if (life == 0)
+			{
+				current_animation = &Death;
+				App->audio->PlayChunk(deathSound, 0);
+				ResetPlayer();
 			}
 
 			current_state = state;
@@ -501,3 +507,12 @@ void ModulePlayer2::internal_input(p2Qeue<ryu2_inputs>& inputs)
 		}
 	}
 }
+
+void ModulePlayer2::ResetPlayer() {
+	life = 1000;
+	position.x = 300; //Returns to its original position
+	if (App->player->position.x != 100 || App->player->life != 1000) {
+		App->player->ResetPlayer();
+	}
+}
+

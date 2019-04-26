@@ -14,7 +14,6 @@
 #define PUNCH_TIME 150
 #define KICK_TIME 400
 #define HADOUKEN_TIME 1000
-#define RESET_TIME 3000
 
 struct SDL_Texture;
 
@@ -47,12 +46,12 @@ public:
 	Animation neutral_falling;
 	Animation Crouch_punch;
 	Animation jump_neutral_punch;
+	Animation ReceivedPunch;
 	Animation Death;
 	iPoint position;
 	int HadoukenCount = 0;
 	int ActiveHadouken = 0;
 	int JumpCount = 0;
-	int ResetCount = 0;
 	bool JumpMin = false;
 	bool JumpMax = false;
 	bool movef = true;
@@ -115,7 +114,6 @@ private:
 	Uint32 punch_timer = 0;
 	Uint32 kick_timer = 0;
 	Uint32 hadouken_timer = 0;
-	Uint32 reset_timer = 0;
 
 	bool external_input(p2Qeue<ryu_inputs>&);
 
