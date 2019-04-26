@@ -14,17 +14,17 @@ ModulePlayer2::ModulePlayer2()
 	position.y = 220;
 
 	// idle animation (arcade sprite sheet)
-	idle.PushBack({ 7, 14, 60, 90 });
-	idle.PushBack({ 95, 15, 60, 89 });
-	idle.PushBack({ 184, 14, 60, 90 });
-	idle.PushBack({ 276, 11, 60, 93 });
-	idle.PushBack({ 366, 12, 60, 92 });
+	idle.PushBack({ 786, 12, 58, 92 });
+	idle.PushBack({ 876, 11, 53, 93 });
+	idle.PushBack({ 968, 14, 59, 90 });
+	idle.PushBack({ 1057, 15, 60, 89 });
+	idle.PushBack({ 1145, 14, 59, 90 });
 	idle.speed = 0.175f;
 
 	// walk forward animation (arcade sprite sheet)
-	forward.PushBack({ 78, 131, 60, 88 });
-	forward.PushBack({ 162, 128, 64, 92 });
-	forward.PushBack({ 259, 128, 63, 90 });
+	forward.PushBack({ 180, 129, 57, 89 });
+	forward.PushBack({ 270, 128, 58, 91 });
+	forward.PushBack({ 259, 128, 63, 90 });//continuar aqui
 	forward.PushBack({ 352, 128, 54, 91 });
 	forward.PushBack({ 432, 131, 50, 89 });
 	forward.speed = 0.15f;
@@ -141,7 +141,7 @@ bool ModulePlayer2::Start()
 {
 	LOG("Loading player textures");
 	bool ret = true;
-	graphics = App->textures->Load("Assets/Images/ryu.png"); // arcade version
+	graphics = App->textures->Load("Assets/Images/ryu2.png"); // arcade version
 	position.x = 300; //Returns to its original position
 
 	//Add a collider to the player
