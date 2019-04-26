@@ -25,6 +25,7 @@ ModulePlayer::ModulePlayer()
 	idle.speed = 0.175f;
 
 	// walk forward animation (arcade sprite sheet)
+	forward.PushBack({ 9,136,53,83 });
 	forward.PushBack({78, 131, 60, 88});
 	forward.PushBack({162, 128, 64, 92});
 	forward.PushBack({259, 128, 63, 90});
@@ -152,7 +153,7 @@ bool ModulePlayer::Start()
 	deathSound = App->audio->LoadChunk("Assets/Sound/ryu-death.wav");
 
 	//Add a collider to the player
-	colliderplayer = App->collision->AddCollider({ position.x,position.y + 90,60,90 }, COLLIDER_PLAYER, App->player);
+	colliderplayer = App->collision->AddCollider({ position.x,position.y - 90,60,90 }, COLLIDER_PLAYER, App->player);
 	
 	return ret;
 }
@@ -185,16 +186,15 @@ update_status ModulePlayer::Update()
 			GodMode = true;
 		}
 		else if (GodMode == true) {
-			colliderplayer = App->collision->AddCollider({ position.x,position.y,60,-90 }, COLLIDER_PLAYER, this);
+			colliderplayer = App->collision->AddCollider({ position.x,position.y - 90, 60, 90 }, COLLIDER_PLAYER, this);
 
 			GodMode = false;
 		}
 	}
-	if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN)
+	if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_STATE::KEY_DOWN) //Treu-re abans d'entregar
 	{
 		life = life - 100;
 	}
-
 
 	while (external_input(inputs))
 	{
@@ -300,12 +300,12 @@ update_status ModulePlayer::Update()
 				break;
 			case ST_PUNCH_STANDING:
 				current_animation = &punch;
-				punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, App->player);
+				punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
 				App->collision->DeleteCollider(punchcollider);
 				break;
 			case ST_PUNCH_CROUCH:
 				current_animation = &Crouch_punch;
-				crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, App->player);
+				crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
 				App->collision->DeleteCollider(crouchpunchcollider);
 				break;
 			case ST_PUNCH_NEUTRAL_JUMP:
@@ -319,7 +319,7 @@ update_status ModulePlayer::Update()
 				break;
 			case ST_KICK_STANDING:
 				current_animation = &kick;
-				kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 27 }, COLLIDER_PLAYER_ATTACK, this);
+				kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 27 }, COLLIDER_PLAYER_ATTACK, this, 50);
 				App->collision->DeleteCollider(kickcollider);
 				break;
 			case ST_HADOUKEN:
@@ -365,6 +365,11 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
 		if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY) 
 		{
 			movef = false;
+		}
+		if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY_SHOT)
+		{
+			int aux = life;
+			life = aux - c2->damage;
 		}
 }
 

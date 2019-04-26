@@ -13,7 +13,7 @@
 #define JUMP_TIME 1500
 #define PUNCH_TIME 150
 #define KICK_TIME 400
-#define HADOUKEN_TIME 1500
+#define HADOUKEN_TIME 1000
 
 struct SDL_Texture;
 

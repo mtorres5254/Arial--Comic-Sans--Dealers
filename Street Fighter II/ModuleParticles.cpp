@@ -23,23 +23,41 @@ ModuleParticles::~ModuleParticles()
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
-	graphics = App->textures->Load("Assets/Images/ryu.png");
+	graphics = App->textures->Load("Assets/Images/particles.png");
 
 	//Hadouken particle
-
-	hadouken.anim.PushBack({ 493, 1563, 43, 32 });
-	hadouken.anim.PushBack({ 550, 1565, 56, 28 });
+	hadouken.anim.PushBack({ 9, 22, 43, 32 });
+	hadouken.anim.PushBack({ 66, 24, 56, 28 });
 	hadouken.life = 3000;
 	hadouken.anim.speed = 0.15f;
 	hadouken.speed.x = 4;
 	hadouken.sound = App->audio->LoadChunk("Assets/Sound/Hadouken.wav");
+	hadouken.damage = 100;
 
-
-	hadoukenFinish.anim.PushBack({});
+	hadoukenFinish.anim.PushBack({ 130,28,26,20 });
+	hadoukenFinish.anim.PushBack({ 168,25,15,25 });
+	hadoukenFinish.anim.PushBack({ 193,24,28,28 });
 	hadoukenFinish.life = 200;
 	hadoukenFinish.anim.speed = 0.15f;
 	hadoukenFinish.speed.x = 0;
 	hadoukenFinish.anim.loop = false;
+
+	//Hadouken Symmetry particle
+	hadoukenSym.anim.PushBack({ 410,22,43,32 });
+	hadoukenSym.anim.PushBack({ 340,24,56,28 });
+	hadoukenSym.life = 3000;
+	hadoukenSym.anim.speed = 0.115f;
+	hadoukenSym.speed.x = -4;
+	hadoukenSym.sound = App->audio->LoadChunk("Assets/Sound/Hadouken.wav");
+	hadoukenSym.damage = 100;
+
+	hadoukenFinishSym.anim.PushBack({ 306,28,26,20 });
+	hadoukenFinishSym.anim.PushBack({ 279,25,15,25 });
+	hadoukenFinishSym.anim.PushBack({ 241,24,28,28 });
+	hadoukenFinishSym.life = 200;
+	hadoukenFinishSym.anim.speed = 0.15f;
+	hadoukenFinishSym.speed.x = 0;
+	hadoukenFinishSym.anim.loop = false;
 	
 	return true;
 }
@@ -103,8 +121,9 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLID
 			p->born = SDL_GetTicks() + delay;
 			p->position.x = x;
 			p->position.y = y;
+			p->damage = particle.damage;
 			if (collider_type != COLLIDER_NONE)
-				p->collider = App->collision->AddCollider(p->anim.GetCurrentFrame(), collider_type, this);
+				p->collider = App->collision->AddCollider(p->anim.GetCurrentFrame(), collider_type, this, p->damage);
 			active[i] = p;
 			break;
 		}

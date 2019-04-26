@@ -17,6 +17,7 @@
 #include "ModuleLoseScene.h"
 #include "ModuleSceneRyu.h"
 #include "ModuleWinScene.h"
+#include "ModuleFont.h"
 
 Application::Application()
 {
@@ -38,6 +39,7 @@ Application::Application()
 	modules[15] = UI = new ModuleUI();
 	modules[16] = lose_scene = new ModuleLoseScene();
 	modules[17] = win_scene = new ModuleWinScene();
+	modules[18] = font = new ModuleFont();
 	
 }	
 
