@@ -111,9 +111,9 @@ private:
 		IN_CROUCH_UP,
 		IN_CROUCH_DOWN,
 		IN_JUMP_AND_CROUCH,
-		IN_P,
-		IN_K,
-		IN_H,
+		IN_X,
+		IN_C,
+		IN_V,
 		IN_JUMP_FINISH,
 		IN_PUNCH_FINISH,
 		IN_KICK_FINISH,
@@ -146,9 +146,9 @@ private:
 				case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
 				case IN_JUMP: state = ST_JUMP_NEUTRAL; jump_timer = SDL_GetTicks();  break;
 				case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-				case IN_P: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
-				case IN_K: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
-				case IN_H: state = ST_HADOUKEN; hadouken_timer = SDL_GetTicks(); break;
+				case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
+				case IN_C: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
+				case IN_V: state = ST_HADOUKEN; hadouken_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -161,9 +161,9 @@ private:
 				case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
 				case IN_JUMP: state = ST_JUMP_FORWARD; jump_timer = SDL_GetTicks();  break;
 				case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-				case IN_P: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
-				case IN_K: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
-				case IN_H: state = ST_HADOUKEN; hadouken_timer = SDL_GetTicks(); break;
+				case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
+				case IN_C: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
+				case IN_V: state = ST_HADOUKEN; hadouken_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -176,9 +176,9 @@ private:
 				case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
 				case IN_JUMP: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
 				case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-				case IN_P: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
-				case IN_K: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
-				case IN_H: state = ST_HADOUKEN; hadouken_timer = SDL_GetTicks(); break;
+				case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
+				case IN_C: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
+				case IN_V: state = ST_HADOUKEN; hadouken_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -188,7 +188,7 @@ private:
 				switch (last_input)
 				{
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
-				case IN_P: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
+				case IN_X: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -198,7 +198,7 @@ private:
 				switch (last_input)
 				{
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
-				case IN_P: state = ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+				case IN_X: state = ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -208,7 +208,7 @@ private:
 				switch (last_input)
 				{
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
-				case IN_P: state = ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+				case IN_X: state = ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -258,7 +258,7 @@ private:
 				{
 				case IN_CROUCH_UP: state = ST_IDLE; break;
 				case IN_JUMP_AND_CROUCH: state = ST_IDLE; break;
-				case IN_P: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
+				case IN_X: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;

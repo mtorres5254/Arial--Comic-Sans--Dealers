@@ -547,7 +547,7 @@ bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
 				inputs.Push(IN_RIGHT_UP);
 				right = false;
 				break;
-			case SDLK_p:
+			case SDLK_x:
 				return false;
 				break;
 			case SDLK_k:
@@ -562,14 +562,14 @@ bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)
 		{
 			switch (event.key.keysym.sym)
 			{
-			case SDLK_p:
-				inputs.Push(IN_P);
+			case SDLK_x:
+				inputs.Push(IN_X);
 				break;
-			case SDLK_k:
-				inputs.Push(IN_K);
+			case SDLK_c:
+				inputs.Push(IN_C);
 				break;
-			case SDLK_h:
-				inputs.Push(IN_H);
+			case SDLK_v:
+				inputs.Push(IN_V);
 				break;
 			case SDLK_w:
 				up = true;
