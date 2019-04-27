@@ -115,7 +115,7 @@ update_status ModuleSceneRyu::Update()
 	// TODO 2: make so pressing SPACE the HONDA stage is loaded
 
 	
-	if (App->player->victorycount == 2 || App->player2->victorycount==2) {
+	if (App->player->victorycount == 2) {
 		
 		//App->player->ResetPlayer();
 		
@@ -124,6 +124,13 @@ update_status ModuleSceneRyu::Update()
 		App->audio->StopMusic(250);
 		
 
+	}
+
+	if (App->player2->victorycount == 2) {
+
+		App->fade->FadeToBlack(App->scene_ryu, App->congrats_screen, 2.0f);
+
+		App->audio->StopMusic(250);
 	}
 
 	return UPDATE_CONTINUE;
