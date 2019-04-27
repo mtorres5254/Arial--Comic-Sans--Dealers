@@ -12,6 +12,7 @@
 #include "ModulePlayer2.h"
 #include "ModuleCollision.h"
 #include "ModuleUI.h"
+#include "ModuleLoseScene.h"
 
 
 
@@ -113,11 +114,11 @@ update_status ModuleSceneRyu::Update()
 
 	// TODO 2: make so pressing SPACE the HONDA stage is loaded
 
-	/*if (App->player->death == true) {
-		App->fade->FadeToBlack(App->scene_ryu, App->congrats_screen, 2.0f);
-		App->audio->StopMusic(3000);
+	if (App->player->victorycount == 2) {
+		App->fade->FadeToBlack(App->scene_ryu, App->lose_scene, 2.0f);
+		App->audio->StopMusic(250);
 
-	}*/
+	}
 
 	return UPDATE_CONTINUE;
 }
