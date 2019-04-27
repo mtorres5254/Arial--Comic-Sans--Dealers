@@ -22,7 +22,7 @@ public:
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect background;
 	Mix_Music* music;
-	
+	Mix_Chunk* start_sound;
 };
 
 #endif // __MODULEWELCOMEPAGE_H__

@@ -30,7 +30,7 @@ bool ModuleWelcomePage::Start()
 	graphics = App->textures->Load("Assets/Images/TitleScreen.png");
 	music = App->audio->LoadMusic("Assets/Sound/start_music.ogg");
 	App->audio->PlayMusic(music, 3000);
-
+	start_sound = App->audio->LoadChunk("Assets/Sound/start_sound.wav");
 	App->render->camera.x = App->render->camera.y = 0;
 	   
 	return true;
@@ -57,6 +57,12 @@ update_status ModuleWelcomePage::Update()
 	if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) {
 
 		App->fade->FadeToBlack(App->welcome_page, App->scene_ryu, 2.0f);
+		App->player->ResetPlayer();
+		App->player->Death.Reset();
+		App->player->DeathCount = 0;
+		App->player->victorycount = 0;
+		
+		App->audio->PlayChunk(start_sound, 0);
 		App->audio->StopMusic(2500);
 	}
 	if (App->input->keyboard[SDL_SCANCODE_F9] == 1) {

@@ -10,6 +10,8 @@
 #include "ModuleUI.h"
 #include "ModuleLoseScene.h"
 #include "ModuleWelcomePage.h"
+#include "ModulePlayer.h"
+#include "ModulePlayer2.h"
 
 ModuleLoseScene::ModuleLoseScene() {
 	background.x = 0;
@@ -26,8 +28,12 @@ bool ModuleLoseScene::Start() {
 	LOG("Loading Lose Screen");
 
 	graphics = App->textures->Load("Assets/Images/Lose.png");
-	music = App->audio->LoadMusic("Assets/Audio/lose_scene.ogg");
+	music = App->audio->LoadMusic("Assets/Sound/lose_scene.ogg");
 	App->audio->PlayMusic(music, 3000);
+	
+	
+		
+	
 	App->UI->Disable();
 
 	return true;
@@ -50,7 +56,7 @@ update_status ModuleLoseScene::Update() {
 
 	App->render->Blit(graphics, 0, 0, &background);
 
-	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
+	if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) {
 
 		App->fade->FadeToBlack(App->lose_scene, App->welcome_page, 2.0f);
 		App->audio->StopMusic(2500);

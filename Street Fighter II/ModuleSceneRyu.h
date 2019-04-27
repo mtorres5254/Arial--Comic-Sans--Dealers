@@ -34,6 +34,7 @@ public:
 
 	float foreground_pos;
 	bool forward;
+	
 };
 
 #endif // __MODULESCENERYU_H__

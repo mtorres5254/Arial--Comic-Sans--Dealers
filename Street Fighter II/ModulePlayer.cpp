@@ -241,7 +241,6 @@ update_status ModulePlayer::Update()
 						position.y += speed;
 					}
 
-
 					if (DeathCount == 1) {
 						App->audio->PlayChunk(deathSound, 0);
 						victorycount++;
@@ -252,11 +251,11 @@ update_status ModulePlayer::Update()
 						DeathCount = 0;
 						Death.Reset();
 						//victorycount++;
-
+						
 						ActiveDeath = 1;
-
 						ResetPlayer();
-
+						
+						
 					}
 
 					//ResetPlayer();
