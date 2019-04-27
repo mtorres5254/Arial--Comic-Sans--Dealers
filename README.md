@@ -64,16 +64,18 @@ A and D - Move left and right
   L - Special Attack
 
  * Debug Mode:
-  F1 - View collision boxes
+ 
+    F1 - View collision boxes
 
-  F2 - GodMode Player 2
+    F2 - GodMode Player 2
 
-  F3 - GodMode Player 1
+    F3 - GodMode Player 1
   
-  *Special Inputs
-  ESC - Quit Game
+  * Special Inputs
   
-  ENTER KEY (RETURN) - Start Game, SceneSwitching
+    ESC - Quit Game
+  
+    ENTER KEY (RETURN) - Start Game, SceneSwitching
   
 
 # Credits
