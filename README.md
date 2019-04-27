@@ -43,11 +43,11 @@ A and D - Move left and right
 
   S - Crouch
 
-  R - Punch
+  X - Punch
 
-  T - Kick
+  C - Kick
 
-  Y - Special Attack
+  V - Special Attack
 
 * Player 2:
  
@@ -57,11 +57,11 @@ A and D - Move left and right
 
   Down arrow - Crouch
 
-  B - Punch
+  J - Punch
 
-  N - Kick
+  K - Kick
 
-  M - Special Attack
+  L - Special Attack
 
  * Debug Mode:
   F1 - View collision boxes
@@ -72,6 +72,8 @@ A and D - Move left and right
   
   *Special Inputs
   ESC - Quit Game
+  
+  ENTER KEY - Start Game 
   
 
 # Credits
