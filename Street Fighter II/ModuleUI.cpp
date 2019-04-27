@@ -36,6 +36,18 @@ ModuleUI::ModuleUI() {
 	KObar.y = 18;
 	KObar.w = 27;
 	KObar.h = 24;
+
+	//RoundBar1
+	RoundBar1.x = 247;
+	RoundBar1.y= 39;
+	RoundBar1.w = 17;
+	RoundBar1.h = 20;
+
+	//RoundBar2
+	RoundBar2.x = 216 ;
+	RoundBar2.y = 39;
+	RoundBar2.w = 17;
+	RoundBar2.h = 20;
 	
 	KOanim.PushBack({205,18,27,24});
 	KOanim.PushBack({205,56,27,24});
@@ -81,12 +93,22 @@ update_status ModuleUI:: Update(){
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - HealthBar1.w - KObar.w / 2, 20, &HealthBar1, false);
 	App->render->Blit(graphics2, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &RedBar2, false);
 	App->render->Blit(graphics2, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &HealthBar2, false);
+
 	if (App->player->life > 250 && App->player2->life > 250) {
 		App->render->Blit(graphics1, SCREEN_WIDTH / 2 - (KObar.w / 2), 15, &KObar, false);
 	}
 	else {
 		App->render->Blit(graphics1, SCREEN_WIDTH / 2 - (KObar.w / 2), 15, &KOanim.GetCurrentFrame(), false);
 	}
+
+	if (App->player2->victorycount == 1 || App->player2->victorycount == 2) {
+		App->render->Blit(graphics1, (SCREEN_WIDTH / 2)-153-(KObar.w/2)-20, 20, &RoundBar1, false);
+	}
+
+	if (App->player->victorycount == 1 || App->player->victorycount == 2) {
+		App->render->Blit(graphics2, (SCREEN_WIDTH / 2) + 153 + (KObar.w / 2) , 20, &RoundBar2, false);
+	}
+	
 	
 	return UPDATE_CONTINUE;
 }

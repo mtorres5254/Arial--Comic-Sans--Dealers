@@ -29,6 +29,8 @@ public:
 	SDL_Rect HealthBar2;
 	SDL_Rect RedBar2;
 	SDL_Rect KObar;
+	SDL_Rect RoundBar1;
+	SDL_Rect RoundBar2;
 
 	Animation KOanim;
 };

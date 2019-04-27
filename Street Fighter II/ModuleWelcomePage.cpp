@@ -10,6 +10,7 @@
 #include "ModuleWelcomePage.h"
 #include "ModuleAudio.h"
 #include "ModuleLoseScene.h"
+#include "ModulePlayer2.h"
 
 
 ModuleWelcomePage::ModuleWelcomePage()
@@ -61,6 +62,11 @@ update_status ModuleWelcomePage::Update()
 		App->player->Death.Reset();
 		App->player->DeathCount = 0;
 		App->player->victorycount = 0;
+
+		App->player2->ResetPlayer();
+		App->player2->Death.Reset();
+		App->player2->DeathCount = 0;
+		App->player2->victorycount = 0;
 		
 		App->audio->PlayChunk(start_sound, 0);
 		App->audio->StopMusic(2500);

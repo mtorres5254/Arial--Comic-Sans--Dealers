@@ -115,7 +115,7 @@ update_status ModuleSceneRyu::Update()
 	// TODO 2: make so pressing SPACE the HONDA stage is loaded
 
 	
-	if (App->player->victorycount == 2) {
+	if (App->player->victorycount == 2 || App->player2->victorycount==2) {
 		
 		//App->player->ResetPlayer();
 		

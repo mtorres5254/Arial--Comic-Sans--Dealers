@@ -66,6 +66,8 @@ public:
 	bool colliderErese = false;
 	bool colliderErese2 = false;
 	bool colliderErese3 = false;
+
+
 	int DeathCount = 0;
 	int ActiveDeath = 0;
 	int victorycount = 0;
