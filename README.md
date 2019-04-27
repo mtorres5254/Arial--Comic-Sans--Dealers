@@ -73,7 +73,7 @@ A and D - Move left and right
   *Special Inputs
   ESC - Quit Game
   
-  ENTER KEY - Start Game 
+  ENTER KEY (RETURN) - Start Game, SceneSwitching
   
 
 # Credits
