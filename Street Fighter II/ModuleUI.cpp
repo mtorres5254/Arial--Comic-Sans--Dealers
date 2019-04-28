@@ -103,7 +103,6 @@ update_status ModuleUI:: Update()
 
 	//Render
 	Counter();
-	
 
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - RedBar1.w - KObar.w / 2, 20, &RedBar1, false);
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - HealthBar1.w - KObar.w / 2, 20, &HealthBar1, false);
@@ -164,7 +163,7 @@ void ModuleUI::Counter() {
 		if (SDL_GetTicks() - timenow > 1000) {
 			time--;
 			Counter1--;
-			if (Counter1 == 0) {
+			if (Counter1 > 0) {
 				Counter1 = 9;
 				Counter2--;
 				if (Counter2 == 0) {
