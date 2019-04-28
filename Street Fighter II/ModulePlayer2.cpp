@@ -48,17 +48,17 @@ ModulePlayer2::ModulePlayer2()
 
 	//kick animation
 
-	kick.PushBack({ 606,269,60,90 });
-	kick.PushBack({ 689,267,66,92 });
-	kick.PushBack({ 777,265,114,94 });
-	kick.PushBack({ 689,267,66,92 });
+	kick.PushBack({ 545,269,59,93 });
+	kick.PushBack({ 456,267,65,91 });
+	kick.PushBack({ 320,267,114,91 });	
+	kick.PushBack({ 456,267,65,91 });
 	kick.speed = 0.175f;
 
 	//hadouken animation
-	hadouken_pose.PushBack({ 34,1545,74,90 });
-	hadouken_pose.PushBack({ 135,1551,85,83 });
-	hadouken_pose.PushBack({ 244,1552,91,83 });
-	hadouken_pose.PushBack({ 357,1558,106,77 });
+	hadouken_pose.PushBack({ 1103,1545,74,90 });
+	hadouken_pose.PushBack({ 991,1551,85,83 });
+	hadouken_pose.PushBack({ 877,1551,89,83 });
+	hadouken_pose.PushBack({ 748,1558,106,77 });
 	hadouken_pose.speed = 0.1f;
 	hadouken_pose.loop = false;
 
@@ -450,7 +450,7 @@ update_status ModulePlayer2::Update()
 
 						break;
 					case ST_KICK_STANDING:
-						current_animation = &kick;
+						current_animation = &kick;						
 						if (kickCol == false) {
 							kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 27 }, COLLIDER_ENEMY_SHOT, App->player, 25);
 							kickCol = true;
