@@ -283,7 +283,7 @@ update_status ModulePlayer::Update()
 							if (position.x < 825)
 							{
 								position.x += speed;
-								if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving == false)
+								if (-((position.x - 60)*2) <= App->render->camera.x - SCREEN_WIDTH /*&& App->input->camMoving == false*/)
 								{
 									if (App->render->camera.x > -1004)
 									{
@@ -308,7 +308,7 @@ update_status ModulePlayer::Update()
 					case ST_WALK_BACKWARD:
 						if (moveb == true) {
 							current_animation = &backward;
-							if (position.x > 0)
+							if (position.x > 0 && App->plyDistance < SCREEN_WIDTH)
 							{
 								position.x -= (0.6 *speed);
 								if (-(position.x * 2) >= App->render->camera.x - 5)

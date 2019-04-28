@@ -51,7 +51,7 @@ public:
 	ModuleSceneRyu* scene_ryu;
 	ModuleFont* font;
 
-
+	int plyDistance;
 
 public:
 

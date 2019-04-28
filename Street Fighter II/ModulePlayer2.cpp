@@ -269,10 +269,10 @@ update_status ModulePlayer2::Update()
 						break;
 					case ST_WALK_FORWARD:
 						current_animation = &backward;
-						if (position.x < 825)
+						if (position.x < 825 && App->plyDistance<SCREEN_WIDTH)
 						{
 							position.x += speed;
-							if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH)
+							if (-((position.x - 60)*1.65) <= App->render->camera.x - SCREEN_WIDTH)
 							{
 								if (App->render->camera.x > -1004)
 								{
