@@ -86,12 +86,31 @@ bool ModuleSceneRyu::CleanUp()
 	App->player2->Disable();
 	App->collision->Disable();
 
+	timenow = SDL_GetTicks();
+	countbig = bigSecs;
+	countsmall = smallSecs;
+	countdown = roundTime;
+
 	return true;
 }
 
 // Update: draw background
 update_status ModuleSceneRyu::Update()
 {
+	time = SDL_GetTicks() - timenow;
+	if (time > 1000)
+	{
+		LOG("Countdown %d", countdown);
+		--countdown;
+		--countsmall;
+		if (countsmall == -1)
+		{
+			--countbig;
+			countsmall = 9;
+		}
+		timenow = SDL_GetTicks();
+		time = 0;
+	}
 	// Calculate boat Y position -----------------------------
 	if (foreground_pos < -6.0f)
 		forward = false;
@@ -113,7 +132,10 @@ update_status ModuleSceneRyu::Update()
 	App->render->Blit(graphics, 0, 170, &ground);
 
 	// TODO 2: make so pressing SPACE the HONDA stage is loaded
-
+	if (countdown <= 0)
+	{
+		App->player->victorycount = 2;
+	}
 	
 	if (App->player->victorycount == 2) {
 		

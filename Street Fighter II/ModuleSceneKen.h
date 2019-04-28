@@ -7,10 +7,6 @@
 
 #include "SDL_mixer/include/SDL_mixer.h"
 
-#define roundTime 99
-#define smallSecs 9
-#define bigSecs 9
-
 
 struct SDL_Texture;
 
@@ -37,11 +33,6 @@ public:
 
 	float foreground_pos;
 	bool forward;
-	
-	int countbig,countsmall,countdown;
-
-private:
-	float  time, timenow;
 };
 
 #endif // __MODULESCENEKEN_H__
