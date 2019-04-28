@@ -240,6 +240,7 @@ update_status ModulePlayer2::Update()
 					if (DeathCount == 80 && ActiveDeath == 0) {
 						DeathCount = 0;
 						Death.Reset();
+						App->render->camera.x = 0;
 						victorycount++;
 						ActiveDeath = 1;
 						ResetPlayer();
