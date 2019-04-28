@@ -33,6 +33,8 @@ In the build you will find the next files:
 3. All the dll's needed (link down below)
 4. A Readme.md file with all the info needed
 
+In order to play you just need to execute the file called "StreetFighter2.exe".
+
 # Usage
 # Inputs
 
@@ -127,3 +129,15 @@ This notice may not be removed or altered from any source distribution.
 * New graph of actions
 * Implement of crouch 
 * Game size: 9.81MB
+
+## Version 0.4.5(WIP)
+* Camera follow players
+* Payer 2 animations and movements
+* Health bars and damage
+* Battle Rounds
+* Countdown timer
+* Win/Lose conditions and scene
+* New animations()
+* Music for each scene
+* 
+* 

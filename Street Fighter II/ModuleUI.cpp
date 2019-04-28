@@ -6,7 +6,7 @@
 #include "ModulePlayer.h"
 #include "ModulePlayer2.h"
 #include "ModuleUI.h"
-#include "ModuleSceneKen.h"
+#include "ModuleSceneRyu.h"
 
 
 ModuleUI::ModuleUI() {
@@ -97,7 +97,7 @@ ModuleUI::ModuleUI() {
 	num7.h = 19;
 	//Num 8
 	num8.x = 306;
-	num8.y = 47;
+	num8.y = 42;
 	num8.w = 12;
 	num8.h = 19;
 	//Num 9
@@ -135,18 +135,71 @@ bool ModuleUI::CleanUp()
 update_status ModuleUI:: Update()
 {
 	//Logic
-	switch (App->scene_ken->countbig)
+	switch (App->scene_ryu->countbig)
 	{
-	case 0: break;
-	case 1: break;
-	case 2: break;
-	case 3: break;
-	case 4: break;
-	case 5: break;
-	case 6: break;
-	case 7: break;
-	case 8: break;
-	case 9: break;
+		case 0: 
+			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num0.w) -2, 45, &num0, false);
+			break;
+		case 1:	
+			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num1.w) - 2, 45, &num1, false);
+			break;
+		case 2: 
+			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num2.w) - 2, 45, &num2, false);
+			break;
+		case 3:
+			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num3.w) - 2, 45, &num3, false);
+			break;
+		case 4: 
+			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num4.w) - 2, 45, &num4, false);
+			break;
+		case 5: 
+			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num5.w) - 2, 45, &num5, false);
+			break;
+		case 6: 
+			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num6.w) - 2, 45, &num6, false);
+			break;
+		case 7: 
+			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num7.w) - 2, 45, &num7, false);
+			break;
+		case 8: 
+			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num8.w) - 2, 45, &num8, false);
+			break;
+		case 9: 
+			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num9.w) - 2, 45, &num9, false);
+			break;
+	}
+	switch (App->scene_ryu->countsmall)
+	{
+	case 0:
+		App->render->Blit(graphics1, SCREEN_WIDTH / 2 - num0.w + 12, 45, &num0, false);
+		break;
+	case 1:
+		App->render->Blit(graphics1, SCREEN_WIDTH / 2 - num1.w + 12, 45, &num1, false);
+		break;
+	case 2:
+		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num2.w) + 12, 45, &num2, false);
+		break;
+	case 3:
+		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num3.w) + 12, 45, &num3, false);
+		break;
+	case 4:
+		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num4.w) + 12, 45, &num4, false);
+		break;
+	case 5:
+		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num5.w) + 12, 45, &num5, false);
+		break;
+	case 6:
+		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num6.w) + 12, 45, &num6, false);
+		break;
+	case 7:
+		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num7.w) + 12, 45, &num7, false);
+		break;
+	case 8:
+		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num8.w) + 12, 45, &num8, false);
+		break;
+	case 9:
+		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num9.w) + 12, 45, &num9, false);
+		break;
 	}
 	HealthBar1.w = App->player->healthbar;
 	HealthBar2.w = App->player2->healthbar;

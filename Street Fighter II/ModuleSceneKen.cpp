@@ -70,10 +70,6 @@ bool ModuleSceneKen::Start()
 	App->collision->Enable();
 	App->UI->Enable();
 
-	timenow = SDL_GetTicks();
-	countbig = bigSecs;
-	countbig = smallSecs;
-	countdown = roundTime;
 	return true;
 }
 
@@ -95,20 +91,6 @@ bool ModuleSceneKen::CleanUp()
 // Update: draw background
 update_status ModuleSceneKen::Update()
 {
-	time = SDL_GetTicks() - timenow;
-	if (time > 1000)
-	{
-		--countdown;
-		--countsmall;
-		if (countsmall == 0)
-		{
-			--countbig;
-			countsmall = 9;
-		}
-		timenow = SDL_GetTicks();
-		time = 0;
-	}
-
 	// Calculate boat Y position -----------------------------
 	if(foreground_pos < -6.0f)
 		forward = false;
