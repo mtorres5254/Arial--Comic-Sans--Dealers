@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleTextures.h"
+#include "ModuleAudio.h"
 #include "SDL/include/SDL.h"
 #include "ModuleRender.h"
 #include "ModulePlayer.h"
@@ -67,8 +68,14 @@ bool ModuleUI::Start()
 
 	graphics1 = App->textures->Load("Assets/Images/Battle_HUD.png"); 
 	graphics2 = App->textures->Load("Assets/Images/Battle_HUD2.png");
-	font_id = App->font->Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890");
-	font_Rounds = App->font->Load("Assets/Tmages/font_round.png", "r123");
+	font_id = App->font->Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890", 1);
+	font_Rounds = App->font->Load("Assets/Images/font_round.png", "r123", 2);
+
+	VoiceRound = App->audio->LoadChunk("Assets/Sound/Round.wav");
+	Voice1 = App->audio->LoadChunk("Assets/Sound/1.wav");
+	Voice2 = App->audio->LoadChunk("Assets/Sound/2.wav");
+	Voice3 = App->audio->LoadChunk("Assets/Sound/3.wav");
+	VoiceFight = App->audio->LoadChunk("Assets/Sound/Fight.wav");
 
 	timenow = SDL_GetTicks();
 	time = 99;
@@ -97,8 +104,6 @@ update_status ModuleUI:: Update()
 	//Render
 	Counter();
 
-	Round1();
-
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - RedBar1.w - KObar.w / 2, 20, &RedBar1, false);
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - HealthBar1.w - KObar.w / 2, 20, &HealthBar1, false);
 	App->render->Blit(graphics2, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &RedBar2, false);
@@ -125,12 +130,27 @@ update_status ModuleUI:: Update()
 
 void ModuleUI::Round1() {
 	App->font->BlitText(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, font_Rounds, "r1");
+	App->audio->PlayChunk(VoiceRound, 0);
+	SDL_Delay(2000);
+	App->audio->PlayChunk(Voice1, 0);
+	SDL_Delay(2000);
+	App->audio->PlayChunk(VoiceFight, 0);
 }
 void ModuleUI::Round2() {
 	App->font->BlitText(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, font_Rounds, "r2");
+	App->audio->PlayChunk(VoiceRound, 0);
+	SDL_Delay(2000);
+	App->audio->PlayChunk(Voice2, 0);
+	SDL_Delay(2000);
+	App->audio->PlayChunk(VoiceFight, 0);
 }
 void ModuleUI::Round3() {
 	App->font->BlitText(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, font_Rounds, "r3");
+	App->audio->PlayChunk(VoiceRound, 0);
+	SDL_Delay(2000);
+	App->audio->PlayChunk(Voice3, 0);
+	SDL_Delay(2000);
+	App->audio->PlayChunk(VoiceFight, 0);
 }
 
 void ModuleUI::Counter() {

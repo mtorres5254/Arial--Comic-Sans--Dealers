@@ -7,6 +7,8 @@
 #include "Globals.h"
 #include "p2Point.h"
 
+#include "SDL_mixer/include/SDL_mixer.h"
+
 #define SECOND 1000 
 
 struct SDL_Texture;
@@ -47,6 +49,12 @@ public:
 	int Counter1;
 	int Counter2;
 	int timenow;
+
+	Mix_Chunk* VoiceRound;
+	Mix_Chunk* Voice1;
+	Mix_Chunk* Voice2;
+	Mix_Chunk* Voice3;
+	Mix_Chunk* VoiceFight;
 
 	
 };

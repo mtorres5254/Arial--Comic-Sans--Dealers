@@ -27,7 +27,7 @@ public:
 	bool Start();
 
 	// Load Font
-	int Load(const char* texture_path, const char* characters);
+	int Load(const char* texture_path, const char* characters, int id);
 	void UnLoad(int font_id);
 
 	// Create a surface from text

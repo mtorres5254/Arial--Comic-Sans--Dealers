@@ -21,10 +21,9 @@ bool ModuleFont::Start() {
 }
 
 // Load new texture from file path
-int ModuleFont::Load(const char* texture_path, const char* characters)
+int ModuleFont::Load(const char* texture_path, const char* characters, int id)
 {
-	for (int i = 0; i < MAX_FONTS; i++) {
-		if (fonts[i].graphic == nullptr) {
+		if (fonts[id].graphic == nullptr) {
 
 			int width;
 			int height;
@@ -43,18 +42,15 @@ int ModuleFont::Load(const char* texture_path, const char* characters)
 
 			SDL_QueryTexture(tex, NULL, NULL, &width, &height);
 
-			fonts[i].graphic = tex; // graphic: pointer to the texture
-			fonts[i].len = strlen(characters); // len: length of the table
-			strcpy_s(fonts[i].table, characters);
-			fonts[i].char_h = height;
-			fonts[i].char_w = width / strlen(characters);
+			fonts[id].graphic = tex; // graphic: pointer to the texture
+			fonts[id].len = strlen(characters); // len: length of the table
+			strcpy_s(fonts[id].table, characters);
+			fonts[id].char_h = height;
+			fonts[id].char_w = width / strlen(characters);
 
 			LOG("Successfully loaded BMP font from %s", texture_path);
-			return i;
-			break;
+			return id;
 		}
-		break;
-	}
 }
 
 void ModuleFont::UnLoad(int font_id)
