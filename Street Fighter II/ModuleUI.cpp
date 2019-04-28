@@ -79,8 +79,8 @@ bool ModuleUI::Start()
 
 	timenow = SDL_GetTicks();
 	time = 99;
-	Counter1 = 9;
-	Counter2 = 9;
+	Counter1 = 9; //unit
+	Counter2 = 9; //decimal
 	
 	return ret;
 }
@@ -158,17 +158,16 @@ void ModuleUI::Counter() {
 	{
 		if (SDL_GetTicks() - timenow > SECOND)
 		{
+			time--;
 			Counter1--;
-			if (Counter1 == 0) {
+			if (Counter1 < 0) {
 				Counter1 = 9;
 				Counter2--;
 				if (Counter2 == 0) {
 					Counter2 = 0;
 				}
-			}
-		
-			timenow = SDL_GetTicks();
-			
+			}		
+			timenow = SDL_GetTicks();		
 		}
 	}
 
@@ -201,6 +200,9 @@ void ModuleUI::Counter() {
 	case 1:
 		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "1");
 		break;
+	case 0:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "0");
+		break;
 	}
 	switch (Counter1)
 	{
@@ -230,6 +232,9 @@ void ModuleUI::Counter() {
 		break;
 	case 1:
 		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "0");
 		break;
 	}
 }
