@@ -3,7 +3,7 @@ We are a group of students willing to develop and try to recreate as close as po
 
 You can find the project at https://github.com/mtorres5254/Arial--Comic-Sans--Dealers
 
-#Description of the Game
+# Description of the Game
 
 Street Fighter II: The World Warrior is an arcade fighting game produced by Capcom originally released in 1991. This sequel of Street Fighter offers a selection of multiple playabale characters, each with their own unique fighting style and special moves.
 
