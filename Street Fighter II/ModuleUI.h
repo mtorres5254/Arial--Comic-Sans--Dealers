@@ -22,6 +22,9 @@ public:
 	bool CleanUp();
 
 	void Counter();
+	void Round1();
+	void Round2();
+	void Round3();
 
 public:
 
@@ -39,6 +42,7 @@ public:
 	Animation KOanim;
 
 	int font_id;
+	int font_Rounds;
 	int time;
 	int Counter1;
 	int Counter2;

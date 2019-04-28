@@ -68,6 +68,7 @@ bool ModuleUI::Start()
 	graphics1 = App->textures->Load("Assets/Images/Battle_HUD.png"); 
 	graphics2 = App->textures->Load("Assets/Images/Battle_HUD2.png");
 	font_id = App->font->Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890");
+	font_Rounds = App->font->Load("Assets/Tmages/font_round.png", "r123");
 
 	timenow = SDL_GetTicks();
 	time = 99;
@@ -96,6 +97,8 @@ update_status ModuleUI:: Update()
 	//Render
 	Counter();
 
+	Round1();
+
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - RedBar1.w - KObar.w / 2, 20, &RedBar1, false);
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - HealthBar1.w - KObar.w / 2, 20, &HealthBar1, false);
 	App->render->Blit(graphics2, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &RedBar2, false);
@@ -118,6 +121,16 @@ update_status ModuleUI:: Update()
 	
 	
 	return UPDATE_CONTINUE;
+}
+
+void ModuleUI::Round1() {
+	App->font->BlitText(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, font_Rounds, "r1");
+}
+void ModuleUI::Round2() {
+	App->font->BlitText(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, font_Rounds, "r2");
+}
+void ModuleUI::Round3() {
+	App->font->BlitText(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, font_Rounds, "r3");
 }
 
 void ModuleUI::Counter() {
@@ -205,4 +218,3 @@ void ModuleUI::Counter() {
 		break;
 	}
 }
-
