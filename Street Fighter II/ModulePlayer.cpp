@@ -8,6 +8,7 @@
 #include "ModuleParticles.h"
 #include "ModuleAudio.h"
 #include "ModuleCollision.h"
+#include "ModuleUI.h"
 
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -175,8 +176,18 @@ ModulePlayer::ModulePlayer()
 	victory.PushBack({ 573, 2474, 60,88 });
 	victory.PushBack({ 660, 2465, 60, 97 });
 	victory.PushBack({ 745, 2440, 55,122 });
-	victory.speed = 0.1f;
+	victory.speed = 0.05f;
 	victory.loop = false;
+
+	//Victory2 animation
+
+	victory1.PushBack({ 46	,2467,53,97 });
+	victory1.PushBack({ 124,2469,54, 95});
+	victory1.PushBack({ 206,2469,54, 95});
+	victory1.PushBack({ 289,2469,54,95 });
+	victory1.PushBack({ 380,2468,54,96 });
+	victory1.loop = false;
+	victory1.speed = 0.1f;
 
 }
 
@@ -272,6 +283,30 @@ update_status ModulePlayer::Update()
 					life = 0;
 				}
 
+				if (App->player2->life == 0 && App->UI->victorycount==0) {
+
+					if (acumvictory < 75) {
+						current_animation = &victory;
+						acumvictory++;
+					}
+					if (acumvictory == 75) {
+						victory.Reset();
+						acumvictory = 0;
+					}
+				}
+				if (App->player2->life == 0 && App->UI->victorycount == 1) {
+
+					if (acumvictory < 75) {
+						current_animation = &victory1;
+						acumvictory++;
+					}
+					if (acumvictory == 75) {
+						victory1.Reset();
+						acumvictory = 0;
+					}
+				}
+
+
 				if (life == 0)
 				{
 					current_animation = &Death;
@@ -300,10 +335,8 @@ update_status ModulePlayer::Update()
 					//ResetPlayer();
 				}
 
-				if (App->player2->life == 0) {
-					
-					current_animation = &victory;
-				}
+				
+				
 			
 				if (damage_received == true) {				
 					
@@ -599,7 +632,7 @@ update_status ModulePlayer::Update()
 				}
 				current_state = state;
 
-
+				
 				// Draw everything --------------------------------------
 
 				SDL_Rect r = current_animation->GetCurrentFrame();
@@ -612,7 +645,7 @@ update_status ModulePlayer::Update()
 				else {
 					colliderplayer->SetPos(position.x + 7, position.y - 90);
 				}
-
+				
 				return UPDATE_CONTINUE;
 			}
 		}
@@ -776,11 +809,11 @@ void ModulePlayer::internal_input(p2Qeue<ryu_inputs>& inputs)
 }
 
 void ModulePlayer::ResetPlayer() {
+	
 	life = 1000;
 	position.x = 100; //Returns to its original position
 	if (App->player2->position.x != 300 || App->player2->life != 1000) {
-		ActiveDeath = 0;
-		
+		ActiveDeath = 0;		
 		App->player2->ResetPlayer();
 		
 		
