@@ -32,18 +32,9 @@ public:
 	SDL_Rect RoundBar1;
 	SDL_Rect RoundBar2;
 
-	SDL_Rect num0;
-	SDL_Rect num1;
-	SDL_Rect num2;
-	SDL_Rect num3;
-	SDL_Rect num4;
-	SDL_Rect num5;
-	SDL_Rect num6;
-	SDL_Rect num7;
-	SDL_Rect num8;
-	SDL_Rect num9;
-
 	Animation KOanim;
+
+	int font_id;
 
 	
 };
