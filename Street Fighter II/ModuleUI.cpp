@@ -6,6 +6,8 @@
 #include "ModulePlayer.h"
 #include "ModulePlayer2.h"
 #include "ModuleUI.h"
+#include "ModuleSceneKen.h"
+
 
 ModuleUI::ModuleUI() {
 
@@ -52,6 +54,57 @@ ModuleUI::ModuleUI() {
 	KOanim.PushBack({205,18,27,24});
 	KOanim.PushBack({205,56,27,24});
 	KOanim.speed = 0.1f;
+
+	//Num 0
+	num0.x = 306;
+	num0.y = 276;
+	num0.w = 12;
+	num0.h = 19;
+	//Num 1
+	num1.x = 306;
+	num1.y = 247;
+	num1.w = 12;
+	num1.h = 19;
+	//Num 2
+	num2.x = 306;
+	num2.y = 217;
+	num2.w = 12;
+	num2.h = 19;
+	//Num 3
+	num3.x = 306;
+	num3.y = 188;
+	num3.w = 12;
+	num3.h = 19;
+	//Num 4
+	num4.x = 306;
+	num4.y = 159;
+	num4.w = 12;
+	num4.h = 19;
+	//Num 5
+	num5.x = 306;
+	num5.y = 129;
+	num5.w = 12;
+	num5.h = 19;
+	//Num 6
+	num6.x = 306;
+	num6.y = 100;
+	num6.w = 12;
+	num6.h = 19;
+	//Num 7
+	num7.x = 306;
+	num7.y = 72;
+	num7.w = 12;
+	num7.h = 19;
+	//Num 8
+	num8.x = 306;
+	num8.y = 47;
+	num8.w = 12;
+	num8.h = 19;
+	//Num 9
+	num9.x = 306;
+	num9.y = 13;
+	num9.w = 12;
+	num9.h = 19;
 }
 
 ModuleUI::~ModuleUI()
@@ -79,10 +132,22 @@ bool ModuleUI::CleanUp()
 	return true;
 }
 
-update_status ModuleUI:: Update(){
-	
+update_status ModuleUI:: Update()
+{
 	//Logic
-
+	switch (App->scene_ken->countbig)
+	{
+	case 0: break;
+	case 1: break;
+	case 2: break;
+	case 3: break;
+	case 4: break;
+	case 5: break;
+	case 6: break;
+	case 7: break;
+	case 8: break;
+	case 9: break;
+	}
 	HealthBar1.w = App->player->healthbar;
 	HealthBar2.w = App->player2->healthbar;
 
