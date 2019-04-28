@@ -208,7 +208,7 @@ update_status ModulePlayer2::Update()
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN) { //Treu-re abans d'entregar
-		life = life - 200;
+		life = 0;
 	}
 
 	if (death == false) {
