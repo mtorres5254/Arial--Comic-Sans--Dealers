@@ -25,7 +25,6 @@ public:
 	bool PlayMusic(Mix_Music * music, int delay);
 	bool PlayChunk(Mix_Chunk * chunk, int repeats);
 	bool StopMusic(int delay);
-	bool IsPlaying();
 
 public:
 	Mix_Music* musics[MAX_AUDIOS];

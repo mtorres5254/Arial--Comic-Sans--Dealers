@@ -552,8 +552,26 @@ update_status ModulePlayer2::Update()
 						colliderErese3 = true;					
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP:
-
 						current_animation = &jump_neutral_punch;
+						if (JumpCount == 1) {
+							if (position.y == 220) {
+								JumpMax = false;
+								JumpMin = true;
+							}
+							if (position.y <= 105) {
+								JumpMin = false;
+								JumpMax = true;
+							}
+
+							if (JumpMin == true) {
+								falling.Reset();
+								position.y -= (speedY * 2);
+							}
+							if (JumpMax == true) {
+								jump_neutral.Reset();
+								position.y += (speedY * 3.2);
+							}
+						}
 						break;
 					case ST_PUNCH_FORWARD_JUMP:
 

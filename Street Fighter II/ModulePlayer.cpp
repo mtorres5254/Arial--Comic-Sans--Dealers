@@ -595,7 +595,6 @@ update_status ModulePlayer::Update()
 								jump_neutral.Reset();
 								position.y += (speedY * 3.2);
 							}
-
 						}
 						break;
 					case ST_PUNCH_FORWARD_JUMP:
