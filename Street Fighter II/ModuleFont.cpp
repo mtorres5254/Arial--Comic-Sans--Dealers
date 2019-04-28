@@ -16,7 +16,8 @@ ModuleFont::~ModuleFont()
 {}
 
 bool ModuleFont::Start() {
-	fonts[Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890")];
+	int i = Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890");
+	fonts[i];
 
 	return true;
 }

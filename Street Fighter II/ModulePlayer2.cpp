@@ -3,8 +3,8 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
-#include "ModulePlayer2.h"
 #include "ModulePlayer.h"
+#include "ModulePlayer2.h"
 #include "ModuleParticles.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -49,7 +49,7 @@ ModulePlayer2::ModulePlayer2()
 	//kick animation
 
 	kick.PushBack({ 545,269,59,93 });
-	kick.PushBack({ 456,267,65,91 });
+	kick.PushBack({ 456,267,86,91 });
 	kick.PushBack({ 320,267,114,91 });	
 	kick.PushBack({ 456,267,65,91 });
 	kick.speed = 0.175f;
@@ -168,6 +168,12 @@ bool ModulePlayer2::Start()
 
 	deathSound = App->audio->LoadChunk("Assets/Sound/ryu-death.wav");
 
+	//Start functions to reset player
+	ResetPlayer();
+	Death.Reset();
+	DeathCount = 0;
+	victorycount = 0;
+
 	//Add a collider to the player
 	colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
 
@@ -192,7 +198,10 @@ update_status ModulePlayer2::Update()
 	p2Qeue<ryu2_inputs> inputs;
 	ryu2_states current_state = ST_UNKNOWN;
 
-	int speed = 1;
+	if (position.y == 220) {
+		speedX = 1;
+		speedY = 1;
+	}
 
 	if (App->input->keyboard[SDL_SCANCODE_F2] == KEY_STATE::KEY_DOWN) {
 		if (GodMode == false) {
@@ -217,7 +226,7 @@ update_status ModulePlayer2::Update()
 
 			internal_input(inputs);
 
-			ryu2_states state = process_fsm(inputs);
+			state = process_fsm(inputs);
 
 			if (state != current_state)
 			{
@@ -271,12 +280,12 @@ update_status ModulePlayer2::Update()
 						current_animation = &backward;
 						if (position.x < 825 && App->plyDistance<SCREEN_WIDTH)
 						{
-							position.x += speed;
+							position.x += speedX;
 							if (-((position.x - 60)*1.65) <= App->render->camera.x - SCREEN_WIDTH)
 							{
 								if (App->render->camera.x > -1004)
 								{
-									App->render->camera.x -= speed * 2;
+									App->render->camera.x -= speedX * 2;
 								}
 							}
 						}
@@ -292,12 +301,12 @@ update_status ModulePlayer2::Update()
 							current_animation = &forward;
 							if (position.x > 0)
 							{
-								position.x -= (0.6 *speed);
+								position.x -= (0.6 *speedX);
 								if (-(position.x * 2) >= App->render->camera.x - 5)
 								{
 									if (App->render->camera.x < 0)
 									{
-										App->render->camera.x += speed * 2;
+										App->render->camera.x += speedX * 2;
 									}
 								}
 							}
@@ -327,12 +336,12 @@ update_status ModulePlayer2::Update()
 
 							if (JumpMin == true) {
 								falling.Reset();
-								position.y -= speed * 2;
+								position.y -= speedY * 2;
 								current_animation = &jump_neutral;
 							}
 							if (JumpMax == true) {
 								jump_neutral.Reset();
-								position.y += speed * 3.2;
+								position.y += speedY * 3.2;
 								current_animation = &falling;
 							}
 
@@ -341,12 +350,12 @@ update_status ModulePlayer2::Update()
 					case ST_JUMP_FORWARD:
 						if (position.x < 825)
 						{
-							position.x += speed;
+							position.x += speedX;
 							if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving == false)
 							{
 								if (App->render->camera.x > -1004)
 								{
-									App->render->camera.x -= speed * 2;
+									App->render->camera.x -= speedX * 2;
 								}
 							}
 						}
@@ -363,12 +372,12 @@ update_status ModulePlayer2::Update()
 
 							if (JumpMin == true) {
 								falling.Reset();
-								position.y -= (speed * 2);
+								position.y -= (speedY * 2);
 								current_animation = &jump_backwards;
 							}
 							if (JumpMax == true) {
 								jump_backwards.Reset();
-								position.y += (speed * 3.2);
+								position.y += (speedY * 3.2);
 								current_animation = &falling;
 							}
 						}
@@ -376,12 +385,12 @@ update_status ModulePlayer2::Update()
 					case ST_JUMP_BACKWARD:
 						if (position.x > 0)
 						{
-							position.x -= (0.6 *speed);
+							position.x -= (0.6 *speedX);
 							if (-(position.x * 2) >= App->render->camera.x - 5)
 							{
 								if (App->render->camera.x < 0)
 								{
-									App->render->camera.x += speed * 2;
+									App->render->camera.x += speedX * 2;
 								}
 							}
 						}
@@ -398,23 +407,29 @@ update_status ModulePlayer2::Update()
 
 							if (JumpMin == true) {
 								falling.Reset();
-								position.y -= (speed * 2);
+								position.y -= (speedY * 2);
 								current_animation = &jump_forward;
 							}
 							if (JumpMax == true) {
 								jump_forward.Reset();
-								position.y += (speed * 3.2);
+								position.y += (speedY * 3.2);
 								current_animation = &falling;
 							}
 						}
 						break;
 					case ST_CROUCH:
+						if (HaveCollider == true) {
+							App->collision->DeleteCollider(colliderplayer);
+							HaveCollider = false;
+						}
+						colliderplayer = App->collision->AddCollider({ position.x, position.y + 100, 45, 65 }, COLLIDER_PLAYER, App->player);
 						current_animation = &crouch;
+						App->collision->DeleteCollider(colliderplayer);
 						break;
 					case ST_PUNCH_STANDING:					
 						current_animation = &punch;
 						if (punchCol == false) {
-							punchcollider = App->collision->AddCollider({ position.x - 21, position.y - 79, 51, 13 }, COLLIDER_ENEMY_SHOT, App->player, 25);
+							punchcollider = App->collision->AddCollider({ position.x - 21, position.y - 79, 51, 13 }, COLLIDER_ENEMY_SHOT, App->player2, 25);
 							punchCol = true;
 						}
 						else if (punchCol == true) {
@@ -428,7 +443,7 @@ update_status ModulePlayer2::Update()
 					case ST_PUNCH_CROUCH:
 						current_animation = &Crouch_punch;					
 						if (CrPunchCol == false) {
-							crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_ENEMY_SHOT, App->player, 25);
+							crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_ENEMY_SHOT, App->player2, 25);
 							CrPunchCol = true;
 						}
 						else if (CrPunchCol == true) {
@@ -450,9 +465,12 @@ update_status ModulePlayer2::Update()
 
 						break;
 					case ST_KICK_STANDING:
-						current_animation = &kick;						
+						current_animation = &kick;	
+						if (kick.current_frame == 2) {
+							position.x + 18;
+						}
 						if (kickCol == false) {
-							kickcollider = App->collision->AddCollider({ position.x + 45, position.y - 92, 70, 27 }, COLLIDER_ENEMY_SHOT, App->player, 25);
+							kickcollider = App->collision->AddCollider({ position.x - 45, position.y - 92, 70, 27 }, COLLIDER_ENEMY_SHOT, App->player2, 25);
 							kickCol = true;
 						}
 						if (kickCol == true && kick.current_frame != 0) {
@@ -466,7 +484,7 @@ update_status ModulePlayer2::Update()
 							HadoukenCount++;
 						}
 						if (HadoukenCount == 35 && ActiveHadouken == 0) {
-							App->particle->AddParticle(App->particle->hadoukenSym, position.x + 65, position.y - 70, COLLIDER_ENEMY_SHOT, 0);
+							App->particle->AddParticle(App->particle->hadoukenSym, position.x - 10, position.y - 70, COLLIDER_ENEMY_SHOT, 0);
 							App->audio->PlayChunk(App->particle->hadoukenSym.sound, 0);
 							HadoukenCount = 0;
 							ActiveHadouken = 1;
@@ -492,14 +510,18 @@ update_status ModulePlayer2::Update()
 }
 
 void ModulePlayer2::OnCollision(Collider* c1, Collider* c2) {
-	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER)
+	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER && (state == ST_WALK_FORWARD || state == ST_WALK_BACKWARD || state == ST_IDLE))
 	{
 		moveb = false;
+	}
+	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER && (state == ST_JUMP_BACKWARD || state == ST_JUMP_FORWARD || state == ST_JUMP_NEUTRAL)) {
+		speedX = -2;
 	}
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER_ATTACK) {
 		int aux = life;
 		life = aux - c2->damage;
 	}
+
 
 }
 

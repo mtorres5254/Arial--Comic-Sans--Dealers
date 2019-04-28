@@ -66,6 +66,7 @@ bool ModuleSceneRyu::Start()
 	graphics = App->textures->Load("Assets/Images/ken_stage.png");
 	music = App->audio->LoadMusic("Assets/Sound/ken.ogg");
 	App->audio->PlayMusic(music, 5000);
+	//
 	App->player->Enable();
 	App->player2->Enable();
 	App->collision->Enable();
@@ -81,10 +82,11 @@ bool ModuleSceneRyu::CleanUp()
 
 	App->textures->Unload(graphics);
 	App->audio->UnloadMusic(music);
-	App->scene_ryu->Disable();
+	//
 	App->player->Disable();
 	App->player2->Disable();
 	App->collision->Disable();
+	App->UI->Disable();
 
 	timenow = SDL_GetTicks();
 	countbig = bigSecs;
@@ -137,21 +139,13 @@ update_status ModuleSceneRyu::Update()
 		App->player->victorycount = 2;
 	}
 	
-	if (App->player->victorycount == 2) {
-		
-		//App->player->ResetPlayer();
-		
+	if (App->player->victorycount == 2) {		
 		App->fade->FadeToBlack(App->scene_ryu, App->lose_scene, 2.0f);
-		
 		App->audio->StopMusic(250);
-		
-
 	}
 
 	if (App->player2->victorycount == 2) {
-
 		App->fade->FadeToBlack(App->scene_ryu, App->congrats_screen, 2.0f);
-
 		App->audio->StopMusic(250);
 	}
 

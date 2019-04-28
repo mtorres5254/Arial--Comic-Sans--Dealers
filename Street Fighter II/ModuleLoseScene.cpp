@@ -29,12 +29,8 @@ bool ModuleLoseScene::Start() {
 
 	graphics = App->textures->Load("Assets/Images/Lose.png");
 	music = App->audio->LoadMusic("Assets/Sound/lose_scene.ogg");
-	App->audio->PlayMusic(music, 3000);
-	
-	
-		
-	
-	App->UI->Disable();
+	App->audio->PlayMusic(music, 300);
+	App->render->camera.x = App->render->camera.y = 0;
 
 	return true;
 }
@@ -45,9 +41,6 @@ bool ModuleLoseScene::CleanUp() {
 
 	App->textures->Unload(graphics);
 	App->audio->UnloadMusic(music);
-	App->lose_scene->Disable();
-
-
 
 	return true;
 }

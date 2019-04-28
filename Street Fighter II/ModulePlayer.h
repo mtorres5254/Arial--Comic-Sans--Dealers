@@ -64,21 +64,19 @@ public:
 	bool colliderErese = false;
 	bool colliderErese2 = false;
 	bool colliderErese3 = false;
+	bool HaveCollider = true;
 	bool death = false;
 
 	int DeathCount = 0;
 	int ActiveDeath = 0;
 	int victorycount = 0;
+	int speedX = 1;
+	int speedY = 1;
 
 	int life = 1000;
 	int healthbar;
 
 private:
-	Collider* colliderplayer;
-	Collider* punchcollider;
-	Collider* crouchpunchcollider;
-	Collider* kickcollider;
-
 
 	enum ryu_states
 	{
@@ -98,6 +96,7 @@ private:
 		ST_PUNCH_CROUCH,
 		ST_KICK_STANDING,
 		ST_HADOUKEN,
+		ST_RECEIVED_PUNCH,
 	};
 
 	enum ryu_inputs
@@ -118,12 +117,22 @@ private:
 		IN_PUNCH_FINISH,
 		IN_KICK_FINISH,
 		IN_HADOUKEN_FINISH,
+		IN_RECEIVED_PUNCH,
 	};
+
+	Collider* colliderplayer;
+	Collider* punchcollider;
+	Collider* crouchpunchcollider;
+	Collider* kickcollider;
 	
+	ryu_states state;
+
 	Uint32 jump_timer = 0;
 	Uint32 punch_timer = 0;
 	Uint32 kick_timer = 0;
 	Uint32 hadouken_timer = 0;
+
+
 
 	bool external_input(p2Qeue<ryu_inputs>&);
 
