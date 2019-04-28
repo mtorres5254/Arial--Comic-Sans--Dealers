@@ -7,6 +7,7 @@
 
 #include "SDL_mixer/include/SDL_mixer.h"
 
+
 struct SDL_Texture;
 
 class ModuleSceneRyu : public Module
@@ -32,6 +33,11 @@ public:
 
 	float foreground_pos;
 	bool forward;
+	int Round;
+
+	bool Round1 = true;
+	bool Round2 = false;
+	bool Round3 = false;
 	
 };
 

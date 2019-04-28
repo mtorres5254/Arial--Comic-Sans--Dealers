@@ -159,3 +159,9 @@ bool ModuleAudio::UnloadChunk(Mix_Chunk *effect)
 
 	return ret;
 }
+
+bool ModuleAudio::IsPlaying() {
+	if (Mix_Playing(-1) == 0) {
+		return true;
+	}
+}
