@@ -147,6 +147,56 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 	return ret;
 }
 
+// Blit to screen on an rotation angle of 90 degrees
+bool ModuleRender::BlitSym(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed, bool use_camera)
+{
+	bool ret = true;
+
+	SDL_Rect rect;
+	SDL_Point p;
+	p.x = section->w / 2;
+	p.y = section->y + section->h;
+
+	if (use_camera) {
+		rect.x = (int)(camera.x * speed) + x * SCREEN_SIZE;
+		rect.y = (int)(camera.y * speed) + y * SCREEN_SIZE;
+
+		if (section != NULL)
+		{
+			rect.w = section->w;
+			rect.h = section->h;
+		}
+		else
+		{
+			SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+		}
+
+	}
+
+	if (use_camera == false) {
+		rect.x = x * SCREEN_SIZE;
+		rect.y = y * SCREEN_SIZE;
+
+		if (section != NULL)
+		{
+			rect.w = section->w;
+			rect.h = section->h;
+		}
+		else
+		{
+			SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+		}
+
+	}
+	rect.w *= SCREEN_SIZE;
+	rect.h *= SCREEN_SIZE;
+
+			SDL_RenderCopyEx(renderer, texture, section, &rect, 0, NULL, SDL_FLIP_HORIZONTAL);
+
+
+	return ret;
+}
+
 bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera)
 {
 	bool ret = true;

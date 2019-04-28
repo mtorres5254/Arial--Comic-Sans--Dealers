@@ -14,101 +14,101 @@ ModulePlayer2::ModulePlayer2()
 	position.x = 300;
 	position.y = 220;
 
+
 	// idle animation (arcade sprite sheet)
-	idle.PushBack({ 786, 12, 58, 92 });
-	idle.PushBack({ 876, 11, 53, 93 });
-	idle.PushBack({ 968, 14, 59, 90 });
-	idle.PushBack({ 1057, 15, 60, 89 });
-	idle.PushBack({ 1145, 14, 59, 90 });
+	idle.PushBack({ 7, 14, 60, 90 });
+	idle.PushBack({ 95, 15, 60, 89 });
+	idle.PushBack({ 184, 14, 60, 90 });
+	idle.PushBack({ 276, 11, 60, 93 });
+	idle.PushBack({ 366, 12, 60, 92 });
 	idle.speed = 0.175f;
 
 	// walk forward animation (arcade sprite sheet)
-	forward.PushBack({ 729, 131, 50, 89 });
-	forward.PushBack({ 805, 128, 54, 91 });
-	forward.PushBack({ 889, 128, 63, 90 });
-	forward.PushBack({ 985, 128, 64, 92 });
-	forward.PushBack({ 1073, 131, 60, 88 });
-	forward.PushBack({ 1149, 136, 53, 83 });
+	forward.PushBack({ 9,136,53,83 });
+	forward.PushBack({ 78, 131, 60, 88 });
+	forward.PushBack({ 162, 128, 64, 92 });
+	forward.PushBack({ 259, 128, 63, 90 });
+	forward.PushBack({ 352, 128, 54, 91 });
+	forward.PushBack({ 432, 131, 50, 89 });
 	forward.speed = 0.15f;
 
 	// walk backward animation
-	backward.PushBack({ 180, 129, 57, 89 });
-	backward.PushBack({ 270, 128, 58, 91 });
-	backward.PushBack({ 356, 127, 58, 90 });
-	backward.PushBack({ 441, 128, 57, 90 });
-	backward.PushBack({ 524, 129, 59, 90 });
-	backward.PushBack({ 608, 131, 61, 87 });
+	backward.PushBack({ 542,127,61,91 });
+	backward.PushBack({ 628,127,60,91 });
+	backward.PushBack({ 713,127,58,91 });
+	backward.PushBack({ 797,127,58,91 });
+	backward.PushBack({ 883,127,57,91 });
+	backward.PushBack({ 974,127,57,91 });
 	backward.speed = 0.1f;
 
 	//punch animation
-	//punch.PushBack({ 1128,272,64,91 });
-	punch.PushBack({ 1011,272,92,91 });
-	punch.PushBack({ 1128,272,64,91 });
+	punch.PushBack({ 19,272,64,91 });
+	punch.PushBack({ 108,272,92,91 });
+	punch.PushBack({ 19,272,64,91 });
 	punch.speed = 0.2f;
 
 	//kick animation
 
-	kick.PushBack({ 545,269,59,93 });
-	kick.PushBack({ 456,267,86,91 });
-	kick.PushBack({ 320,267,114,91 });	
-	kick.PushBack({ 456,267,65,91 });
+	kick.PushBack({ 606,269,60,90 });
+	kick.PushBack({ 689,267,66,92 });
+	kick.PushBack({ 777,265,114,94 });
+	kick.PushBack({ 689,267,66,92 });
 	kick.speed = 0.175f;
 
 	//hadouken animation
-	hadouken_pose.PushBack({ 1103,1545,74,90 });
-	hadouken_pose.PushBack({ 991,1551,85,83 });
-	hadouken_pose.PushBack({ 877,1551,89,83 });
-	hadouken_pose.PushBack({ 748,1558,106,77 });
+	hadouken_pose.PushBack({ 34,1545,74,90 });
+	hadouken_pose.PushBack({ 135,1551,85,83 });
+	hadouken_pose.PushBack({ 244,1552,91,83 });
+	hadouken_pose.PushBack({ 357,1558,106,77 });
 	hadouken_pose.speed = 0.1f;
 	hadouken_pose.loop = false;
 
 	//crouch animation
-	crouch.PushBack({ 1131,1212,53,83 });
-	crouch.PushBack({ 1039,1227,57,69 });
-	crouch.PushBack({ 953,1235,61,61 });
+	crouch.PushBack({ 32,1212,53,83 });
+	crouch.PushBack({ 115,1227,57,69 });
+	crouch.PushBack({ 197,1235,61,61 });
 	crouch.loop = false;
 	crouch.speed = 0.3f;
 
 	//neutral jump animation
-	jump_neutral.PushBack({ 1139,847,55,85 });
-	jump_neutral.PushBack({ 1055,823,56,104 });
-	jump_neutral.PushBack({ 1055,823,56,104 });
-	jump_neutral.PushBack({ 1055,823,56,104 });
-	jump_neutral.PushBack({ 1055,823,56,104 });
-	jump_neutral.PushBack({ 1055,823,56,104 });
-	jump_neutral.PushBack({ 1055,823,56,104 });
-	jump_neutral.PushBack({ 1055,823,56,104 });
-	jump_neutral.PushBack({ 985,805,50,89 });
-	jump_neutral.PushBack({ 985,805,50,89 });
-	jump_neutral.PushBack({ 985,805,50,89 });
-	jump_neutral.PushBack({ 985,805,50,89 });
-	jump_neutral.PushBack({ 906,798,54,77 });
-	jump_neutral.PushBack({ 836,813,48,70 });
+	jump_neutral.PushBack({ 17,847,55,85 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 100,823,56,104 });
+	jump_neutral.PushBack({ 177,805,50,89 });
+	jump_neutral.PushBack({ 177,805,50,89 });
+	jump_neutral.PushBack({ 177,805,50,89 });
+	jump_neutral.PushBack({ 177,805,50,89 });
+	jump_neutral.PushBack({ 251,798,54,77 });
+	jump_neutral.PushBack({ 327,813,48,70 });
 	jump_neutral.loop = false;
 	jump_neutral.speed = 0.175f;
 
-	//neutral jump falling animation
+	//falling animation
 
-	falling.PushBack({ 766,810,48,89 });
-	falling.PushBack({ 692,819,55,109 });
-	falling.PushBack({ 692,819,55,109 });
-	falling.PushBack({ 692,819,55,109 });
-	falling.PushBack({ 692,819,55,109 });
-	falling.PushBack({ 692,819,55,109 });
-	falling.PushBack({ 692,819,55,109 });
-	falling.PushBack({ 692,819,55,109 });
-	falling.PushBack({ 692,819,55,109 });
-	falling.PushBack({ 692,819,55,109 });
-	falling.PushBack({ 692,819,55,109 });
-	falling.PushBack({ 692,819,55,109 });
-	falling.PushBack({ 692,819,55,109 });
+	falling.PushBack({ 397,810,48,89 });
+	falling.PushBack({ 464,819,55,109 });
+	falling.PushBack({ 464,819,55,109 });
+	falling.PushBack({ 464,819,55,109 });
+	falling.PushBack({ 464,819,55,109 });
+	falling.PushBack({ 464,819,55,109 });
+	falling.PushBack({ 464,819,55,109 });
+	falling.PushBack({ 464,819,55,109 });
+	falling.PushBack({ 464,819,55,109 });
+	falling.PushBack({ 464,819,55,109 });
+	falling.PushBack({ 464,819,55,109 });
+	falling.PushBack({ 464,819,55,109 });
+	falling.PushBack({ 464,819,55,109 });
 	falling.loop = false;
 	falling.speed = 0.175f;
 
-
 	//crouch punch
-	//Crouch_punch.PushBack({ 1118,1344,69,61 });
-	Crouch_punch.PushBack({ 998,1344,95,61 });
+	Crouch_punch.PushBack({ 24,1344,69,61 });
+	Crouch_punch.PushBack({ 118,1344,95,61 });
 	Crouch_punch.speed = 0.2f;
 
 	//death animation
@@ -119,40 +119,43 @@ ModulePlayer2::ModulePlayer2()
 	Death.speed = 0.05f;
 
 	//Jump forward animation
-	jump_forward.PushBack({ 562,823,55,103 });
-	jump_forward.PushBack({ 562,823,55,103 });
-	jump_forward.PushBack({ 562,823,55,103 });
-	jump_forward.PushBack({ 562,823,55,103 });
-	jump_forward.PushBack({ 562,823,55,103 });
-	jump_forward.PushBack({ 562,823,55,103 });
-	jump_forward.PushBack({ 481,813,61,78 });
-	jump_forward.PushBack({ 363,811,104,42 });
-	jump_forward.PushBack({ 292,791,53,82 });
-	jump_forward.PushBack({ 162,808,122,44 });
-	jump_forward.PushBack({ 76,806,71,87 });
-	jump_forward.PushBack({ 7,802,55,109 });
+	jump_forward.PushBack({ 594,823,55,103 });
+	jump_forward.PushBack({ 594,823,55,103 });
+	jump_forward.PushBack({ 594,823,55,103 });
+	jump_forward.PushBack({ 594,823,55,103 });
+	jump_forward.PushBack({ 594,823,55,103 });
+	jump_forward.PushBack({ 594,823,55,103 });
+	jump_forward.PushBack({ 669,813,61,78 });
+	jump_forward.PushBack({ 744,811,104,42 });
+	jump_forward.PushBack({ 864,791,53,82 });
+	jump_forward.PushBack({ 927,808,122,44 });
+	jump_forward.PushBack({ 1064,806,71,87 });
+	jump_forward.PushBack({ 1149,802,55,109 });
 	jump_forward.loop = false;
 	jump_forward.speed = 0.175f;
 
 	//Jump backwards animation
-	jump_backwards.PushBack({ 76,806,71,87 });
-	jump_backwards.PushBack({ 76,806,71,87 });
-	jump_backwards.PushBack({ 76,806,71,87 });
-	jump_backwards.PushBack({ 76,806,71,87 });
-	jump_backwards.PushBack({ 76,806,71,87 });
-	jump_backwards.PushBack({ 76,806,71,87 });
-	jump_backwards.PushBack({ 162,808,122,44 });
-	jump_backwards.PushBack({ 292,791,53,82 });
-	jump_backwards.PushBack({ 363,811,104,42 });
-	jump_backwards.PushBack({ 481,813,61,78 });
-	jump_backwards.PushBack({ 562,823,55,103 });
+	jump_backwards.PushBack({ 1064,806,71,87 });
+	jump_backwards.PushBack({ 1064,806,71,87 });
+	jump_backwards.PushBack({ 1064,806,71,87 });
+	jump_backwards.PushBack({ 1064,806,71,87 });
+	jump_backwards.PushBack({ 1064,806,71,87 });
+	jump_backwards.PushBack({ 1064,806,71,87 });
+	jump_backwards.PushBack({ 927,808,122,44 });
+	jump_backwards.PushBack({ 864,791,53,82 });
+	jump_backwards.PushBack({ 744,811,104,42 });
+	jump_backwards.PushBack({ 669,813,61,78 });
+	jump_backwards.PushBack({ 594,823,55,103 });
 	jump_backwards.loop = false;
 	jump_backwards.speed = 0.175f;
 
 	//Jump neutral punch
+	jump_neutral_punch.PushBack({ 176,805,50,89 });
 	jump_neutral_punch.PushBack({ 29,987,52,69 });
 	jump_neutral_punch.PushBack({ 97,985,81,71 });
-	jump_neutral_punch.speed = 0.1f;
+	jump_neutral_punch.loop = false;
+	jump_neutral_punch.speed = 0.175f;
+
 }
 
 ModulePlayer2::~ModulePlayer2()
@@ -163,7 +166,7 @@ bool ModulePlayer2::Start()
 {
 	LOG("Loading player textures");
 	bool ret = true;
-	graphics = App->textures->Load("Assets/Images/ryu2.png"); // arcade version
+	graphics = App->textures->Load("Assets/Images/ryu.png");
 	position.x = 300; //Returns to its original position
 
 	deathSound = App->audio->LoadChunk("Assets/Sound/ryu-death.wav");
@@ -466,9 +469,6 @@ update_status ModulePlayer2::Update()
 						break;
 					case ST_KICK_STANDING:
 						current_animation = &kick;	
-						if (kick.current_frame == 2) {
-							position.x + 18;
-						}
 						if (kickCol == false) {
 							kickcollider = App->collision->AddCollider({ position.x - 45, position.y - 92, 70, 27 }, COLLIDER_ENEMY_SHOT, App->player2, 25);
 							kickCol = true;
@@ -498,7 +498,7 @@ update_status ModulePlayer2::Update()
 			// Draw everything --------------------------------------
 
 			SDL_Rect r = current_animation->GetCurrentFrame();
-			App->render->Blit(graphics, position.x, position.y - r.h, &r);
+			App->render->BlitSym(graphics, position.x, position.y - r.h, &r);
 
 			//Update collider position to player position
 			colliderplayer->SetPos(position.x + 7, position.y - 90);
