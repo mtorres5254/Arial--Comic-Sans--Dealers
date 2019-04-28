@@ -126,5 +126,9 @@ update_status ModuleSceneRyu::Update()
 		App->audio->StopMusic(250);
 	}
 
+	if (App->UI->time <= 0)
+	{
+		App->player->victorycount = 2;
+	}
 	return UPDATE_CONTINUE;
 }
