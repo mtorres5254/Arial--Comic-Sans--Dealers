@@ -6,6 +6,7 @@
 #include "ModulePlayer.h"
 #include "ModulePlayer2.h"
 #include "ModuleParticles.h"
+#include "ModuleUI.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
@@ -177,6 +178,16 @@ ModulePlayer2::ModulePlayer2()
 	victory.speed = 0.1f;
 	victory.loop = false;
 
+	//Victory2 animation
+
+	victory1.PushBack({ 46,2467,53,97 });
+	victory1.PushBack({ 124,2469,54, 95 });
+	victory1.PushBack({ 206,2469,54, 95 });
+	victory1.PushBack({ 289,2469,54,95 });
+	victory1.PushBack({ 380,2468,54,96 });
+	victory1.loop = false;
+	victory1.speed = 0.1f;
+
 }
 
 ModulePlayer2::~ModulePlayer2()
@@ -228,6 +239,7 @@ update_status ModulePlayer2::Update()
 		speedY = 1;
 	}
 
+	
 	if (HaveCollider == false && GodMode == false && state != ST_CROUCH) {
 		colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
 		HaveCollider = true;
@@ -269,6 +281,34 @@ update_status ModulePlayer2::Update()
 					life = 0;
 				}
 
+
+				if (App->player->life == 0 && App->UI->victorycount1 == 0) {
+
+					if (acumvictory < 75) {
+						current_animation = &victory;
+						acumvictory++;
+					}
+					if (acumvictory == 75) {
+						acumvictory = 0;
+						victory.Reset();
+						
+					}
+				}
+
+
+				if (App->player->life == 0 && App->UI->victorycount1 == 1) {
+
+					if (acumvictory < 75) {
+						current_animation = &victory1;
+						acumvictory++;
+					}
+					if (acumvictory == 75) {
+						victory1.Reset();
+						acumvictory = 0;
+					}
+				}
+
+
 				if (life == 0)
 				{
 					current_animation = &Death;
@@ -292,10 +332,7 @@ update_status ModulePlayer2::Update()
 					//ResetPlayer();
 				}
 
-				if (App->player->life == 0) {
-
-					current_animation = &victory;
-				}
+				
 
 				if (damage_received == true) {
 

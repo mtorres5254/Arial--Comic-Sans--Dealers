@@ -52,9 +52,10 @@ public:
 	Animation Death;
 	Animation damage;
 	Animation victory;
+	Animation victory1;
 	iPoint position;
 
-	
+	int acumvictory = 0;
 	int HadoukenCount = 0;
 	int ActiveHadouken = 0;
 	int JumpCount = 0;
@@ -74,7 +75,7 @@ public:
 
 	int DeathCount = 0;
 	int ActiveDeath = 0;
-	int victorycount = 0;
+	int victorycount =0;
 	int speedX = 1;
 	int speedY = 1;
 	int acumdamage = 0;

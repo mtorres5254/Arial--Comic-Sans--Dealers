@@ -43,6 +43,8 @@ public:
 
 	Animation KOanim;
 
+	int victorycount=0;
+	int victorycount1 = 0;
 	int font_id;
 	int font_Rounds;
 	int time;

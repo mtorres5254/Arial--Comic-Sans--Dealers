@@ -54,6 +54,7 @@ public:
 	Animation Death;
 	Animation damage;
 	Animation victory;
+	Animation victory1;
 	iPoint position;
 	int HadoukenCount = 0;
 	int ActiveHadouken = 0;
@@ -71,7 +72,7 @@ public:
 	bool colliderErese = false;
 	bool colliderErese2 = false;
 	bool colliderErese3 = false;
-
+	int acumvictory = 0;
 	int acumdamage = 0;
 
 	bool damage_received = false;

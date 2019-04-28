@@ -117,12 +117,19 @@ update_status ModuleUI:: Update()
 		App->render->Blit(graphics1, SCREEN_WIDTH / 2 - (KObar.w / 2), 15, &KOanim.GetCurrentFrame(), false);
 	}
 
+
 	if (App->player2->victorycount == 1 || App->player2->victorycount == 2) {
 		App->render->Blit(graphics1, (SCREEN_WIDTH / 2)-153-(KObar.w/2)-20, 20, &RoundBar1, false);
+		victorycount = 1;
+		
 	}
 
 	if (App->player->victorycount == 1 || App->player->victorycount == 2) {
+	
 		App->render->Blit(graphics2, (SCREEN_WIDTH / 2) + 153 + (KObar.w / 2) , 20, &RoundBar2, false);
+
+		if(App->player->DeathCount==0)
+		victorycount1 = 1;
 	}
 	
 	
