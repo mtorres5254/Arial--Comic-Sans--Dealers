@@ -16,59 +16,45 @@ ModuleFont::~ModuleFont()
 {}
 
 bool ModuleFont::Start() {
-	int i = Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890");
-	fonts[i];
 
 	return true;
 }
 
 // Load new texture from file path
-int ModuleFont::Load(const char* texture_path, const char* characters, uint rows)
+int ModuleFont::Load(const char* texture_path, const char* characters)
 {
-	int id = -1;
+	for (int i = 0; i < MAX_FONTS; i++) {
+		if (fonts[i].graphic == nullptr) {
 
-	int width;
-	int height;
+			int width;
+			int height;
 
-	if (texture_path == nullptr || characters == nullptr || rows == 0)
-	{
-		LOG("Could not load font");
-		return id;
-	}
+			if (texture_path == nullptr || characters == nullptr)
+			{
+				LOG("Could not load font");
+			}
 
-	SDL_Texture* tex = App->textures->Load(texture_path);
+			SDL_Texture* tex = App->textures->Load(texture_path);
 
-	if (tex == nullptr || strlen(characters) >= MAX_FONT_CHARS)
-	{
-		LOG("Could not load font at %s with characters '%s'", texture_path, characters);
-		return id;
-	}
+			if (tex == nullptr || strlen(characters) >= MAX_FONT_CHARS)
+			{
+				LOG("Could not load font at %s with characters '%s'", texture_path, characters);
+			}
 
-	id = 0;
-	for (; id < MAX_FONTS; ++id)
-		if (fonts[id].graphic == nullptr)
+			SDL_QueryTexture(tex, NULL, NULL, &width, &height);
+
+			fonts[i].graphic = tex; // graphic: pointer to the texture
+			fonts[i].len = strlen(characters); // len: length of the table
+			strcpy_s(fonts[i].table, characters);
+			fonts[i].char_h = height;
+			fonts[i].char_w = width / strlen(characters);
+
+			LOG("Successfully loaded BMP font from %s", texture_path);
+			return i;
 			break;
-
-	if (id == MAX_FONTS)
-	{
-		LOG("Cannot load font %s. Array is full (max %d).", texture_path, MAX_FONTS);
-		return id;
+		}
+		break;
 	}
-
-	SDL_QueryTexture(tex, NULL, NULL, &width, &height);
-
-	fonts[id].graphic = tex; // graphic: pointer to the texture
-	fonts[id].rows = rows; // rows: rows of characters in the texture
-	fonts[id].len = strlen(characters); // len: length of the table
-
-	strcpy_s(fonts[id].table, characters);
-	fonts[id].row_chars = fonts[id].len;
-	fonts[id].char_h = height / rows;
-	fonts[id].char_w = width / strlen(characters);
-
-	LOG("Successfully loaded BMP font from %s", texture_path);
-
-	return id;
 }
 
 void ModuleFont::UnLoad(int font_id)
@@ -86,7 +72,7 @@ void ModuleFont::BlitText(int x, int y, int font_id, const char* text) const
 {
 	if (text == nullptr || font_id < 0 || font_id >= MAX_FONTS || App->font->fonts[font_id].graphic == nullptr)
 	{
-		//LOG("Unable to render text with bmp font id %d", font_id);
+		LOG("Unable to render text with bmp font id %d", font_id);
 		return;
 	}
 
@@ -103,7 +89,6 @@ void ModuleFont::BlitText(int x, int y, int font_id, const char* text) const
 		int j = 0;
 		do
 		{
-			// TODO 2: Find the character in the table and its position in the texture, then Blit
 			if (font->table[j] == text[i]) {
 				rect.x = j * font->char_w;
 				rect.y = 0;

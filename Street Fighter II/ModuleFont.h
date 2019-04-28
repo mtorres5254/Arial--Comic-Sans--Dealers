@@ -14,7 +14,7 @@ struct Font
 {
 	char table[MAX_FONT_CHARS];
 	SDL_Texture* graphic = nullptr;
-	uint rows, len, char_w, char_h, row_chars;
+	uint len, char_w, char_h, row_chars;
 };
 
 class ModuleFont : public Module
@@ -27,7 +27,7 @@ public:
 	bool Start();
 
 	// Load Font
-	int Load(const char* texture_path, const char* characters, uint rows = 1);
+	int Load(const char* texture_path, const char* characters);
 	void UnLoad(int font_id);
 
 	// Create a surface from text

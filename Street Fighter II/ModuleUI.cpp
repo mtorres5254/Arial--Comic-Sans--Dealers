@@ -54,57 +54,6 @@ ModuleUI::ModuleUI() {
 	KOanim.PushBack({205,18,27,24});
 	KOanim.PushBack({205,56,27,24});
 	KOanim.speed = 0.1f;
-
-	//Num 0
-	num0.x = 306;
-	num0.y = 276;
-	num0.w = 12;
-	num0.h = 19;
-	//Num 1
-	num1.x = 306;
-	num1.y = 247;
-	num1.w = 12;
-	num1.h = 19;
-	//Num 2
-	num2.x = 306;
-	num2.y = 217;
-	num2.w = 12;
-	num2.h = 19;
-	//Num 3
-	num3.x = 306;
-	num3.y = 188;
-	num3.w = 12;
-	num3.h = 19;
-	//Num 4
-	num4.x = 306;
-	num4.y = 159;
-	num4.w = 12;
-	num4.h = 19;
-	//Num 5
-	num5.x = 306;
-	num5.y = 129;
-	num5.w = 12;
-	num5.h = 19;
-	//Num 6
-	num6.x = 306;
-	num6.y = 100;
-	num6.w = 12;
-	num6.h = 19;
-	//Num 7
-	num7.x = 306;
-	num7.y = 72;
-	num7.w = 12;
-	num7.h = 19;
-	//Num 8
-	num8.x = 306;
-	num8.y = 42;
-	num8.w = 12;
-	num8.h = 19;
-	//Num 9
-	num9.x = 306;
-	num9.y = 13;
-	num9.w = 12;
-	num9.h = 19;
 }
 
 ModuleUI::~ModuleUI()
@@ -118,6 +67,12 @@ bool ModuleUI::Start()
 
 	graphics1 = App->textures->Load("Assets/Images/Battle_HUD.png"); 
 	graphics2 = App->textures->Load("Assets/Images/Battle_HUD2.png");
+	font_id = App->font->Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890");
+
+	timenow = SDL_GetTicks();
+	time = 99;
+	Counter1 = 9;
+	Counter2 = 9;
 	
 	return ret;
 }
@@ -135,77 +90,11 @@ bool ModuleUI::CleanUp()
 update_status ModuleUI:: Update()
 {
 	//Logic
-	switch (App->scene_ryu->countbig)
-	{
-		case 0: 
-			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num0.w) -2, 45, &num0, false);
-			break;
-		case 1:	
-			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num1.w) - 2, 45, &num1, false);
-			break;
-		case 2: 
-			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num2.w) - 2, 45, &num2, false);
-			break;
-		case 3:
-			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num3.w) - 2, 45, &num3, false);
-			break;
-		case 4: 
-			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num4.w) - 2, 45, &num4, false);
-			break;
-		case 5: 
-			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num5.w) - 2, 45, &num5, false);
-			break;
-		case 6: 
-			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num6.w) - 2, 45, &num6, false);
-			break;
-		case 7: 
-			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num7.w) - 2, 45, &num7, false);
-			break;
-		case 8: 
-			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num8.w) - 2, 45, &num8, false);
-			break;
-		case 9: 
-			App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num9.w) - 2, 45, &num9, false);
-			break;
-	}
-	switch (App->scene_ryu->countsmall)
-	{
-	case 0:
-		App->render->Blit(graphics1, SCREEN_WIDTH / 2 - num0.w + 12, 45, &num0, false);
-		break;
-	case 1:
-		App->render->Blit(graphics1, SCREEN_WIDTH / 2 - num1.w + 12, 45, &num1, false);
-		break;
-	case 2:
-		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num2.w) + 12, 45, &num2, false);
-		break;
-	case 3:
-		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num3.w) + 12, 45, &num3, false);
-		break;
-	case 4:
-		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num4.w) + 12, 45, &num4, false);
-		break;
-	case 5:
-		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num5.w) + 12, 45, &num5, false);
-		break;
-	case 6:
-		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num6.w) + 12, 45, &num6, false);
-		break;
-	case 7:
-		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num7.w) + 12, 45, &num7, false);
-		break;
-	case 8:
-		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num8.w) + 12, 45, &num8, false);
-		break;
-	case 9:
-		App->render->Blit(graphics1, (SCREEN_WIDTH / 2 - num9.w) + 12, 45, &num9, false);
-		break;
-	}
 	HealthBar1.w = App->player->healthbar;
 	HealthBar2.w = App->player2->healthbar;
 
 	//Render
-	App->font->BlitText(SCREEN_WIDTH / 2, 100, 1, "hola");
+	Counter();
 
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - RedBar1.w - KObar.w / 2, 20, &RedBar1, false);
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - HealthBar1.w - KObar.w / 2, 20, &HealthBar1, false);
@@ -229,5 +118,86 @@ update_status ModuleUI:: Update()
 	
 	
 	return UPDATE_CONTINUE;
+}
+
+void ModuleUI::Counter() {
+	if (timenow > 0)
+	{
+		if (SDL_GetTicks() - timenow > SECOND)
+		{
+			Counter1--;
+			if (Counter1 == 0) {
+				Counter1 = 9;
+				Counter2--;
+				if (Counter2 == 0) {
+					Counter2 = 0;
+				}
+			}
+		
+			timenow = SDL_GetTicks();
+			
+		}
+	}
+
+	switch (Counter2)
+	{
+	case 9:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "1");
+		break;
+	}
+	switch (Counter1)
+	{
+	case 9:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "1");
+		break;
+	}
 }
 
