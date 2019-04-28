@@ -158,6 +158,17 @@ ModulePlayer::ModulePlayer()
 	jump_neutral_punch.PushBack({ 97,985,81,71 });
 	jump_neutral_punch.loop = false;
 	jump_neutral_punch.speed = 0.175f;
+
+	//Damage animation
+
+	damage.PushBack({ 30,2101,68,79 });
+	damage.PushBack({ 117,2090,62,90 });
+	damage.PushBack({ 207,2091,68,89 });
+	damage.PushBack({ 297,2091,72,88 });
+	damage.PushBack({ 398,2094,58, 85});
+	damage.PushBack({ 482,2097,66, 82});
+	damage.speed = 0.1f;
+	damage.loop = false;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -214,7 +225,7 @@ update_status ModulePlayer::Update()
 	}
 
 	//Debug Commands
-	if (App->input->keyboard[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_F3] == KEY_STATE::KEY_DOWN ) {
 		if (GodMode == false) {
 			App->collision->DeleteCollider(colliderplayer);
 
@@ -245,6 +256,7 @@ update_status ModulePlayer::Update()
 
 				healthbar = life * 0.153;
 
+				
 				if (life < 0) {
 					life = 0;
 				}
@@ -269,15 +281,45 @@ update_status ModulePlayer::Update()
 						App->render->camera.x = 0;
 						
 						ActiveDeath = 1;
-						ResetPlayer();
-						
+						ResetPlayer();				
 						
 					}
 
 					//ResetPlayer();
 				}
-				else  if (life > 0) {
-				
+			
+				if (damage_received == true) {				
+					
+					
+					if (life == 0) {
+						damage_received = false;
+					}
+					if (acumdamage == 1) {
+						App->collision->DeleteCollider(colliderplayer);
+					}
+					if (acumdamage >= 0 && acumdamage < 60 && life > 0) {
+						
+						
+						current_animation = &damage;
+						acumdamage++;
+					}
+					
+					if (acumdamage == 60 && life > 0) {
+						
+						acumdamage = 0;
+						
+						damage.Reset();
+						
+						damage_received = false;
+						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_PLAYER, App->player);
+						
+					}					
+					
+				}				
+
+				else  if (life > 0 && damage_received==false) {
+					
+					
 					switch (state)
 					{
 					case ST_IDLE:
@@ -292,6 +334,7 @@ update_status ModulePlayer::Update()
 						ActiveHadouken = 0;
 						ActiveDeath = 0;
 						break;
+
 					case ST_WALK_FORWARD:
 						if (movef == true) {
 							current_animation = &forward;
@@ -566,12 +609,16 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
 	}
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && (state == ST_JUMP_BACKWARD || state == ST_JUMP_FORWARD || state == ST_JUMP_NEUTRAL)) {
 		speedX = -1;
+		
 	}
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY_SHOT)
 	{
 		int aux = life;
 		life = aux - c2->damage;
+		damage_received = true;
+		
 	}
+	
 }
 
 bool ModulePlayer::external_input(p2Qeue<ryu_inputs>& inputs)

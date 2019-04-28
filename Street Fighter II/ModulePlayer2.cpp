@@ -153,6 +153,17 @@ ModulePlayer2::ModulePlayer2()
 	jump_neutral_punch.PushBack({ 29,987,52,69 });
 	jump_neutral_punch.PushBack({ 97,985,81,71 });
 	jump_neutral_punch.speed = 0.1f;
+
+	//Damage animation
+
+	damage.PushBack({ 30,2101,68,79 });
+	damage.PushBack({ 117,2090,62,90 });
+	damage.PushBack({ 207,2091,68,89 });
+	damage.PushBack({ 297,2091,72,88 });
+	damage.PushBack({ 398,2094,58, 85 });
+	damage.PushBack({ 482,2097,66, 82 });
+	damage.speed = 0.1f;
+	damage.loop = false;
 }
 
 ModulePlayer2::~ModulePlayer2()
@@ -190,7 +201,6 @@ bool ModulePlayer2::CleanUp()
 }
 
 
-
 // Update: draw background
 update_status ModulePlayer2::Update()
 {
@@ -201,6 +211,11 @@ update_status ModulePlayer2::Update()
 	if (position.y == 220) {
 		speedX = 1;
 		speedY = 1;
+	}
+
+	if (HaveCollider == false && GodMode == false && state != ST_CROUCH) {
+		colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
+		HaveCollider = true;
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_F2] == KEY_STATE::KEY_DOWN) {
@@ -219,6 +234,7 @@ update_status ModulePlayer2::Update()
 	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN) { //Treu-re abans d'entregar
 		life = 0;
 	}
+
 
 	if (death == false) {
 		while (external_input(inputs))
@@ -259,6 +275,28 @@ update_status ModulePlayer2::Update()
 
 
 					//ResetPlayer();
+				}
+
+				if (damage_received == true) {
+
+					if (life == 0) {
+						damage_received = false;
+					}
+					if (acumdamage == 1) {
+						App->collision->DeleteCollider(colliderplayer);
+					}
+					if (acumdamage >= 0 && acumdamage < 60) {
+						current_animation = &damage;
+						acumdamage++;
+					}
+					if (acumdamage == 60) {
+						acumdamage = 0;
+						damage.Reset();
+
+						damage_received = false;
+						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
+					}
+
 				}
 
 				else if (life > 0) {
@@ -422,7 +460,7 @@ update_status ModulePlayer2::Update()
 							App->collision->DeleteCollider(colliderplayer);
 							HaveCollider = false;
 						}
-						colliderplayer = App->collision->AddCollider({ position.x, position.y + 100, 45, 65 }, COLLIDER_PLAYER, App->player);
+						colliderplayer = App->collision->AddCollider({ position.x, position.y + 100, 45, 65 }, COLLIDER_ENEMY, App->player);
 						current_animation = &crouch;
 						App->collision->DeleteCollider(colliderplayer);
 						break;
@@ -500,8 +538,14 @@ update_status ModulePlayer2::Update()
 			SDL_Rect r = current_animation->GetCurrentFrame();
 			App->render->Blit(graphics, position.x, position.y - r.h, &r);
 
+			if (state == ST_CROUCH) {
+				colliderplayer->SetPos(position.x + 7, position.y - 65);
+			}
 			//Update collider position to player position
-			colliderplayer->SetPos(position.x + 7, position.y - 90);
+			else {
+				colliderplayer->SetPos(position.x + 7, position.y - 90);
+			}
+			
 
 			return UPDATE_CONTINUE;
 		}
@@ -520,6 +564,7 @@ void ModulePlayer2::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER_ATTACK) {
 		int aux = life;
 		life = aux - c2->damage;
+		damage_received = true;
 	}
 
 

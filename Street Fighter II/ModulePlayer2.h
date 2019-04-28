@@ -50,6 +50,7 @@ public:
 	Animation jump_neutral_punch;
 	Animation ReceivedPunch;
 	Animation Death;
+	Animation damage;
 	iPoint position;
 	int HadoukenCount = 0;
 	int ActiveHadouken = 0;
@@ -68,7 +69,9 @@ public:
 	bool colliderErese2 = false;
 	bool colliderErese3 = false;
 
+	int acumdamage = 0;
 
+	bool damage_received = false;
 	int DeathCount = 0;
 	int ActiveDeath = 0;
 	int victorycount = 0;

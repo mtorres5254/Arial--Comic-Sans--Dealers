@@ -48,6 +48,7 @@ public:
 	Animation jump_neutral_punch;
 	Animation ReceivedPunch;
 	Animation Death;
+	Animation damage;
 	iPoint position;
 
 	int HadoukenCount = 0;
@@ -72,6 +73,9 @@ public:
 	int victorycount = 0;
 	int speedX = 1;
 	int speedY = 1;
+	int acumdamage = 0;
+
+	bool damage_received = false;
 
 	int life = 1000;
 	int healthbar;
