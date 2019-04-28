@@ -125,10 +125,5 @@ update_status ModuleSceneRyu::Update()
 		App->fade->FadeToBlack(App->scene_ryu, App->congrats_screen, 2.0f);
 		App->audio->StopMusic(250);
 	}
-
-	if (App->UI->time <= 0)
-	{
-		App->player->victorycount = 2;
-	}
 	return UPDATE_CONTINUE;
 }
