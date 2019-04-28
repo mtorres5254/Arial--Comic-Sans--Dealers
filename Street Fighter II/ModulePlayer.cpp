@@ -169,6 +169,15 @@ ModulePlayer::ModulePlayer()
 	damage.PushBack({ 482,2097,66, 82});
 	damage.speed = 0.1f;
 	damage.loop = false;
+
+	//Victory animation
+	victory.PushBack({ 495, 2479, 53, 83 });
+	victory.PushBack({ 573, 2474, 60,88 });
+	victory.PushBack({ 660, 2465, 60, 97 });
+	victory.PushBack({ 745, 2440, 55,122 });
+	victory.speed = 0.1f;
+	victory.loop = false;
+
 }
 
 ModulePlayer::~ModulePlayer()
@@ -184,6 +193,8 @@ bool ModulePlayer::Start()
 	
 	//Sounds
 	deathSound = App->audio->LoadChunk("Assets/Sound/ryu-death.wav");
+	ugh = App->audio->LoadChunk("Assets/Sound/ugh.wav");
+	hit = App->audio->LoadChunk("Assets/Sound/golpe.wav");
 
 	//Start functions to reset player
 	ResetPlayer();
@@ -270,6 +281,7 @@ update_status ModulePlayer::Update()
 					}
 
 					if (DeathCount == 1) {
+						
 						App->audio->PlayChunk(deathSound, 0);
 						victorycount++;
 					}
@@ -287,6 +299,11 @@ update_status ModulePlayer::Update()
 
 					//ResetPlayer();
 				}
+
+				if (App->player2->life == 0) {
+					
+					current_animation = &victory;
+				}
 			
 				if (damage_received == true) {				
 					
@@ -296,6 +313,8 @@ update_status ModulePlayer::Update()
 					}
 					if (acumdamage == 1) {
 						App->collision->DeleteCollider(colliderplayer);
+						App->audio->PlayChunk(hit, 0);
+						App->audio->PlayChunk(ugh,0);
 					}
 					if (acumdamage >= 0 && acumdamage < 60 && life > 0) {
 						
@@ -317,7 +336,7 @@ update_status ModulePlayer::Update()
 					
 				}				
 
-				else  if (life > 0 && damage_received==false) {
+				else  if (life > 0 && damage_received==false && App->player2->life>0) {
 					
 					
 					switch (state)

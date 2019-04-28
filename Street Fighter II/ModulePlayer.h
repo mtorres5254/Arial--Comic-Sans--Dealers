@@ -33,6 +33,8 @@ public:
 
 	SDL_Texture* graphics = nullptr;
 	Mix_Chunk* deathSound;
+	Mix_Chunk* ugh;
+	Mix_Chunk* hit;
 	Animation idle;
 	Animation forward;
 	Animation backward;
@@ -49,8 +51,10 @@ public:
 	Animation ReceivedPunch;
 	Animation Death;
 	Animation damage;
+	Animation victory;
 	iPoint position;
 
+	
 	int HadoukenCount = 0;
 	int ActiveHadouken = 0;
 	int JumpCount = 0;
