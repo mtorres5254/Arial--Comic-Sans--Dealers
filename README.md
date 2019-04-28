@@ -98,9 +98,10 @@ The Gamusinos Fighters group (for sharing sprites). Link to their project: https
 # License
 
 We've used the following libraries:
-https://www.libsdl.org/
-https://www.libsdl.org/projects/SDL_image/
-https://www.libsdl.org/projects/SDL_mixer/
+
+* https://www.libsdl.org/
+* https://www.libsdl.org/projects/SDL_image/
+* https://www.libsdl.org/projects/SDL_mixer/
 
 This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
 
