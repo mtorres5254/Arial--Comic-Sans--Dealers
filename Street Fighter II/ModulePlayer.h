@@ -48,6 +48,8 @@ public:
 	Animation falling;
 	Animation Crouch_punch;
 	Animation jump_neutral_punch;
+	Animation jump_forward_punch;
+	Animation jump_backward_punch;
 	Animation ReceivedPunch;
 	Animation Death;
 	Animation damage;
