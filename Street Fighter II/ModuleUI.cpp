@@ -68,6 +68,11 @@ bool ModuleUI::Start()
 	graphics1 = App->textures->Load("Assets/Images/Battle_HUD.png"); 
 	graphics2 = App->textures->Load("Assets/Images/Battle_HUD2.png");
 	font_id = App->font->Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890");
+
+	timenow = SDL_GetTicks();
+	time = 99;
+	Counter1 = 9;
+	Counter2 = 9;
 	
 	return ret;
 }
@@ -89,7 +94,7 @@ update_status ModuleUI:: Update()
 	HealthBar2.w = App->player2->healthbar;
 
 	//Render
-	App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "99");
+	Counter();
 
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - RedBar1.w - KObar.w / 2, 20, &RedBar1, false);
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - HealthBar1.w - KObar.w / 2, 20, &HealthBar1, false);
@@ -113,5 +118,86 @@ update_status ModuleUI:: Update()
 	
 	
 	return UPDATE_CONTINUE;
+}
+
+void ModuleUI::Counter() {
+	if (timenow > 0)
+	{
+		if (SDL_GetTicks() - timenow > SECOND)
+		{
+			Counter1--;
+			if (Counter1 == 0) {
+				Counter1 = 9;
+				Counter2--;
+				if (Counter2 == 0) {
+					Counter2 = 0;
+				}
+			}
+		
+			timenow = SDL_GetTicks();
+			
+		}
+	}
+
+	switch (Counter2)
+	{
+	case 9:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "1");
+		break;
+	}
+	switch (Counter1)
+	{
+	case 9:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "1");
+		break;
+	}
 }
 

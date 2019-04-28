@@ -7,6 +7,8 @@
 #include "Globals.h"
 #include "p2Point.h"
 
+#define SECOND 1000 
+
 struct SDL_Texture;
 
 class ModuleUI : public Module
@@ -18,6 +20,8 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+
+	void Counter();
 
 public:
 
@@ -35,6 +39,10 @@ public:
 	Animation KOanim;
 
 	int font_id;
+	int time;
+	int Counter1;
+	int Counter2;
+	int timenow;
 
 	
 };
