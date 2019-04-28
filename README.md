@@ -70,6 +70,10 @@ A and D - Move left and right
     F2 - GodMode Player 2
 
     F3 - GodMode Player 1
+    
+    F4 - Direct Lose 
+    
+    F5 - Direct Win
   
   * Special Inputs
   
