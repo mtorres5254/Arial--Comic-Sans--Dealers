@@ -41,7 +41,7 @@ ModulePlayer2::ModulePlayer2()
 	backward.speed = 0.1f;
 
 	//punch animation
-	punch.PushBack({ 1128,272,64,91 });
+	//punch.PushBack({ 1128,272,64,91 });
 	punch.PushBack({ 1011,272,92,91 });
 	punch.PushBack({ 1128,272,64,91 });
 	punch.speed = 0.2f;
@@ -63,9 +63,9 @@ ModulePlayer2::ModulePlayer2()
 	hadouken_pose.loop = false;
 
 	//crouch animation
-	crouch.PushBack({ 32,1212,53,83 });
-	crouch.PushBack({ 115,1227,57,69 });
-	crouch.PushBack({ 197,1235,61,61 });
+	crouch.PushBack({ 1131,1212,53,83 });
+	crouch.PushBack({ 1039,1227,57,69 });
+	crouch.PushBack({ 953,1235,61,61 });
 	crouch.loop = false;
 	crouch.speed = 0.3f;
 
@@ -107,8 +107,8 @@ ModulePlayer2::ModulePlayer2()
 
 
 	//crouch punch
-	Crouch_punch.PushBack({ 24,1344,69,61 });
-	Crouch_punch.PushBack({ 118,1344,95,61 });
+	//Crouch_punch.PushBack({ 1118,1344,69,61 });
+	Crouch_punch.PushBack({ 998,1344,95,61 });
 	Crouch_punch.speed = 0.2f;
 
 	//death animation
@@ -411,7 +411,7 @@ update_status ModulePlayer2::Update()
 					case ST_CROUCH:
 						current_animation = &crouch;
 						break;
-					case ST_PUNCH_STANDING:
+					case ST_PUNCH_STANDING:					
 						current_animation = &punch;
 						if (punchCol == false) {
 							punchcollider = App->collision->AddCollider({ position.x - 21, position.y - 79, 51, 13 }, COLLIDER_ENEMY_SHOT, App->player, 25);
@@ -426,7 +426,7 @@ update_status ModulePlayer2::Update()
 						colliderErese = true;
 						break;
 					case ST_PUNCH_CROUCH:
-						current_animation = &Crouch_punch;
+						current_animation = &Crouch_punch;					
 						if (CrPunchCol == false) {
 							crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_ENEMY_SHOT, App->player, 25);
 							CrPunchCol = true;
@@ -437,7 +437,7 @@ update_status ModulePlayer2::Update()
 						if (Crouch_punch.current_frame == 0 && colliderErese3 == true) {
 							CrPunchCol = false;
 						}
-						colliderErese3 = true;
+						colliderErese3 = true;					
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP:
 
@@ -551,7 +551,8 @@ bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_j:
-				inputs.Push(IN_J);
+				inputs.Push(IN_J);	
+				position.x -= 35;
 				break;
 			case SDLK_k:
 				inputs.Push(IN_K);
@@ -613,8 +614,9 @@ void ModulePlayer2::internal_input(p2Qeue<ryu2_inputs>& inputs)
 	{
 		if (SDL_GetTicks() - punch_timer > PUNCH_TIME)
 		{
-			inputs.Push(IN_PUNCH_FINISH);
+			inputs.Push(IN_PUNCH_FINISH);			
 			punch_timer = 0;
+			position.x += 35;
 		}
 	}
 
