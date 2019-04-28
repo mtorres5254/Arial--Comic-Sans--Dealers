@@ -138,11 +138,8 @@ update_status ModuleUI:: Update()
 void ModuleUI::Round1() {
 	App->font->BlitText(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2, font_Rounds, "r1");
 	App->audio->PlayChunk(VoiceRound, 0);
-
 	App->audio->PlayChunk(Voice1, 0);
-	App->audio->PlayChunk(VoiceFight, 0);	
-
-
+	App->audio->PlayChunk(VoiceFight, 0);
 }
 void ModuleUI::Round2() {
 	App->font->BlitText(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, font_Rounds, "r2");
@@ -163,7 +160,7 @@ void ModuleUI::Counter() {
 		if (SDL_GetTicks() - timenow > 1000) {
 			time--;
 			Counter1--;
-			if (Counter1 > 0) {
+			if (Counter1 == 0) {
 				Counter1 = 9;
 				Counter2--;
 				if (Counter2 == 0) {
