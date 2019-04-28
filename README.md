@@ -131,13 +131,13 @@ This notice may not be removed or altered from any source distribution.
 * Game size: 9.81MB
 
 ## Version 0.4.5(WIP)
-*Camera follow players
-*Payer 2 animations and movements
-*Health bars and damage
-*Battle Rounds
-*Countdown timer
-*Win/Lose conditions and scene
-*New animations()
-*Music for each scene
-*
-*
+* Camera follow players
+* Payer 2 animations and movements
+* Health bars and damage
+* Battle Rounds
+* Countdown timer
+* Win/Lose conditions and scene
+* New animations()
+* Music for each scene
+* 
+* 
