@@ -16,7 +16,8 @@ ModuleFont::~ModuleFont()
 {}
 
 bool ModuleFont::Start() {
-	fonts[Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890")];
+	int i = Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890");
+	fonts[i];
 
 	return true;
 }
@@ -85,7 +86,7 @@ void ModuleFont::BlitText(int x, int y, int font_id, const char* text) const
 {
 	if (text == nullptr || font_id < 0 || font_id >= MAX_FONTS || App->font->fonts[font_id].graphic == nullptr)
 	{
-		LOG("Unable to render text with bmp font id %d", font_id);
+		//LOG("Unable to render text with bmp font id %d", font_id);
 		return;
 	}
 

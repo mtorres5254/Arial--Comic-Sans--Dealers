@@ -9,6 +9,7 @@
 #include "Module.h"
 #include "ModuleWelcomePage.h"
 #include "ModuleAudio.h"
+#include "ModuleUI.h"
 #include "ModuleLoseScene.h"
 #include "ModulePlayer2.h"
 
@@ -30,7 +31,7 @@ bool ModuleWelcomePage::Start()
 
 	graphics = App->textures->Load("Assets/Images/TitleScreen.png");
 	music = App->audio->LoadMusic("Assets/Sound/start_music.ogg");
-	App->audio->PlayMusic(music, 3000);
+	App->audio->PlayMusic(music, 300);
 	start_sound = App->audio->LoadChunk("Assets/Sound/start_sound.wav");
 	App->render->camera.x = App->render->camera.y = 0;
 	   
@@ -43,8 +44,6 @@ bool ModuleWelcomePage::CleanUp()
 
 	App->textures->Unload(graphics);
 	App->audio->UnloadMusic(music);
-	App->welcome_page->Disable();
-
 
 	return true;
 }
@@ -56,24 +55,8 @@ update_status ModuleWelcomePage::Update()
 
 
 	if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) {
-
-		App->fade->FadeToBlack(App->welcome_page, App->scene_ryu, 2.0f);
-		App->player->ResetPlayer();
-		App->player->Death.Reset();
-		App->player->DeathCount = 0;
-		App->player->victorycount = 0;
-
-		App->player2->ResetPlayer();
-		App->player2->Death.Reset();
-		App->player2->DeathCount = 0;
-		App->player2->victorycount = 0;
-		
+		App->fade->FadeToBlack(App->welcome_page, App->scene_ryu, 2.0f);		
 		App->audio->PlayChunk(start_sound, 0);
-		App->audio->StopMusic(2500);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_F9] == 1) {
-
-		App->fade->FadeToBlack(App->welcome_page, App->lose_scene, 2.0f);
 		App->audio->StopMusic(250);
 	}
 

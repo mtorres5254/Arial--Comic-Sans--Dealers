@@ -82,10 +82,10 @@ bool ModuleSceneKen::CleanUp()
 	
 	App->textures->Unload(graphics);
 	App->audio->UnloadMusic(music);
-	App->scene_ken->Disable();
 	App->player->Disable();
 	App->player2->Disable();
 	App->collision->Disable();
+	App->UI->Disable();
 
 	return true;
 }
