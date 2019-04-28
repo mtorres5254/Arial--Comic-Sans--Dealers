@@ -9,7 +9,7 @@
 
 #include "SDL_mixer/include/SDL_mixer.h"
 
-#define SECOND 1000 
+#define SECOND 1000
 
 struct SDL_Texture;
 

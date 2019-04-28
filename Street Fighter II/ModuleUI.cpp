@@ -103,6 +103,7 @@ update_status ModuleUI:: Update()
 
 	//Render
 	Counter();
+	Round1();
 
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - RedBar1.w - KObar.w / 2, 20, &RedBar1, false);
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - HealthBar1.w - KObar.w / 2, 20, &HealthBar1, false);
@@ -138,36 +139,34 @@ update_status ModuleUI:: Update()
 void ModuleUI::Round1() {
 	App->font->BlitText(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, font_Rounds, "r1");
 	App->audio->PlayChunk(VoiceRound, 0);
-	SDL_Delay(2000);
-	App->audio->PlayChunk(Voice1, 0);
-	SDL_Delay(2000);
-	App->audio->PlayChunk(VoiceFight, 0);
+	if (App->audio->IsPlaying == true) {
+		App->audio->PlayChunk(Voice1, 0);
+		if (App->audio->IsPlaying == true) {
+			App->audio->PlayChunk(VoiceFight, 0);
+		}
+	}
+	
 }
 void ModuleUI::Round2() {
 	App->font->BlitText(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, font_Rounds, "r2");
 	App->audio->PlayChunk(VoiceRound, 0);
-	SDL_Delay(2000);
 	App->audio->PlayChunk(Voice2, 0);
-	SDL_Delay(2000);
 	App->audio->PlayChunk(VoiceFight, 0);
 }
 void ModuleUI::Round3() {
 	App->font->BlitText(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, font_Rounds, "r3");
 	App->audio->PlayChunk(VoiceRound, 0);
-	SDL_Delay(2000);
 	App->audio->PlayChunk(Voice3, 0);
-	SDL_Delay(2000);
 	App->audio->PlayChunk(VoiceFight, 0);
 }
 
 void ModuleUI::Counter() {
 	if (timenow > 0)
 	{
-		if (SDL_GetTicks() - timenow > SECOND)
-		{
+		if (SDL_GetTicks() - timenow > 1000) {
 			time--;
 			Counter1--;
-			if (Counter1 < 0) {
+			if (Counter1 == 0) {
 				Counter1 = 9;
 				Counter2--;
 				if (Counter2 == 0) {

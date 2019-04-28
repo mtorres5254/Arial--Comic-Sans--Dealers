@@ -16,6 +16,8 @@
 
 
 
+
+
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModuleSceneRyu::ModuleSceneRyu()
@@ -72,6 +74,7 @@ bool ModuleSceneRyu::Start()
 	App->collision->Enable();
 	App->UI->Enable();
 
+
 	return true;
 }
 
@@ -113,8 +116,6 @@ update_status ModuleSceneRyu::Update()
 	App->render->Blit(graphics, 192, 104 + (int)foreground_pos, &(girl.GetCurrentFrame()), 0.92f); // girl animation
 
 	App->render->Blit(graphics, 0, 170, &ground);
-
-	// TODO 2: make so pressing SPACE the HONDA stage is loaded
 	
 	if (App->player->victorycount == 2) {		
 		App->fade->FadeToBlack(App->scene_ryu, App->lose_scene, 2.0f);
@@ -125,5 +126,15 @@ update_status ModuleSceneRyu::Update()
 		App->fade->FadeToBlack(App->scene_ryu, App->congrats_screen, 2.0f);
 		App->audio->StopMusic(250);
 	}
+
+	if (App->UI->time == 0) {
+		if (App->player->life > App->player2->life) {
+			App->player->victorycount++;
+		}
+		if (App->player->life < App->player2->life) {
+			App->player2->victorycount++;
+		}
+	}
+
 	return UPDATE_CONTINUE;
 }
