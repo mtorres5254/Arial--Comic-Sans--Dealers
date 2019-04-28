@@ -130,7 +130,7 @@ This notice may not be removed or altered from any source distribution.
 * Implement of crouch 
 * Game size: 9.81MB
 
-##Version 0.4.5(WIP)
+## Version 0.4.5(WIP)
 *Camera follow players
 *Payer 2 animations and movements
 *Health bars and damage
