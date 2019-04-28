@@ -103,7 +103,7 @@ update_status ModuleUI:: Update()
 
 	//Render
 	Counter();
-	Round1();
+	
 
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - RedBar1.w - KObar.w / 2, 20, &RedBar1, false);
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - HealthBar1.w - KObar.w / 2, 20, &HealthBar1, false);
@@ -139,12 +139,6 @@ update_status ModuleUI:: Update()
 void ModuleUI::Round1() {
 	App->font->BlitText(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, font_Rounds, "r1");
 	App->audio->PlayChunk(VoiceRound, 0);
-	if (App->audio->IsPlaying == true) {
-		App->audio->PlayChunk(Voice1, 0);
-		if (App->audio->IsPlaying == true) {
-			App->audio->PlayChunk(VoiceFight, 0);
-		}
-	}
 	
 }
 void ModuleUI::Round2() {

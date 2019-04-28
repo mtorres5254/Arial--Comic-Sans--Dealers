@@ -160,6 +160,21 @@ ModulePlayer::ModulePlayer()
 	jump_neutral_punch.loop = false;
 	jump_neutral_punch.speed = 0.175f;
 
+	//Jump forward punch
+
+	jump_forward_punch.PushBack({ 235,987,52,69 });
+	jump_forward_punch.PushBack({ 307,979,69,77 });
+	jump_forward_punch.PushBack({ 395,992,88,64 });
+	jump_forward_punch.loop = false;
+	jump_forward_punch.speed = 0.175f;
+
+	//Jump backward punch
+	jump_backward_punch.PushBack({ 27,1099,59,76 });
+	jump_backward_punch.PushBack({ 107,1102,55,73 });
+	jump_backward_punch.PushBack({ 182,1108,77,67 });
+	jump_backward_punch.loop = false;
+	jump_backward_punch.speed = 0.175f;
+
 	//Damage animation
 
 	damage.PushBack({ 30,2101,68,79 });
@@ -188,6 +203,8 @@ ModulePlayer::ModulePlayer()
 	victory1.PushBack({ 380,2468,54,96 });
 	victory1.loop = false;
 	victory1.speed = 0.1f;
+
+	
 
 }
 
@@ -599,10 +616,77 @@ update_status ModulePlayer::Update()
 						}
 						break;
 					case ST_PUNCH_FORWARD_JUMP:
+						
+						if (position.x < 825)
+						{
+							position.x += speedX * 1.5;
+							if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving == false)
+							{
+								if (App->render->camera.x > -1004)
+								{
+									App->render->camera.x -= speedX * 2;
+								}
+							}
+						}
+						current_animation = &jump_forward_punch;
+						if (JumpCount == 1) {
+							if (position.y == 220) {
+								JumpMax = false;
+								JumpMin = true;
+							}
+							if (position.y <= 110) {
+								JumpMin = false;
+								JumpMax = true;
+							}
+
+							if (JumpMin == true) {
+								falling.Reset();
+								position.y -= (speedY * 2);
+								
+							}
+							if (JumpMax == true) {
+								jump_forward.Reset();
+								position.y += (speedY * 3.2);
+							
+							}
+						}
 
 						break;
 					case ST_PUNCH_BACKWARD_JUMP:
+						current_animation = &jump_backward_punch;
+						if (position.x > 0)
+						{
+							position.x -= (0.6 *speedX);
+							if (-(position.x * 2) >= App->render->camera.x - 5)
+							{
+								if (App->render->camera.x < 0)
+								{
+									App->render->camera.x += speedX * 2;
+								}
+							}
+						}
+						
+						if (JumpCount == 1) {
+							if (position.y == 220) {
+								JumpMax = false;
+								JumpMin = true;
+							}
+							if (position.y <= 110) {
+								JumpMin = false;
+								JumpMax = true;
+							}
 
+							if (JumpMin == true) {
+								falling.Reset();
+								position.y -= (speedY * 2);
+								
+							}
+							if (JumpMax == true) {
+								jump_backwards.Reset();
+								position.y += (speedY * 3.2);
+								
+							}
+						}
 						break;
 					case ST_KICK_STANDING:
 						current_animation = &kick;
