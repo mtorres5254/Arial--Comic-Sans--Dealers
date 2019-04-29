@@ -78,9 +78,9 @@ bool ModuleUI::Start()
 	VoiceFight = App->audio->LoadChunk("Assets/Sound/Fight.wav");
 
 	timenow = SDL_GetTicks();
-	time = 20;
-	Counter1 = 0; //unit
-	Counter2 = 2; //decimal
+	time = 99;
+	Counter1 = 9; //unit
+	Counter2 = 9; //decimal
 	
 	return ret;
 }
