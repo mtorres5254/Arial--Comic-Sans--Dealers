@@ -160,12 +160,13 @@ void ModuleUI::Counter() {
 		if (SDL_GetTicks() - timenow > 1000) {
 			time--;
 			Counter1--;
-			if (Counter1 < 0) { //if ==0 jump from x1 to x9 (21 to 19 for example)
+			if (Counter1 == -1) { //if ==0 jump from x1 to x9 (21 to 19 for example)
 				Counter1 = 9;
 				Counter2--;
 				if (Counter2 == 0) {
 					Counter2 = 0;
 				}
+
 			}		
 			timenow = SDL_GetTicks();		
 		}
