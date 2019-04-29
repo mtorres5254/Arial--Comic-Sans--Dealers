@@ -120,13 +120,11 @@ update_status ModuleUI:: Update()
 	if (App->player2->victorycount == 1 || App->player2->victorycount == 2) {
 		App->render->Blit(graphics1, (SCREEN_WIDTH / 2)-153-(KObar.w/2)-20, 20, &RoundBar1, false);
 		victorycount = 1;
-		
 	}
 
 	if (App->player->victorycount == 1 || App->player->victorycount == 2) {
 	
-		App->render->Blit(graphics2, (SCREEN_WIDTH / 2) + 153 + (KObar.w / 2) , 20, &RoundBar2, false);
-
+		App->render->Blit(graphics2, (SCREEN_WIDTH / 2) + 153 + (KObar.w / 2) , 20, &RoundBar2, false);		
 		if(App->player->DeathCount==0)
 		victorycount1 = 1;
 	}
@@ -157,12 +155,14 @@ void ModuleUI::Round3() {
 void ModuleUI::Counter() {
 	if (timenow > 0)
 	{
-		if (SDL_GetTicks() - timenow > 1000) {
+		if (SDL_GetTicks() - timenow > 1000) {			
 			time--;
+			LOG("%d", time);
 			Counter1--;
 			if (Counter1 == -1) { //if ==0 jump from x1 to x9 (21 to 19 for example)
 				Counter1 = 9;
 				Counter2--;
+				
 				if (Counter2 == 0) {
 					Counter2 = 0;
 				}
