@@ -136,9 +136,8 @@ update_status ModuleSceneRyu::Update()
 		}
 		else
 		{
-			App->UI->time = 20;
-			App->UI->Counter1 = 0;
-			App->UI->Counter2 = 2;
+			App->player->victorycount++;
+			App->player2->victorycount++;
 		}
 	}
 
