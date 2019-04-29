@@ -570,7 +570,13 @@ update_status ModulePlayer::Update()
 					case ST_PUNCH_STANDING:
 						current_animation = &punch;
 						if (punchCol == false) {
-							punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
+							if (position.x < App->player2->position.x) {
+								punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
+							}
+							if (position.x > App->player2->position.x) {
+								punchcollider = App->collision->AddCollider({ position.x -21, position.y - 79, 51, 13 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
+							}
+							
 							punchCol = true;
 						}
 						else if (punchCol == true) {
@@ -707,7 +713,12 @@ update_status ModulePlayer::Update()
 							HadoukenCount++;
 						}
 						if (HadoukenCount == 35 && ActiveHadouken == 0) {
-							App->particle->AddParticle(App->particle->hadouken, position.x + 65, position.y - 70, COLLIDER_PLAYER_ATTACK, 0);
+							if (position.x < App->player2->position.x) {
+								App->particle->AddParticle(App->particle->hadouken, position.x + 65, position.y - 70, COLLIDER_PLAYER_ATTACK, 0);
+							}
+							if (position.x > App->player2->position.x) {
+								App->particle->AddParticle(App->particle->hadoukenSym, position.x - 10, position.y - 70, COLLIDER_PLAYER_ATTACK, 0);
+							}
 							App->audio->PlayChunk(App->particle->hadouken.sound, 0);
 							HadoukenCount = 0;
 							ActiveHadouken = 1;
@@ -722,8 +733,12 @@ update_status ModulePlayer::Update()
 				// Draw everything --------------------------------------
 
 				SDL_Rect r = current_animation->GetCurrentFrame();
-				App->render->Blit(graphics, position.x, position.y - r.h, &r);
-
+				if (position.x < App->player2->position.x) {
+					App->render->Blit(graphics, position.x, position.y - r.h, &r);
+				}
+				if (position.x > App->player2->position.x) {
+					App->render->BlitSym(graphics, position.x, position.y - r.h, &r);
+				}
 				//Update collider position to player position
 				if (state == ST_CROUCH) {
 					colliderplayer->SetPos(position.x + 7, position.y - 65);
