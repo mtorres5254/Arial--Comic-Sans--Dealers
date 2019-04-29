@@ -134,6 +134,12 @@ update_status ModuleSceneRyu::Update()
 		if (App->player->life < App->player2->life) {
 			App->player2->victorycount++;
 		}
+		else
+		{
+			App->UI->time = 20;
+			App->UI->Counter1 = 0;
+			App->UI->Counter2 = 2;
+		}
 	}
 
 	return UPDATE_CONTINUE;
