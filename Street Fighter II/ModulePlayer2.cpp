@@ -240,11 +240,11 @@ bool ModulePlayer2::CleanUp()
 
 	return true;
 }
-
-
 // Update: draw background
-update_status ModulePlayer2::Update()
-{
+update_status ModulePlayer2::Update() {
+
+	ColliderErease();
+
 	Animation* current_animation = &idle;
 	p2Qeue<ryu2_inputs> inputs;
 	ryu2_states current_state = ST_UNKNOWN;
@@ -254,13 +254,7 @@ update_status ModulePlayer2::Update()
 		speedY = 1;
 	}
 
-	
-	if (HaveCollider == false && GodMode == false && state != ST_CROUCH) {
-		colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
-		HaveCollider = true;
-	}
-
-	if (App->input->keyboard[SDL_SCANCODE_F2] == KEY_STATE::KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_F2] == KEY_STATE::KEY_DOWN) { //Debug: Godmode
 		if (GodMode == false) {
 			App->collision->DeleteCollider(colliderplayer);
 
@@ -273,7 +267,7 @@ update_status ModulePlayer2::Update()
 		}
 	}
 
-	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN) { //Treu-re abans d'entregar
+	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_STATE::KEY_DOWN) { //Debug: Player Insta-win
 		life = 0;
 	}
 
@@ -377,6 +371,7 @@ update_status ModulePlayer2::Update()
 					switch (state)
 					{
 					case ST_IDLE:
+						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
 						current_animation = &idle;
 						forward.Reset();
 						backward.Reset();
@@ -389,6 +384,7 @@ update_status ModulePlayer2::Update()
 						ActiveDeath = 0;
 						break;
 					case ST_WALK_FORWARD:
+						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
 						current_animation = &backward;
 						if (position.x < 825 && App->plyDistance<SCREEN_WIDTH)
 						{
@@ -409,6 +405,7 @@ update_status ModulePlayer2::Update()
 						ActiveHadouken = 0;
 						break;
 					case ST_WALK_BACKWARD:
+						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
 						if (moveb == true) {
 							current_animation = &forward;
 							if (position.x > 0)
@@ -435,6 +432,7 @@ update_status ModulePlayer2::Update()
 						}
 						break;
 					case ST_JUMP_NEUTRAL:
+						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
 						JumpCount = 1;
 						if (JumpCount == 1) {
 							if (position.y == 220) {
@@ -460,6 +458,7 @@ update_status ModulePlayer2::Update()
 						}
 						break;
 					case ST_JUMP_FORWARD:
+						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
 						if (position.x < 825)
 						{
 							position.x += speedX;
@@ -495,6 +494,7 @@ update_status ModulePlayer2::Update()
 						}
 						break;
 					case ST_JUMP_BACKWARD:
+						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
 						if (position.x > 0)
 						{
 							position.x -= (0.6 *speedX);
@@ -530,52 +530,26 @@ update_status ModulePlayer2::Update()
 						}
 						break;
 					case ST_CROUCH:
-						if (HaveCollider == true) {
-							App->collision->DeleteCollider(colliderplayer);
-							HaveCollider = false;
-						}
-						colliderplayer = App->collision->AddCollider({ position.x, position.y + 100, 45, 65 }, COLLIDER_ENEMY, App->player);
+						crouchplayer = App->collision->AddCollider({ position.x, position.y + 100, 45, 65 }, COLLIDER_ENEMY, App->player2);
 						current_animation = &crouch;
-						App->collision->DeleteCollider(colliderplayer);
 						break;
 					case ST_PUNCH_STANDING:					
 						current_animation = &punch;
-						if (punchCol == false) {
 							if (position.x > App->player->position.x) {
 								punchcollider = App->collision->AddCollider({ position.x - 21, position.y - 79, 51, 13 }, COLLIDER_ENEMY_SHOT, App->player2, 25);
 							}
 							if (position.x < App->player->position.x) {
 								punchcollider = App->collision->AddCollider({ position.x + 41, position.y - 79, 51, 13 }, COLLIDER_ENEMY_SHOT, App->player2, 25);
 							}
-							
-							punchCol = true;
-						}
-						else if (punchCol == true) {
-							App->collision->DeleteCollider(punchcollider);
-						}
-						if (punch.current_frame == 0 && colliderErese == true) {
-							punchCol = false;
-						}
-						colliderErese = true;
 						break;
 					case ST_PUNCH_CROUCH:
 						current_animation = &Crouch_punch;					
-						if (CrPunchCol == false) {
-							if (position.x > App->player->position.x) {
-								crouchpunchcollider = App->collision->AddCollider({ position.x - 28, position.y - 49, 48, 10 }, COLLIDER_ENEMY_SHOT, App->player2, 25);
-							}
-							if (position.x < App->player->position.x) {
-								crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_ENEMY_SHOT, App->player2, 25);
-							}
-							CrPunchCol = true;
+						if (position.x > App->player->position.x) {
+							crouchpunchcollider = App->collision->AddCollider({ position.x - 28, position.y - 49, 48, 10 }, COLLIDER_ENEMY_SHOT, App->player2, 25);
 						}
-						else if (CrPunchCol == true) {
-							App->collision->DeleteCollider(crouchpunchcollider);
-						}
-						if (Crouch_punch.current_frame == 0 && colliderErese3 == true) {
-							CrPunchCol = false;
-						}
-						colliderErese3 = true;					
+						if (position.x < App->player->position.x) {
+							crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_ENEMY_SHOT, App->player2, 25);
+						}				
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP:
 						current_animation = &jump_neutral_punch;
@@ -672,14 +646,7 @@ update_status ModulePlayer2::Update()
 						break;
 					case ST_KICK_STANDING:
 						current_animation = &kick;	
-						if (kickCol == false) {
-							kickcollider = App->collision->AddCollider({ position.x - 45, position.y - 92, 70, 27 }, COLLIDER_ENEMY_SHOT, App->player2, 25);
-							kickCol = true;
-						}
-						if (kickCol == true && kick.current_frame != 0) {
-							App->collision->DeleteCollider(kickcollider);
-							kickCol = false;
-						}
+						kickcollider = App->collision->AddCollider({ position.x - 45, position.y - 92, 70, 27 }, COLLIDER_ENEMY_SHOT, App->player2, 25);
 						break;
 					case ST_HADOUKEN:
 						current_animation = &hadouken_pose;
@@ -891,5 +858,13 @@ void ModulePlayer2::ResetPlayer() {
 		App->UI->Counter2 = 9;
 		App->player->ResetPlayer();
 	}
+}
+
+void ModulePlayer2::ColliderErease() {
+	App->collision->DeleteCollider(colliderplayer);
+	App->collision->DeleteCollider(crouchplayer);
+	App->collision->DeleteCollider(kickcollider);
+	App->collision->DeleteCollider(punchcollider);
+	App->collision->DeleteCollider(crouchpunchcollider);
 }
 

@@ -30,6 +30,7 @@ public:
 	bool CleanUp();
 	void OnCollision(Collider*, Collider*);
 	void ResetPlayer();
+	void ColliderErease();
 
 public:
 
@@ -67,13 +68,6 @@ public:
 	bool moveb = true;
 	bool death = false;
 	bool GodMode = false;
-	bool punchCol = false;
-	bool CrPunchCol = false;
-	bool kickCol = false;
-	bool HaveCollider = true;
-	bool colliderErese = false;
-	bool colliderErese2 = false;
-	bool colliderErese3 = false;
 	int acumvictory = 0;
 	int acumdamage = 0;
 
@@ -136,6 +130,7 @@ private:
 	Collider* punchcollider;
 	Collider* crouchpunchcollider;
 	Collider* kickcollider;
+	Collider* crouchplayer;
 
 	ryu2_states state;	
 
