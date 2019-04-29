@@ -865,6 +865,9 @@ void ModulePlayer2::ResetPlayer() {
 	position.x = 300; //Returns to its original position
 	if (App->player->position.x != 100 || App->player->life != 1000) {
 		ActiveDeath = 0;
+		App->UI->time = 99;
+		App->UI->Counter1 = 9;
+		App->UI->Counter2 = 9;
 		App->player->ResetPlayer();
 	}
 }

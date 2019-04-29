@@ -336,6 +336,9 @@ update_status ModulePlayer::Update()
 						
 						App->audio->PlayChunk(deathSound, 0);
 						victorycount++;
+						App->UI->time = 99;
+						App->UI->Counter1 = 9;
+						App->UI->Counter2 = 9;
 					}
 					if (DeathCount < 80)
 						DeathCount++;
