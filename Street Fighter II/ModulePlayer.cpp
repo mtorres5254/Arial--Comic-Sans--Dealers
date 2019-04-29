@@ -590,7 +590,13 @@ update_status ModulePlayer::Update()
 					case ST_PUNCH_CROUCH:
 						current_animation = &Crouch_punch;
 						if (CrPunchCol == false) {
-							crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
+							if (position.x < App->player2->position.x) {
+								crouchpunchcollider = App->collision->AddCollider({ position.x + 48, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
+							}
+							if (position.x > App->player2->position.x) {
+								crouchpunchcollider = App->collision->AddCollider({ position.x - 28, position.y - 49, 48, 10 }, COLLIDER_PLAYER_ATTACK, App->player, 25);
+							}
+							
 							CrPunchCol = true;
 						}
 						else if (CrPunchCol == true) {
