@@ -13,6 +13,7 @@
 #include "ModuleCollision.h"
 #include "ModuleUI.h"
 #include "ModuleLoseScene.h"
+#include "ModuleChunLi.h"
 
 
 
@@ -69,7 +70,7 @@ bool ModuleSceneRyu::Start()
 	music = App->audio->LoadMusic("Assets/Sound/ken.ogg");
 	App->audio->PlayMusic(music, 5000);
 	//
-	App->player->Enable();
+	App->chunli->Enable();
 	App->player2->Enable();
 	App->collision->Enable();
 	App->UI->Enable();
@@ -88,6 +89,7 @@ bool ModuleSceneRyu::CleanUp()
 	//
 	App->player->Disable();
 	App->player2->Disable();
+	App->chunli->Disable();
 	App->collision->Disable();
 	App->UI->Disable();
 

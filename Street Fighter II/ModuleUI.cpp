@@ -8,6 +8,7 @@
 #include "ModulePlayer2.h"
 #include "ModuleUI.h"
 #include "ModuleSceneRyu.h"
+#include "ModuleChunLi.h"
 
 
 ModuleUI::ModuleUI() {
@@ -98,7 +99,7 @@ bool ModuleUI::CleanUp()
 update_status ModuleUI:: Update()
 {
 	//Logic
-	HealthBar1.w = App->player->healthbar;
+	HealthBar1.w = App->chunli->healthbar;
 	HealthBar2.w = App->player2->healthbar;
 
 	//Render

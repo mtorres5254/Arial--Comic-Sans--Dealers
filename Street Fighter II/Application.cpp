@@ -17,6 +17,7 @@
 #include "ModuleLoseScene.h"
 #include "ModuleSceneRyu.h"
 #include "ModuleWinScene.h"
+#include "ModuleChunLi.h"
 #include "ModuleFont.h"
 
 Application::Application()
@@ -32,13 +33,14 @@ Application::Application()
 	modules[8] = scene_ryu = new ModuleSceneRyu();
 	modules[9] = player = new ModulePlayer();	
 	modules[10] = player2 = new ModulePlayer2();
-	modules[11] = fade = new ModuleFadeToBlack();
-	modules[12] = welcome_page = new ModuleWelcomePage();
-	modules[13] = particle = new ModuleParticles();
-	modules[14] = collision = new ModuleCollision();
-	modules[15] = UI = new ModuleUI();
-	modules[16] = lose_scene = new ModuleLoseScene();
-	modules[17] = font = new ModuleFont();
+	modules[11] = chunli = new ModuleChunLi();
+	modules[12] = fade = new ModuleFadeToBlack();
+	modules[13] = welcome_page = new ModuleWelcomePage();
+	modules[14] = particle = new ModuleParticles();
+	modules[15] = collision = new ModuleCollision();
+	modules[16] = UI = new ModuleUI();
+	modules[17] = lose_scene = new ModuleLoseScene();
+	modules[18] = font = new ModuleFont();
 	
 }	
 
@@ -55,6 +57,7 @@ bool Application::Init()
 	// Player will be enabled on the first update of a new scene
 	player->Disable();
 	player2->Disable();
+	chunli->Disable();
 	// Disable the map that you do not start with
 	scene_honda->Disable();
 	scene_ken->Disable();

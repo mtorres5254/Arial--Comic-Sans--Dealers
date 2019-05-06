@@ -7,6 +7,7 @@
 #include "ModulePlayer2.h"
 #include "ModuleParticles.h"
 #include "ModuleUI.h"
+#include "ModuleChunLi.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
@@ -851,12 +852,12 @@ void ModulePlayer2::internal_input(p2Qeue<ryu2_inputs>& inputs)
 void ModulePlayer2::ResetPlayer() {
 	life = 1000;
 	position.x = 300; //Returns to its original position
-	if (App->player->position.x != 100 || App->player->life != 1000) {
+	if (App->chunli->position.x != 100 || App->chunli->life != 1000) {
 		ActiveDeath = 0;
 		App->UI->time = 99;
 		App->UI->Counter1 = 9;
 		App->UI->Counter2 = 9;
-		App->player->ResetPlayer();
+		App->chunli->ResetPlayer();
 	}
 }
 

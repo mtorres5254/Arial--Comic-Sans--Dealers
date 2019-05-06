@@ -12,7 +12,7 @@
 #include "ModulePlayer2.h"
 #include "ModuleCollision.h"
 #include "ModuleUI.h"
-
+#include "ModuleChunLi.h"
 
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -82,6 +82,7 @@ bool ModuleSceneKen::CleanUp()
 	App->audio->UnloadMusic(music);
 	App->player->Disable();
 	App->player2->Disable();
+	App->chunli->Disable();
 	App->collision->Disable();
 	App->UI->Disable();
 
