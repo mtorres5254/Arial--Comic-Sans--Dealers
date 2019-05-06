@@ -25,6 +25,82 @@ ModuleChunLi::ModuleChunLi()
 	idle.PushBack({ 436, 436, 72, 87 });
 	idle.PushBack({ 363, 437, 72, 86 });
 	idle.speed = 0.1f;
+
+	//Forward
+	forward.PushBack({ 788, 341, 78,84 });
+	forward.PushBack({ 867, 338, 71, 87});
+	forward.PushBack({ 939, 337, 63, 87});
+	forward.PushBack({ 0, 434, 62, 89});
+	forward.PushBack({ 63, 435, 67, 88});
+	forward.PushBack({ 131, 436, 76, 87});
+	forward.PushBack({ 208, 437, 81, 86});
+	forward.PushBack({ 131, 436, 76, 87 });
+	forward.PushBack({ 63, 435, 67, 88 });
+	forward.PushBack({ 0, 434, 62, 89 });
+	forward.PushBack({ 939, 337, 63, 87 });
+	forward.PushBack({ 867, 338, 71, 87 });
+	forward.speed = 0.2f;
+	
+	//Backward
+
+	backward.PushBack({ 652,437, 73, 86});
+	backward.PushBack({ 726, 434, 63, 89 });
+	backward.PushBack({ 790, 433, 60, 90});
+	backward.PushBack({ 851, 432, 63, 91});
+	backward.PushBack({ 915, 433, 64, 90});
+	backward.PushBack({ 0, 531, 64, 89});
+	backward.PushBack({ 66, 532, 72, 88});
+	backward.PushBack({ 0, 531, 64, 89 });
+	backward.PushBack({ 915, 433, 64, 90 });
+	backward.PushBack({ 851, 432, 63, 91 });
+	backward.PushBack({ 790, 433, 60, 90 });
+	backward.PushBack({ 726, 434, 63, 89 });
+	backward.speed = 0.15f;
+
+	//Crouch
+
+	crouch.PushBack({ 934,742 , 74, 81});
+	crouch.PushBack({ 0, 833, 73, 72});
+	crouch.PushBack({ 74, 839, 72, 66});
+	crouch.PushBack({ 147, 839, 72, 65});
+	crouch.speed = 0.3f;
+	crouch.loop = false;
+
+	//Jump 
+
+	jump_neutral.PushBack({ 1756, 1, 47,110 });
+	jump_neutral.PushBack({ 1804, 27, 50, 84});
+	jump_neutral.PushBack({ 1855, 36, 52, 75});
+	jump_neutral.PushBack({ 1908, 46, 57, 65});
+	jump_neutral.speed = 0.2f;
+
+	//jump forward
+	jump_forward.PushBack({ 925,940,50,84 });
+	jump_forward.PushBack({ 1024,30,88,81 });
+	jump_forward.PushBack({ 1113,63,121,48 });
+	jump_forward.PushBack({ 1235,23,109,88 });
+	jump_forward.PushBack({ 1345,7,52,104 });
+	jump_forward.PushBack({ 1398,30,110,81 });
+	jump_forward.PushBack({ 1509,45,119,66 });
+	jump_forward.PushBack({ 1629,35,95,76 });	
+	jump_forward.speed = 0.1f;
+
+	//jump backward
+
+	jump_backwards.PushBack({ 925,940,50,84 });
+	jump_backwards.PushBack({ 1629,35,95,76 });
+	jump_backwards.PushBack({ 1509,45,119,66 });
+	jump_backwards.PushBack({ 1345,7,52,104 });
+	jump_backwards.PushBack({ 1235,23,109,88 });
+	jump_backwards.PushBack({ 1113,63,121,48 });
+	jump_backwards.PushBack({ 1024,30,88,81 });
+	jump_backwards.speed = 0.1f;
+		
+		
+		
+		
+
+
 }
 
 ModuleChunLi::~ModuleChunLi()
@@ -35,7 +111,7 @@ bool ModuleChunLi::Start()
 {
 	LOG("Loading player textures");
 	bool ret = true;
-	graphics = App->textures->Load("Assets/Images/Chun-Li1.png"); // arcade version
+	graphics = App->textures->Load("Assets/Images/ChunLi.png"); // arcade version
 	position.x = 100; //Returns to its original position
 
 	//Sounds
