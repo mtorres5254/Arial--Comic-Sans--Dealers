@@ -85,6 +85,9 @@ ModuleChunLi::ModuleChunLi()
 	jump_neutral.loop = true;
 
 	//jump forward
+
+
+	jump_forward.PushBack({ 1756, 1, 47, 110 });
 	jump_forward.PushBack({ 925,940,50,84 });
 	jump_forward.PushBack({ 1024,30,88,81 });
 	jump_forward.PushBack({ 1113,63,121,48 });
@@ -92,19 +95,25 @@ ModuleChunLi::ModuleChunLi()
 	jump_forward.PushBack({ 1345,7,52,104 });
 	jump_forward.PushBack({ 1398,30,110,81 });
 	jump_forward.PushBack({ 1509,45,119,66 });
-	jump_forward.PushBack({ 1629,35,95,76 });	
-	jump_forward.speed = 0.1f;
+	jump_forward.PushBack({ 1629,35,95,76 });
+	jump_forward.PushBack({ 1756, 1, 47, 110 });
+	jump_forward.speed = 0.19f;
+	jump_forward.loop = true;
 
 	//jump backward
 
+	jump_backwards.PushBack({ 1756, 1, 47, 110 });
 	jump_backwards.PushBack({ 925,940,50,84 });
 	jump_backwards.PushBack({ 1629,35,95,76 });
 	jump_backwards.PushBack({ 1509,45,119,66 });
+	jump_backwards.PushBack({ 1398,30,110,81 });
 	jump_backwards.PushBack({ 1345,7,52,104 });
 	jump_backwards.PushBack({ 1235,23,109,88 });
 	jump_backwards.PushBack({ 1113,63,121,48 });
 	jump_backwards.PushBack({ 1024,30,88,81 });
-	jump_backwards.speed = 0.1f;
+	jump_backwards.PushBack({ 1756, 1, 47, 110 });
+	jump_backwards.speed = 0.19f;
+	jump_backwards.loop = true;
 	
 		
 	//Punch animation
@@ -231,6 +240,8 @@ update_status ModuleChunLi::Update()
 						current_animation = &idle;
 						crouch.Reset();
 						jump_neutral.Reset();
+						jump_forward.Reset();
+						jump_backwards.Reset();
 
 						break;
 
@@ -246,22 +257,20 @@ update_status ModuleChunLi::Update()
 						position.x--;
 
 						break;
-					case ST_JUMP_NEUTRAL2:
-						
+					case ST_JUMP_NEUTRAL2:						
 						
 
-								current_animation = &jump_neutral;
-								if (jump_neutral.current_frame < 2) {
-									position.y -= 11;
-								}
-								if (jump_neutral.current_frame > 2 && jump_neutral.current_frame <= 4) {
-									position.y -= 2;
-								}
+						current_animation = &jump_neutral;
+						if (jump_neutral.current_frame < 2) {
+							position.y -= 11;
+						}
+						if (jump_neutral.current_frame > 2 && jump_neutral.current_frame <= 4) {
+							position.y -= 2;
+						}
 								
-								if (jump_neutral.current_frame > 5 && position.y < 220) {
-									position.y += 8;
-								}			
-								
+						if (jump_neutral.current_frame > 5 && position.y < 220) {
+							position.y += 8;
+						}								
 								
 
 						break;
@@ -269,12 +278,53 @@ update_status ModuleChunLi::Update()
 
 						current_animation = &jump_forward;
 
+						
+						if (jump_forward.current_frame < 3) {
+							position.y -= 8;
+							position.x += 3;
+						}
+
+
+						if (jump_forward.current_frame >= 3 && jump_forward.current_frame < 5) {
+							position.y -= 5;
+							position.x += 3;
+						}
+						if (jump_forward.current_frame >= 5 && jump_forward.current_frame <= 8) {
+							position.y += 7;
+							position.x += 3;
+						}
+						
+						if (jump_forward.current_frame > 8 && position.y < 220) {
+							position.y += 8;
+							position.x += 3;
+						}
 
 						break;
 					case ST_JUMP_BACKWARD2:
 
 
 						current_animation = &jump_backwards;
+
+
+						if (jump_backwards.current_frame < 3) {
+							position.y -= 8;
+							position.x -= 3;
+						}
+
+
+						if (jump_backwards.current_frame >= 3 && jump_backwards.current_frame < 5) {
+							position.y -= 5;
+							position.x -= 3;
+						}
+						if (jump_backwards.current_frame >= 5 && jump_backwards.current_frame <= 8) {
+							position.y += 7;
+							position.x -= 3;
+						}
+
+						if (jump_backwards.current_frame > 8 && position.y < 220) {
+							position.y += 8;
+							position.x -= 3;
+						}
 
 						break;
 					case ST_CROUCH2:
