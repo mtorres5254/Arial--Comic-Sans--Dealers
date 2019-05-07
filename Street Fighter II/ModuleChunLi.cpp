@@ -81,8 +81,8 @@ ModuleChunLi::ModuleChunLi()
 	jump_neutral.PushBack({ 1804, 27, 50, 84 });
 	jump_neutral.PushBack({ 1756, 1, 47, 110 });
 	
-	jump_neutral.speed = 0.2f;
-	jump_neutral.loop = false;
+	jump_neutral.speed = 0.175f;
+	jump_neutral.loop = true;
 
 	//jump forward
 	jump_forward.PushBack({ 925,940,50,84 });
@@ -248,20 +248,21 @@ update_status ModuleChunLi::Update()
 						break;
 					case ST_JUMP_NEUTRAL2:
 						
-						current_animation = &jump_neutral;
-						if (jump_neutral.current_frame <2) {
-							position.y-=12;
-						}
-						if (jump_neutral.current_frame > 2 && jump_neutral.current_frame < 4) {
-							position.y -= 3;
-						}
-						if (jump_neutral.current_frame == 4) {
-							position.y -= 3;
-						}
 						
-						if (jump_neutral.current_frame > 5) {
-							position.y += 7;
-						}
+
+								current_animation = &jump_neutral;
+								if (jump_neutral.current_frame < 2) {
+									position.y -= 11;
+								}
+								if (jump_neutral.current_frame > 2 && jump_neutral.current_frame <= 4) {
+									position.y -= 2;
+								}
+								
+								if (jump_neutral.current_frame > 5 && position.y < 220) {
+									position.y += 8;
+								}			
+								
+								
 
 						break;
 					case ST_JUMP_FORWARD2:

@@ -109,6 +109,7 @@ public:
 	int jumpHeight = 0;
 	int speed = 1;
 	bool damage_received = false;
+	bool jumpactive = 0;
 
 	int life = 1000;
 	int healthbar;
