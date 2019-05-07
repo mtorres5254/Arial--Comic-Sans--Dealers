@@ -11,10 +11,6 @@
 #include "SDL\include\SDL.h"
 #include "SDL_mixer/include/SDL_mixer.h"
 
-#define JUMP_TIME 1500
-#define PUNCH_TIME 150
-#define KICK_TIME 400
-#define HADOUKEN_TIME 1500
 
 
 struct SDL_Texture;

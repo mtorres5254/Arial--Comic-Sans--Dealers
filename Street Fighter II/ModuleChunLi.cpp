@@ -10,13 +10,16 @@
 #include "ModuleAudio.h"
 #include "ModuleCollision.h"
 #include "ModuleUI.h"
+#include "p2Qeue.h"
+#include "Application.h"
+
 
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModuleChunLi::ModuleChunLi()
 {
-	position.x = 100;
+	position.x = 500;
 	position.y = 220;
 
 	// idle animation (arcade sprite sheet)
@@ -68,11 +71,18 @@ ModuleChunLi::ModuleChunLi()
 
 	//Jump 
 
-	jump_neutral.PushBack({ 1756, 1, 47,110 });
+	jump_neutral.PushBack({ 1756, 1, 47, 110 });
 	jump_neutral.PushBack({ 1804, 27, 50, 84});
 	jump_neutral.PushBack({ 1855, 36, 52, 75});
 	jump_neutral.PushBack({ 1908, 46, 57, 65});
+	jump_neutral.PushBack({ 1908, 46, 57, 65 });
+	jump_neutral.PushBack({ 1908, 46, 57, 65});
+	jump_neutral.PushBack({ 1855, 36, 52, 75 });
+	jump_neutral.PushBack({ 1804, 27, 50, 84 });
+	jump_neutral.PushBack({ 1756, 1, 47, 110 });
+	
 	jump_neutral.speed = 0.2f;
+	jump_neutral.loop = false;
 
 	//jump forward
 	jump_forward.PushBack({ 925,940,50,84 });
@@ -95,6 +105,7 @@ ModuleChunLi::ModuleChunLi()
 	jump_backwards.PushBack({ 1113,63,121,48 });
 	jump_backwards.PushBack({ 1024,30,88,81 });
 	jump_backwards.speed = 0.1f;
+	
 		
 	//Punch animation
 
@@ -155,7 +166,7 @@ bool ModuleChunLi::Start()
 	LOG("Loading player textures");
 	bool ret = true;
 	graphics = App->textures->Load("Assets/Images/ChunLi.png"); // arcade version
-	position.x = 100; //Returns to its original position
+	position.x = 500; //Returns to its original position
 
 	//Sounds
 	
@@ -187,8 +198,8 @@ bool ModuleChunLi::CleanUp()
 update_status ModuleChunLi::Update()
 {
 	Animation* current_animation = &idle;
-	p2Qeue<chunli_inputs> inputs;
-	chunli_states current_state = ST_UNKNOWN;
+	p2Qeue<ryu_inputs2> inputs;
+	ryu_states2 current_state = ST_UNKNOWN2;
 
 	if (position.y == 220) {
 		speedX = 1;
@@ -207,176 +218,97 @@ update_status ModuleChunLi::Update()
 
 			if (state != current_state)
 			{
+				//lifecondition(current_animation);			
+				
 
-				healthbar = life * 0.153;
-
-
-				if (life < 0) {
-					life = 0;
-				}
-
-				if (App->player2->life == 0 && App->UI->victorycount == 0) {
-
-					if (acumvictory < 75) {
-						current_animation = &victory;
-						acumvictory++;
-					}
-					if (acumvictory == 75) {
-						victory.Reset();
-						acumvictory = 0;
-					}
-				}
-				if (App->player2->life == 0 && App->UI->victorycount == 1) {
-
-					if (acumvictory < 75) {
-						current_animation = &victory1;
-						acumvictory++;
-					}
-					if (acumvictory == 75) {
-						victory1.Reset();
-						acumvictory = 0;
-					}
-				}
-
-
-				if (life == 0)
-				{
-					current_animation = &Death;
-
-					if (position.y < 220) {
-						position.y += speedY;
-					}
-
-					if (DeathCount == 1) {
-
-
-						victorycount++;
-						App->UI->time = 99;
-						App->UI->Counter1 = 9;
-						App->UI->Counter2 = 9;
-					}
-					if (DeathCount < 80)
-						DeathCount++;
-					if (DeathCount == 80 && ActiveDeath == 0) {
-						DeathCount = 0;
-						Death.Reset();
-						App->render->camera.x = 0;
-
-						ActiveDeath = 1;
-						ResetPlayer();
-
-					}
-
-					//ResetPlayer();
-				}
-
-
-
-
-				if (damage_received == true) {
-
-
-					if (life == 0) {
-						damage_received = false;
-					}
-					if (acumdamage == 1) {
-
-
-					}
-					if (acumdamage >= 0 && acumdamage < 60 && life > 0) {
-
-
-						current_animation = &damage;
-						acumdamage++;
-					}
-
-					if (acumdamage == 60 && life > 0) {
-
-						acumdamage = 0;
-
-						damage.Reset();
-
-						damage_received = false;
-
-
-					}
-
-				}
-
-				else  if (life > 0 && damage_received == false && App->player2->life > 0) {
+				if (life > 0 && damage_received == false && App->player2->life > 0) {
 
 
 					switch (state)
 					{
-					case ST_IDLE:
+					case ST_IDLE2:
 						
 						current_animation = &idle;
+						crouch.Reset();
+						jump_neutral.Reset();
 
 						break;
 
-					case ST_WALK_FORWARD:
+					case ST_WALK_FORWARD2:
 
 						current_animation = &forward;
-
+						position.x++;
 						break;
 
-					case ST_WALK_BACKWARD:
+					case ST_WALK_BACKWARD2:
 
 						current_animation = &backward;
+						position.x--;
 
 						break;
-					case ST_JUMP_NEUTRAL:
-
-
+					case ST_JUMP_NEUTRAL2:
+						
 						current_animation = &jump_neutral;
-
+						if (jump_neutral.current_frame <2) {
+							position.y-=12;
+						}
+						if (jump_neutral.current_frame > 2 && jump_neutral.current_frame < 4) {
+							position.y -= 3;
+						}
+						if (jump_neutral.current_frame == 4) {
+							position.y -= 3;
+						}
+						
+						if (jump_neutral.current_frame > 5) {
+							position.y += 7;
+						}
 
 						break;
-					case ST_JUMP_FORWARD:
+					case ST_JUMP_FORWARD2:
 
 						current_animation = &jump_forward;
 
 
 						break;
-					case ST_JUMP_BACKWARD:
+					case ST_JUMP_BACKWARD2:
 
 
 						current_animation = &jump_backwards;
 
 						break;
-					case ST_CROUCH:
+					case ST_CROUCH2:
 
 						current_animation = &crouch;
 
 						break;
-					case ST_PUNCH_STANDING:
+					case ST_PUNCH_STANDING2:
 						
 						current_animation = &punch;
 						break;
-					case ST_PUNCH_CROUCH:
+					case ST_PUNCH_CROUCH2:
 
 						current_animation = &Crouch_punch;
 
 						break;
-					case ST_PUNCH_NEUTRAL_JUMP:
+					case ST_PUNCH_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_punch;
 
 						break;
-					case ST_PUNCH_FORWARD_JUMP:
+					case ST_PUNCH_FORWARD_JUMP2:
 
 
 						current_animation = &jump_forward_punch;
 
 						break;
-					case ST_PUNCH_BACKWARD_JUMP:
+					case ST_PUNCH_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch;
 
 						break;
-					case ST_KICK_STANDING:
+					case ST_KICK_STANDING2:
 						current_animation = &kick;
 
 						break;
-					case ST_HADOUKEN:
+					case ST_HADOUKEN2:
 
 
 						break;
@@ -407,11 +339,11 @@ update_status ModuleChunLi::Update()
 
 
 void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && (state == ST_WALK_FORWARD || state == ST_WALK_BACKWARD || state == ST_IDLE))
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && (state == ST_WALK_FORWARD2 || state == ST_WALK_BACKWARD2 || state == ST_IDLE2))
 	{
 		
 	}
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && (state == ST_JUMP_BACKWARD || state == ST_JUMP_FORWARD || state == ST_JUMP_NEUTRAL)) {
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && (state == ST_JUMP_BACKWARD2 || state == ST_JUMP_FORWARD2 || state == ST_JUMP_NEUTRAL2)) {
 		speedX = -1;
 
 	}
@@ -425,7 +357,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
 }
 
-bool ModuleChunLi::external_input(p2Qeue<chunli_inputs>& inputs)
+bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 {
 	static bool left = false;
 	static bool right = false;
@@ -443,18 +375,18 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs>& inputs)
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_s:
-				inputs.Push(IN_CROUCH_UP);
+				inputs.Push(IN_CROUCH_UP2);
 				down = false;
 				break;
 			case SDLK_w:
 				up = false;
 				break;
 			case SDLK_a:
-				inputs.Push(IN_LEFT_UP);
+				inputs.Push(IN_LEFT_UP2);
 				left = false;
 				break;
 			case SDLK_d:
-				inputs.Push(IN_RIGHT_UP);
+				inputs.Push(IN_RIGHT_UP2);
 				right = false;
 				break;
 			case SDLK_x:
@@ -473,13 +405,13 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs>& inputs)
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_x:
-				inputs.Push(IN_X);
+				inputs.Push(IN_X2);
 				break;
 			case SDLK_c:
-				inputs.Push(IN_C);
+				inputs.Push(IN_C2);
 				break;
 			case SDLK_v:
-				inputs.Push(IN_V);
+				inputs.Push(IN_V2);
 				break;
 			case SDLK_w:
 				up = true;
@@ -499,33 +431,33 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs>& inputs)
 	}
 
 	if (left && right)
-		inputs.Push(IN_LEFT_AND_RIGHT);
+		inputs.Push(IN_LEFT_AND_RIGHT2);
 	{
 		if (left)
-			inputs.Push(IN_LEFT_DOWN);
+			inputs.Push(IN_LEFT_DOWN2);
 		if (right)
-			inputs.Push(IN_RIGHT_DOWN);
+			inputs.Push(IN_RIGHT_DOWN2);
 	}
 
 	if (up && down)
-		inputs.Push(IN_JUMP_AND_CROUCH);
+		inputs.Push(IN_JUMP_AND_CROUCH2);
 	else
 	{
 		if (down)
-			inputs.Push(IN_CROUCH_DOWN);
+			inputs.Push(IN_CROUCH_DOWN2);
 		if (up)
-			inputs.Push(IN_JUMP);
+			inputs.Push(IN_JUMP2);
 	}
 	return true;
 }
 
-void ModuleChunLi::internal_input(p2Qeue<chunli_inputs>& inputs)
+void ModuleChunLi::internal_input(p2Qeue<ryu_inputs2>& inputs)
 {
 	if (jump_timer > 0)
 	{
 		if (SDL_GetTicks() - jump_timer > JUMP_TIME)
 		{
-			inputs.Push(IN_JUMP_FINISH);
+			inputs.Push(IN_JUMP_FINISH2);
 			jump_timer = 0;
 			position.y = 220;
 		}
@@ -535,7 +467,7 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs>& inputs)
 	{
 		if (SDL_GetTicks() - punch_timer > PUNCH_TIME)
 		{
-			inputs.Push(IN_PUNCH_FINISH);
+			inputs.Push(IN_PUNCH_FINISH2);
 			punch_timer = 0;
 		}
 	}
@@ -544,7 +476,7 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs>& inputs)
 	{
 		if (SDL_GetTicks() - kick_timer > KICK_TIME)
 		{
-			inputs.Push(IN_KICK_FINISH);
+			inputs.Push(IN_KICK_FINISH2);
 			kick_timer = 0;
 		}
 	}
@@ -553,7 +485,7 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs>& inputs)
 	{
 		if (SDL_GetTicks() - hadouken_timer > HADOUKEN_TIME)
 		{
-			inputs.Push(IN_HADOUKEN_FINISH);
+			inputs.Push(IN_HADOUKEN_FINISH2);
 			hadouken_timer = 0;
 		}
 	}
@@ -569,5 +501,298 @@ void ModuleChunLi::ResetPlayer() {
 		App->UI->time = 99;
 		App->UI->Counter1 = 9;
 		App->UI->Counter2 = 9;
+	}
+}
+
+ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
+{
+	static ryu_states2 state = ST_IDLE2;
+	ryu_inputs2 last_input;
+
+	while (inputs.Pop(last_input))
+	{
+		switch (state)
+		{
+		case ST_IDLE2:
+		{
+			switch (last_input)
+			{
+			case IN_RIGHT_DOWN2: state = ST_WALK_FORWARD2; break;
+			case IN_LEFT_DOWN2: state = ST_WALK_BACKWARD2; break;
+			case IN_JUMP2: state = ST_JUMP_NEUTRAL2; jump_timer = SDL_GetTicks();  break;
+			case IN_CROUCH_DOWN2: state = ST_CROUCH2; break;
+			case IN_X2: state = ST_PUNCH_STANDING2; punch_timer = SDL_GetTicks();  break;
+			case IN_C2: state = ST_KICK_STANDING2; kick_timer = SDL_GetTicks(); break;
+			case IN_V2: state = ST_HADOUKEN2; hadouken_timer = SDL_GetTicks(); break;
+			}
+		}
+		break;
+
+		case ST_WALK_FORWARD2:
+		{
+			switch (last_input)
+			{
+			case IN_RIGHT_UP2: state = ST_IDLE2; break;
+			case IN_LEFT_AND_RIGHT2: state = ST_IDLE2; break;
+			case IN_JUMP2: state = ST_JUMP_FORWARD2; jump_timer = SDL_GetTicks();  break;
+			case IN_CROUCH_DOWN2: state = ST_CROUCH2; break;
+			case IN_X2: state = ST_PUNCH_STANDING2; punch_timer = SDL_GetTicks();  break;
+			case IN_C2: state = ST_KICK_STANDING2; kick_timer = SDL_GetTicks(); break;
+			case IN_V2: state = ST_HADOUKEN2; hadouken_timer = SDL_GetTicks(); break;
+			}
+		}
+		break;
+
+		case ST_WALK_BACKWARD2:
+		{
+			switch (last_input)
+			{
+			case IN_LEFT_UP2: state = ST_IDLE2; break;
+			case IN_LEFT_AND_RIGHT2: state = ST_IDLE2; break;
+			case IN_JUMP2: state = ST_JUMP_BACKWARD2; jump_timer = SDL_GetTicks();  break;
+			case IN_CROUCH_DOWN2: state = ST_CROUCH2; break;
+			case IN_X2: state = ST_PUNCH_STANDING2; punch_timer = SDL_GetTicks();  break;
+			case IN_C2: state = ST_KICK_STANDING2; kick_timer = SDL_GetTicks(); break;
+			case IN_V2: state = ST_HADOUKEN2; hadouken_timer = SDL_GetTicks(); break;
+			}
+		}
+		break;
+
+		case ST_JUMP_NEUTRAL2:
+		{
+			switch (last_input)
+			{
+			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_X2: state = ST_PUNCH_NEUTRAL_JUMP2; punch_timer = SDL_GetTicks(); break;
+			}
+		}
+		break;
+
+		case ST_JUMP_FORWARD2:
+		{
+			switch (last_input)
+			{
+			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_X2: state = ST_PUNCH_FORWARD_JUMP2; punch_timer = SDL_GetTicks(); break;
+			}
+		}
+		break;
+
+		case ST_JUMP_BACKWARD2:
+		{
+			switch (last_input)
+			{
+			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_X2: state = ST_PUNCH_BACKWARD_JUMP2; punch_timer = SDL_GetTicks(); break;
+			}
+		}
+		break;
+
+		case ST_PUNCH_NEUTRAL_JUMP2:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH2: state = ST_JUMP_NEUTRAL2; break;
+			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			}
+		}
+		break;
+
+		case ST_PUNCH_FORWARD_JUMP2:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH2: state = ST_JUMP_FORWARD2; break;
+			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			}
+		}
+		break;
+
+		case ST_PUNCH_BACKWARD_JUMP2:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH2: state = ST_JUMP_BACKWARD2; break;
+			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			}
+		}
+		break;
+
+		case ST_PUNCH_STANDING2:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH2: state = ST_IDLE2; break;
+			}
+		}
+		break;
+
+		case ST_CROUCH2:
+		{
+			switch (last_input)
+			{
+			case IN_CROUCH_UP2: state = ST_IDLE2; break;
+			case IN_JUMP_AND_CROUCH2: state = ST_IDLE2; break;
+			case IN_X2: state = ST_PUNCH_CROUCH2; punch_timer = SDL_GetTicks(); break;
+			}
+		}
+		break;
+		case ST_PUNCH_CROUCH2:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH2:
+				if (IN_CROUCH_DOWN2 == true)
+					state = ST_CROUCH2;
+				else
+					state = ST_IDLE2;
+				break;
+			}
+		}
+		break;
+		case ST_KICK_STANDING2:
+		{
+			switch (last_input)
+			{
+			case IN_KICK_FINISH2: state = ST_IDLE2; break;
+			}
+		}
+		break;
+		case ST_HADOUKEN2:
+		{
+			switch (last_input)
+			{
+			case IN_HADOUKEN_FINISH2: state = ST_IDLE2; break;
+			}
+			break;
+		}
+
+		}
+	}
+	return state;
+}
+
+void ModuleChunLi::lifecondition(Animation* current_animation) {
+
+
+	healthbar = life * 0.153;
+	   
+	if (life < 0) {
+		life = 0;
+	}
+
+
+	if (App->player2->life == 0 && App->UI->victorycount == 0) {
+
+		if (acumvictory < 75) {
+			current_animation = &victory;
+			acumvictory++;
+		}
+		if (acumvictory == 75) {
+			victory.Reset();
+			acumvictory = 0;
+		}
+	}
+	if (App->player2->life == 0 && App->UI->victorycount == 1) {
+
+		if (acumvictory < 75) {
+			current_animation = &victory1;
+			acumvictory++;
+		}
+		if (acumvictory == 75) {
+			victory1.Reset();
+			acumvictory = 0;
+		}
+	}
+
+
+	if (life == 0)
+	{
+		current_animation = &Death;
+
+		if (position.y < 220) {
+			position.y += speedY;
+		}
+
+		if (DeathCount == 1) {
+
+			victorycount++;
+			App->UI->time = 99;
+			App->UI->Counter1 = 9;
+			App->UI->Counter2 = 9;
+		}
+		if (DeathCount < 80)
+			DeathCount++;
+		if (DeathCount == 80 && ActiveDeath == 0) {
+			DeathCount = 0;
+			Death.Reset();
+			App->render->camera.x = 0;
+
+			ActiveDeath = 1;
+			ResetPlayer();
+
+		}
+
+		if (damage_received == true) {
+
+
+			if (life == 0) {
+				damage_received = false;
+			}
+			if (acumdamage == 1) {
+
+
+			}
+			if (acumdamage >= 0 && acumdamage < 60 && life > 0) {
+
+
+				current_animation = &damage;
+				acumdamage++;
+			}
+
+			if (acumdamage == 60 && life > 0) {
+
+				acumdamage = 0;
+
+				damage.Reset();
+
+				damage_received = false;
+
+
+			}
+
+		}
+
+		//ResetPlayer();
+	}
+
+	if (damage_received == true) {
+
+
+		if (life == 0) {
+			damage_received = false;
+		}
+		if (acumdamage == 1) {
+
+
+		}
+		if (acumdamage >= 0 && acumdamage < 60 && life > 0) {
+
+
+			current_animation = &damage;
+			acumdamage++;
+		}
+
+		if (acumdamage == 60 && life > 0) {
+
+			acumdamage = 0;
+
+			damage.Reset();
+
+			damage_received = false;
+
+
+		}
+
 	}
 }
