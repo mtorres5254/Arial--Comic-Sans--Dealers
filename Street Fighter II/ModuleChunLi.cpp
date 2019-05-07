@@ -96,10 +96,53 @@ ModuleChunLi::ModuleChunLi()
 	jump_backwards.PushBack({ 1024,30,88,81 });
 	jump_backwards.speed = 0.1f;
 		
-		
-		
-		
+	//Punch animation
 
+	punch.PushBack({ 139, 533, 78, 87});
+	punch.PushBack({ 218, 531, 101, 89});
+	punch.PushBack({ 320, 524, 87, 96});
+	punch.PushBack({ 218, 531, 101, 89 });
+	punch.PushBack({ 139, 533, 78, 87 });
+	punch.speed = 0.2f;
+
+	//kick
+
+	kick.PushBack({ 131,630 , 66, 89});
+	kick.PushBack({ 198, 626, 71, 93});
+	kick.PushBack({ 270, 622, 106,97 });
+	kick.PushBack({ 198, 626, 71, 93 });
+	kick.PushBack({ 131,630 , 66, 89 });
+	kick.speed = 0.2f;
+		
+	//crouch punch
+
+	Crouch_punch.PushBack({ 368, 839, 71, 66});
+	Crouch_punch.PushBack({ 440, 839, 77, 66});
+	Crouch_punch.PushBack({ 518, 841, 107, 64});
+	Crouch_punch.PushBack({ 440, 839, 77, 66 });
+	Crouch_punch.PushBack({ 368, 839, 71, 66 });
+	Crouch_punch.speed = 0.2f;
+
+	//punch neutral jump
+
+	jump_neutral_punch.PushBack({ 1966, 22, 66,89 });
+	jump_neutral_punch.PushBack({ 1024, 131,53 ,90 });
+	jump_neutral_punch.PushBack({ 1078, 146, 85, 75});
+	jump_neutral_punch.PushBack({ 1164, 144, 87, 77});
+	jump_neutral_punch.speed = 0.2f;
+
+	//punch forward jump
+	
+	jump_forward_punch.PushBack({ 1252, 147, 53, 74 });
+	jump_forward_punch.PushBack({ 1306, 146, 59,75 });
+	jump_forward_punch.PushBack({ 1366, 144,83, 77});
+	jump_forward_punch.speed = 0.2f;
+
+	//punch backward jump
+	jump_backward_punch.PushBack({ 1252, 147, 53, 74 });
+	jump_backward_punch.PushBack({ 1306, 146, 59,75 });
+	jump_backward_punch.PushBack({ 1366, 144,83, 77 });
+	jump_backward_punch.speed = 0.2f;
 
 }
 
@@ -144,8 +187,8 @@ bool ModuleChunLi::CleanUp()
 update_status ModuleChunLi::Update()
 {
 	Animation* current_animation = &idle;
-	p2Qeue<ryu_inputs> inputs;
-	ryu_states current_state = ST_UNKNOWN;
+	p2Qeue<chunli_inputs> inputs;
+	chunli_states current_state = ST_UNKNOWN;
 
 	if (position.y == 220) {
 		speedX = 1;
@@ -266,6 +309,7 @@ update_status ModuleChunLi::Update()
 					switch (state)
 					{
 					case ST_IDLE:
+						
 						current_animation = &idle;
 
 						break;
@@ -306,9 +350,11 @@ update_status ModuleChunLi::Update()
 
 						break;
 					case ST_PUNCH_STANDING:
+						
 						current_animation = &punch;
-
+						break;
 					case ST_PUNCH_CROUCH:
+
 						current_animation = &Crouch_punch;
 
 						break;
@@ -379,7 +425,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
 }
 
-bool ModuleChunLi::external_input(p2Qeue<ryu_inputs>& inputs)
+bool ModuleChunLi::external_input(p2Qeue<chunli_inputs>& inputs)
 {
 	static bool left = false;
 	static bool right = false;
@@ -470,11 +516,10 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs>& inputs)
 		if (up)
 			inputs.Push(IN_JUMP);
 	}
-
 	return true;
 }
 
-void ModuleChunLi::internal_input(p2Qeue<ryu_inputs>& inputs)
+void ModuleChunLi::internal_input(p2Qeue<chunli_inputs>& inputs)
 {
 	if (jump_timer > 0)
 	{

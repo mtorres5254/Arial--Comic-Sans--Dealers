@@ -71,7 +71,7 @@ public:
 
 private:
 
-	enum ryu_states
+	enum chunli_states
 	{
 		ST_UNKNOWN,
 
@@ -92,7 +92,7 @@ private:
 		ST_RECEIVED_PUNCH,
 	};
 
-	enum ryu_inputs
+	enum chunli_inputs
 	{
 		IN_LEFT_DOWN,
 		IN_LEFT_UP,
@@ -115,7 +115,7 @@ private:
 
 	
 
-	ryu_states state;
+	chunli_states state;
 
 	Uint32 jump_timer = 0;
 	Uint32 punch_timer = 0;
@@ -124,14 +124,14 @@ private:
 
 
 
-	bool external_input(p2Qeue<ryu_inputs>&);
+	bool external_input(p2Qeue<chunli_inputs>&);
 
-	void internal_input(p2Qeue<ryu_inputs>&);
+	void internal_input(p2Qeue<chunli_inputs>&);
 
-	ryu_states process_fsm(p2Qeue<ryu_inputs>& inputs)
+	chunli_states process_fsm(p2Qeue<chunli_inputs>& inputs)
 	{
-		static ryu_states state = ST_IDLE;
-		ryu_inputs last_input;
+		static chunli_states state = ST_IDLE;
+		chunli_inputs last_input;
 
 		while (inputs.Pop(last_input))
 		{
