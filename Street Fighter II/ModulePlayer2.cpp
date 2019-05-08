@@ -387,17 +387,17 @@ update_status ModulePlayer2::Update() {
 					case ST_WALK_FORWARD:
 						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
 						current_animation = &backward;
-						if (position.x < 825 && App->plyDistance<SCREEN_WIDTH)
-						{
+						//if (position.x < 825 && App->plyDistance<SCREEN_WIDTH)
+						//{
 							position.x += speedX;
-							if (-((position.x - 60)*1.65) <= App->render->camera.x - SCREEN_WIDTH)
+							/*if (-((position.x - 60)*1.65) <= App->render->camera.x - SCREEN_WIDTH)
 							{
 								if (App->render->camera.x > -1004)
 								{
 									App->render->camera.x -= speedX * 2;
 								}
-							}
-						}
+							}*/
+						//}
 						crouch.Reset();
 						kick.Reset();
 						punch.Reset();
@@ -409,17 +409,17 @@ update_status ModulePlayer2::Update() {
 						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
 						if (moveb == true) {
 							current_animation = &forward;
-							if (position.x > 0)
-							{
+							//if (position.x > 0)
+							//{
 								position.x -= (0.6 *speedX);
-								if (-(position.x * 2) >= App->render->camera.x - 5)
+								/*if (-(position.x * 2) >= App->render->camera.x - 5)
 								{
 									if (App->render->camera.x < 0)
 									{
 										App->render->camera.x += speedX * 2;
 									}
-								}
-							}
+								}*/
+							//}
 							crouch.Reset();
 							kick.Reset();
 							punch.Reset();
@@ -710,12 +710,23 @@ void ModulePlayer2::OnCollision(Collider* c1, Collider* c2) {
 		damage_received = true;
 	}
 
-	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_WALL) 
+	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_WALL)//<-
 	{
-		
+		if (c2->rect.x > c1->rect.x)//->
+		{
+			if (App->render->camera.x > -1004)
+			{
+				App->render->camera.x -= speedX * 2;
+			}
+		}
+		else//<-
+		{
+			if (App->render->camera.x < 0)
+			{
+				App->render->camera.x += speedX * 2;
+			}
+		}		
 	}
-
-
 }
 
 bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)

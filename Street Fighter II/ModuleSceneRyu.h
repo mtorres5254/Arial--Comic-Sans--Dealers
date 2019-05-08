@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "Globals.h"
+#include "ModuleCollision.h"
 
 #include "SDL_mixer/include/SDL_mixer.h"
 
@@ -38,7 +39,9 @@ public:
 	bool Round1 = true;
 	bool Round2 = false;
 	bool Round3 = false;
-	
+
+	Collider* wallLeft;
+	Collider *wallRight;	
 };
 
 #endif // __MODULESCENERYU_H__

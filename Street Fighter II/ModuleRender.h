@@ -2,6 +2,7 @@
 #define __ModuleRenderer_H__
 
 #include "Module.h"
+#include "ModuleCollision.h"
 #include "SDL\include\SDL_rect.h"
 
 struct SDL_Renderer;
@@ -25,7 +26,7 @@ public:
 
 public:
 	SDL_Renderer* renderer = nullptr;
-	SDL_Rect camera;
+	SDL_Rect camera;	
 };
 
 #endif //__ModuleRenderer_H__

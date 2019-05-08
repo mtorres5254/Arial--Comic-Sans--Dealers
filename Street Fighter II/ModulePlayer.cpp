@@ -410,18 +410,18 @@ update_status ModulePlayer::Update()
 					case ST_WALK_FORWARD:
 						if (movef == true) {
 							current_animation = &forward;
-							if (position.x < 825)
-							{
+							//if (position.x < 825)
+							//{
 								position.x += speedX;
-								if (-((position.x - 60)*2) <= App->render->camera.x - SCREEN_WIDTH)
+								/*if (-((position.x - 60)*2) <= App->render->camera.x - SCREEN_WIDTH)
 								{
 									if (App->render->camera.x > -1004)
 									{
 										App->render->camera.x -= speedX * 2;
 									}
-								}
+								}*/
 
-							}
+							//}
 							crouch.Reset();
 							kick.Reset();
 							punch.Reset();
@@ -438,17 +438,17 @@ update_status ModulePlayer::Update()
 					case ST_WALK_BACKWARD:
 						if (moveb == true) {
 							current_animation = &backward;
-							if (position.x > 0 && App->plyDistance < SCREEN_WIDTH)
-							{
+							//if (position.x > 0 && App->plyDistance < SCREEN_WIDTH)
+							//{
 								position.x -= (0.6 *speedX);
-								if (-(position.x * 2) >= App->render->camera.x - 5)
+								/*if (-(position.x * 2) >= App->render->camera.x - 5)
 								{
 									if (App->render->camera.x < 0)
 									{
 										App->render->camera.x += speedX * 2;
 									}
-								}
-							}
+								}*/
+							//}
 							crouch.Reset();
 							kick.Reset();
 							punch.Reset();
@@ -778,9 +778,22 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
 		
 	}
 
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL)
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL)//<-
 	{
-
+		if (c2->rect.x > c1->rect.x)//->
+		{
+			if (App->render->camera.x > -1004)
+			{
+				App->render->camera.x -= speedX * 2;
+			}
+		}
+		else//<-
+		{
+			if (App->render->camera.x < 0)
+			{
+				App->render->camera.x += speedX * 2;
+			}
+		}
 	}
 	
 }

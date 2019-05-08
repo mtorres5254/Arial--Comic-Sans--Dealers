@@ -7,6 +7,7 @@
 #include "ModuleCongratsScreen.h"
 #include "ModuleSceneKen.h"
 #include "ModuleSceneHonda.h"
+#include "ModuleCollision.h"
 #include "SDL/include/SDL.h"
 
 ModuleRender::ModuleRender() : Module()
@@ -14,6 +15,9 @@ ModuleRender::ModuleRender() : Module()
 	camera.x = camera.y = 0;
 	camera.w = SCREEN_WIDTH;
 	camera.h = SCREEN_HEIGHT;
+
+	//wallLeft = App->collision->AddCollider({ camera.x - 5 ,camera.y,5,SCREEN_HEIGHT }, COLLIDER_WALL_LEFT, App->render);
+	//wallRight = App->collision->AddCollider({ SCREEN_WIDTH ,camera.y,5,SCREEN_HEIGHT }, COLLIDER_WALL_RIGHT, App->render);	
 }
 
 // Destructor
