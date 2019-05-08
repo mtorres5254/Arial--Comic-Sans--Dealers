@@ -8,6 +8,7 @@
 #include "ModuleParticles.h"
 #include "ModuleUI.h"
 #include "ModuleChunLi.h"
+#include "ModuleSceneRyu.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
@@ -710,23 +711,31 @@ void ModulePlayer2::OnCollision(Collider* c1, Collider* c2) {
 		damage_received = true;
 	}
 
-	/*if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_WALL)//<-
+	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_WALL)
 	{
-		if (c2->rect.x > c1->rect.x)//->
+		moveb = false;
+		if (c1->rect.x > c2->rect.x)//->
 		{
+			LOG("WALL RIGHT");			
+			LOG("%d", App->scene_ryu->wallRight->rect.x);
+			
 			if (App->render->camera.x > -1004)
 			{
+				App->scene_ryu->wallRight->rect.x += speedX * 2;
 				App->render->camera.x -= speedX * 2;
 			}
 		}
 		else//<-
 		{
+			LOG("WALL LEFT");
+			LOG("%d", App->scene_ryu->wallLeft->rect.x);
 			if (App->render->camera.x < 0)
 			{
+				App->scene_ryu->wallLeft->rect.x -= speedX * 2;
 				App->render->camera.x += speedX * 2;
 			}
 		}		
-	}*/
+	}
 }
 
 bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)

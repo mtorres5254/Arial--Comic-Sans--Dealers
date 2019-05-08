@@ -778,7 +778,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
 		
 	}
 
-	/*if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL)//<-
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL)//<-
 	{
 		if (c2->rect.x > c1->rect.x)//->
 		{
@@ -794,7 +794,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
 				App->render->camera.x += speedX * 2;
 			}
 		}
-	}*/
+	}
 	
 }
 

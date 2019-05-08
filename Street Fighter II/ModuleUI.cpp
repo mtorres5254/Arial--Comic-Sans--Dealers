@@ -158,7 +158,7 @@ void ModuleUI::Counter() {
 	{
 		if (SDL_GetTicks() - timenow > 1000) {			
 			time--;
-			LOG("%d", time);
+			//LOG("%d", time);
 			Counter1--;
 			if (Counter1 == -1) { //if ==0 jump from x1 to x9 (21 to 19 for example)
 				Counter1 = 9;

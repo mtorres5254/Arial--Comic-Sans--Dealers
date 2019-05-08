@@ -70,14 +70,13 @@ bool ModuleSceneRyu::Start()
 	music = App->audio->LoadMusic("Assets/Sound/ken.ogg");
 	App->audio->PlayMusic(music, 5000);
 	//
-	App->chunli->Enable();
-	//App->player->Enable();
+	//App->chunli->Enable();
+	App->player2->Enable();
 	App->collision->Enable();
 	App->UI->Enable();
 
-	wallLeft = App->collision->AddCollider({ App->render->camera.x - 5 , App->render->camera.y, 5, SCREEN_HEIGHT }, COLLIDER_WALL, App->scene_ryu);
-	wallRight = App->collision->AddCollider({ SCREEN_WIDTH , App->render->camera.y, 5, SCREEN_HEIGHT }, COLLIDER_WALL, App->scene_ryu);
-
+	wallLeft = App->collision->AddCollider({ App->render->camera.x, App->render->camera.y, 5, SCREEN_HEIGHT }, COLLIDER_WALL, App->scene_ryu,0,1);
+	wallRight = App->collision->AddCollider({ SCREEN_WIDTH, App->render->camera.y, 5, SCREEN_HEIGHT }, COLLIDER_WALL, App->scene_ryu,0,2);
 	return true;
 }
 
