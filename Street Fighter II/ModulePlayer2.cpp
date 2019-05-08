@@ -364,7 +364,7 @@ update_status ModulePlayer2::Update() {
 						damage.Reset();
 
 						damage_received = false;
-						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
+						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY,App->player2);
 					}
 
 				}
@@ -373,7 +373,7 @@ update_status ModulePlayer2::Update() {
 					switch (state)
 					{
 					case ST_IDLE:
-						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
+						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY,App->player2);
 						current_animation = &idle;
 						forward.Reset();
 						backward.Reset();
@@ -386,7 +386,7 @@ update_status ModulePlayer2::Update() {
 						ActiveDeath = 0;
 						break;
 					case ST_WALK_FORWARD:
-						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
+						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY,App->player2);
 						current_animation = &backward;
 						//if (position.x < 825 && App->plyDistance<SCREEN_WIDTH)
 						//{
@@ -407,7 +407,7 @@ update_status ModulePlayer2::Update() {
 						ActiveHadouken = 0;
 						break;
 					case ST_WALK_BACKWARD:
-						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
+						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY,App->player2);
 						if (moveb == true) {
 							current_animation = &forward;
 							//if (position.x > 0)
@@ -434,7 +434,7 @@ update_status ModulePlayer2::Update() {
 						}
 						break;
 					case ST_JUMP_NEUTRAL:
-						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
+						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY,App->player2);
 						JumpCount = 1;
 						if (JumpCount == 1) {
 							if (position.y == 220) {
@@ -460,7 +460,7 @@ update_status ModulePlayer2::Update() {
 						}
 						break;
 					case ST_JUMP_FORWARD:
-						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
+						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY,App->player2);
 						if (position.x < 825)
 						{
 							position.x += speedX;
@@ -648,7 +648,7 @@ update_status ModulePlayer2::Update() {
 						break;
 					case ST_KICK_STANDING:
 						current_animation = &kick;	
-						kickcollider = App->collision->AddCollider({ position.x - 45, position.y - 92, 70, 27 }, COLLIDER_ENEMY_SHOT, App->player2, 25);
+						kickcollider = App->collision->AddCollider({ position.x - 45, position.y - 92, 70, 27 }, COLLIDER_ENEMY_SHOT,App->player2, 25);
 						break;
 					case ST_HADOUKEN:
 						current_animation = &hadouken_pose;
@@ -711,31 +711,35 @@ void ModulePlayer2::OnCollision(Collider* c1, Collider* c2) {
 		damage_received = true;
 	}
 
-	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_WALL)
+	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_WALL_LEFT)//LEFT
 	{
-		moveb = false;
-		if (c1->rect.x > c2->rect.x)//->
+		//moveb = false;
+	
+		LOG("WALL LEFT");
+		LOG("%d", App->scene_ryu->wallRight->rect.x);
+
+		if (App->render->camera.x > -1004)
 		{
-			LOG("WALL RIGHT");			
-			LOG("%d", App->scene_ryu->wallRight->rect.x);
-			
-			if (App->render->camera.x > -1004)
-			{
-				App->scene_ryu->wallRight->rect.x += speedX * 2;
-				App->render->camera.x -= speedX * 2;
-			}
+			App->scene_ryu->wallRight->rect.x -= speedX * 2;
+			App->render->camera.x -= speedX * 2;
 		}
-		else//<-
-		{
-			LOG("WALL LEFT");
-			LOG("%d", App->scene_ryu->wallLeft->rect.x);
-			if (App->render->camera.x < 0)
-			{
-				App->scene_ryu->wallLeft->rect.x -= speedX * 2;
-				App->render->camera.x += speedX * 2;
-			}
-		}		
 	}
+
+	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_WALL_RIGHT)//RIGHT
+	{
+		//moveb = false;
+		LOG("WALL RIGHT");
+		LOG("%d", App->scene_ryu->wallRight->rect.x);
+
+		if (App->render->camera.x < 0)
+		{
+			App->scene_ryu->wallRight->rect.x += speedX * 2;
+			App->render->camera.x += speedX * 2;
+		}
+
+		
+	}
+	
 }
 
 bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)

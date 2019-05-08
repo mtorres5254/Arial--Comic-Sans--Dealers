@@ -75,8 +75,8 @@ bool ModuleSceneRyu::Start()
 	App->collision->Enable();
 	App->UI->Enable();
 
-	wallLeft = App->collision->AddCollider({ App->render->camera.x, App->render->camera.y, 5, SCREEN_HEIGHT }, COLLIDER_WALL, App->scene_ryu,0,1);
-	wallRight = App->collision->AddCollider({ SCREEN_WIDTH, App->render->camera.y, 5, SCREEN_HEIGHT }, COLLIDER_WALL, App->scene_ryu,0,2);
+	wallLeft = App->collision->AddCollider({ App->render->camera.x, App->render->camera.y, 5, SCREEN_HEIGHT }, COLLIDER_WALL_LEFT);
+	wallRight = App->collision->AddCollider({ App->render->camera.x + SCREEN_WIDTH, App->render->camera.y, 5, SCREEN_HEIGHT }, COLLIDER_WALL_RIGHT);
 	return true;
 }
 
