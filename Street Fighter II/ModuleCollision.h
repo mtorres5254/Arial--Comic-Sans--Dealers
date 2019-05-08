@@ -2,18 +2,19 @@
 #define __ModuleCollision_H__
 
 #define MAX_COLLIDERS 50
-
 #include "Module.h"
+
 
 enum COLLIDER_TYPE
 {
 	COLLIDER_NONE = -1,
-	COLLIDER_WALL_RIGHT,
+	COLLIDER_WALL,
 	COLLIDER_PLAYER,
 	COLLIDER_ENEMY,
 	COLLIDER_PLAYER_ATTACK,
 	COLLIDER_ENEMY_SHOT,
-	COLLIDER_WALL_LEFT,
+
+
 	COLLIDER_MAX
 };
 
@@ -23,8 +24,8 @@ struct Collider
 	bool to_delete = false;
 	COLLIDER_TYPE type;
 	Module* callback = nullptr;
-	int damage;
 
+	int damage;
 	Collider(SDL_Rect rectangle, COLLIDER_TYPE typeC, Module* callbackC = nullptr, int dmg = 0) {
 		rect = rectangle;
 		type = typeC;
@@ -37,7 +38,6 @@ struct Collider
 		rect.x = x;
 		rect.y = y;
 	}
-
 	bool CheckCollision(const SDL_Rect& r) const;
 };
 
@@ -47,6 +47,7 @@ public:
 
 	ModuleCollision();
 	~ModuleCollision();
+
 
 	update_status PreUpdate() override;
 	update_status Update() override;

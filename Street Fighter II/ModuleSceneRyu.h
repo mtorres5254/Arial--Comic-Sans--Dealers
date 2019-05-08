@@ -40,8 +40,8 @@ public:
 	bool Round2 = false;
 	bool Round3 = false;
 
-	Collider* wallLeft;
-	Collider *wallRight;	
+	//Collider* wallLeft;
+	//Collider *wallRight;	
 };
 
 #endif // __MODULESCENERYU_H__

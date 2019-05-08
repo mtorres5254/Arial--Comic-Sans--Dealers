@@ -710,7 +710,7 @@ void ModulePlayer2::OnCollision(Collider* c1, Collider* c2) {
 		damage_received = true;
 	}
 
-	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_WALL)//<-
+	/*if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_WALL)//<-
 	{
 		if (c2->rect.x > c1->rect.x)//->
 		{
@@ -726,7 +726,7 @@ void ModulePlayer2::OnCollision(Collider* c1, Collider* c2) {
 				App->render->camera.x += speedX * 2;
 			}
 		}		
-	}
+	}*/
 }
 
 bool ModulePlayer2::external_input(p2Qeue<ryu2_inputs>& inputs)
