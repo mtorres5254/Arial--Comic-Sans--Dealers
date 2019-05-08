@@ -713,31 +713,31 @@ void ModulePlayer2::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_WALL_LEFT)//LEFT
 	{
-		//moveb = false;
+		moveb = false;
 	
 		LOG("WALL LEFT");
 		LOG("%d", App->scene_ryu->wallRight->rect.x);
 
-		if (App->render->camera.x > -1004)
+		if (App->render->camera.x < 0)
 		{
-			App->scene_ryu->wallRight->rect.x -= speedX * 2;
-			App->render->camera.x -= speedX * 2;
+			App->scene_ryu->wallLeft->rect.x -= speedX;
+			App->scene_ryu->wallRight->rect.x -= speedX;
+			App->render->camera.x += speedX * 2;
 		}
 	}
 
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_WALL_RIGHT)//RIGHT
 	{
-		//moveb = false;
+		moveb = false;
 		LOG("WALL RIGHT");
 		LOG("%d", App->scene_ryu->wallRight->rect.x);
 
-		if (App->render->camera.x < 0)
+		if (App->render->camera.x > -1004)
 		{
-			App->scene_ryu->wallRight->rect.x += speedX * 2;
-			App->render->camera.x += speedX * 2;
-		}
-
-		
+			App->scene_ryu->wallRight->rect.x += speedX;
+			App->scene_ryu->wallLeft->rect.x += speedX;
+			App->render->camera.x -= speedX * 2;
+		}		
 	}
 	
 }
