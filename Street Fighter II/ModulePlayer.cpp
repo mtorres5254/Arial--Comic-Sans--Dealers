@@ -777,6 +777,11 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
 		damage_received = true;
 		
 	}
+
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL)
+	{
+
+	}
 	
 }
 
