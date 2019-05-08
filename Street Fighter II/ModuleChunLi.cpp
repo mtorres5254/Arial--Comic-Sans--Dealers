@@ -4,7 +4,7 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModulePlayer2.h"
-#include "ModulePlayer.h"
+
 #include "ModuleParticles.h"
 #include "ModuleChunLi.h"
 #include "ModuleAudio.h"
@@ -81,11 +81,10 @@ ModuleChunLi::ModuleChunLi()
 	jump_neutral.PushBack({ 1804, 27, 50, 84 });
 	jump_neutral.PushBack({ 1756, 1, 47, 110 });
 	
-	jump_neutral.speed = 0.175f;
-	jump_neutral.loop = true;
+	jump_neutral.speed = 0.21f;
+	jump_neutral.loop = false;
 
 	//jump forward
-
 
 	jump_forward.PushBack({ 1756, 1, 47, 110 });
 	jump_forward.PushBack({ 925,940,50,84 });
@@ -123,7 +122,9 @@ ModuleChunLi::ModuleChunLi()
 	punch.PushBack({ 320, 524, 87, 96});
 	punch.PushBack({ 218, 531, 101, 89 });
 	punch.PushBack({ 139, 533, 78, 87 });
-	punch.speed = 0.2f;
+	
+	punch.speed = 0.325f;
+	punch.loop = false;
 
 	//kick
 
@@ -149,7 +150,9 @@ ModuleChunLi::ModuleChunLi()
 	jump_neutral_punch.PushBack({ 1024, 131,53 ,90 });
 	jump_neutral_punch.PushBack({ 1078, 146, 85, 75});
 	jump_neutral_punch.PushBack({ 1164, 144, 87, 77});
-	jump_neutral_punch.speed = 0.2f;
+
+	jump_neutral_punch.speed = 0.4f;
+	jump_neutral_punch.loop = false;
 
 	//punch forward jump
 	
@@ -157,12 +160,14 @@ ModuleChunLi::ModuleChunLi()
 	jump_forward_punch.PushBack({ 1306, 146, 59,75 });
 	jump_forward_punch.PushBack({ 1366, 144,83, 77});
 	jump_forward_punch.speed = 0.2f;
+	jump_forward_punch.loop = false;
 
 	//punch backward jump
 	jump_backward_punch.PushBack({ 1252, 147, 53, 74 });
 	jump_backward_punch.PushBack({ 1306, 146, 59,75 });
 	jump_backward_punch.PushBack({ 1366, 144,83, 77 });
 	jump_backward_punch.speed = 0.2f;
+	jump_backward_punch.loop = false;
 
 }
 
@@ -187,7 +192,7 @@ bool ModuleChunLi::Start()
 	victorycount = 0;
 
 	//Add a collider to the player
-	colliderchunli = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_PLAYER, App->player);
+	
 
 	return ret;
 }
@@ -242,6 +247,12 @@ update_status ModuleChunLi::Update()
 						jump_neutral.Reset();
 						jump_forward.Reset();
 						jump_backwards.Reset();
+						punch.Reset();
+						jump_neutral_punch.Reset();
+						jump_backward_punch.Reset();
+						jump_forward_punch.Reset();
+						
+						
 
 						break;
 
@@ -259,73 +270,86 @@ update_status ModuleChunLi::Update()
 						break;
 					case ST_JUMP_NEUTRAL2:						
 						
+						current_animation = &jump_neutral;											
 
-						current_animation = &jump_neutral;
-						if (jump_neutral.current_frame < 2) {
-							position.y -= 11;
+						//Speed logic of jump
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2/4.5) {
+							position.y -= 8;
 						}
-						if (jump_neutral.current_frame > 2 && jump_neutral.current_frame <= 4) {
-							position.y -= 2;
+
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 4;
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y +=4;
+							}
 						}
-								
-						if (jump_neutral.current_frame > 5 && position.y < 220) {
-							position.y += 8;
-						}								
-								
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2/1.28) {
+							position.y += 10;
+						}
 
 						break;
+
 					case ST_JUMP_FORWARD2:
 
+			
+
 						current_animation = &jump_forward;
+						position.x += 3;
 
 						
-						if (jump_forward.current_frame < 3) {
-							position.y -= 8;
-							position.x += 3;
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+							position.y -= 9;
+							
+						}
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 5;
+								
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 7;
+							
+							}
 						}
 
-
-						if (jump_forward.current_frame >= 3 && jump_forward.current_frame < 5) {
-							position.y -= 5;
-							position.x += 3;
-						}
-						if (jump_forward.current_frame >= 5 && jump_forward.current_frame <= 8) {
-							position.y += 7;
-							position.x += 3;
-						}
-						
-						if (jump_forward.current_frame > 8 && position.y < 220) {
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
 							position.y += 8;
-							position.x += 3;
 						}
 
 						break;
+
 					case ST_JUMP_BACKWARD2:
 
 
 						current_animation = &jump_backwards;
+						position.x -= 3;
 
 
-						if (jump_backwards.current_frame < 3) {
-							position.y -= 8;
-							position.x -= 3;
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+							position.y -= 9;
+
+						}
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 5;
+
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 7;
+
+							}
 						}
 
-
-						if (jump_backwards.current_frame >= 3 && jump_backwards.current_frame < 5) {
-							position.y -= 5;
-							position.x -= 3;
-						}
-						if (jump_backwards.current_frame >= 5 && jump_backwards.current_frame <= 8) {
-							position.y += 7;
-							position.x -= 3;
-						}
-
-						if (jump_backwards.current_frame > 8 && position.y < 220) {
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
 							position.y += 8;
-							position.x -= 3;
 						}
-
 						break;
 					case ST_CROUCH2:
 
@@ -335,6 +359,8 @@ update_status ModuleChunLi::Update()
 					case ST_PUNCH_STANDING2:
 						
 						current_animation = &punch;
+
+						
 						break;
 					case ST_PUNCH_CROUCH2:
 
@@ -342,17 +368,94 @@ update_status ModuleChunLi::Update()
 
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP2:
+
 						current_animation = &jump_neutral_punch;
+
+						
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 4.5) {
+							position.y -= 8;
+						}
+
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.28) {
+							position.y += 10;
+						}
+
+						
+						if (SDL_GetTicks() - punch_neutral_jump_timer > PUNCH_NEUTRAL_JUMP_TIME2) {
+							jump_neutral_punch.Reset();
+							jump_neutral.current_frame = 9;			
+							
+						}
+						
+						
 
 						break;
 					case ST_PUNCH_FORWARD_JUMP2:
 
-
+					
 						current_animation = &jump_forward_punch;
+
+						position.x += 3;
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+							position.y -= 8;
+
+						}
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
+							position.y += 8;
+						}
+
+						if (SDL_GetTicks() - punch_neutral_jump_timer == PUNCH_NEUTRAL_JUMP_TIME2) {
+							jump_forward_punch.Reset();
+							
+						}
 
 						break;
 					case ST_PUNCH_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch;
+
+						position.x -= 3;
+
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+							position.y -= 8;
+
+						}
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
+							position.y += 8;
+						}
 
 						break;
 					case ST_KICK_STANDING2:
@@ -506,7 +609,7 @@ void ModuleChunLi::internal_input(p2Qeue<ryu_inputs2>& inputs)
 {
 	if (jump_timer > 0)
 	{
-		if (SDL_GetTicks() - jump_timer > JUMP_TIME)
+		if (SDL_GetTicks() - jump_timer > JUMP_TIME2)
 		{
 			inputs.Push(IN_JUMP_FINISH2);
 			jump_timer = 0;
@@ -516,7 +619,7 @@ void ModuleChunLi::internal_input(p2Qeue<ryu_inputs2>& inputs)
 
 	if (punch_timer > 0)
 	{
-		if (SDL_GetTicks() - punch_timer > PUNCH_TIME)
+		if (SDL_GetTicks() - punch_timer > PUNCH_TIME2)
 		{
 			inputs.Push(IN_PUNCH_FINISH2);
 			punch_timer = 0;
@@ -525,7 +628,7 @@ void ModuleChunLi::internal_input(p2Qeue<ryu_inputs2>& inputs)
 
 	if (kick_timer > 0)
 	{
-		if (SDL_GetTicks() - kick_timer > KICK_TIME)
+		if (SDL_GetTicks() - kick_timer > KICK_TIME2)
 		{
 			inputs.Push(IN_KICK_FINISH2);
 			kick_timer = 0;
@@ -534,10 +637,19 @@ void ModuleChunLi::internal_input(p2Qeue<ryu_inputs2>& inputs)
 
 	if (hadouken_timer > 0)
 	{
-		if (SDL_GetTicks() - hadouken_timer > HADOUKEN_TIME)
+		if (SDL_GetTicks() - hadouken_timer > HADOUKEN_TIME2)
 		{
 			inputs.Push(IN_HADOUKEN_FINISH2);
 			hadouken_timer = 0;
+		}
+	}
+
+	if (punch_neutral_jump_timer > 0)
+	{
+		if (SDL_GetTicks() - punch_neutral_jump_timer > PUNCH_NEUTRAL_JUMP_TIME2)
+		{
+			inputs.Push(IN_PUNCH_FINISH2);
+			punch_neutral_jump_timer = 0;
 		}
 	}
 }
@@ -614,7 +726,7 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			switch (last_input)
 			{
 			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
-			case IN_X2: state = ST_PUNCH_NEUTRAL_JUMP2; punch_timer = SDL_GetTicks(); break;
+			case IN_X2: state = ST_PUNCH_NEUTRAL_JUMP2; punch_neutral_jump_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -624,7 +736,7 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			switch (last_input)
 			{
 			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
-			case IN_X2: state = ST_PUNCH_FORWARD_JUMP2; punch_timer = SDL_GetTicks(); break;
+			case IN_X2: state = ST_PUNCH_FORWARD_JUMP2; punch_neutral_jump_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -634,7 +746,7 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			switch (last_input)
 			{
 			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
-			case IN_X2: state = ST_PUNCH_BACKWARD_JUMP2; punch_timer = SDL_GetTicks(); break;
+			case IN_X2: state = ST_PUNCH_BACKWARD_JUMP2; punch_neutral_jump_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;

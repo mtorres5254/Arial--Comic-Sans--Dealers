@@ -71,7 +71,7 @@ bool ModuleSceneRyu::Start()
 	App->audio->PlayMusic(music, 5000);
 	//
 	App->chunli->Enable();
-	App->player->Enable();
+	//App->player->Enable();
 	App->collision->Enable();
 	App->UI->Enable();
 

@@ -10,7 +10,16 @@
 #include "SDL\include\SDL.h"
 #include "SDL_mixer/include/SDL_mixer.h"
 
+
+
+#define JUMP_TIME2 850
+#define PUNCH_TIME2 150
+#define PUNCH_NEUTRAL_JUMP_TIME2 850
+#define KICK_TIME2 400
+#define HADOUKEN_TIME2 1000
 struct SDL_Texture;
+
+
 
 enum ryu_states2
 {
@@ -110,7 +119,7 @@ public:
 	int speed = 1;
 	bool damage_received = false;
 	bool jumpactive = 0;
-
+	bool prueba = false;
 	int life = 1000;
 	int healthbar;
 
@@ -120,6 +129,7 @@ public:
 	Uint32 punch_timer = 0;
 	Uint32 kick_timer = 0;
 	Uint32 hadouken_timer = 0;
+	Uint32 punch_neutral_jump_timer = 0;
 
 	
 };
