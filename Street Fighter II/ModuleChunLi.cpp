@@ -18,41 +18,66 @@
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModuleChunLi::ModuleChunLi()
+ {}
+
+ModuleChunLi::~ModuleChunLi()
+{}
+
+// Load assets
+bool ModuleChunLi::Start()
 {
+	
+	bool ret = true;
+
+	graphics = App->textures->Load("Assets/Images/ChunLi.png"); // arcade version
+	
 	position.x = 500;
 	position.y = 220;
 
 	// idle animation (arcade sprite sheet)
-	idle.PushBack({ 290, 438, 72, 85 });
-	idle.PushBack({ 363, 437, 72, 86 });
-	idle.PushBack({ 436, 436, 72, 87 });
-	idle.PushBack({ 363, 437, 72, 86 });
+
+
+	const int idleCollider = 2;//Collider num for the idle animation
+	SDL_Rect idleHitbox[idleCollider] = { { 10, 0, 40, 75 },{ 25, 75, 20, 20 } };
+	COLLIDER_TYPE idleCollType[idleCollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER} };
+	Module* idleCallBack[idleCollider] = { {this},{this} };
+
+	idle.PushBack1({ 290, 438, 72, 85 }, idleCollider, idleHitbox, idleCollType, idleCallBack);
+	idle.PushBack1({ 363, 437, 72, 86 }, idleCollider, idleHitbox, idleCollType, idleCallBack);
+	idle.PushBack1({ 436, 436, 72, 87 }, idleCollider, idleHitbox, idleCollType, idleCallBack);
+	idle.PushBack1({ 363, 437, 72, 86 }, idleCollider, idleHitbox, idleCollType, idleCallBack);
 	idle.speed = 0.1f;
 
 	//Forward
-	forward.PushBack({ 788, 341, 78,84 });
-	forward.PushBack({ 867, 338, 71, 87});
-	forward.PushBack({ 939, 337, 63, 87});
-	forward.PushBack({ 0, 434, 62, 89});
-	forward.PushBack({ 63, 435, 67, 88});
-	forward.PushBack({ 131, 436, 76, 87});
-	forward.PushBack({ 208, 437, 81, 86});
-	forward.PushBack({ 131, 436, 76, 87 });
-	forward.PushBack({ 63, 435, 67, 88 });
-	forward.PushBack({ 0, 434, 62, 89 });
-	forward.PushBack({ 939, 337, 63, 87 });
-	forward.PushBack({ 867, 338, 71, 87 });
+
+	const int forwardcollider = 2;//Collider num for the idle animation
+	SDL_Rect forwardhitbox[idleCollider] = { { 10, 0, 40, 75 },{ 25, 75, 20, 20 } };
+	COLLIDER_TYPE forwardCollType[idleCollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER} };
+	Module* ForwardCallback[idleCollider] = { {this},{this} };
+	forward.PushBack1({ 788, 341, 78,84 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
+	forward.PushBack1({ 867, 338, 71, 87 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
+	forward.PushBack1({ 939, 337, 63, 87 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
+	forward.PushBack1({ 0, 434, 62, 89 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
+	forward.PushBack1({ 63, 435, 67, 88 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
+	forward.PushBack1({ 131, 436, 76, 87 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
+	forward.PushBack1({ 208, 437, 81, 86 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
+	forward.PushBack1({ 131, 436, 76, 87 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
+	forward.PushBack1({ 63, 435, 67, 88 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
+	forward.PushBack1({ 0, 434, 62, 89 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
+	forward.PushBack1({ 939, 337, 63, 87 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
+	forward.PushBack1({ 867, 338, 71, 87 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
 	forward.speed = 0.2f;
 	
+
 	//Backward
 
-	backward.PushBack({ 652,437, 73, 86});
+	backward.PushBack({ 652,437, 73, 86 });
 	backward.PushBack({ 726, 434, 63, 89 });
-	backward.PushBack({ 790, 433, 60, 90});
-	backward.PushBack({ 851, 432, 63, 91});
-	backward.PushBack({ 915, 433, 64, 90});
-	backward.PushBack({ 0, 531, 64, 89});
-	backward.PushBack({ 66, 532, 72, 88});
+	backward.PushBack({ 790, 433, 60, 90 });
+	backward.PushBack({ 851, 432, 63, 91 });
+	backward.PushBack({ 915, 433, 64, 90 });
+	backward.PushBack({ 0, 531, 64, 89 });
+	backward.PushBack({ 66, 532, 72, 88 });
 	backward.PushBack({ 0, 531, 64, 89 });
 	backward.PushBack({ 915, 433, 64, 90 });
 	backward.PushBack({ 851, 432, 63, 91 });
@@ -62,25 +87,25 @@ ModuleChunLi::ModuleChunLi()
 
 	//Crouch
 
-	crouch.PushBack({ 934,742 , 74, 81});
-	crouch.PushBack({ 0, 833, 73, 72});
-	crouch.PushBack({ 74, 839, 72, 66});
-	crouch.PushBack({ 147, 839, 72, 65});
+	crouch.PushBack({ 934,742 , 74, 81 });
+	crouch.PushBack({ 0, 833, 73, 72 });
+	crouch.PushBack({ 74, 839, 72, 66 });
+	crouch.PushBack({ 147, 839, 72, 65 });
 	crouch.speed = 0.3f;
 	crouch.loop = false;
 
 	//Jump 
 
 	jump_neutral.PushBack({ 1756, 1, 47, 110 });
-	jump_neutral.PushBack({ 1804, 27, 50, 84});
-	jump_neutral.PushBack({ 1855, 36, 52, 75});
-	jump_neutral.PushBack({ 1908, 46, 57, 65});
+	jump_neutral.PushBack({ 1804, 27, 50, 84 });
+	jump_neutral.PushBack({ 1855, 36, 52, 75 });
 	jump_neutral.PushBack({ 1908, 46, 57, 65 });
-	jump_neutral.PushBack({ 1908, 46, 57, 65});
+	jump_neutral.PushBack({ 1908, 46, 57, 65 });
+	jump_neutral.PushBack({ 1908, 46, 57, 65 });
 	jump_neutral.PushBack({ 1855, 36, 52, 75 });
 	jump_neutral.PushBack({ 1804, 27, 50, 84 });
 	jump_neutral.PushBack({ 1756, 1, 47, 110 });
-	
+
 	jump_neutral.speed = 0.21f;
 	jump_neutral.loop = false;
 
@@ -113,33 +138,33 @@ ModuleChunLi::ModuleChunLi()
 	jump_backwards.PushBack({ 1756, 1, 47, 110 });
 	jump_backwards.speed = 0.19f;
 	jump_backwards.loop = true;
-	
-		
+
+
 	//Punch animation
 
-	punch.PushBack({ 139, 533, 78, 87});
-	punch.PushBack({ 218, 531, 101, 89});
-	punch.PushBack({ 320, 524, 87, 96});
+	punch.PushBack({ 139, 533, 78, 87 });
+	punch.PushBack({ 218, 531, 101, 89 });
+	punch.PushBack({ 320, 524, 87, 96 });
 	punch.PushBack({ 218, 531, 101, 89 });
 	punch.PushBack({ 139, 533, 78, 87 });
-	
+
 	punch.speed = 0.3f;
 	punch.loop = false;
 
 	//kick
 
-	kick.PushBack({ 131,630 , 66, 89});
-	kick.PushBack({ 198, 626, 71, 93});
+	kick.PushBack({ 131,630 , 66, 89 });
+	kick.PushBack({ 198, 626, 71, 93 });
 	kick.PushBack({ 270, 622, 106,97 });
 	kick.PushBack({ 198, 626, 71, 93 });
 	kick.PushBack({ 131,630 , 66, 89 });
 	kick.speed = 0.2f;
-		
+
 	//crouch punch
 
-	Crouch_punch.PushBack({ 368, 839, 71, 66});
-	Crouch_punch.PushBack({ 440, 839, 77, 66});
-	Crouch_punch.PushBack({ 518, 841, 107, 64});
+	Crouch_punch.PushBack({ 368, 839, 71, 66 });
+	Crouch_punch.PushBack({ 440, 839, 77, 66 });
+	Crouch_punch.PushBack({ 518, 841, 107, 64 });
 	Crouch_punch.PushBack({ 518, 841, 107, 64 });
 	Crouch_punch.PushBack({ 518, 841, 107, 64 });
 	Crouch_punch.PushBack({ 440, 839, 77, 66 });
@@ -151,17 +176,17 @@ ModuleChunLi::ModuleChunLi()
 
 	jump_neutral_punch.PushBack({ 1966, 22, 66,89 });
 	jump_neutral_punch.PushBack({ 1024, 131,53 ,90 });
-	jump_neutral_punch.PushBack({ 1078, 146, 85, 75});
-	jump_neutral_punch.PushBack({ 1164, 144, 87, 77});
+	jump_neutral_punch.PushBack({ 1078, 146, 85, 75 });
+	jump_neutral_punch.PushBack({ 1164, 144, 87, 77 });
 
 	jump_neutral_punch.speed = 0.4f;
 	jump_neutral_punch.loop = false;
 
 	//punch forward jump
-	
+
 	jump_forward_punch.PushBack({ 1252, 147, 53, 74 });
 	jump_forward_punch.PushBack({ 1306, 146, 59,75 });
-	jump_forward_punch.PushBack({ 1366, 144,83, 77});
+	jump_forward_punch.PushBack({ 1366, 144,83, 77 });
 	jump_forward_punch.speed = 0.2f;
 	jump_forward_punch.loop = false;
 
@@ -170,22 +195,7 @@ ModuleChunLi::ModuleChunLi()
 	jump_backward_punch.PushBack({ 1306, 146, 59,75 });
 	jump_backward_punch.PushBack({ 1366, 144,83, 77 });
 	jump_backward_punch.speed = 0.2f;
-	jump_backward_punch.loop = false;
-
-}
-
-ModuleChunLi::~ModuleChunLi()
-{}
-
-// Load assets
-bool ModuleChunLi::Start()
-{
-	LOG("Loading player textures");
-	bool ret = true;
-	graphics = App->textures->Load("Assets/Images/ChunLi.png"); // arcade version
-	position.x = 500; //Returns to its original position
-
-	//Sounds
+	jump_backward_punch.loop = false;	
 	
 
 	//Start functions to reset player
@@ -195,7 +205,7 @@ bool ModuleChunLi::Start()
 	victorycount = 0;
 
 	//Add a collider to the player
-	
+	//colliderchunli = App->collision->AddCollider(idle.frames[1], COLLIDER_PLAYER, App->chunli, 0);
 
 	return ret;
 }
@@ -480,18 +490,7 @@ update_status ModuleChunLi::Update()
 				}
 				current_state = state;
 
-
-				// Draw everything --------------------------------------
-
-				SDL_Rect r = current_animation->GetCurrentFrame();
-				if (position.x < App->player2->position.x) {
-					App->render->Blit(graphics, position.x, position.y - r.h, &r);
-				}
-				if (position.x > App->player2->position.x) {
-					App->render->BlitSym(graphics, position.x, position.y - r.h, &r);
-				}
-				//Update collider position to player position
-
+				colliders_and_blit(current_animation);
 
 				return UPDATE_CONTINUE;
 			}
@@ -499,6 +498,36 @@ update_status ModuleChunLi::Update()
 	}
 }
 
+void ModuleChunLi::colliders_and_blit(Animation* current_animation) {
+
+	for (int i = 0; i < MAX_COLLIDERS; i++)//deletes all the hitboxes at the start of the frame
+	{
+		if (colliders[i] != nullptr)
+			colliders[i]->to_delete = true;
+	}
+
+
+	SDL_Rect r;
+	int max_hitboxes = current_animation->maxcolliders[(int)current_animation->current_frame];
+
+	for (int i = 0; i < max_hitboxes; i++)
+	{
+		r = current_animation->hitbox[i];
+
+		colliders[i] = App->collision->AddCollider({ position.x + r.x , position.y - r.h - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
+
+
+	}
+	r = current_animation->GetCurrentFrame();
+
+
+	if (position.x < App->player2->position.x) {
+		App->render->Blit(graphics, position.x, position.y - r.h, &r);
+	}
+	if (position.x > App->player2->position.x) {
+		App->render->BlitSym(graphics, position.x, position.y - r.h, &r);
+	}
+}
 
 
 void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {

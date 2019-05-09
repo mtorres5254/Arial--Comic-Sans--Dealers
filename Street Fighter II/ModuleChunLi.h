@@ -17,6 +17,9 @@
 #define PUNCH_NEUTRAL_JUMP_TIME2 850
 #define KICK_TIME2 400
 #define HADOUKEN_TIME2 1000
+
+#define MAX_FRAME_COLLIDERS 6
+
 struct SDL_Texture;
 
 
@@ -77,6 +80,7 @@ public:
 	ryu_states2 process_fsm(p2Qeue<ryu_inputs2>& inputs);
 	void ResetPlayer();
 	void lifecondition(Animation*);
+	void colliders_and_blit(Animation*);
 
 public:
 
@@ -104,7 +108,8 @@ public:
 	Animation victory1;
 	iPoint position;
 
-	Collider* colliderchunli;
+	Collider* colliders[MAX_COLLIDERS];
+
 	int acumvictory = 0;
 		
 	bool death = false;

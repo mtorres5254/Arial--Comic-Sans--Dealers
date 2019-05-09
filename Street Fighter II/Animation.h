@@ -1,7 +1,11 @@
 #ifndef __ANIMATION_H__
 #define __ANIMATION_H__
 
+
 #include "SDL/include/SDL_rect.h"
+#include "p2Point.h"
+#include "ModuleCollision.h"
+
 #define MAX_FRAMES 25
 
 class Animation
@@ -11,10 +15,20 @@ public:
 	float speed = 1.0f;
 	SDL_Rect frames[MAX_FRAMES];
 
+
+	SDL_Rect hitbox[MAX_FRAMES]; 
+	COLLIDER_TYPE type[MAX_FRAMES]; 
+	Module *callback[MAX_FRAMES]; 
+	int maxcolliders[MAX_FRAMES]; 
+	
+	
+
 public:
 	float current_frame;
 	int last_frame = 0;
 	int loops = 0;
+	int last_collider = 0;
+
 
 public:
 
@@ -44,6 +58,27 @@ public:
 	{
 		current_frame = 0;
 	}
+	
+	void PushBack1(const SDL_Rect& rect, int nColliders, SDL_Rect rhitbox[], COLLIDER_TYPE ctipo[], Module *pcallback[])
+	{
+		frames[last_frame] = rect;		
+		
+	
+		maxcolliders[last_frame] = nColliders;
+
+		for (int i = 0; i < nColliders; i++)
+		{			
+			hitbox[i] = rhitbox[i];
+			type[i] = ctipo[i];
+			callback[i] = pcallback[i];
+			
+		}
+		last_frame++;
+	}
+	
+	
 };
+
+
 
 #endif
