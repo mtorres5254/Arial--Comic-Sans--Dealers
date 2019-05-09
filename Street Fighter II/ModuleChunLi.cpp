@@ -37,10 +37,10 @@ bool ModuleChunLi::Start()
 	// idle animation (arcade sprite sheet)
 
 
-	const int idleCollider = 2;//Collider num for the idle animation
-	SDL_Rect idleHitbox[idleCollider] = { { 10, 0, 40, 75 },{ 25, 75, 20, 20 } };
-	COLLIDER_TYPE idleCollType[idleCollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER} };
-	Module* idleCallBack[idleCollider] = { {this},{this} };
+	const int idleCollider = 5;//Collider num for the idle animation
+	SDL_Rect idleHitbox[idleCollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33} };
+	COLLIDER_TYPE idleCollType[idleCollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER} };
+	Module* idleCallBack[idleCollider] = { {this},{this},{this},{this},{this} };
 
 	idle.PushBack1({ 290, 438, 72, 85 }, idleCollider, idleHitbox, idleCollType, idleCallBack);
 	idle.PushBack1({ 363, 437, 72, 86 }, idleCollider, idleHitbox, idleCollType, idleCallBack);
@@ -50,39 +50,43 @@ bool ModuleChunLi::Start()
 
 	//Forward
 
-	const int forwardcollider = 2;//Collider num for the idle animation
-	SDL_Rect forwardhitbox[idleCollider] = { { 10, 0, 40, 75 },{ 25, 75, 20, 20 } };
-	COLLIDER_TYPE forwardCollType[idleCollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER} };
-	Module* ForwardCallback[idleCollider] = { {this},{this} };
-	forward.PushBack1({ 788, 341, 78,84 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
-	forward.PushBack1({ 867, 338, 71, 87 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
-	forward.PushBack1({ 939, 337, 63, 87 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
-	forward.PushBack1({ 0, 434, 62, 89 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
-	forward.PushBack1({ 63, 435, 67, 88 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
-	forward.PushBack1({ 131, 436, 76, 87 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
-	forward.PushBack1({ 208, 437, 81, 86 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
-	forward.PushBack1({ 131, 436, 76, 87 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
-	forward.PushBack1({ 63, 435, 67, 88 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
-	forward.PushBack1({ 0, 434, 62, 89 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
-	forward.PushBack1({ 939, 337, 63, 87 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
-	forward.PushBack1({ 867, 338, 71, 87 }, forwardcollider, forwardhitbox, forwardCollType, ForwardCallback);
+	const int fwdcollider = 5;//Collider num for the idle animation
+	SDL_Rect fwdhitbox[idleCollider] = { { 0, 3, 45, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 13, 71, 31, 21 },{ 2, 37, 35, 41 } };
+	COLLIDER_TYPE fwdCollType[idleCollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER} };
+	Module* fwdCallback[idleCollider] = { {this},{this},{this},{this},{this} };
+	forward.PushBack1({ 652,437, 73, 86 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 726, 434, 63, 89 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 790, 433, 60, 90 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 851, 432, 63, 91 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 915, 433, 64, 90 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 0, 531, 64, 89 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 66, 532, 72, 88 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 0, 531, 64, 89 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 915, 433, 64, 90 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 851, 432, 63, 91 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 790, 433, 60, 90 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 726, 434, 63, 89 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
 	forward.speed = 0.2f;
 	
 
 	//Backward
 
-	backward.PushBack({ 652,437, 73, 86 });
-	backward.PushBack({ 726, 434, 63, 89 });
-	backward.PushBack({ 790, 433, 60, 90 });
-	backward.PushBack({ 851, 432, 63, 91 });
-	backward.PushBack({ 915, 433, 64, 90 });
-	backward.PushBack({ 0, 531, 64, 89 });
-	backward.PushBack({ 66, 532, 72, 88 });
-	backward.PushBack({ 0, 531, 64, 89 });
-	backward.PushBack({ 915, 433, 64, 90 });
-	backward.PushBack({ 851, 432, 63, 91 });
-	backward.PushBack({ 790, 433, 60, 90 });
-	backward.PushBack({ 726, 434, 63, 89 });
+	const int bwdcollider = 5;//Collider num for the idle animation
+	SDL_Rect bwdhitbox[idleCollider] = { { 0, 3, 45, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 13, 71, 31, 21 },{ 2, 37, 35, 41 } };
+	COLLIDER_TYPE bcwCollType[idleCollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER} };
+	Module* bwdCallback[idleCollider] = { {this},{this},{this},{this},{this} };
+	backward.PushBack1({ 652,437, 73, 86 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 726, 434, 63, 89 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 790, 433, 60, 90 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 851, 432, 63, 91 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 915, 433, 64, 90 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 0, 531, 64, 89 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 66, 532, 72, 88 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 0, 531, 64, 89 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 915, 433, 64, 90 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 851, 432, 63, 91 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 790, 433, 60, 90 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 726, 434, 63, 89 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
 	backward.speed = 0.15f;
 
 	//Crouch
@@ -528,7 +532,6 @@ void ModuleChunLi::colliders_and_blit(Animation* current_animation) {
 		App->render->BlitSym(graphics, position.x, position.y - r.h, &r);
 	}
 }
-
 
 void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && (state == ST_WALK_FORWARD2 || state == ST_WALK_BACKWARD2 || state == ST_IDLE2))

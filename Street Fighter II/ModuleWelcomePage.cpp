@@ -12,6 +12,7 @@
 #include "ModuleUI.h"
 #include "ModuleLoseScene.h"
 #include "ModulePlayer2.h"
+#include "ModuleSceneDhalsim.h"
 
 
 ModuleWelcomePage::ModuleWelcomePage()
@@ -55,7 +56,7 @@ update_status ModuleWelcomePage::Update()
 
 
 	if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) {
-		App->fade->FadeToBlack(App->welcome_page, App->scene_ryu, 2.0f);		
+		App->fade->FadeToBlack(App->welcome_page, App->scene_dhalsim, 2.0f);		
 		App->audio->PlayChunk(start_sound, 0);
 		App->audio->StopMusic(250);
 	}
