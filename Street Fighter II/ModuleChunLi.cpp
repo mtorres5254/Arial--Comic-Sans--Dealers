@@ -123,7 +123,7 @@ ModuleChunLi::ModuleChunLi()
 	punch.PushBack({ 218, 531, 101, 89 });
 	punch.PushBack({ 139, 533, 78, 87 });
 	
-	punch.speed = 0.325f;
+	punch.speed = 0.3f;
 	punch.loop = false;
 
 	//kick
@@ -140,9 +140,12 @@ ModuleChunLi::ModuleChunLi()
 	Crouch_punch.PushBack({ 368, 839, 71, 66});
 	Crouch_punch.PushBack({ 440, 839, 77, 66});
 	Crouch_punch.PushBack({ 518, 841, 107, 64});
+	Crouch_punch.PushBack({ 518, 841, 107, 64 });
+	Crouch_punch.PushBack({ 518, 841, 107, 64 });
 	Crouch_punch.PushBack({ 440, 839, 77, 66 });
 	Crouch_punch.PushBack({ 368, 839, 71, 66 });
-	Crouch_punch.speed = 0.2f;
+	Crouch_punch.speed = 0.275f;
+	Crouch_punch.loop = true;
 
 	//punch neutral jump
 
@@ -251,6 +254,7 @@ update_status ModuleChunLi::Update()
 						jump_neutral_punch.Reset();
 						jump_backward_punch.Reset();
 						jump_forward_punch.Reset();
+						Crouch_punch.Reset();				
 						
 						
 
@@ -259,12 +263,14 @@ update_status ModuleChunLi::Update()
 					case ST_WALK_FORWARD2:
 
 						current_animation = &forward;
+						punch.Reset();
 						position.x++;
 						break;
 
 					case ST_WALK_BACKWARD2:
 
 						current_animation = &backward;
+						punch.Reset();
 						position.x--;
 
 						break;
@@ -297,7 +303,6 @@ update_status ModuleChunLi::Update()
 					case ST_JUMP_FORWARD2:
 
 			
-
 						current_animation = &jump_forward;
 						position.x += 3;
 
@@ -354,18 +359,22 @@ update_status ModuleChunLi::Update()
 					case ST_CROUCH2:
 
 						current_animation = &crouch;
-
+						
+						
 						break;
 					case ST_PUNCH_STANDING2:
 						
 						current_animation = &punch;
+
+		
 
 						
 						break;
 					case ST_PUNCH_CROUCH2:
 
 						current_animation = &Crouch_punch;
-
+						
+						
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP2:
 
