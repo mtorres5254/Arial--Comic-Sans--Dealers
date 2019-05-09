@@ -388,17 +388,8 @@ update_status ModulePlayer2::Update() {
 					case ST_WALK_FORWARD:
 						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY,App->player2);
 						current_animation = &backward;
-						//if (position.x < 825 && App->plyDistance<SCREEN_WIDTH)
-						//{
-							position.x += speedX;
-							/*if (-((position.x - 60)*1.65) <= App->render->camera.x - SCREEN_WIDTH)
-							{
-								if (App->render->camera.x > -1004)
-								{
-									App->render->camera.x -= speedX * 2;
-								}
-							}*/
-						//}
+						position.x += speedX;
+
 						crouch.Reset();
 						kick.Reset();
 						punch.Reset();
@@ -408,30 +399,16 @@ update_status ModulePlayer2::Update() {
 						break;
 					case ST_WALK_BACKWARD:
 						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY,App->player2);
-						if (moveb == true) {
-							current_animation = &forward;
-							//if (position.x > 0)
-							//{
-								position.x -= (0.6 *speedX);
-								/*if (-(position.x * 2) >= App->render->camera.x - 5)
-								{
-									if (App->render->camera.x < 0)
-									{
-										App->render->camera.x += speedX * 2;
-									}
-								}*/
-							//}
-							crouch.Reset();
-							kick.Reset();
-							punch.Reset();
-							hadouken_pose.Reset();
-							HadoukenCount = 0;
-							ActiveHadouken = 0;
-							ActiveDeath = 0;
-						}
-						else if (moveb == false) {
-							moveb = true;
-						}
+						current_animation = &forward;
+						position.x -= (0.6 *speedX);
+
+						crouch.Reset();
+						kick.Reset();
+						punch.Reset();
+						hadouken_pose.Reset();
+						HadoukenCount = 0;
+						ActiveHadouken = 0;
+						ActiveDeath = 0;
 						break;
 					case ST_JUMP_NEUTRAL:
 						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY,App->player2);
@@ -461,17 +438,8 @@ update_status ModulePlayer2::Update() {
 						break;
 					case ST_JUMP_FORWARD:
 						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY,App->player2);
-						//if (position.x < 825)
-						//{
-							position.x += speedX;
-							/*if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving == false)
-							{
-								if (App->render->camera.x > -1004)
-								{
-									App->render->camera.x -= speedX * 2;
-								}
-							}*/
-						//}
+						position.x += speedX;
+
 						JumpCount = 1;
 						if (JumpCount == 1) {
 							if (position.y == 220) {
@@ -497,17 +465,8 @@ update_status ModulePlayer2::Update() {
 						break;
 					case ST_JUMP_BACKWARD:
 						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
-						//if (position.x > 0)
-						//{
-							position.x -= (0.6 *speedX);
-							/*if (-(position.x * 2) >= App->render->camera.x - 5)
-							{
-								if (App->render->camera.x < 0)
-								{
-									App->render->camera.x += speedX * 2;
-								}
-							}*/
-						//}
+						position.x -= (0.6 *speedX);
+
 						JumpCount = 1;
 						if (JumpCount == 1) {
 							if (position.y == 220) {
