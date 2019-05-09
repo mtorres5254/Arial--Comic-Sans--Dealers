@@ -461,17 +461,17 @@ update_status ModulePlayer2::Update() {
 						break;
 					case ST_JUMP_FORWARD:
 						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY,App->player2);
-						if (position.x < 825)
-						{
+						//if (position.x < 825)
+						//{
 							position.x += speedX;
-							if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving == false)
+							/*if (-((position.x - 60) * 2) <= App->render->camera.x - SCREEN_WIDTH && App->input->camMoving == false)
 							{
 								if (App->render->camera.x > -1004)
 								{
 									App->render->camera.x -= speedX * 2;
 								}
-							}
-						}
+							}*/
+						//}
 						JumpCount = 1;
 						if (JumpCount == 1) {
 							if (position.y == 220) {
@@ -497,17 +497,17 @@ update_status ModulePlayer2::Update() {
 						break;
 					case ST_JUMP_BACKWARD:
 						colliderplayer = App->collision->AddCollider({ position.x + 7 ,position.y - 90,45,90 }, COLLIDER_ENEMY, App->player2);
-						if (position.x > 0)
-						{
+						//if (position.x > 0)
+						//{
 							position.x -= (0.6 *speedX);
-							if (-(position.x * 2) >= App->render->camera.x - 5)
+							/*if (-(position.x * 2) >= App->render->camera.x - 5)
 							{
 								if (App->render->camera.x < 0)
 								{
 									App->render->camera.x += speedX * 2;
 								}
-							}
-						}
+							}*/
+						//}
 						JumpCount = 1;
 						if (JumpCount == 1) {
 							if (position.y == 220) {
@@ -715,8 +715,8 @@ void ModulePlayer2::OnCollision(Collider* c1, Collider* c2) {
 	{
 		moveb = false;
 	
-		LOG("WALL LEFT");
-		LOG("%d", App->scene_ryu->wallRight->rect.x);
+		//LOG("WALL LEFT");
+		//LOG("%d", App->scene_ryu->wallRight->rect.x);
 
 		if (App->render->camera.x < 0)
 		{
@@ -729,8 +729,8 @@ void ModulePlayer2::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_WALL_RIGHT)//RIGHT
 	{
 		moveb = false;
-		LOG("WALL RIGHT");
-		LOG("%d", App->scene_ryu->wallRight->rect.x);
+		//LOG("WALL RIGHT");
+		//LOG("%d", App->scene_ryu->wallRight->rect.x);
 
 		if (App->render->camera.x > -1004)
 		{
