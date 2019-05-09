@@ -19,6 +19,7 @@
 #include "ModuleWinScene.h"
 #include "ModuleChunLi.h"
 #include "ModuleFont.h"
+#include "ModuleSceneDhalsim.h"
 
 Application::Application()
 {
@@ -31,16 +32,17 @@ Application::Application()
 	modules[6] = scene_honda = new ModuleSceneHonda();
 	modules[7] = scene_ken = new ModuleSceneKen();
 	modules[8] = scene_ryu = new ModuleSceneRyu();
-	modules[9] = player = new ModulePlayer();	
-	modules[10] = player2 = new ModulePlayer2();
-	modules[11] = chunli = new ModuleChunLi();
-	modules[12] = fade = new ModuleFadeToBlack();
-	modules[13] = welcome_page = new ModuleWelcomePage();
-	modules[14] = particle = new ModuleParticles();
-	modules[15] = collision = new ModuleCollision();
-	modules[16] = UI = new ModuleUI();
-	modules[17] = lose_scene = new ModuleLoseScene();
-	modules[18] = font = new ModuleFont();
+	modules[9] = scene_dhalsim = new ModuleSceneDhalsim();
+	modules[10] = player = new ModulePlayer();	
+	modules[11] = player2 = new ModulePlayer2();
+	modules[12] = chunli = new ModuleChunLi();
+	modules[13] = fade = new ModuleFadeToBlack();
+	modules[14] = welcome_page = new ModuleWelcomePage();
+	modules[15] = particle = new ModuleParticles();
+	modules[16] = collision = new ModuleCollision();
+	modules[17] = UI = new ModuleUI();
+	modules[18] = lose_scene = new ModuleLoseScene();
+	modules[19] = font = new ModuleFont();
 	
 }	
 
@@ -61,6 +63,7 @@ bool Application::Init()
 	// Disable the map that you do not start with
 	scene_honda->Disable();
 	scene_ken->Disable();
+	scene_dhalsim->Disable();
 	scene_ryu->Disable();
 	lose_scene->Disable();
 	congrats_screen->Disable();
