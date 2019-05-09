@@ -14,6 +14,7 @@
 #include "ModuleUI.h"
 #include "ModuleLoseScene.h"
 #include "ModuleChunLi.h"
+#include "ModuleSceneDhalsim.h"
 
 
 
@@ -143,6 +144,12 @@ update_status ModuleSceneRyu::Update()
 			App->player2->victorycount++;
 		}
 	}
+	
+	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
 
+		App->fade->FadeToBlack(App->scene_ryu, App->scene_dhalsim, 2.0f);
+		App->audio->StopMusic(2000);
+
+	}
 	return UPDATE_CONTINUE;
 }

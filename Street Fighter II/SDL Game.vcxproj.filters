@@ -92,6 +92,9 @@
     <ClInclude Include="ModuleChunLi.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleSceneDhalsim.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -158,6 +161,9 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleChunLi.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSceneDhalsim.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
