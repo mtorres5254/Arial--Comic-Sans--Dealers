@@ -5,8 +5,6 @@
 #include "ModuleInput.h"
 #include "ModuleWelcomePage.h"
 #include "ModuleCongratsScreen.h"
-#include "ModuleSceneKen.h"
-#include "ModuleSceneHonda.h"
 #include "SDL/include/SDL.h"
 
 ModuleRender::ModuleRender() : Module()
@@ -55,25 +53,6 @@ update_status ModuleRender::PreUpdate()
 update_status ModuleRender::Update()	
 {
 	int speed = 3;
-
-	if (App->scene_honda->IsEnabled() == true)
-	{
-		if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_STATE::KEY_REPEAT)
-		{
-			if (camera.x < -153)//Ryu Scene
-			{
-				camera.x += speed;
-
-			}
-		}
-		if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_STATE::KEY_REPEAT)
-		{
-			if (camera.x > -765)//Ryu Scence
-			{
-				camera.x -= speed;
-			}
-		}
-	}
 
 	return update_status::UPDATE_CONTINUE;
 }

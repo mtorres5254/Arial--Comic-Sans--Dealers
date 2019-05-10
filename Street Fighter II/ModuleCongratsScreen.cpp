@@ -8,7 +8,6 @@
 #include "ModuleCongratsScreen.h"
 #include "ModuleWelcomePage.h"
 #include "ModuleAudio.h"
-#include "ModulePlayer.h"
 #include "ModuleUI.h"
 
 ModuleCongratsScreen::ModuleCongratsScreen()

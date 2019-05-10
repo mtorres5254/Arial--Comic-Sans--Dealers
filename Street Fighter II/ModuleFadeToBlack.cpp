@@ -5,8 +5,6 @@
 #include "ModuleRender.h"
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
-#include "ModuleSceneKen.h"
-#include "ModuleSceneHonda.h"
 
 ModuleFadeToBlack::ModuleFadeToBlack()
 {
@@ -43,15 +41,7 @@ update_status ModuleFadeToBlack::Update()
 				
 				moduleOff->Disable();
 				moduleOn->Enable();
-				if (moduleOn == App->scene_honda)
-				{
-					App->render->camera.x = -153;
-					App->render->camera.y = 0;
-				}
-				else
-				{
-					App->render->camera.x = App->render->camera.y = 0;
-				}
+				App->render->camera.x = App->render->camera.y = 0;
 							
 				// ---
 				total_time += total_time;

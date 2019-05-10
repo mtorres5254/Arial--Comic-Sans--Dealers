@@ -3,18 +3,16 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleSceneDhalsim.h"
-#include "ModuleSceneRyu.h"
-#include "ModulePlayer.h"
 #include "ModuleInput.h"
 #include "ModuleFadeToBlack.h"
 #include "Module.h"
 #include "ModuleCongratsScreen.h"
 #include "ModuleAudio.h"
-#include "ModulePlayer2.h"
 #include "ModuleCollision.h"
 #include "ModuleUI.h"
 #include "ModuleLoseScene.h"
 #include "ModuleChunLi.h"
+#include "ModuleChunLi2.h"
 
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -65,7 +63,7 @@ bool ModuleSceneDhalsim::Start()
 	App->audio->PlayMusic(music, 5000);
 	//
 	App->chunli->Enable();
-	//App->player2->Enable();
+	App->chunli2->Enable();
 	App->collision->Enable();
 	App->UI->Enable();
 
@@ -79,9 +77,8 @@ bool ModuleSceneDhalsim::CleanUp()
 
 	App->textures->Unload(graphics);
 	App->audio->UnloadMusic(music);
-	App->player->Disable();
-	App->player2->Disable();
 	App->chunli->Disable();
+	App->chunli2->Disable();
 	App->collision->Disable();
 	App->UI->Disable();
 
@@ -98,33 +95,33 @@ update_status ModuleSceneDhalsim::Update()
 	App->render->Blit(graphics, 390, 79, &rightelephant); // Right elephant in the background 
 	App->render->Blit(graphics, -338, 176, &ground);
 
-	if (App->player->victorycount == 2) {
+	if (App->chunli->victorycount == 2) {
 		App->fade->FadeToBlack(App->scene_dhalsim, App->lose_scene, 2.0f);
 		App->audio->StopMusic(250);
 	}
 
-	if (App->player2->victorycount == 2) {
+	if (App->chunli2->victorycount == 2) {
 		App->fade->FadeToBlack(App->scene_dhalsim, App->congrats_screen, 2.0f);
 		App->audio->StopMusic(250);
 	}
 
 	if (App->UI->time <= 0) {
-		if (App->player->life > App->player2->life) {
-			App->player->victorycount++;
+		if (App->chunli->life > App->chunli2->life) {
+			App->chunli->victorycount++;
 		}
-		if (App->player->life < App->player2->life) {
-			App->player2->victorycount++;
+		if (App->chunli->life < App->chunli2->life) {
+			App->chunli2->victorycount++;
 		}
 		else
 		{
-			App->player->victorycount++;
-			App->player2->victorycount++;
+			App->chunli->victorycount++;
+			App->chunli2->victorycount++;
 		}
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
 
-		App->fade->FadeToBlack(App->scene_dhalsim, App->scene_ryu, 2.0f);
+		App->fade->FadeToBlack(App->scene_dhalsim, App->congrats_screen, 2.0f);
 		App->audio->StopMusic(2000);
 
 	}

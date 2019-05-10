@@ -10,8 +10,6 @@
 #include "ModuleUI.h"
 #include "ModuleLoseScene.h"
 #include "ModuleWelcomePage.h"
-#include "ModulePlayer.h"
-#include "ModulePlayer2.h"
 
 ModuleLoseScene::ModuleLoseScene() {
 	background.x = 0;
