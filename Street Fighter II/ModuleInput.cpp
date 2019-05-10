@@ -17,6 +17,16 @@ bool ModuleInput::Init()
 	LOG("Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
+	SDL_Init(SDL_INIT_JOYSTICK);
+
+		//Load joystick
+		gGameController = SDL_JoystickOpen(0);
+		if (gGameController == NULL)
+		{
+			LOG("Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError());
+		}
+	
+
 
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{

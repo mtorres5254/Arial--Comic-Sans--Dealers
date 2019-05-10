@@ -9,7 +9,7 @@
 #include <list>
 
 #define MAX_KEYS 300
-
+#define JOYSTICK_DEAD_ZONE 8000
 enum KEY_STATE
 {
 	KEY_IDLE = 0,
@@ -20,6 +20,10 @@ enum KEY_STATE
 
 class ModuleInput : public Module
 {
+
+public:
+
+	SDL_Joystick* gGameController;
 public:
 
 	ModuleInput();
