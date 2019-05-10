@@ -21,20 +21,8 @@ bool ModuleInput::Init()
 	SDL_Init(SDL_INIT_GAMECONTROLLER);
 
 	//Load joystick
-	for (int i = 0; i < SDL_NumJoysticks(); ++i) {
-		if (SDL_IsGameController(i)) {
-			gGameController = SDL_GameControllerOpen(i);
-			if (gGameController) {
-				break;
-			}
-			else {
-				fprintf(stderr, "Could not open gamecontroller %i: %s\n", i, SDL_GetError());
-			}
-		}
-	}
-	if (gGameController == NULL)
-	{
-		LOG("Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError());
+	if (GamepadLoad(gGameController) == true) {
+		Gamepad = true;
 	}
 	
 
@@ -55,6 +43,11 @@ update_status ModuleInput::PreUpdate()
 	SDL_PumpEvents();
 	SDL_Event event;
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
+
+	if (Gamepad == false && SDL_NumJoysticks() > 0) {
+		GamepadLoad(gGameController);
+		Gamepad = true;
+	}
 
 	for (int i = 0; i < MAX_KEYS; ++i)
 	{
@@ -103,4 +96,20 @@ bool ModuleInput::CleanUp()
 	LOG("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER);
 	return true;
+}
+
+bool ModuleInput::GamepadLoad(SDL_GameController* Gamepad) {
+	for (int i = 0; i < SDL_NumJoysticks(); ++i) {
+		if (SDL_IsGameController(i)) {
+			if (Gamepad == nullptr) {
+				Gamepad = SDL_GameControllerOpen(i);
+				if (Gamepad) {
+					return true;
+				}
+				else {
+					fprintf(stderr, "Could not open gamecontroller %i: %s\n", i, SDL_GetError());
+				}
+			}
+		}
+	}
 }

@@ -33,10 +33,13 @@ public:
 	update_status PreUpdate();
 	bool CleanUp();
 
+	bool GamepadLoad(SDL_GameController* Gamepad);
+
 public:
 	KEY_STATE keyboard[MAX_KEYS];
 	std::list<SDL_Event> eventList;
 	bool camMoving,border;
+	bool Gamepad = false;
 };
 
 #endif // __ModuleInput_H__
