@@ -18,16 +18,25 @@ bool ModuleInput::Init()
 	LOG("Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
-	SDL_Init(SDL_INIT_JOYSTICK);
+	SDL_Init(SDL_INIT_GAMECONTROLLER);
 
-		//Load joystick
-		gGameController = SDL_JoystickOpen(0);
-		if (gGameController == NULL)
-		{
-			LOG("Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError());
+	//Load joystick
+	for (int i = 0; i < SDL_NumJoysticks(); ++i) {
+		if (SDL_IsGameController(i)) {
+			gGameController = SDL_GameControllerOpen(i);
+			if (gGameController) {
+				break;
+			}
+			else {
+				fprintf(stderr, "Could not open gamecontroller %i: %s\n", i, SDL_GetError());
+			}
 		}
+	}
+	if (gGameController == NULL)
+	{
+		LOG("Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError());
+	}
 	
-
 
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
@@ -92,6 +101,6 @@ update_status ModuleInput::PreUpdate()
 bool ModuleInput::CleanUp()
 {
 	LOG("Quitting SDL input event subsystem");
-	SDL_QuitSubSystem(SDL_INIT_EVENTS);
+	SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER);
 	return true;
 }
