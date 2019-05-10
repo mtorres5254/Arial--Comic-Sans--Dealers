@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "SDL/include/SDL.h"
+#include "ModuleRender.h"
 
 ModuleInput::ModuleInput() : Module()
 {
@@ -66,6 +67,16 @@ update_status ModuleInput::PreUpdate()
 
 	if (keyboard[SDL_SCANCODE_ESCAPE])
 		return update_status::UPDATE_STOP;
+
+	if (keyboard[SDL_SCANCODE_O]) {
+		App->render->camera.x += 1;
+	}
+
+	if (keyboard[SDL_SCANCODE_P]) {
+		App->render->camera.x -= 1;
+	}
+
+		
 
 	while (SDL_PollEvent(&event) != 0)
 	{

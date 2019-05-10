@@ -19,6 +19,8 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+	void roundpoints();
+	void fadeto();
 
 public:
 
@@ -26,16 +28,17 @@ public:
 
 	SDL_Rect ground;
 	SDL_Rect background;
-	SDL_Rect rightelephant;
-	SDL_Rect leftelephant;
-	/*
+
+
+	
+	
 	Animation rightelephant1;
-	Animation rightelephant2;
-	Animation rightelephant3;
+	//Animation rightelephant2;
+	//Animation rightelephant3;
 	Animation leftelephant1;
-	Animation leftelephant2;
-	Animation leftelephant3;
-	*/
+	//Animation leftelephant2;
+	//Animation leftelephant3;
+	
 	Mix_Music* music;
 
 	float foreground_pos;

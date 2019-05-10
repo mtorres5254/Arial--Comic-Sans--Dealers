@@ -278,8 +278,8 @@ update_status ModuleChunLi::Update()
 						jump_neutral_punch.Reset();
 						jump_backward_punch.Reset();
 						jump_forward_punch.Reset();
-						Crouch_punch.Reset();				
-						
+						Crouch_punch.Reset();	
+						kick.Reset();
 						
 
 						break;

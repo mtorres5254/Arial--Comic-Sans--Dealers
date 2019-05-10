@@ -20,10 +20,10 @@
 ModuleSceneDhalsim::ModuleSceneDhalsim()
 {
 	// Ground
-	ground.x = 53;
-	ground.y = 777;
-	ground.w = 1302;
-	ground.h = 73;
+	ground.x = 234;
+	ground.y = 750;
+	ground.w = 821;
+	ground.h = 91;
 
 	// Background 
 	background.x = 21;
@@ -33,17 +33,22 @@ ModuleSceneDhalsim::ModuleSceneDhalsim()
 
 	// Left elephant in the background
 	
-	leftelephant.x = 26;
-	leftelephant.y = 34;
-	leftelephant.w = 115;
-	leftelephant.h = 84;
+	
 
+	leftelephant1.PushBack1({ 27,34,115,84 }, {}, {}, {}, {});
+	leftelephant1.PushBack1({ 147,34,115,84 }, {}, {}, {}, {});
+	leftelephant1.PushBack1({ 267,34,115,84 }, {}, {}, {}, {});
+	leftelephant1.PushBack1({ 147,34,115,84 }, {}, {}, {}, {});
+	leftelephant1.speed = 0.05f;
 	// Right elephant in the background
 
-	rightelephant.x = 635;
-	rightelephant.y = 34;
-	rightelephant.w = 115;
-	rightelephant.h = 84;
+
+	rightelephant1.PushBack1({ 635,34,115,84 }, {}, {}, {}, {});
+	rightelephant1.PushBack1({ 515,34,115,84 }, {}, {}, {}, {});
+	rightelephant1.PushBack1({ 395,34,115,84 }, {}, {}, {}, {});
+	rightelephant1.PushBack1({ 515,34,115,84 }, {}, {}, {}, {});
+	rightelephant1.speed = 0.05f;
+
 
 	// for moving the foreground
 	foreground_pos = 0;
@@ -91,20 +96,19 @@ update_status ModuleSceneDhalsim::Update()
 {
 
 	// Draw everything --------------------------------------
-	App->render->Blit(graphics, 0, 0, &background); // background
-	App->render->Blit(graphics, 119, 79, &leftelephant);  //Left elephant in the background 
-	App->render->Blit(graphics, 390, 79, &rightelephant); // Right elephant in the background 
-	App->render->Blit(graphics, -338, 176, &ground);
+	App->render->Blit(graphics, 0, -16, &background, 0.92f); // background
+	App->render->Blit(graphics, 119, 63, &(leftelephant1.GetCurrentFrame()), 0.92f);  //Left elephant in the background 
+	App->render->Blit(graphics, 390, 63, &(rightelephant1.GetCurrentFrame()), 0.92f); // Right elephant in the background 
+	App->render->Blit(graphics, 0, 133, &ground);
 
-	if (App->chunli->victorycount == 2) {
-		App->fade->FadeToBlack(App->scene_dhalsim, App->lose_scene, 2.0f);
-		App->audio->StopMusic(250);
-	}
+	
+	roundpoints();
+	fadeto();
 
-	if (App->chunli2->victorycount == 2) {
-		App->fade->FadeToBlack(App->scene_dhalsim, App->congrats_screen, 2.0f);
-		App->audio->StopMusic(250);
-	}
+	return UPDATE_CONTINUE;
+}
+
+void ModuleSceneDhalsim::roundpoints() {
 
 	if (App->UI->time <= 0) {
 		if (App->chunli->life > App->chunli2->life) {
@@ -119,6 +123,19 @@ update_status ModuleSceneDhalsim::Update()
 			App->chunli2->victorycount++;
 		}
 	}
+}
+
+void ModuleSceneDhalsim::fadeto() {
+
+	if (App->chunli->victorycount == 2) {
+		App->fade->FadeToBlack(App->scene_dhalsim, App->lose_scene, 2.0f);
+		App->audio->StopMusic(250);
+	}
+
+	if (App->chunli2->victorycount == 2) {
+		App->fade->FadeToBlack(App->scene_dhalsim, App->congrats_screen, 2.0f);
+		App->audio->StopMusic(250);
+	}
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
 
@@ -126,5 +143,4 @@ update_status ModuleSceneDhalsim::Update()
 		App->audio->StopMusic(2000);
 
 	}
-	return UPDATE_CONTINUE;
 }
