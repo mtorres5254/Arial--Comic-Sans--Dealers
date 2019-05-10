@@ -7,7 +7,8 @@
 #include "ModuleChunLi.h"
 #include "ModuleChunLi2.h"
 #include "ModuleUI.h"
-#include "ModuleChunLi.h"
+#include "ModuleInput.h"
+
 
 
 ModuleUI::ModuleUI() {
@@ -99,8 +100,28 @@ update_status ModuleUI:: Update()
 	HealthBar1.w = App->chunli->healthbar;
 	HealthBar2.w = App->chunli2->healthbar;
 
+	SDL_Event event;
+	int max = App->input->eventList.size();
+	for (int a = 0; a < max; ++a)
+	{
+		event = App->input->eventList.front();
+		App->input->eventList.pop_front();
+
+		if (event.key.keysym.sym == SDLK_F7 && event.key.state == SDL_PRESSED && GamepadInfo == false) {
+			GamepadInfo = true;
+		}
+		else if (event.key.keysym.sym == SDLK_F7 && event.key.state == SDL_PRESSED && GamepadInfo == true) {
+			GamepadInfo = false;
+		}
+
+	}
+
 	//Render
 	Counter();
+	if (GamepadInfo == true) {
+		GamepadDebug();
+
+	}
 
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - RedBar1.w - KObar.w / 2, 20, &RedBar1, false);
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - HealthBar1.w - KObar.w / 2, 20, &HealthBar1, false);
@@ -131,24 +152,6 @@ update_status ModuleUI:: Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleUI::Round1() {
-	App->font->BlitText(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2, font_Rounds, "r1");
-	App->audio->PlayChunk(VoiceRound, 0);
-	App->audio->PlayChunk(Voice1, 0);
-	App->audio->PlayChunk(VoiceFight, 0);
-}
-void ModuleUI::Round2() {
-	App->font->BlitText(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, font_Rounds, "r2");
-	App->audio->PlayChunk(VoiceRound, 0);
-	App->audio->PlayChunk(Voice2, 0);
-	App->audio->PlayChunk(VoiceFight, 0);
-}
-void ModuleUI::Round3() {
-	App->font->BlitText(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, font_Rounds, "r3");
-	App->audio->PlayChunk(VoiceRound, 0);
-	App->audio->PlayChunk(Voice3, 0);
-	App->audio->PlayChunk(VoiceFight, 0);
-}
 
 void ModuleUI::Counter() {
 	if (timenow > 0)
@@ -236,4 +239,9 @@ void ModuleUI::Counter() {
 		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "0");
 		break;
 	}
+}
+
+void ModuleUI::GamepadDebug() {
+	//escriure aqui el codi que mostra la info debug
+	App->font->BlitText(0, 0, font_id, "hola");
 }

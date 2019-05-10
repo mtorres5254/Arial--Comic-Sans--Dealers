@@ -686,10 +686,10 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 				break;
 			}
 		if (event.caxis.type == SDL_CONTROLLERAXISMOTION) {
-			switch (event.caxis.axis) 
+			/*switch (event.caxis.axis) 
 			{
 			case SDL_CONTROLLER_AXIS_LEFTY:
-				if (event.caxis.value > 6551) {
+				/*if (event.caxis.value > 6551) {
 					down = true;
 				}
 				if (event.caxis.value < -6551) {
@@ -697,14 +697,14 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 				}
 				break;
 			case SDL_CONTROLLER_AXIS_LEFTX:
-				if (event.caxis.value > 6551) {
+				/*if (event.caxis.value > 6551) {
 					right = true;
 				}
 				if (event.caxis.value < -6551) {
 					left = true;
 				}
 				break;
-			}
+			} */
 		}
 		
 		App->input->eventList.push_back(event);
@@ -786,7 +786,7 @@ void ModuleChunLi::ResetPlayer() {
 	position.x = 180; //Returns to its original position
 	if (App->chunli2->position.x != 300 || App->chunli2->life != 1000) {
 		ActiveDeath = 0;
-		//App->chunli2->ResetPlayer();
+		App->chunli2->ResetPlayer();
 		App->UI->time = 99;
 		App->UI->Counter1 = 9;
 		App->UI->Counter2 = 9;

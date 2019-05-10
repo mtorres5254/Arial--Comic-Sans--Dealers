@@ -24,9 +24,7 @@ public:
 	bool CleanUp();
 
 	void Counter();
-	void Round1();
-	void Round2();
-	void Round3();
+	void GamepadDebug();
 
 public:
 
@@ -51,6 +49,8 @@ public:
 	int Counter1;
 	int Counter2;
 	int timenow;
+
+	bool GamepadInfo = false;
 
 	Mix_Chunk* VoiceRound;
 	Mix_Chunk* Voice1;
