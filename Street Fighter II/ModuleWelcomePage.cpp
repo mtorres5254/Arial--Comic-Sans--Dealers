@@ -27,7 +27,7 @@ bool ModuleWelcomePage::Start()
 	LOG("Loading WelcomePage");
 
 	graphics = App->textures->Load("Assets/Images/TitleScreen.png");
-	music = App->audio->LoadMusic("Assets/Sound/start_music.ogg");
+	music = App->audio->LoadMusic("Assets/Sound/Musics/start_music.ogg");
 	App->audio->PlayMusic(music, 300);
 	start_sound = App->audio->LoadChunk("Assets/Sound/start_sound.wav");
 	App->render->camera.x = App->render->camera.y = 0;

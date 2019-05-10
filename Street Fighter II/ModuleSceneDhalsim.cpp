@@ -59,7 +59,7 @@ bool ModuleSceneDhalsim::Start()
 	LOG("Loading Dhalsim scene");
 
 	graphics = App->textures->Load("Assets/Images/Dhalsim_stage.png");
-	music = App->audio->LoadMusic("Assets/Sound/dhalsim.ogg");
+	music = App->audio->LoadMusic("Assets/Sound/Musics/dhalsim.ogg");
 	App->audio->PlayMusic(music, 5000);
 	//
 	App->chunli->Enable();

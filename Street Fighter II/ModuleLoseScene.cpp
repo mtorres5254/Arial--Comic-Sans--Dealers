@@ -26,7 +26,7 @@ bool ModuleLoseScene::Start() {
 	LOG("Loading Lose Screen");
 
 	graphics = App->textures->Load("Assets/Images/Lose.png");
-	music = App->audio->LoadMusic("Assets/Sound/lose_scene.ogg");
+	music = App->audio->LoadMusic("Assets/Sound/Musics/lose_scene.ogg");
 	App->audio->PlayMusic(music, 300);
 	App->render->camera.x = App->render->camera.y = 0;
 

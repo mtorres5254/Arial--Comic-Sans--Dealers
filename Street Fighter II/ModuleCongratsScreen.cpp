@@ -26,7 +26,7 @@ bool ModuleCongratsScreen::Start()
 	LOG("Loading CongratsScreen");
 
 	graphics = App->textures->Load("Assets/Images/CongratsScreen.png");	
-	music = App->audio->LoadMusic("Assets/Sound/congrats.ogg");
+	music = App->audio->LoadMusic("Assets/Sound/Musics/congrats.ogg");
 	App->audio->PlayMusic(music, 300);
 	App->render->camera.x = App->render->camera.y = 0;
 
