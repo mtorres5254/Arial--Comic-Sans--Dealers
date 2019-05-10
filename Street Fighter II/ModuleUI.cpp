@@ -4,10 +4,9 @@
 #include "ModuleAudio.h"
 #include "SDL/include/SDL.h"
 #include "ModuleRender.h"
-#include "ModulePlayer.h"
-#include "ModulePlayer2.h"
+#include "ModuleChunLi.h"
+#include "ModuleChunLi2.h"
 #include "ModuleUI.h"
-#include "ModuleSceneRyu.h"
 #include "ModuleChunLi.h"
 
 
@@ -100,7 +99,7 @@ update_status ModuleUI:: Update()
 {
 	//Logic
 	HealthBar1.w = App->chunli->healthbar;
-	HealthBar2.w = App->player2->healthbar;
+	HealthBar2.w = App->chunli2->healthbar;
 
 	//Render
 	Counter();
@@ -110,7 +109,7 @@ update_status ModuleUI:: Update()
 	App->render->Blit(graphics2, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &RedBar2, false);
 	App->render->Blit(graphics2, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &HealthBar2, false);
 
-	if (App->player->life > 250 && App->player2->life > 250) {
+	if (App->chunli->life > 250 && App->chunli2->life > 250) {
 		App->render->Blit(graphics1, SCREEN_WIDTH / 2 - (KObar.w / 2), 15, &KObar, false);
 	}
 	else {
@@ -118,15 +117,15 @@ update_status ModuleUI:: Update()
 	}
 
 
-	if (App->player2->victorycount == 1 || App->player2->victorycount == 2) {
+	if (App->chunli2->victorycount == 1 || App->chunli2->victorycount == 2) {
 		App->render->Blit(graphics1, (SCREEN_WIDTH / 2)-153-(KObar.w/2)-20, 20, &RoundBar1, false);
 		victorycount = 1;
 	}
 
-	if (App->player->victorycount == 1 || App->player->victorycount == 2) {
+	if (App->chunli->victorycount == 1 || App->chunli->victorycount == 2) {
 	
 		App->render->Blit(graphics2, (SCREEN_WIDTH / 2) + 153 + (KObar.w / 2) , 20, &RoundBar2, false);		
-		if(App->player->DeathCount==0)
+		if(App->chunli->DeathCount==0)
 		victorycount1 = 1;
 	}
 	

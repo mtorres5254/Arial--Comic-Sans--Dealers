@@ -53,10 +53,6 @@ private:
 
 public:
 
-	Particle hadouken;
-	Particle hadoukenFinish;
-	Particle hadoukenSym;
-	Particle hadoukenFinishSym;
 	
 	
 };

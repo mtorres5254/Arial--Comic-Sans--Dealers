@@ -3,21 +3,17 @@
 #include "ModuleRender.h"
 #include "ModuleInput.h"
 #include "ModuleTextures.h"
-#include "ModuleSceneKen.h"
-#include "ModuleSceneHonda.h"
-#include "ModulePlayer.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleWelcomePage.h"
 #include "ModuleCongratsScreen.h"
 #include "ModuleAudio.h"
 #include "ModuleParticles.h"
-#include "ModulePlayer2.h"
 #include "ModuleCollision.h"
 #include "ModuleUI.h"
 #include "ModuleLoseScene.h"
-#include "ModuleSceneRyu.h"
 #include "ModuleWinScene.h"
 #include "ModuleChunLi.h"
+#include "ModuleChunLi2.h"
 #include "ModuleFont.h"
 #include "ModuleSceneDhalsim.h"
 
@@ -29,20 +25,17 @@ Application::Application()
 	modules[3] = textures = new ModuleTextures();
 	modules[4] = audio = new ModuleAudio();
 	modules[5] = congrats_screen = new ModuleCongratsScreen();
-	modules[6] = scene_honda = new ModuleSceneHonda();
-	modules[7] = scene_ken = new ModuleSceneKen();
-	modules[8] = scene_ryu = new ModuleSceneRyu();
-	modules[9] = scene_dhalsim = new ModuleSceneDhalsim();
-	modules[10] = player = new ModulePlayer();	
-	modules[11] = player2 = new ModulePlayer2();
-	modules[12] = chunli = new ModuleChunLi();
-	modules[13] = fade = new ModuleFadeToBlack();
-	modules[14] = welcome_page = new ModuleWelcomePage();
-	modules[15] = particle = new ModuleParticles();
-	modules[16] = collision = new ModuleCollision();
-	modules[17] = UI = new ModuleUI();
-	modules[18] = lose_scene = new ModuleLoseScene();
-	modules[19] = font = new ModuleFont();
+	modules[6] = scene_dhalsim = new ModuleSceneDhalsim();
+	modules[7] = chunli = new ModuleChunLi();
+	modules[8] = chunli2 = new ModuleChunLi2();
+	modules[9] = fade = new ModuleFadeToBlack();
+	modules[10] = welcome_page = new ModuleWelcomePage();
+	modules[11] = particle = new ModuleParticles();
+	modules[12] = collision = new ModuleCollision();
+	modules[13] = UI = new ModuleUI();
+	modules[14] = lose_scene = new ModuleLoseScene();
+	modules[15] = font = new ModuleFont();
+	
 	
 }	
 
@@ -57,14 +50,10 @@ bool Application::Init()
 	bool ret = true;
 
 	// Player will be enabled on the first update of a new scene
-	player->Disable();
-	player2->Disable();
 	chunli->Disable();
+	chunli2->Disable();
 	// Disable the map that you do not start with
-	scene_honda->Disable();
-	scene_ken->Disable();
 	scene_dhalsim->Disable();
-	scene_ryu->Disable();
 	lose_scene->Disable();
 	congrats_screen->Disable();
 	collision->Disable();
@@ -82,7 +71,7 @@ bool Application::Init()
 update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
-	plyDistance = (player2->position.x + 60) - player->position.x;
+	plyDistance = (chunli2->position.x + 60) - chunli->position.x;
 	for(int i = 0; i < NUM_MODULES && ret == UPDATE_CONTINUE; ++i)
 		ret = modules[i]->IsEnabled() ? modules[i]->PreUpdate() : UPDATE_CONTINUE;
 

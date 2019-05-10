@@ -2,16 +2,12 @@
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
-#include "ModuleSceneRyu.h"
-#include "ModulePlayer.h"
 #include "ModuleInput.h"
 #include "ModuleFadeToBlack.h"
 #include "Module.h"
 #include "ModuleWelcomePage.h"
 #include "ModuleAudio.h"
-#include "ModuleUI.h"
 #include "ModuleLoseScene.h"
-#include "ModulePlayer2.h"
 #include "ModuleSceneDhalsim.h"
 
 

@@ -38,9 +38,6 @@
     <ClInclude Include="ModuleTextures.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModulePlayer.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="p2Point.h">
       <Filter>Containers</Filter>
     </ClInclude>
@@ -48,12 +45,6 @@
       <Filter>Containers</Filter>
     </ClInclude>
     <ClInclude Include="ModuleFadeToBlack.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleSceneHonda.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleSceneKen.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleWelcomePage.h">
@@ -68,9 +59,6 @@
     <ClInclude Include="ModuleParticles.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModulePlayer2.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleCollision.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -83,9 +71,6 @@
     <ClInclude Include="ModuleLoseScene.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleSceneRyu.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleFont.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -93,6 +78,9 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleSceneDhalsim.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleChunLi2.h">
       <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>
@@ -115,16 +103,7 @@
     <ClCompile Include="Globals.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="ModulePlayer.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleFadeToBlack.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleSceneHonda.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleSceneKen.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleWelcomePage.cpp">
@@ -139,9 +118,6 @@
     <ClCompile Include="ModuleParticles.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModulePlayer2.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleCollision.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -154,9 +130,6 @@
     <ClCompile Include="ModuleLoseScene.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleSceneRyu.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleFont.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -164,6 +137,9 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleSceneDhalsim.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleChunLi2.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
