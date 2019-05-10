@@ -33,11 +33,11 @@ public:
 	
 	
 	Animation rightelephant1;
-	//Animation rightelephant2;
-	//Animation rightelephant3;
+	Animation rightelephant2;
+	Animation rightelephant3;
 	Animation leftelephant1;
-	//Animation leftelephant2;
-	//Animation leftelephant3;
+	Animation leftelephant2;
+	Animation leftelephant3;
 	
 	Mix_Music* music;
 

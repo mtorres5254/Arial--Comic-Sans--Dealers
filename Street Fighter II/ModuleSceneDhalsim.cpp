@@ -40,7 +40,21 @@ ModuleSceneDhalsim::ModuleSceneDhalsim()
 	leftelephant1.PushBack1({ 267,34,115,84 }, {}, {}, {}, {});
 	leftelephant1.PushBack1({ 147,34,115,84 }, {}, {}, {}, {});
 	leftelephant1.speed = 0.05f;
+
+	leftelephant2.PushBack1({ 761,195,165,133 }, {}, {}, {}, {});
+	leftelephant2.PushBack1({ 928,195,220,133 }, {}, {}, {}, {});
+	leftelephant2.PushBack1({ 1150,195,229,133 }, {}, {}, {}, {});
+	leftelephant2.PushBack1({ 928,195,220,133 }, {}, {}, {}, {});
+	leftelephant2.speed = 0.05f;
+
+	leftelephant3.PushBack1({ 563,566,217,175 }, {}, {}, {}, {});
+	leftelephant3.PushBack1({ 783,566,291,175 }, {}, {}, {}, {});
+	leftelephant3.PushBack1({ 1077,566,302,175 }, {}, {}, {}, {});
+	leftelephant3.PushBack1({ 783,563,291,178 }, {}, {}, {}, {});
+	leftelephant3.speed = 0.05f;
 	// Right elephant in the background
+
+
 
 
 	rightelephant1.PushBack1({ 635,34,115,84 }, {}, {}, {}, {});
@@ -49,7 +63,13 @@ ModuleSceneDhalsim::ModuleSceneDhalsim()
 	rightelephant1.PushBack1({ 515,34,115,84 }, {}, {}, {}, {});
 	rightelephant1.speed = 0.05f;
 
+	rightelephant2.PushBack1({ 1213,36,165,133 }, {}, {}, {}, {});
+	rightelephant2.PushBack1({ 991,36,220,133 }, {}, {}, {}, {});
+	rightelephant2.PushBack1({ 762,36,300,133 }, {}, {}, {}, {});
+	rightelephant2.PushBack1({ 991,36,220,133 }, {}, {}, {}, {});
+	rightelephant2.speed = 0.05f;
 
+	
 	// for moving the foreground
 	foreground_pos = 0;
 	forward = true;
@@ -97,10 +117,17 @@ update_status ModuleSceneDhalsim::Update()
 
 	// Draw everything --------------------------------------
 	App->render->Blit(graphics, 0, -16, &background, 0.92f); // background
-	App->render->Blit(graphics, 119, 63, &(leftelephant1.GetCurrentFrame()), 0.92f);  //Left elephant in the background 
-	App->render->Blit(graphics, 390, 63, &(rightelephant1.GetCurrentFrame()), 0.92f); // Right elephant in the background 
+	
+	
+	
 	App->render->Blit(graphics, 0, 133, &ground);
+	App->render->Blit(graphics, 119, 63, &(leftelephant1.GetCurrentFrame()), 0.92f);
+	App->render->Blit(graphics, 390, 63, &(rightelephant1.GetCurrentFrame()), 0.92f); // Right elephant in the background 
 
+	App->render->Blit(graphics, -38, 50, &(leftelephant2.GetCurrentFrame()), 0.92f);//Left elephant in the background 
+	App->render->Blit(graphics, 432, 50, &(rightelephant2.GetCurrentFrame()), 0.92f);
+
+	App->render->Blit(graphics, -195, 50, &(leftelephant3.GetCurrentFrame()), 0.92f);
 	
 	roundpoints();
 	fadeto();
