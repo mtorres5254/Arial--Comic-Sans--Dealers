@@ -14,7 +14,7 @@ ModuleUI::ModuleUI() {
 
 	//HealthBar1
 	HealthBar1.x = 43;
-	HealthBar1.y=	24;
+	HealthBar1.y=  24;
 	HealthBar1.w = 153;
 	HealthBar1.h = 19;
 
@@ -24,12 +24,12 @@ ModuleUI::ModuleUI() {
 	RedBar1.h = 19;
 
 	//HealthBar2
-	HealthBar2.x = 284;
+	HealthBar2.x = 43;
 	HealthBar2.y = 24;
 	HealthBar2.w = 153;
 	HealthBar2.h = 19;
 
-	RedBar2.x = 284;
+	RedBar2.x = 43;
 	RedBar2.y = 54;
 	RedBar2.w = 153;
 	RedBar2.h = 19;
@@ -47,7 +47,7 @@ ModuleUI::ModuleUI() {
 	RoundBar1.h = 20;
 
 	//RoundBar2
-	RoundBar2.x = 216 ;
+	RoundBar2.x = 247 ;
 	RoundBar2.y = 39;
 	RoundBar2.w = 17;
 	RoundBar2.h = 20;
@@ -67,7 +67,6 @@ bool ModuleUI::Start()
 	bool ret = true;
 
 	graphics1 = App->textures->Load("Assets/Images/Battle_HUD.png"); 
-	graphics2 = App->textures->Load("Assets/Images/Battle_HUD2.png");
 	font_id = App->font->Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890", 1);
 	font_Rounds = App->font->Load("Assets/Images/font_round.png", "r123", 2);
 
@@ -90,7 +89,6 @@ bool ModuleUI::CleanUp()
 	LOG("Unloading UI graphics");
 
 	App->textures->Unload(graphics1);
-	App->textures->Unload(graphics2);
 
 	return true;
 }
@@ -106,8 +104,8 @@ update_status ModuleUI:: Update()
 
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - RedBar1.w - KObar.w / 2, 20, &RedBar1, false);
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - HealthBar1.w - KObar.w / 2, 20, &HealthBar1, false);
-	App->render->Blit(graphics2, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &RedBar2, false);
-	App->render->Blit(graphics2, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &HealthBar2, false);
+	App->render->BlitSym(graphics1, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &RedBar2, false);
+	App->render->BlitSym(graphics1, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &HealthBar2, false);
 
 	if (App->chunli->life > 250 && App->chunli2->life > 250) {
 		App->render->Blit(graphics1, SCREEN_WIDTH / 2 - (KObar.w / 2), 15, &KObar, false);
