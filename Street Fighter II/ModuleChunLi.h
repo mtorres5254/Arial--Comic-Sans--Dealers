@@ -72,6 +72,7 @@ public:
 	~ModuleChunLi();
 
 	bool Start();
+	update_status PreUpdate();
 	update_status Update();
 	bool CleanUp();
 	void OnCollision(Collider*, Collider*);

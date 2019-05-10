@@ -58,6 +58,7 @@ bool ModuleSceneDhalsim::Start()
 {
 	LOG("Loading Dhalsim scene");
 
+	App->render->camera.x = -120;
 	graphics = App->textures->Load("Assets/Images/Dhalsim_stage.png");
 	music = App->audio->LoadMusic("Assets/Sound/Musics/dhalsim.ogg");
 	App->audio->PlayMusic(music, 5000);

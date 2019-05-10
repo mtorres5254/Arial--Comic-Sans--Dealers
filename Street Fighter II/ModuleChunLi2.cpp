@@ -30,7 +30,7 @@ bool ModuleChunLi2::Start()
 
 	graphics = App->textures->Load("Assets/Images/ChunLi.png"); // arcade version
 
-	position.x = 300;
+	position.x = 375;
 	position.y = 220;
 
 	// idle animation (arcade sprite sheet)
@@ -211,6 +211,8 @@ bool ModuleChunLi2::Start()
 	return ret;
 }
 
+
+
 bool ModuleChunLi2::CleanUp()
 {
 	LOG("Unloading Player textures");
@@ -221,6 +223,18 @@ bool ModuleChunLi2::CleanUp()
 }
 
 
+update_status ModuleChunLi2::PreUpdate()
+{
+
+	for (int i = 0; i < MAX_COLLIDERS; i++)//deletes all the hitboxes at the start of the frame
+	{
+		if (colliders[i] != nullptr) {
+			colliders[i]->to_delete = true;
+			colliders[i] = nullptr;
+		}
+	}
+	return UPDATE_CONTINUE;
+}
 
 // Update: draw background
 update_status ModuleChunLi2::Update()
@@ -695,10 +709,10 @@ void ModuleChunLi2::internal_input(p2Qeue<ryu_inputs>& inputs)
 void ModuleChunLi2::ResetPlayer() {
 
 	life = 1000;
-	position.x = 300; //Returns to its original position
+	position.x = 375; 
 	if (App->chunli->position.x != 100 || App->chunli->life != 1000) {
 		ActiveDeath = 0;
-		App->chunli->ResetPlayer();
+		//App->chunli->ResetPlayer();
 		App->UI->time = 99;
 		App->UI->Counter1 = 9;
 		App->UI->Counter2 = 9;
