@@ -632,6 +632,81 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 				break;
 			}
 		}
+		if(event.cbutton.type == SDL_CONTROLLERBUTTONUP)
+			switch (event.cbutton.button)
+			{
+			case SDL_CONTROLLER_BUTTON_A:
+				return false;
+				break;
+			case SDL_CONTROLLER_BUTTON_B:
+				return false;
+				break;
+			case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
+				return false;
+				break;
+			case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+				inputs.Push(IN_CROUCH_UP2);
+				down = false;
+				break;
+			case SDL_CONTROLLER_BUTTON_DPAD_UP:
+				up = false;
+				break;
+			case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+				inputs.Push(IN_LEFT_UP2);
+				left = false;
+				break;
+			case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+				inputs.Push(IN_RIGHT_UP2);
+				right = false;
+				break;
+			}
+		if (event.cbutton.type == SDL_CONTROLLERBUTTONDOWN)
+			switch (event.cbutton.button)
+			{
+			case SDL_CONTROLLER_BUTTON_A:
+				inputs.Push(IN_X2);
+				break;
+			case SDL_CONTROLLER_BUTTON_B:
+				inputs.Push(IN_C2);
+				break;
+			case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
+				inputs.Push(IN_V2);
+				break;
+			case SDL_CONTROLLER_BUTTON_DPAD_UP:
+				up = true;
+				break;
+			case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+				down = true;
+				break;
+			case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+				left = true;
+				break;
+			case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+				right = true;
+				break;
+			}
+		if (event.caxis.type == SDL_CONTROLLERAXISMOTION) {
+			switch (event.caxis.axis) 
+			{
+			case SDL_CONTROLLER_AXIS_LEFTY:
+				if (event.caxis.value > 6551) {
+					down = true;
+				}
+				if (event.caxis.value < -6551) {
+					up = true;
+				}
+				break;
+			case SDL_CONTROLLER_AXIS_LEFTX:
+				if (event.caxis.value > 6551) {
+					right = true;
+				}
+				if (event.caxis.value < -6551) {
+					left = true;
+				}
+				break;
+			}
+		}
+		
 		App->input->eventList.push_back(event);
 	}
 

@@ -23,7 +23,7 @@ class ModuleInput : public Module
 
 public:
 
-	SDL_Joystick* gGameController;
+	SDL_GameController* gGameController;
 public:
 
 	ModuleInput();
