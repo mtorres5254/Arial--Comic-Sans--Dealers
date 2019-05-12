@@ -11,6 +11,7 @@
 #include "ModuleUI.h"
 #include "p2Qeue.h"
 #include "Application.h"
+#include "ModuleSceneDhalsim.h"
 
 
 
@@ -237,10 +238,7 @@ update_status ModuleChunLi2::Update()
 	p2Qeue<ryu_inputs> inputs;
 	ryu_states current_state = ST_UNKNOWN;
 
-	if (position.y == 220) {
-		speedX = 1;
-		speedY = 1;
-	}
+	positionlimits();
 
 
 	if (death == false) {
@@ -507,6 +505,34 @@ update_status ModuleChunLi2::Update()
 	}
 }
 
+
+void ModuleChunLi2::positionlimits() {
+
+	if (position.y == 220) {
+		speedX = 1;
+		speedY = 1;
+	}
+
+	if (position.x <= App->scene_dhalsim->background.x - 12) {
+		position.x = App->scene_dhalsim->background.x - 12;
+	}
+
+	if (position.x >= (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) -90 ) {
+		position.x = (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w)-90 ;
+	}
+	
+	if (abs(App->chunli->position.x - position.x) >= SCREEN_WIDTH -80 && position.x>App->chunli->position.x) {
+		App->chunli->position.x = position.x - SCREEN_WIDTH + 80;
+		position.x = App->chunli->position.x + SCREEN_WIDTH - 80;		
+	}
+
+	if (abs(App->chunli->position.x - position.x) >= SCREEN_WIDTH - 80 && position.x < App->chunli->position.x) {
+		
+		App->chunli->position.x = position.x + SCREEN_WIDTH - 80;
+		position.x = App->chunli->position.x - SCREEN_WIDTH + 80;
+	}
+}
+
 void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 
 	for (int i = 0; i < MAX_COLLIDERS; i++)//deletes all the hitboxes at the start of the frame
@@ -553,7 +579,10 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER && state == ST_WALK_FORWARD)
 	{
 
-		speedX = 0;
+		if (position.x < App->chunli2->position.x)
+			position.x -= 1;
+		else if (position.x > App->chunli2->position.x)
+			position.x += 1;
 
 	}
 

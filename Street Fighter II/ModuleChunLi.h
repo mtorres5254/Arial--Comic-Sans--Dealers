@@ -81,7 +81,8 @@ public:
 	void ResetPlayer();
 	void lifecondition(Animation*);
 	void colliders_and_blit(Animation*);
-
+	void positionlimits();
+	
 public:
 
 	SDL_Texture* graphics = nullptr;

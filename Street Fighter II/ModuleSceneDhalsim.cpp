@@ -132,13 +132,21 @@ update_status ModuleSceneDhalsim::Update()
 	roundpoints();
 	fadeto();
 	
-	if (App->chunli2->position.x - App->chunli->position.x < App->render->camera.w + 33 && App->render->camera.x < background.x - 12 && App->render->camera.x >(background.x - background.w) + SCREEN_WIDTH) {
+	if (App->chunli2->position.x - App->chunli->position.x < App->render->camera.w + 33) {
 			
 		App->render->camera.x = -((App->chunli->position.x + App->chunli2->position.x) / 2 - App->render->camera.w / 2 + 33);
 
 
 	}
+	if (App->render->camera.x >= background.x - 10) {
+		App->render->camera.x = background.x - 10;
+		
+	}
 	
+	if (App->render->camera.x <= (background.x - background.w) + SCREEN_WIDTH-28) {
+		App->render->camera.x = (background.x - background.w) + SCREEN_WIDTH-28;
+		
+	}
 
 	return UPDATE_CONTINUE;
 }

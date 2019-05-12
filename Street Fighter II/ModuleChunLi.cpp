@@ -11,6 +11,7 @@
 #include "ModuleUI.h"
 #include "p2Qeue.h"
 #include "Application.h"
+#include "ModuleSceneDhalsim.h"
 
 
 
@@ -235,20 +236,9 @@ update_status ModuleChunLi::Update()
 	Animation* current_animation = &idle;
 	p2Qeue<ryu_inputs2> inputs;
 	ryu_states2 current_state = ST_UNKNOWN2;
-
-	if (position.y == 220) {
-		speedX = 1;
-		speedY = 1;
-	}
-	if (position.x <App->render->camera.x-115) {
-		speedX = 0;
-		speedY = 0;
-	}
-
-
-
 	
-
+	positionlimits();
+	   
 
 	if (death == false) {
 		while (external_input(inputs))
@@ -515,6 +505,34 @@ update_status ModuleChunLi::Update()
 	}
 }
 
+void ModuleChunLi::positionlimits() {
+
+	if (position.y == 220) {
+		speedX = 1;
+		speedY = 1;
+	}
+	if (position.x <= App->scene_dhalsim->background.x - 12) {
+		position.x = App->scene_dhalsim->background.x - 12;
+	}
+
+	if (position.x >= (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) - 90) {
+		position.x = (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) - 90;
+	}
+	
+	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH-80 && position.x<App->chunli2->position.x) {
+		App->chunli2->position.x = position.x + SCREEN_WIDTH - 80;
+		position.x = App->chunli2->position.x -SCREEN_WIDTH+80;		
+		
+	}
+	
+	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH - 80 && position.x > App->chunli2->position.x) {
+
+		App->chunli2->position.x = position.x - SCREEN_WIDTH + 80;
+		position.x = App->chunli2->position.x + SCREEN_WIDTH - 80;
+	}
+
+}
+
 void ModuleChunLi::colliders_and_blit(Animation* current_animation) {
 
 	for (int i = 0; i < MAX_COLLIDERS; i++)//deletes all the hitboxes at the start of the frame
@@ -559,9 +577,12 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && state == ST_WALK_FORWARD2)
 	{
+		if (position.x < App->chunli2->position.x)
+			position.x -= 1;
 
-		speedX = 0;
-
+		else if (position.x > App->chunli2->position.x)
+			position.x += 1;
+	
 	}
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && (state == ST_JUMP_BACKWARD2 || state == ST_JUMP_FORWARD2 || state == ST_JUMP_NEUTRAL2)) {
