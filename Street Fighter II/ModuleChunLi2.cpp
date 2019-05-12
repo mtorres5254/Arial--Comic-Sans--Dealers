@@ -29,7 +29,7 @@ bool ModuleChunLi2::Start()
 
 	bool ret = true;
 
-	graphics = App->textures->Load("Assets/Images/ChunLi.png"); // arcade version
+	graphics = App->textures->Load("Assets/Images/ChunLi2.png"); // arcade version
 
 	position.x = 375;
 	position.y = 220;
@@ -554,6 +554,8 @@ void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 
 	}
 	r = current_animation->GetCurrentFrame();
+
+	
 
 
 	if (position.x < App->chunli->position.x) {
