@@ -218,21 +218,15 @@ bool ModuleChunLi::CleanUp()
 
 	App->textures->Unload(graphics);
 
-	return true;
-}
-
-
-update_status ModuleChunLi::PreUpdate()
-{
-	
-	for (int i = 0; i < MAX_COLLIDERS; i++)//deletes all the hitboxes at the start of the frame
+	for (int i = 0; i < MAX_COLLIDERS; i++)
 	{
 		if (colliders[i] != nullptr) {
 			colliders[i]->to_delete = true;
 			colliders[i] = nullptr;
 		}
 	}
-	return UPDATE_CONTINUE;
+
+	return true;
 }
 
 
@@ -246,6 +240,14 @@ update_status ModuleChunLi::Update()
 		speedX = 1;
 		speedY = 1;
 	}
+	if (position.x <App->render->camera.x-115) {
+		speedX = 0;
+		speedY = 0;
+	}
+
+
+
+	
 
 
 	if (death == false) {
@@ -505,6 +507,7 @@ update_status ModuleChunLi::Update()
 				current_state = state;
 
 				colliders_and_blit(current_animation);
+				
 
 				return UPDATE_CONTINUE;
 			}
@@ -544,12 +547,25 @@ void ModuleChunLi::colliders_and_blit(Animation* current_animation) {
 }
 
 void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && (state == ST_WALK_FORWARD2 || state == ST_WALK_BACKWARD2 || state == ST_IDLE2))
-	{
-		//speedX = 0;
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && state == ST_IDLE2)
+	{		
+		if (position.x < App->chunli2->position.x)
+			position.x -= 1;
+
+		else if (position.x > App->chunli2->position.x)
+			position.x += 1;
+
 	}
+
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && state == ST_WALK_FORWARD2)
+	{
+
+		speedX = 0;
+
+	}
+
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && (state == ST_JUMP_BACKWARD2 || state == ST_JUMP_FORWARD2 || state == ST_JUMP_NEUTRAL2)) {
-		speedX = -1;
+		//speedX = -1;
 
 	}
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY_SHOT)

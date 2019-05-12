@@ -219,24 +219,18 @@ bool ModuleChunLi2::CleanUp()
 
 	App->textures->Unload(graphics);
 
-	return true;
-}
-
-
-update_status ModuleChunLi2::PreUpdate()
-{
-
-	for (int i = 0; i < MAX_COLLIDERS; i++)//deletes all the hitboxes at the start of the frame
+	for (int i = 0; i < MAX_COLLIDERS; i++)
 	{
 		if (colliders[i] != nullptr) {
 			colliders[i]->to_delete = true;
 			colliders[i] = nullptr;
 		}
 	}
-	return UPDATE_CONTINUE;
+
+	return true;
 }
 
-// Update: draw background
+
 update_status ModuleChunLi2::Update()
 {
 	Animation* current_animation = &idle;
@@ -289,14 +283,14 @@ update_status ModuleChunLi2::Update()
 
 						current_animation = &forward;
 						punch.Reset();
-						position.x++;
+						position.x += speedX;
 						break;
 
 					case ST_WALK_BACKWARD:
 
 						current_animation = &backward;
 						punch.Reset();
-						position.x--;
+						position.x -= speedX;
 
 						break;
 					case ST_JUMP_NEUTRAL:
@@ -329,7 +323,7 @@ update_status ModuleChunLi2::Update()
 
 
 						current_animation = &jump_forward;
-						position.x += 3;
+						position.x += (3 * speedX);
 
 
 						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
@@ -358,7 +352,7 @@ update_status ModuleChunLi2::Update()
 
 
 						current_animation = &jump_backwards;
-						position.x -= 3;
+						position.x -= (3 * speedX);
 
 
 						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
@@ -545,12 +539,26 @@ void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 }
 
 void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
-	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER && (state == ST_WALK_FORWARD || state == ST_WALK_BACKWARD || state == ST_IDLE))
+	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER &&  state == ST_IDLE)
 	{
-		speedX = 0;
+		if (position.x < App->chunli->position.x)
+			position.x -= 1;
+
+		else if (position.x > App->chunli->position.x)
+			position.x += 1;
+		
+		
 	}
+
+	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER && state == ST_WALK_FORWARD)
+	{
+
+		speedX = 0;
+
+	}
+
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER && (state == ST_JUMP_BACKWARD || state == ST_JUMP_FORWARD || state == ST_JUMP_NEUTRAL)) {
-		speedX = -1;
+		//speedX = -1;
 
 	}
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER_ATTACK)

@@ -72,7 +72,6 @@ public:
 	~ModuleChunLi2();
 
 	bool Start();
-	update_status PreUpdate();
 	update_status Update();
 	bool CleanUp();
 	void OnCollision(Collider*, Collider*);
@@ -114,6 +113,7 @@ public:
 	int acumvictory = 0;
 
 	bool death = false;
+
 
 	int DeathCount = 0;
 	int ActiveDeath = 0;

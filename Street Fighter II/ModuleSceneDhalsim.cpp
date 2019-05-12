@@ -116,21 +116,29 @@ update_status ModuleSceneDhalsim::Update()
 {
 
 	// Draw everything --------------------------------------
-	App->render->Blit(graphics, 0, -16, &background, 0.92f); // background
+	App->render->Blit(graphics, -12, -16, &background, 0.92f); // background
 	
 	
 	
-	App->render->Blit(graphics, 0, 133, &ground);
-	App->render->Blit(graphics, 119, 63, &(leftelephant1.GetCurrentFrame()), 0.92f);
-	App->render->Blit(graphics, 390, 63, &(rightelephant1.GetCurrentFrame()), 0.92f); // Right elephant in the background 
+	App->render->Blit(graphics, -56, 133, &ground);
+	App->render->Blit(graphics, 107, 63, &(leftelephant1.GetCurrentFrame()), 0.92f);
+	App->render->Blit(graphics, 378, 63, &(rightelephant1.GetCurrentFrame()), 0.92f); // Right elephant in the background 
 
-	App->render->Blit(graphics, -38, 50, &(leftelephant2.GetCurrentFrame()), 0.92f);//Left elephant in the background 
-	App->render->Blit(graphics, 432, 50, &(rightelephant2.GetCurrentFrame()), 0.92f);
+//	App->render->Blit(graphics, -38, 50, &(leftelephant2.GetCurrentFrame()), 0.92f);//Left elephant in the background 
+	//App->render->Blit(graphics, 432, 50, &(rightelephant2.GetCurrentFrame()), 0.92f);
 
-	App->render->Blit(graphics, -195, 50, &(leftelephant3.GetCurrentFrame()), 0.92f);
+	//App->render->Blit(graphics, -195, 50, &(leftelephant3.GetCurrentFrame()), 0.92f);
 	
 	roundpoints();
 	fadeto();
+	
+	if (App->chunli2->position.x - App->chunli->position.x < App->render->camera.w + 33 && App->render->camera.x < background.x - 12 && App->render->camera.x >(background.x - background.w) + SCREEN_WIDTH) {
+			
+		App->render->camera.x = -((App->chunli->position.x + App->chunli2->position.x) / 2 - App->render->camera.w / 2 + 33);
+
+
+	}
+	
 
 	return UPDATE_CONTINUE;
 }
