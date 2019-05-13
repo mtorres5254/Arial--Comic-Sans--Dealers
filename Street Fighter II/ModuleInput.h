@@ -9,6 +9,7 @@
 #include <list>
 
 #define MAX_KEYS 300
+#define MAX_PADS 4
 #define JOYSTICK_DEAD_ZONE 8000
 enum KEY_STATE
 {
@@ -18,12 +19,31 @@ enum KEY_STATE
 	KEY_UP
 };
 
+enum BUTTON_STATES
+{
+	A,
+	B,
+	X,
+	Y,
+	DPAD_UP,
+	DPAD_DOWN,
+	DPAD_LEFT,
+	DPAD_RIGHT,
+	LB,
+	RB,
+	IDLE,
+};
+
+struct GamePad {
+	SDL_GameController* Pad;
+	int key_state = KEY_IDLE;
+	Uint8 button_state = IDLE;
+	float Xaxis_state;
+	float Yaxis_state;
+};
+
 class ModuleInput : public Module
 {
-
-public:
-
-	SDL_GameController* gGameController;
 public:
 
 	ModuleInput();
@@ -32,14 +52,17 @@ public:
 	bool Init();
 	update_status PreUpdate();
 	bool CleanUp();
-
-	bool GamepadLoad(SDL_GameController* Gamepad);
+	void GetGamepadButton(GamePad*);
+	void GetGamepadAxis(GamePad*);
 
 public:
 	KEY_STATE keyboard[MAX_KEYS];
-	std::list<SDL_Event> eventList;
 	bool camMoving,border;
 	bool Gamepad = false;
+	bool Gamepad2 = false;
+	GamePad Pad1;
+	GamePad Pad2;
+	SDL_Event event;
 };
 
 #endif // __ModuleInput_H__

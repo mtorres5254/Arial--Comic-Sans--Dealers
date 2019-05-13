@@ -100,21 +100,14 @@ update_status ModuleUI:: Update()
 	HealthBar1.w = App->chunli->healthbar;
 	HealthBar2.w = App->chunli2->healthbar;
 
-	SDL_Event event;
-	int max = App->input->eventList.size();
-	for (int a = 0; a < max; ++a)
-	{
-		event = App->input->eventList.front();
-		App->input->eventList.pop_front();
-
-		if (event.key.keysym.sym == SDLK_F7 && event.key.state == SDL_PRESSED && GamepadInfo == false) {
-			GamepadInfo = true;
-		}
-		else if (event.key.keysym.sym == SDLK_F7 && event.key.state == SDL_PRESSED && GamepadInfo == true) {
-			GamepadInfo = false;
-		}
-
+	if (App->input->keyboard[SDL_SCANCODE_F7] == KEY_DOWN && GamepadInfo == false) {
+		GamepadInfo = true;
 	}
+	else if (App->input->keyboard[SDL_SCANCODE_F7] == KEY_DOWN && GamepadInfo == true) {
+		GamepadInfo = false;
+	}
+
+	
 
 	//Render
 	Counter();

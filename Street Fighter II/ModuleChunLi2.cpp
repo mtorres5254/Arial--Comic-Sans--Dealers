@@ -609,70 +609,105 @@ bool ModuleChunLi2::external_input(p2Qeue<ryu_inputs>& inputs)
 	static bool down = false;
 	static bool up = false;
 
-	SDL_Event event;
-	int max = App->input->eventList.size();
-	for (int a = 0; a < max; ++a)
-	{
-		event = App->input->eventList.front();
-		App->input->eventList.pop_front();
-		if (event.type == SDL_KEYUP && event.key.repeat == 0)
-		{
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_DOWN:
-				inputs.Push(IN_CROUCH_UP);
-				down = false;
-				break;
-			case SDLK_UP:
-				up = false;
-				break;
-			case SDLK_LEFT:
-				inputs.Push(IN_LEFT_UP);
-				left = false;
-				break;
-			case SDLK_RIGHT:
-				inputs.Push(IN_RIGHT_UP);
-				right = false;
-				break;
-			case SDLK_j:
-				return false;
-				break;
-			case SDLK_k:
-				return false;
-				break;
-			case SDLK_l:
-				return false;
-				break;
-			}
-		}
-		if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
-		{
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_j:
-				inputs.Push(IN_X);
-				break;
-			case SDLK_k:
-				inputs.Push(IN_C);
-				break;
-			case SDLK_l:
-				inputs.Push(IN_V);
-				break;
-			case SDLK_UP:
-				up = true;
-				break;
-			case SDLK_DOWN:
-				down = true;
-				break;
-			case SDLK_LEFT:
-				left = true;
-				break;
-			case SDLK_RIGHT:
-				right = true;
-				break;
-			}
-		}
-		App->input->eventList.push_back(event);
+	//Key up
+	if (App->input->keyboard[SDL_SCANCODE_S] == KEY_UP) {
+		inputs.Push(IN_CROUCH_UP);
+		down = false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_W] == KEY_UP) {
+		up = false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_UP) {
+		inputs.Push(IN_LEFT_UP);
+		left = false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_UP) {
+		inputs.Push(IN_RIGHT_UP);
+		right = false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_UP) {
+		return false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_C] == KEY_UP) {
+		return false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_V] == KEY_UP) {
+		return false;
+	}
+
+	//Key down
+
+	if (App->input->keyboard[SDL_SCANCODE_W] == KEY_DOWN) {
+		up = true;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_S] == KEY_DOWN) {
+		down = true;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_DOWN) {
+		left = true;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_DOWN) {
+		right = true;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_DOWN) {
+		inputs.Push(IN_X);
+	}
+	if (App->input->keyboard[SDL_SCANCODE_C] == KEY_DOWN) {
+		inputs.Push(IN_C);
+	}
+	if (App->input->keyboard[SDL_SCANCODE_V] == KEY_DOWN) {
+		inputs.Push(IN_V);
+	}
+
+
+
+	//Controller
+	if (App->input->Pad2.button_state == A && App->input->Pad2.key_state == KEY_UP) {
+		return false;
+	}
+	if (App->input->Pad2.button_state == B && App->input->Pad2.key_state == KEY_UP) {
+		return false;
+	}
+	if (App->input->Pad2.button_state == RB && App->input->Pad2.key_state == KEY_UP) {
+		return false;
+	}
+	if (App->input->Pad2.button_state == DPAD_UP && App->input->Pad2.key_state == KEY_UP) {
+		up = false;
+	}
+	if (App->input->Pad2.button_state == DPAD_DOWN && App->input->Pad2.key_state == KEY_UP) {
+		inputs.Push(IN_CROUCH_UP);
+		down = false;
+	}
+	if (App->input->Pad2.button_state == DPAD_LEFT && App->input->Pad2.key_state == KEY_UP) {
+		inputs.Push(IN_LEFT_UP);
+		left = false;
+	}
+	if (App->input->Pad2.button_state == DPAD_RIGHT && App->input->Pad2.key_state == KEY_UP) {
+		inputs.Push(IN_RIGHT_UP);
+		right = false;
+	}
+
+
+	if (App->input->Pad2.button_state == A && App->input->Pad2.key_state == KEY_DOWN) {
+		inputs.Push(IN_X);
+	}
+	if (App->input->Pad2.button_state == B && App->input->Pad2.key_state == KEY_DOWN) {
+		inputs.Push(IN_C);
+	}
+	if (App->input->Pad2.button_state == RB && App->input->Pad2.key_state == KEY_DOWN) {
+		inputs.Push(IN_V);
+	}
+	if (App->input->Pad2.button_state == DPAD_UP && App->input->Pad2.key_state == KEY_DOWN) {
+		up = true;
+	}
+	if (App->input->Pad2.button_state == DPAD_DOWN && App->input->Pad2.key_state == KEY_DOWN) {
+		down = true;
+	}
+	if (App->input->Pad2.button_state == DPAD_LEFT && App->input->Pad2.key_state == KEY_DOWN) {
+		left = true;
+	}
+	if (App->input->Pad2.button_state == DPAD_RIGHT && App->input->Pad2.key_state == KEY_DOWN) {
+		right = true;
 	}
 
 	if (left && right)

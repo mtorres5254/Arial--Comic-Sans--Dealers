@@ -606,146 +606,107 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 	static bool down = false;
 	static bool up = false;
 
-	SDL_Event event;
-	int max = App->input->eventList.size();
-	for (int a = 0; a < max; ++a)
-	{
-		event = App->input->eventList.front();
-		App->input->eventList.pop_front();
-		if (event.type == SDL_KEYUP && event.key.repeat == 0)
-		{
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_s:
-				inputs.Push(IN_CROUCH_UP2);
-				down = false;
-				break;
-			case SDLK_w:
-				up = false;
-				break;
-			case SDLK_a:
-				inputs.Push(IN_LEFT_UP2);
-				left = false;
-				break;
-			case SDLK_d:
-				inputs.Push(IN_RIGHT_UP2);
-				right = false;
-				break;
-			case SDLK_x:
-				return false;
-				break;
-			case SDLK_k:
-				return false;
-				break;
-			case SDLK_h:
-				return false;
-				break;
-			}
-		}
-		if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
-		{
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_x:
-				inputs.Push(IN_X2);
-				break;
-			case SDLK_c:
-				inputs.Push(IN_C2);
-				break;
-			case SDLK_v:
-				inputs.Push(IN_V2);
-				break;
-			case SDLK_w:
-				up = true;
-				break;
-			case SDLK_s:
-				down = true;
-				break;
-			case SDLK_a:
-				left = true;
-				break;
-			case SDLK_d:
-				right = true;
-				break;
-			}
-		}
-		if(event.cbutton.type == SDL_CONTROLLERBUTTONUP)
-			switch (event.cbutton.button)
-			{
-			case SDL_CONTROLLER_BUTTON_A:
-				return false;
-				break;
-			case SDL_CONTROLLER_BUTTON_B:
-				return false;
-				break;
-			case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
-				return false;
-				break;
-			case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
-				inputs.Push(IN_CROUCH_UP2);
-				down = false;
-				break;
-			case SDL_CONTROLLER_BUTTON_DPAD_UP:
-				up = false;
-				break;
-			case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
-				inputs.Push(IN_LEFT_UP2);
-				left = false;
-				break;
-			case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
-				inputs.Push(IN_RIGHT_UP2);
-				right = false;
-				break;
-			}
-		if (event.cbutton.type == SDL_CONTROLLERBUTTONDOWN)
-			switch (event.cbutton.button)
-			{
-			case SDL_CONTROLLER_BUTTON_A:
-				inputs.Push(IN_X2);
-				break;
-			case SDL_CONTROLLER_BUTTON_B:
-				inputs.Push(IN_C2);
-				break;
-			case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
-				inputs.Push(IN_V2);
-				break;
-			case SDL_CONTROLLER_BUTTON_DPAD_UP:
-				up = true;
-				break;
-			case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
-				down = true;
-				break;
-			case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
-				left = true;
-				break;
-			case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
-				right = true;
-				break;
-			}
-		if (event.caxis.type == SDL_CONTROLLERAXISMOTION) {
-			/*switch (event.caxis.axis) 
-			{
-			case SDL_CONTROLLER_AXIS_LEFTY:
-				/*if (event.caxis.value > 6551) {
-					down = true;
-				}
-				if (event.caxis.value < -6551) {
-					up = true;
-				}
-				break;
-			case SDL_CONTROLLER_AXIS_LEFTX:
-				/*if (event.caxis.value > 6551) {
-					right = true;
-				}
-				if (event.caxis.value < -6551) {
-					left = true;
-				}
-				break;
-			} */
-		}
-		
-		App->input->eventList.push_back(event);
+	//Key up
+	if (App->input->keyboard[SDL_SCANCODE_S] == KEY_UP) {
+		inputs.Push(IN_CROUCH_UP2);
+		down = false;
 	}
+	if (App->input->keyboard[SDL_SCANCODE_W] == KEY_UP) {
+		up = false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_UP) {
+		inputs.Push(IN_LEFT_UP2);
+		left = false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_UP) {
+		inputs.Push(IN_RIGHT_UP2);
+		right = false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_UP) {
+		return false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_C] == KEY_UP) {
+		return false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_V] == KEY_UP) {
+		return false;
+	}
+
+	//Key down
+	
+	if (App->input->keyboard[SDL_SCANCODE_W] == KEY_DOWN) {
+		up = true;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_S] == KEY_DOWN) {
+		down = true;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_DOWN) {
+		left = true;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_DOWN) {
+		right = true;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_DOWN) {
+		inputs.Push(IN_X2);
+	}
+	if (App->input->keyboard[SDL_SCANCODE_C] == KEY_DOWN) {
+		inputs.Push(IN_C2);
+	}
+	if (App->input->keyboard[SDL_SCANCODE_V] == KEY_DOWN) {
+		inputs.Push(IN_V2);
+	}
+
+
+
+	//Controller
+	if (App->input->Pad1.button_state == A && App->input->Pad1.key_state == KEY_UP) {
+		return false;
+	}
+	if (App->input->Pad1.button_state == B && App->input->Pad1.key_state == KEY_UP) {
+		return false;
+	}
+	if (App->input->Pad1.button_state == RB && App->input->Pad1.key_state == KEY_UP) {
+		return false;
+	}
+	if (App->input->Pad1.button_state == DPAD_UP && App->input->Pad1.key_state == KEY_UP) {
+		up = false;
+	}
+	if (App->input->Pad1.button_state == DPAD_DOWN && App->input->Pad1.key_state == KEY_UP) {
+		inputs.Push(IN_CROUCH_UP2);
+		down = false;
+	}
+	if (App->input->Pad1.button_state == DPAD_LEFT && App->input->Pad1.key_state == KEY_UP) {
+		inputs.Push(IN_LEFT_UP2);
+		left = false;
+	}
+	if (App->input->Pad1.button_state == DPAD_RIGHT && App->input->Pad1.key_state == KEY_UP) {
+		inputs.Push(IN_RIGHT_UP2);
+		right = false;
+	}
+
+
+	if (App->input->Pad1.button_state == A && App->input->Pad1.key_state == KEY_DOWN) {
+		inputs.Push(IN_X2);
+	}
+	if (App->input->Pad1.button_state == B && App->input->Pad1.key_state == KEY_DOWN) {
+		inputs.Push(IN_C2);
+	}
+	if (App->input->Pad1.button_state == RB && App->input->Pad1.key_state == KEY_DOWN) {
+		inputs.Push(IN_V2);
+	}
+	if (App->input->Pad1.button_state == DPAD_UP && App->input->Pad1.key_state == KEY_DOWN) {
+		up = true;
+	}
+	if (App->input->Pad1.button_state == DPAD_DOWN && App->input->Pad1.key_state == KEY_DOWN) {
+		down = true;
+	}
+	if (App->input->Pad1.button_state == DPAD_LEFT && App->input->Pad1.key_state == KEY_DOWN) {
+		left = true;
+	}
+	if (App->input->Pad1.button_state == DPAD_RIGHT && App->input->Pad1.key_state == KEY_DOWN) {
+		right = true;
+	}
+	
 
 	if (left && right)
 		inputs.Push(IN_LEFT_AND_RIGHT2);

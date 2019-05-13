@@ -21,9 +21,10 @@ bool ModuleInput::Init()
 	SDL_Init(SDL_INIT_GAMECONTROLLER);
 
 	//Load joystick
-	if (GamepadLoad(gGameController) == true) {
-		Gamepad = true;
-	}
+
+	if(SDL_NumJoysticks() == 1) Pad1.Pad = SDL_GameControllerOpen(0);
+	if(SDL_NumJoysticks() == 2) Pad2.Pad = SDL_GameControllerOpen(1);
+			
 	
 
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
@@ -39,16 +40,73 @@ bool ModuleInput::Init()
 // Called every draw update
 update_status ModuleInput::PreUpdate()
 {
-	eventList.clear();
 	SDL_PumpEvents();
-	SDL_Event event;
+
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
+	SDL_GameControllerUpdate();
 
 	if (Gamepad == false && SDL_NumJoysticks() > 0) {
-		GamepadLoad(gGameController);
+		Pad1.Pad = SDL_GameControllerOpen(1);
 		Gamepad = true;
 	}
+	if (Gamepad == true && SDL_NumJoysticks() == 0) {
+		Pad1.Pad = NULL;
+		Gamepad = false;
+	}
 
+	if (Gamepad2 == false && SDL_NumJoysticks() == 2) {
+		Pad2.Pad = SDL_GameControllerOpen(2);
+		Gamepad2 = true;
+	}
+	if (Gamepad2 == true && SDL_NumJoysticks() < 2) {
+		Pad2.Pad = NULL;
+		Gamepad2 = false;
+	}
+	
+	//Gamepad logic
+    GetGamepadButton(&Pad1);
+	GetGamepadButton(&Pad2);
+
+	for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; i++) {
+		if (SDL_GameControllerGetButton(Pad1.Pad, (SDL_GameControllerButton)i) == 1) {
+			if (Pad1.key_state == KEY_IDLE) {
+				Pad1.key_state == KEY_DOWN;
+			}
+			else {
+				Pad1.key_state = KEY_REPEAT;
+			}
+		}
+		else {
+			if (Pad1.key_state == KEY_REPEAT || Pad1.key_state == KEY_DOWN) {
+				Pad1.key_state = KEY_UP;
+			}
+			else {
+				Pad1.key_state = KEY_IDLE;
+			}
+		}
+	}
+
+	for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; i++) {
+		if (SDL_GameControllerGetButton(Pad2.Pad, (SDL_GameControllerButton)i) == 1) {
+			if (Pad2.key_state == KEY_IDLE) {
+				Pad2.key_state == KEY_DOWN;
+			}
+			else {
+				Pad2.key_state = KEY_REPEAT;
+			}
+		}
+		else {
+			if (Pad2.key_state == KEY_REPEAT || Pad2.key_state == KEY_DOWN) {
+				Pad2.key_state = KEY_UP;
+			}
+			else {
+				Pad2.key_state = KEY_IDLE;
+			}
+		}
+	}
+
+
+	//Keyboard logic
 	for (int i = 0; i < MAX_KEYS; ++i)
 	{
 		if (keys[i] == 1)
@@ -83,7 +141,6 @@ update_status ModuleInput::PreUpdate()
 	while (SDL_PollEvent(&event) != 0)
 	{
 		if (event.type == SDL_QUIT) { return update_status::UPDATE_STOP; }
-		eventList.push_back(event);
 	}
 	
 
@@ -98,18 +155,20 @@ bool ModuleInput::CleanUp()
 	return true;
 }
 
-bool ModuleInput::GamepadLoad(SDL_GameController* Gamepad) {
-	for (int i = 0; i < SDL_NumJoysticks(); ++i) {
-		if (SDL_IsGameController(i)) {
-			if (Gamepad == nullptr) {
-				Gamepad = SDL_GameControllerOpen(i);
-				if (Gamepad) {
-					return true;
-				}
-				else {
-					fprintf(stderr, "Could not open gamecontroller %i: %s\n", i, SDL_GetError());
-				}
-			}
-		}
-	}
+void ModuleInput::GetGamepadButton(GamePad* gamepad) {
+	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_A) == 1) gamepad->button_state = A;
+	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_B) == 1) gamepad->button_state = B;
+	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_X) == 1) gamepad->button_state = X;
+	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_Y) == 1) gamepad->button_state = Y;
+	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_DPAD_UP) == 1) gamepad->button_state = DPAD_UP;
+	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == 1) gamepad->button_state = DPAD_DOWN;
+	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_DPAD_LEFT) == 1) gamepad->button_state = DPAD_LEFT;
+	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == 1) gamepad->button_state = DPAD_RIGHT;
+	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == 1) gamepad->button_state = LB;
+	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == 1) gamepad->button_state = RB;
+}
+
+void ModuleInput::GetGamepadAxis(GamePad* gamepad) {
+	gamepad->Xaxis_state = SDL_GameControllerGetAxis(gamepad->Pad, SDL_CONTROLLER_AXIS_LEFTX);
+	gamepad->Yaxis_state = SDL_GameControllerGetAxis(gamepad->Pad, SDL_CONTROLLER_AXIS_LEFTY);
 }

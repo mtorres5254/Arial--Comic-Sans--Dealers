@@ -22,8 +22,6 @@ ModuleParticles::~ModuleParticles()
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
-	graphics = App->textures->Load("Assets/Images/particles.png");
-
 	
 	return true;
 }
@@ -32,7 +30,6 @@ bool ModuleParticles::Start()
 bool ModuleParticles::CleanUp()
 {
 	LOG("Unloading particles");
-	App->textures->Unload(graphics);
 
 	for(uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
