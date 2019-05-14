@@ -626,52 +626,52 @@ bool ModuleChunLi2::external_input(p2Qeue<ryu_inputs>& inputs)
 	static bool up = false;
 
 	//Key up
-	if (App->input->keyboard[SDL_SCANCODE_S] == KEY_UP) {
+	if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_UP) {
 		inputs.Push(IN_CROUCH_UP);
 		down = false;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_W] == KEY_UP) {
+	if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_UP) {
 		up = false;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_UP) {
+	if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_UP) {
 		inputs.Push(IN_LEFT_UP);
 		left = false;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_UP) {
+	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_UP) {
 		inputs.Push(IN_RIGHT_UP);
 		right = false;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_UP) {
+	if (App->input->keyboard[SDL_SCANCODE_J] == KEY_UP) {
 		return false;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_C] == KEY_UP) {
+	if (App->input->keyboard[SDL_SCANCODE_K] == KEY_UP) {
 		return false;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_V] == KEY_UP) {
+	if (App->input->keyboard[SDL_SCANCODE_L] == KEY_UP) {
 		return false;
 	}
 
 	//Key down
 
-	if (App->input->keyboard[SDL_SCANCODE_W] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_DOWN) {
 		up = true;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_S] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_DOWN) {
 		down = true;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_DOWN) {
 		left = true;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_DOWN) {
 		right = true;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_J] == KEY_DOWN) {
 		inputs.Push(IN_X);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_C] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_K] == KEY_DOWN) {
 		inputs.Push(IN_C);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_V] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_L] == KEY_DOWN) {
 		inputs.Push(IN_V);
 	}
 

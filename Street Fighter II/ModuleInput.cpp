@@ -22,8 +22,14 @@ bool ModuleInput::Init()
 
 	//Load joystick
 
-	if(SDL_NumJoysticks() == 1) Pad1.Pad = SDL_GameControllerOpen(0);
-	if(SDL_NumJoysticks() == 2) Pad2.Pad = SDL_GameControllerOpen(1);
+	if (SDL_NumJoysticks() >= 1) {
+		Pad1.Pad = SDL_GameControllerOpen(0);
+		Gamepad = true;
+	}
+	if (SDL_NumJoysticks() == 2) {
+		Pad2.Pad = SDL_GameControllerOpen(1);
+		Gamepad2 = true;
+	}
 			
 	
 
@@ -64,48 +70,50 @@ update_status ModuleInput::PreUpdate()
 	}
 	
 	//Gamepad logic
-    GetGamepadButton(&Pad1);
-	GetGamepadButton(&Pad2);
-
-	for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; i++) {
-		if (SDL_GameControllerGetButton(Pad1.Pad, (SDL_GameControllerButton)i) == 1) {
-			if (Pad1.key_state == KEY_IDLE) {
-				Pad1.key_state == KEY_DOWN;
+	if (Gamepad == true) {
+		GetGamepadButton(&Pad1);
+		for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; i++) {
+			if (SDL_GameControllerGetButton(Pad1.Pad, (SDL_GameControllerButton)i) == 1) {
+				if (Pad1.key_state == KEY_IDLE) {
+					Pad1.key_state == KEY_DOWN;
+				}
+				else {
+					Pad1.key_state = KEY_REPEAT;
+				}
 			}
 			else {
-				Pad1.key_state = KEY_REPEAT;
-			}
-		}
-		else {
-			if (Pad1.key_state == KEY_REPEAT || Pad1.key_state == KEY_DOWN) {
-				Pad1.key_state = KEY_UP;
-			}
-			else {
-				Pad1.key_state = KEY_IDLE;
-			}
-		}
-	}
-
-	for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; i++) {
-		if (SDL_GameControllerGetButton(Pad2.Pad, (SDL_GameControllerButton)i) == 1) {
-			if (Pad2.key_state == KEY_IDLE) {
-				Pad2.key_state == KEY_DOWN;
-			}
-			else {
-				Pad2.key_state = KEY_REPEAT;
-			}
-		}
-		else {
-			if (Pad2.key_state == KEY_REPEAT || Pad2.key_state == KEY_DOWN) {
-				Pad2.key_state = KEY_UP;
-			}
-			else {
-				Pad2.key_state = KEY_IDLE;
+				if (Pad1.key_state == KEY_REPEAT || Pad1.key_state == KEY_DOWN) {
+					Pad1.key_state = KEY_UP;
+				}
+				else {
+					Pad1.key_state = KEY_IDLE;
+				}
 			}
 		}
 	}
-
-
+   
+	if (Gamepad2 == true) {
+		GetGamepadButton(&Pad2);
+		for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; i++) {
+			if (SDL_GameControllerGetButton(Pad2.Pad, (SDL_GameControllerButton)i) == 1) {
+				if (Pad2.key_state == KEY_IDLE) {
+					Pad2.key_state == KEY_DOWN;
+				}
+				else {
+					Pad2.key_state = KEY_REPEAT;
+				}
+			}
+			else {
+				if (Pad2.key_state == KEY_REPEAT || Pad2.key_state == KEY_DOWN) {
+					Pad2.key_state = KEY_UP;
+				}
+				else {
+					Pad2.key_state = KEY_IDLE;
+				}
+			}
+		}
+	}
+	
 	//Keyboard logic
 	for (int i = 0; i < MAX_KEYS; ++i)
 	{
@@ -156,7 +164,7 @@ bool ModuleInput::CleanUp()
 }
 
 void ModuleInput::GetGamepadButton(GamePad* gamepad) {
-	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_A) == 1) gamepad->button_state = A;
+    if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_A) == 1) gamepad->button_state = A;
 	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_B) == 1) gamepad->button_state = B;
 	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_X) == 1) gamepad->button_state = X;
 	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_Y) == 1) gamepad->button_state = Y;
@@ -165,7 +173,7 @@ void ModuleInput::GetGamepadButton(GamePad* gamepad) {
 	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_DPAD_LEFT) == 1) gamepad->button_state = DPAD_LEFT;
 	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == 1) gamepad->button_state = DPAD_RIGHT;
 	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == 1) gamepad->button_state = LB;
-	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == 1) gamepad->button_state = RB;
+	if (SDL_GameControllerGetButton(gamepad->Pad, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == 1) gamepad->button_state = RB; 
 }
 
 void ModuleInput::GetGamepadAxis(GamePad* gamepad) {
