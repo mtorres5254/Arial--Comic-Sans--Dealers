@@ -31,7 +31,7 @@ bool ModuleChunLi2::Start()
 
 	graphics = App->textures->Load("Assets/Images/ChunLi2.png"); // arcade version
 
-	position.x = 375;
+	position.x = 395;
 	position.y = 220;
 
 	// idle animation (arcade sprite sheet)
@@ -42,10 +42,10 @@ bool ModuleChunLi2::Start()
 	COLLIDER_TYPE idleCollType[idleCollider] = { { COLLIDER_ENEMY },{ COLLIDER_ENEMY },{ COLLIDER_ENEMY },{ COLLIDER_ENEMY },{ COLLIDER_ENEMY } };
 	Module* idleCallBack[idleCollider] = { { this },{ this },{ this },{ this },{ this } };
 
-	idle.PushBack1({ 290, 438, 72, 85 }, idleCollider, idleHitbox, idleCollType, idleCallBack);
-	idle.PushBack1({ 363, 437, 72, 86 }, idleCollider, idleHitbox, idleCollType, idleCallBack);
-	idle.PushBack1({ 436, 436, 72, 87 }, idleCollider, idleHitbox, idleCollType, idleCallBack);
-	idle.PushBack1({ 363, 437, 72, 86 }, idleCollider, idleHitbox, idleCollType, idleCallBack);
+	idle.PushBack1({ 290, 438, 72, 85 }, { 32,2 }, idleCollider, idleHitbox, idleCollType, idleCallBack);
+	idle.PushBack1({ 363, 437, 72, 86 }, { 32,2 }, idleCollider, idleHitbox, idleCollType, idleCallBack);
+	idle.PushBack1({ 436, 436, 72, 87 }, { 32,2 }, idleCollider, idleHitbox, idleCollType, idleCallBack);
+	idle.PushBack1({ 363, 437, 72, 86 }, { 32,2 }, idleCollider, idleHitbox, idleCollType, idleCallBack);
 	idle.speed = 0.1f;
 
 	//Forward
@@ -54,18 +54,18 @@ bool ModuleChunLi2::Start()
 	SDL_Rect fwdhitbox[idleCollider] = { { 0, 3, 45, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 13, 71, 31, 21 },{ 2, 37, 35, 41 } };
 	COLLIDER_TYPE fwdCollType[idleCollider] = { { COLLIDER_ENEMY },{ COLLIDER_ENEMY },{ COLLIDER_ENEMY },{ COLLIDER_ENEMY },{ COLLIDER_ENEMY } };
 	Module* fwdCallback[idleCollider] = { { this },{ this },{ this },{ this },{ this } };
-	forward.PushBack1({ 652,437, 73, 86 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
-	forward.PushBack1({ 726, 434, 63, 89 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
-	forward.PushBack1({ 790, 433, 60, 90 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
-	forward.PushBack1({ 851, 432, 63, 91 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
-	forward.PushBack1({ 915, 433, 64, 90 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
-	forward.PushBack1({ 0, 531, 64, 89 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
-	forward.PushBack1({ 66, 532, 72, 88 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
-	forward.PushBack1({ 0, 531, 64, 89 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
-	forward.PushBack1({ 915, 433, 64, 90 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
-	forward.PushBack1({ 851, 432, 63, 91 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
-	forward.PushBack1({ 790, 433, 60, 90 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
-	forward.PushBack1({ 726, 434, 63, 89 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 652,437, 73, 86 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 726, 434, 63, 89 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 790, 433, 60, 90 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 851, 432, 63, 91 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 915, 433, 64, 90 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 0, 531, 64, 89 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 66, 532, 72, 88 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 0, 531, 64, 89 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 915, 433, 64, 90 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 851, 432, 63, 91 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 790, 433, 60, 90 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
+	forward.PushBack1({ 726, 434, 63, 89 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback);
 	forward.speed = 0.2f;
 
 
@@ -75,18 +75,18 @@ bool ModuleChunLi2::Start()
 	SDL_Rect bwdhitbox[idleCollider] = { { 0, 3, 45, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 13, 71, 31, 21 },{ 2, 37, 35, 41 } };
 	COLLIDER_TYPE bcwCollType[idleCollider] = { { COLLIDER_ENEMY },{ COLLIDER_ENEMY },{ COLLIDER_ENEMY },{ COLLIDER_ENEMY },{ COLLIDER_ENEMY } };
 	Module* bwdCallback[idleCollider] = { { this },{ this },{ this },{ this },{ this } };
-	backward.PushBack1({ 652,437, 73, 86 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
-	backward.PushBack1({ 726, 434, 63, 89 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
-	backward.PushBack1({ 790, 433, 60, 90 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
-	backward.PushBack1({ 851, 432, 63, 91 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
-	backward.PushBack1({ 915, 433, 64, 90 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
-	backward.PushBack1({ 0, 531, 64, 89 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
-	backward.PushBack1({ 66, 532, 72, 88 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
-	backward.PushBack1({ 0, 531, 64, 89 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
-	backward.PushBack1({ 915, 433, 64, 90 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
-	backward.PushBack1({ 851, 432, 63, 91 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
-	backward.PushBack1({ 790, 433, 60, 90 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
-	backward.PushBack1({ 726, 434, 63, 89 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 652,437, 73, 86 }, { 32,2 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 726, 434, 63, 89 }, { 32,2 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 790, 433, 60, 90 }, { 32,2 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 851, 432, 63, 91 }, { 32,2 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 915, 433, 64, 90 }, { 32,2 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 0, 531, 64, 89 }, { 32,2 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 66, 532, 72, 88 }, { 32,2 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 0, 531, 64, 89 }, { 32,2 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 915, 433, 64, 90 }, { 32,2 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 851, 432, 63, 91 }, { 32,2 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 790, 433, 60, 90 }, { 32,2 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
+	backward.PushBack1({ 726, 434, 63, 89 }, { 32,2 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback);
 	backward.speed = 0.15f;
 
 	//Crouch
@@ -157,11 +157,22 @@ bool ModuleChunLi2::Start()
 
 	//kick
 
-	kick.PushBack({ 131,630 , 66, 89 });
-	kick.PushBack({ 198, 626, 71, 93 });
-	kick.PushBack({ 270, 622, 106,97 });
-	kick.PushBack({ 198, 626, 71, 93 });
-	kick.PushBack({ 131,630 , 66, 89 });
+	const int kickcollider = 5;//Collider num for the idle animation
+	SDL_Rect kickhitbox[kickcollider] = { { 0, 3, 44, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 13, 71, 31, 21 },{ 2, 37, 35, 41 } };
+	COLLIDER_TYPE kickCollType[kickcollider] = { { COLLIDER_ENEMY },{ COLLIDER_ENEMY },{ COLLIDER_ENEMY },{ COLLIDER_ENEMY },{ COLLIDER_ENEMY } };
+	Module* kickCallback[kickcollider] = { { this },{ this },{ this },{ this },{ this }};
+
+
+	const int kickcollider2 = 6;
+	SDL_Rect kickhitbox2[kickcollider2] = { { 0, 3, 44, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 13, 71, 31, 21 },{ 2, 37, 35, 41 }, {43,72,67,11} };
+	COLLIDER_TYPE kickCollType2[kickcollider2] = { { COLLIDER_ENEMY },{ COLLIDER_ENEMY },{ COLLIDER_ENEMY },{ COLLIDER_ENEMY },{ COLLIDER_ENEMY }, {COLLIDER_ENEMY_SHOT} };
+	Module* kickCallback2[kickcollider2] = { { this },{ this },{ this },{ this },{ this }, {this} };
+
+	kick.PushBack1({ 131,630 , 66, 89 }, { 32,2 },kickcollider, kickhitbox,kickCollType,kickCallback);
+	kick.PushBack1({ 198, 626, 71, 93 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback);
+	kick.PushBack1({ 270, 622, 106,97 }, { 32,20 }, kickcollider2, kickhitbox2, kickCollType2, kickCallback2);
+	kick.PushBack1({ 198, 626, 71, 93 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback);
+	kick.PushBack1({ 131,630 , 66, 89 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback);
 	kick.speed = 0.2f;
 
 	//crouch punch
@@ -272,6 +283,7 @@ update_status ModuleChunLi2::Update()
 						jump_backward_punch.Reset();
 						jump_forward_punch.Reset();
 						Crouch_punch.Reset();
+						kick.Reset();
 
 
 
@@ -535,6 +547,10 @@ void ModuleChunLi2::positionlimits() {
 
 void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 
+	PivotX = current_animation->pivot[(int)current_animation->current_frame].x;
+	PivotY = current_animation->pivot[(int)current_animation->current_frame].y;
+
+
 	for (int i = 0; i < MAX_COLLIDERS; i++)//deletes all the hitboxes at the start of the frame
 	{
 		if (colliders[i] != nullptr)
@@ -549,7 +565,7 @@ void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 	{
 		r = current_animation->hitbox[i];
 
-		colliders[i] = App->collision->AddCollider({ position.x + r.x , position.y - r.h - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
+		colliders[i] = App->collision->AddCollider({ position.x -(r.w-PivotX) - r.x , position.y - r.h +PivotY - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
 
 
 	}
@@ -559,10 +575,10 @@ void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 
 
 	if (position.x < App->chunli->position.x) {
-		App->render->Blit(graphics, position.x, position.y - r.h, &r);
+		App->render->Blit(graphics, position.x , position.y - r.h, &r);
 	}
 	if (position.x > App->chunli->position.x) {
-		App->render->BlitSym(graphics, position.x, position.y - r.h, &r);
+		App->render->BlitSym(graphics, position.x-(r.w-PivotX), position.y  - r.h, &r);
 	}
 }
 
@@ -783,7 +799,7 @@ void ModuleChunLi2::internal_input(p2Qeue<ryu_inputs>& inputs)
 void ModuleChunLi2::ResetPlayer() {
 
 	life = 1000;
-	position.x = 375; 
+	position.x = 410; 
 	if (App->chunli->position.x != 100 || App->chunli->life != 1000) {
 		ActiveDeath = 0;
 		//App->chunli->ResetPlayer();

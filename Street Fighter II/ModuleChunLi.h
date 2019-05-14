@@ -115,6 +115,9 @@ public:
 		
 	bool death = false;
 
+	int PivotX = 0;
+	int PivotY = 0;
+
 
 	int DeathCount = 0;
 	int ActiveDeath = 0;

@@ -15,7 +15,7 @@ public:
 	float speed = 1.0f;
 	SDL_Rect frames[MAX_FRAMES];
 
-
+	p2Point <int> pivot[MAX_FRAMES];
 	SDL_Rect hitbox[MAX_FRAMES]; 
 	COLLIDER_TYPE type[MAX_FRAMES]; 
 	Module *callback[MAX_FRAMES]; 
@@ -59,10 +59,10 @@ public:
 		current_frame = 0;
 	}
 	
-	void PushBack1(const SDL_Rect& rect, int nColliders, SDL_Rect rhitbox[], COLLIDER_TYPE ctipo[], Module *pcallback[])
+	void PushBack1(const SDL_Rect& rect, p2Point <int> Pivot, int nColliders, SDL_Rect rhitbox[], COLLIDER_TYPE ctipo[], Module *pcallback[])
 	{
 		frames[last_frame] = rect;		
-		
+		pivot[last_frame] = Pivot;
 	
 		maxcolliders[last_frame] = nColliders;
 
