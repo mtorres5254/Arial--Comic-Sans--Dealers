@@ -71,7 +71,7 @@ bool ModuleChunLi::Start()
 
 	//Backward
 
-	const int bwdcollider = 5;//Collider num for the idle animation
+	const int bwdcollider = 5;//Collider num for the backwards animation
 	SDL_Rect bwdhitbox[idleCollider] = { { 0, 3, 45, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 13, 71, 31, 21 },{ 2, 37, 35, 41 } };
 	COLLIDER_TYPE bcwCollType[idleCollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER} };
 	Module* bwdCallback[idleCollider] = { {this},{this},{this},{this},{this} };
@@ -90,11 +90,14 @@ bool ModuleChunLi::Start()
 	backward.speed = 0.15f;
 
 	//Crouch
-
-	crouch.PushBack({ 934,742 , 74, 81 });
-	crouch.PushBack({ 0, 833, 73, 72 });
-	crouch.PushBack({ 74, 839, 72, 66 });
-	crouch.PushBack({ 147, 839, 72, 65 });
+	const int crhcollider = 5;//Collider num for the crouch animation
+	SDL_Rect crhhitbox[crhcollider] = { { 30, 48, 23, 19 },{ 17, 29, 22, 27 },{ 38, 29, 29, 24 },{ 0, 0, 40, 29 },{ 40, 0, 34, 32 } };
+	COLLIDER_TYPE crchCollType[crhcollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER} };
+	Module* crhCallback[crhcollider] = { {this},{this},{this},{this},{this} };
+	crouch.PushBack1({ 934, 742 , 74, 81 }, { 32, 2 }, crhcollider, crhhitbox, crchCollType, crhCallback);
+	crouch.PushBack1({ 0, 833, 73, 72 }, { 32, 2 }, crhcollider, crhhitbox, crchCollType, crhCallback);
+	crouch.PushBack1({ 74, 839, 72, 66 }, { 32, 2 }, crhcollider, crhhitbox, crchCollType, crhCallback);
+	crouch.PushBack1({ 147, 839, 72, 65 }, { 32, 2 }, crhcollider, crhhitbox, crchCollType, crhCallback);
 	crouch.speed = 0.3f;
 	crouch.loop = false;
 
@@ -145,46 +148,61 @@ bool ModuleChunLi::Start()
 
 
 	//Punch animation
+	const int punchcollider = 5;//Collider num for the punch animation
+	SDL_Rect punchhitbox[punchcollider] = { { 0, 3, 44, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 25, 71, 31, 21 },{ 2, 7, 35, 41 } };
+	COLLIDER_TYPE punchCollType[punchcollider] = { { COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER } };
+	Module* punchCallback[punchcollider] = { { this },{ this },{ this },{ this },{ this } };
 
-	punch.PushBack({ 139, 533, 78, 87 });
-	punch.PushBack({ 218, 531, 101, 89 });
-	punch.PushBack({ 320, 524, 87, 96 });
-	punch.PushBack({ 218, 531, 101, 89 });
-	punch.PushBack({ 139, 533, 78, 87 });
+
+	const int punchcollider2 = 6;
+	SDL_Rect punchhitbox2[punchcollider2] = { { 0, 3, 44, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 25, 71, 31, 21 },{ 2, 37, 35, 41 }, {63,72,25,27} };
+	COLLIDER_TYPE punchCollType2[punchcollider2] = { { COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER }, {COLLIDER_PLAYER_ATTACK} };
+	Module* punchCallback2[punchcollider2] = { { this },{ this },{ this },{ this },{ this }, {this} };
+	punch.PushBack1({ 139, 533, 78, 87 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback);
+	punch.PushBack1({ 218, 531, 101, 89 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback);
+	punch.PushBack1({ 320, 524, 87, 96 }, {32,2 }, punchcollider2, punchhitbox2, punchCollType2, punchCallback2);
+	punch.PushBack1({ 218, 531, 101, 89 }, { 32, 2 }, punchcollider, punchhitbox, punchCollType, punchCallback);
+	punch.PushBack1({ 139, 533, 78, 87 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback);
 
 	punch.speed = 0.3f;
 	punch.loop = false;
 
 	//kick
 
-	const int kickcollider = 5;//Collider num for the idle animation
+	const int kickcollider = 5;//Collider num for the kick animation
 	SDL_Rect kickhitbox[kickcollider] = { { 0, 3, 44, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 13, 71, 31, 21 },{ 2, 37, 35, 41 } };
 	COLLIDER_TYPE kickCollType[kickcollider] = { { COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER } };
 	Module* kickCallback[kickcollider] = { { this },{ this },{ this },{ this },{ this } };
 
 
 	const int kickcollider2 = 6;
-	SDL_Rect kickhitbox2[kickcollider2] = { { 0, 3, 44, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 13, 71, 31, 21 },{ 2, 37, 35, 41 }, {43,72,67,11} };
+	SDL_Rect kickhitbox2[kickcollider2] = { { 0, 3, 44, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 13, 71, 31, 21 },{ 2, 37, 35, 41 }, {43,55,67,11} };
 	COLLIDER_TYPE kickCollType2[kickcollider2] = { { COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER }, {COLLIDER_PLAYER_ATTACK} };
 	Module* kickCallback2[kickcollider2] = { { this },{ this },{ this },{ this },{ this }, {this} };
 
 	kick.PushBack1({ 131,630 , 66, 89 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback);
 	kick.PushBack1({ 198, 626, 71, 93 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback);
-	kick.PushBack1({ 270, 622, 106,97 }, { 32,20 }, kickcollider2, kickhitbox2, kickCollType2, kickCallback2);
+	kick.PushBack1({ 270, 622, 106,97 }, { 32,2 }, kickcollider2, kickhitbox2, kickCollType2, kickCallback2);
 	kick.PushBack1({ 198, 626, 71, 93 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback);
 	kick.PushBack1({ 131,630 , 66, 89 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback);
 	kick.speed = 0.2f;
 
 	//crouch punch
-
-	Crouch_punch.PushBack({ 368, 839, 71, 66 });
-	Crouch_punch.PushBack({ 440, 839, 77, 66 });
-	Crouch_punch.PushBack({ 518, 841, 107, 64 });
-	Crouch_punch.PushBack({ 518, 841, 107, 64 });
-	Crouch_punch.PushBack({ 518, 841, 107, 64 });
-	Crouch_punch.PushBack({ 440, 839, 77, 66 });
-	Crouch_punch.PushBack({ 368, 839, 71, 66 });
-	Crouch_punch.speed = 0.275f;
+	const int crhpnchcollider = 5;//Collider num for the crouch punch animation
+	SDL_Rect crhpnchhitbox[crhpnchcollider] = { { 30, 48, 23, 19 },{ 17, 29, 22, 27 },{ 38, 29, 29, 24 },{ 0, 0, 40, 29 },{ 40, 0, 34, 32 } };
+	COLLIDER_TYPE crchpnchCollType[crhpnchcollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER} };
+	Module* crhpnchCallback[crhpnchcollider] = { {this},{this},{this},{this},{this} };
+	
+	const int crhpnchcollider2 = 6;
+	SDL_Rect crhpnchhitbox2[crhpnchcollider2] = { { 30, 48, 23, 19 },{ 17, 29, 22, 27 },{ 38, 29, 29, 24 },{ 0, 0, 40, 29 },{ 40, 0, 34, 32 },{52, 38, 56, 12}};
+	COLLIDER_TYPE crchpnchCollType2[crhpnchcollider2] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER}, {COLLIDER_PLAYER_ATTACK} };
+	Module* crhpnchCallback2[crhpnchcollider2] = { {this},{this},{this},{this},{this} };
+	
+	
+	Crouch_punch.PushBack1({ 368, 839, 71, 66 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback);
+	Crouch_punch.PushBack1({ 518, 841, 107, 64 }, { 32, 2 }, crhpnchcollider2, crhpnchhitbox2, crchpnchCollType2, crhpnchCallback2);
+	Crouch_punch.PushBack1({ 440, 839, 77, 66 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback);
+	Crouch_punch.speed = 0.13f;
 	Crouch_punch.loop = true;
 
 	//punch neutral jump
