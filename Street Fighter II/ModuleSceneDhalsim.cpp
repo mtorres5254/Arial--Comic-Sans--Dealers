@@ -13,6 +13,7 @@
 #include "ModuleLoseScene.h"
 #include "ModuleChunLi.h"
 #include "ModuleChunLi2.h"
+#include "Animation.h"
 
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -20,10 +21,10 @@
 ModuleSceneDhalsim::ModuleSceneDhalsim()
 {
 	// Ground
-	ground.x = 234;
-	ground.y = 750;
-	ground.w = 821;
-	ground.h = 91;
+	ground.x = 53;
+	ground.y = 777;
+	ground.w = 1302;
+	ground.h = 73;
 
 	// Background 
 	background.x = 21;
@@ -52,9 +53,8 @@ ModuleSceneDhalsim::ModuleSceneDhalsim()
 	leftelephant3.PushBack1({ 1077,566,302,175 }, {}, {}, {}, {}, {});
 	leftelephant3.PushBack1({ 783,563,291,178 }, {}, {}, {}, {}, {});
 	leftelephant3.speed = 0.05f;
+
 	// Right elephant in the background
-
-
 
 
 	rightelephant1.PushBack1({ 635,34,115,84 }, {},  {}, {}, {}, {});
@@ -63,11 +63,12 @@ ModuleSceneDhalsim::ModuleSceneDhalsim()
 	rightelephant1.PushBack1({ 515,34,115,84 }, {}, {}, {}, {}, {});
 	rightelephant1.speed = 0.05f;
 
-	rightelephant2.PushBack1({ 1213,36,165,133 }, {}, {}, {}, {}, {});
-	rightelephant2.PushBack1({ 991,36,220,133 }, {},  {}, {}, {}, {});
-	rightelephant2.PushBack1({ 762,36,300,133 }, {}, {}, {}, {}, {});
-	rightelephant2.PushBack1({ 991,36,220,133 }, {}, {}, {}, {}, {});
+	rightelephant2.PushBack1({ 1213,36,165,133 }, { 55,0 }, {}, {}, {}, {});
+	rightelephant2.PushBack1({ 991,36,220,133 }, { 55,0 },  {}, {}, {}, {});
+	rightelephant2.PushBack1({ 762,36,228,133 }, { 55,0 }, {}, {}, {}, {});
+	rightelephant2.PushBack1({ 991,36,220,133 }, { 55,0 }, {}, {}, {}, {});
 	rightelephant2.speed = 0.05f;
+	
 
 	
 	// for moving the foreground
@@ -115,19 +116,29 @@ bool ModuleSceneDhalsim::CleanUp()
 update_status ModuleSceneDhalsim::Update()
 {
 
+	Animation* current_animation = &rightelephant2;
+	Animation * curren_animation = &rightelephant3;
+
+	PivotX = current_animation->pivot[(int)current_animation->current_frame].x;
+	
+
 	// Draw everything --------------------------------------
+	
+	
+	SDL_Rect r1 = current_animation->GetCurrentFrame();
+	
+
 	App->render->Blit(graphics, -12, -16, &background, 0.92f); // background
-	
-	
-	
-	App->render->Blit(graphics, -56, 133, &ground);
+	App->render->Blit(graphics, -56, 150, &ground);
 	App->render->Blit(graphics, 107, 63, &(leftelephant1.GetCurrentFrame()), 0.92f);
 	App->render->Blit(graphics, 378, 63, &(rightelephant1.GetCurrentFrame()), 0.92f); // Right elephant in the background 
 
-//	App->render->Blit(graphics, -38, 50, &(leftelephant2.GetCurrentFrame()), 0.92f);//Left elephant in the background 
-	//App->render->Blit(graphics, 432, 50, &(rightelephant2.GetCurrentFrame()), 0.92f);
+	App->render->Blit(graphics, -38, 50, &(leftelephant2.GetCurrentFrame()), 0.92f);//Left elephant in the background 
 
-	//App->render->Blit(graphics, -195, 50, &(leftelephant3.GetCurrentFrame()), 0.92f);
+	App->render->Blit(graphics, 583 -( r1.w - PivotX) , 50, &r1, 0.92f);
+
+	
+	App->render->Blit(graphics, -150, 23, &(leftelephant3.GetCurrentFrame()), 0.92f);
 	
 	roundpoints();
 	fadeto();

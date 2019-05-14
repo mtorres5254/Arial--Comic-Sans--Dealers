@@ -146,11 +146,16 @@ bool ModuleChunLi::Start()
 
 	//Punch animation
 
-	punch.PushBack({ 139, 533, 78, 87 });
-	punch.PushBack({ 218, 531, 101, 89 });
-	punch.PushBack({ 320, 524, 87, 96 });
-	punch.PushBack({ 218, 531, 101, 89 });
-	punch.PushBack({ 139, 533, 78, 87 });
+	const int punchcollider = 5;//Collider num for the idle animation
+	SDL_Rect punchhitbox[punchcollider] = { { 0, 3, 44, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 13, 71, 31, 21 },{ 2, 37, 35, 41 } };
+	COLLIDER_TYPE punchCollType[punchcollider] = { { COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER } };
+	Module* punchCallback[punchcollider] = { { this },{ this },{ this },{ this },{ this } };
+
+	punch.PushBack1({ 139, 533, 78, 87 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback);
+	punch.PushBack1({ 218, 531, 101, 89 } ,{ 32, 2 }, punchcollider, punchhitbox, punchCollType, punchCallback);
+	punch.PushBack1({ 320, 524, 87, 96 } ,{ 32, 2 }, punchcollider, punchhitbox, punchCollType, punchCallback);
+	punch.PushBack1({ 218, 531, 101, 89 }, { 32, 2 }, punchcollider, punchhitbox, punchCollType, punchCallback);
+	punch.PushBack1({ 139, 533, 78, 87 }, { 32, 2 }, punchcollider, punchhitbox, punchCollType, punchCallback);
 
 	punch.speed = 0.3f;
 	punch.loop = false;
@@ -562,9 +567,11 @@ void ModuleChunLi::colliders_and_blit(Animation* current_animation) {
 	{
 		r = current_animation->hitbox[i];
 
+		if (position.x < App->chunli2->position.x)
 		colliders[i] = App->collision->AddCollider({ position.x + PivotX + r.x , position.y + PivotY- r.h - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
 
-
+		if (position.x > App->chunli2->position.x)
+			colliders[i] = App->collision->AddCollider({ position.x - (r.w - PivotX) - r.x , position.y - r.h + PivotY - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
 	}
 	r = current_animation->GetCurrentFrame();
 
@@ -573,7 +580,7 @@ void ModuleChunLi::colliders_and_blit(Animation* current_animation) {
 		App->render->Blit(graphics, position.x + PivotX, position.y - r.h, &r);
 	}
 	if (position.x > App->chunli2->position.x) {
-		App->render->BlitSym(graphics, position.x , position.y - r.h, &r);
+		App->render->BlitSym(graphics, position.x - (r.w - PivotX), position.y - r.h, &r);
 	}
 }
 
