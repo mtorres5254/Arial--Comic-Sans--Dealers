@@ -565,8 +565,11 @@ void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 	{
 		r = current_animation->hitbox[i];
 
-		colliders[i] = App->collision->AddCollider({ position.x -(r.w-PivotX) - r.x , position.y - r.h +PivotY - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
+		if (position.x > App->chunli->position.x)
+			colliders[i] = App->collision->AddCollider({ position.x -(r.w-PivotX) - r.x , position.y - r.h +PivotY - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
 
+		if (position.x < App->chunli->position.x)
+			colliders[i] = App->collision->AddCollider({ position.x  -  PivotX + r.x , position.y + PivotY - r.h - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
 
 	}
 	r = current_animation->GetCurrentFrame();
@@ -575,7 +578,7 @@ void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 
 
 	if (position.x < App->chunli->position.x) {
-		App->render->Blit(graphics, position.x , position.y - r.h, &r);
+		App->render->Blit(graphics, position.x -PivotX, position.y - r.h, &r);
 	}
 	if (position.x > App->chunli->position.x) {
 		App->render->BlitSym(graphics, position.x-(r.w-PivotX), position.y  - r.h, &r);

@@ -29,7 +29,8 @@ public:
 	SDL_Rect ground;
 	SDL_Rect background;
 
-
+	int PivotX = 0;
+	int PivotY = 0;
 	
 	
 	Animation rightelephant1;
