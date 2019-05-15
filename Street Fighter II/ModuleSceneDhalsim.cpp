@@ -36,37 +36,37 @@ ModuleSceneDhalsim::ModuleSceneDhalsim()
 	
 	
 
-	leftelephant1.PushBack1({ 27,34,115,84 }, {}, {}, {}, {}, {});
-	leftelephant1.PushBack1({ 147,34,115,84 }, {}, {}, {}, {}, {});
-	leftelephant1.PushBack1({ 267,34,115,84 }, {}, {}, {}, {}, {});
-	leftelephant1.PushBack1({ 147,34,115,84 }, {}, {}, {}, {}, {});
+	leftelephant1.PushBack1({ 27,34,115,84 }, {}, {}, {}, {}, {}, {});
+	leftelephant1.PushBack1({ 147,34,115,84 }, {}, {}, {}, {}, {}, {});
+	leftelephant1.PushBack1({ 267,34,115,84 }, {}, {}, {}, {}, {}, {});
+	leftelephant1.PushBack1({ 147,34,115,84 }, {}, {}, {}, {}, {}, {});
 	leftelephant1.speed = 0.05f;
 
-	leftelephant2.PushBack1({ 761,195,165,133 }, {}, {}, {}, {}, {});
-	leftelephant2.PushBack1({ 928,195,220,133 }, {}, {}, {}, {}, {});
-	leftelephant2.PushBack1({ 1150,195,229,133 }, {}, {}, {}, {}, {});
-	leftelephant2.PushBack1({ 928,195,220,133 }, {}, {}, {}, {}, {});
+	leftelephant2.PushBack1({ 761,195,165,133 }, {}, {}, {}, {}, {}, {});
+	leftelephant2.PushBack1({ 928,195,220,133 }, {}, {}, {}, {}, {}, {});
+	leftelephant2.PushBack1({ 1150,195,229,133 }, {}, {}, {}, {}, {}, {});
+	leftelephant2.PushBack1({ 928,195,220,133 }, {}, {}, {}, {}, {}, {});
 	leftelephant2.speed = 0.05f;
 
-	leftelephant3.PushBack1({ 563,566,217,175 }, {}, {}, {}, {}, {});
-	leftelephant3.PushBack1({ 783,566,291,175 }, {}, {}, {}, {}, {});
-	leftelephant3.PushBack1({ 1077,566,302,175 }, {}, {}, {}, {}, {});
-	leftelephant3.PushBack1({ 783,563,291,178 }, {}, {}, {}, {}, {});
+	leftelephant3.PushBack1({ 563,566,217,175 }, {}, {}, {}, {}, {}, {});
+	leftelephant3.PushBack1({ 783,566,291,175 }, {}, {}, {}, {}, {}, {});
+	leftelephant3.PushBack1({ 1077,566,302,175 }, {}, {}, {}, {}, {}, {});
+	leftelephant3.PushBack1({ 783,563,291,178 }, {}, {}, {}, {}, {}, {});
 	leftelephant3.speed = 0.05f;
 
 	// Right elephant in the background
 
 
-	rightelephant1.PushBack1({ 635,34,115,84 }, {},  {}, {}, {}, {});
-	rightelephant1.PushBack1({ 515,34,115,84 }, {}, {}, {}, {}, {});
-	rightelephant1.PushBack1({ 395,34,115,84 }, {}, {}, {}, {}, {});
-	rightelephant1.PushBack1({ 515,34,115,84 }, {}, {}, {}, {}, {});
+	rightelephant1.PushBack1({ 635,34,115,84 }, {},  {}, {}, {}, {}, {});
+	rightelephant1.PushBack1({ 515,34,115,84 }, {}, {}, {}, {}, {}, {});
+	rightelephant1.PushBack1({ 395,34,115,84 }, {}, {}, {}, {}, {}, {});
+	rightelephant1.PushBack1({ 515,34,115,84 }, {}, {}, {}, {}, {}, {});
 	rightelephant1.speed = 0.05f;
 
-	rightelephant2.PushBack1({ 1213,36,165,133 }, { 55,0 }, {}, {}, {}, {});
-	rightelephant2.PushBack1({ 991,36,220,133 }, { 55,0 },  {}, {}, {}, {});
-	rightelephant2.PushBack1({ 762,36,228,133 }, { 55,0 }, {}, {}, {}, {});
-	rightelephant2.PushBack1({ 991,36,220,133 }, { 55,0 }, {}, {}, {}, {});
+	rightelephant2.PushBack1({ 1213,36,165,133 }, { 55,0 }, {}, {}, {}, {}, {});
+	rightelephant2.PushBack1({ 991,36,220,133 }, { 55,0 },  {}, {}, {}, {}, {});
+	rightelephant2.PushBack1({ 762,36,228,133 }, { 55,0 }, {}, {}, {}, {}, {});
+	rightelephant2.PushBack1({ 991,36,220,133 }, { 55,0 }, {}, {}, {}, {}, {});
 	rightelephant2.speed = 0.05f;
 	
 

@@ -17,6 +17,10 @@
 #define PUNCH_NEUTRAL_JUMP_TIME2 850
 #define KICK_TIME2 400
 #define HADOUKEN_TIME2 1000
+#define DMG_TIME2 150
+
+
+
 
 #define MAX_FRAME_COLLIDERS 6
 
@@ -140,7 +144,7 @@ public:
 	Uint32 kick_timer = 0;
 	Uint32 hadouken_timer = 0;
 	Uint32 punch_neutral_jump_timer = 0;
-
+	Uint32 dmg_timer = 0;
 	
 };
 

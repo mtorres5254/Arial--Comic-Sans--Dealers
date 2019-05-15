@@ -20,7 +20,7 @@ public:
 	COLLIDER_TYPE type[MAX_FRAMES]; 
 	Module *callback[MAX_FRAMES]; 
 	int maxcolliders[MAX_FRAMES]; 
-	
+	int damage[MAX_FRAMES];
 	
 
 public:
@@ -59,10 +59,11 @@ public:
 		current_frame = 0;
 	}
 	
-	void PushBack1(const SDL_Rect& rect, p2Point <int> Pivot, int nColliders, SDL_Rect rhitbox[], COLLIDER_TYPE ctipo[], Module *pcallback[])
+	void PushBack1(const SDL_Rect& rect, p2Point <int> Pivot, int nColliders, SDL_Rect rhitbox[], COLLIDER_TYPE ctipo[], Module *pcallback[], int dmg)
 	{
 		frames[last_frame] = rect;		
 		pivot[last_frame] = Pivot;
+		damage[last_frame] = dmg;
 	
 		maxcolliders[last_frame] = nColliders;
 
