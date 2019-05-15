@@ -1,3 +1,4 @@
+#include <windows.h>
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleTextures.h"
@@ -8,6 +9,7 @@
 #include "ModuleChunLi2.h"
 #include "ModuleUI.h"
 #include "ModuleInput.h"
+#include "ModuleSceneDhalsim.h"
 
 
 
@@ -106,9 +108,11 @@ update_status ModuleUI:: Update()
 	else if (App->input->keyboard[SDL_SCANCODE_F7] == KEY_DOWN && GamepadInfo == true) {
 		GamepadInfo = false;
 	}
-
 	
-	
+	/*if (App->scene_dhalsim->newRound)
+	{
+		Round(App->scene_dhalsim->Round);
+	}*/
 	//Render
 	Counter();
 	if (GamepadInfo == true) {
@@ -247,22 +251,21 @@ void ModuleUI::Round(int round)
 	switch (round)
 	{
 		case 1: 
-			App->font->BlitText(30, 43, font_id, "round 1"); 
-			App->font->BlitText(95, 43, font_id, "fight!");
+			App->font->BlitText(SCREEN_WIDTH/2 - 40, SCREEN_HEIGHT/2 - 5, font_id, "round 1"); 
+			Sleep(2000);
+			App->font->BlitText(SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 - 5, font_id, "fight!");
+			Sleep(1000);
+			App->scene_dhalsim->fight = true;
 			break;
-		case 2: 
+		/*case 2: 
 			App->font->BlitText(95, 43, font_id, "round 2"); 
 			App->font->BlitText(95, 43, font_id, "fight!");
 			break;
 		case 3:
 			App->font->BlitText(95, 43, font_id, "round 3"); 
 			App->font->BlitText(95, 43, font_id, "fight!");
-			break;
-	}
-	
-	
-	
-	
+			break;*/
+	}	
 }
 
 

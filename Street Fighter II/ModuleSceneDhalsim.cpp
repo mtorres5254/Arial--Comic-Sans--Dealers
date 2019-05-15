@@ -122,12 +122,12 @@ update_status ModuleSceneDhalsim::Update()
 	Animation * curren_animation = &rightelephant3;
 
 	PivotX = current_animation->pivot[(int)current_animation->current_frame].x;
-	if (newRound)
+	/*if (newRound)
 	{
 		App->UI->Round(Round);
 		newRound = false;
 		fight = true;
-	}
+	}*/
 	
 
 	// Draw everything --------------------------------------
