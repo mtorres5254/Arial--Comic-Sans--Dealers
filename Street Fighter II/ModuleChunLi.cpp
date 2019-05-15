@@ -103,46 +103,57 @@ bool ModuleChunLi::Start()
 
 	//Jump 
 
-	jump_neutral.PushBack({ 1756, 1, 47, 110 });
-	jump_neutral.PushBack({ 1804, 27, 50, 84 });
-	jump_neutral.PushBack({ 1855, 36, 52, 75 });
-	jump_neutral.PushBack({ 1908, 46, 57, 65 });
-	jump_neutral.PushBack({ 1908, 46, 57, 65 });
-	jump_neutral.PushBack({ 1908, 46, 57, 65 });
-	jump_neutral.PushBack({ 1855, 36, 52, 75 });
-	jump_neutral.PushBack({ 1804, 27, 50, 84 });
-	jump_neutral.PushBack({ 1756, 1, 47, 110 });
+	const int jumpcollider = 5;//Collider num for the idle animation
+	SDL_Rect jumphitbox[jumpcollider] = { { 5, 53, 37, 19 },{ 2, 4, 51, 54 },{ 9, 55, 37, 39 },{ 20, 86, 31, 21 },{ 8, 68, 31, 27 } };
+	COLLIDER_TYPE jumpCollType[jumpcollider] = { {COLLIDER_PLAYER},{COLLIDER_NONE},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER} };
+	Module* jumpCallback[jumpcollider] = { {this},{this},{this},{this},{this} };
+
+	jump_neutral.PushBack1({ 1756, 1, 47, 110 }, { 32, 25 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback);
+	jump_neutral.PushBack1({ 1804, 27, 50, 84 }, { 32, 25 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback);
+	jump_neutral.PushBack1({ 1855, 36, 52, 75 }, { 32, 25 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback);
+	jump_neutral.PushBack1({ 1908, 46, 57, 65 }, { 32, 25 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback);
+	jump_neutral.PushBack1({ 1908, 46, 57, 65 }, { 32, 25 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback);
+	jump_neutral.PushBack1({ 1908, 46, 57, 65 }, { 32, 25 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback);
+	jump_neutral.PushBack1({ 1855, 36, 52, 75 }, { 32, 25 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback);
+	jump_neutral.PushBack1({ 1804, 27, 50, 84 }, { 32, 25 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback);
+	jump_neutral.PushBack1({ 1756, 1, 47, 110 }, { 32, 25 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback);
 
 	jump_neutral.speed = 0.21f;
 	jump_neutral.loop = false;
 
 	//jump forward
 
-	jump_forward.PushBack({ 1756, 1, 47, 110 });
-	jump_forward.PushBack({ 925,940,50,84 });
-	jump_forward.PushBack({ 1024,30,88,81 });
-	jump_forward.PushBack({ 1113,63,121,48 });
-	jump_forward.PushBack({ 1235,23,109,88 });
-	jump_forward.PushBack({ 1345,7,52,104 });
-	jump_forward.PushBack({ 1398,30,110,81 });
-	jump_forward.PushBack({ 1509,45,119,66 });
-	jump_forward.PushBack({ 1629,35,95,76 });
-	jump_forward.PushBack({ 1756, 1, 47, 110 });
+	const int jumpfcollider1 = 1;//Collider num for the idle animation
+	SDL_Rect jumpfhitbox1[jumpfcollider1] = { { 32, 55, 37, 39 } };
+	COLLIDER_TYPE jumpfCollType1[jumpfcollider1] = { {COLLIDER_PLAYER}, };
+	Module* jumpfCallback1[jumpfcollider1] = { {this} };
+
+
+	jump_forward.PushBack1({ 1756, 1, 47, 110 }, { 32, 25 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback);
+	jump_forward.PushBack1({ 925,940,50,84 }, { 32, 25 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback);
+	jump_forward.PushBack1({ 1024,30,88,81 }, { 32, 25 }, jumpfcollider1, jumpfhitbox1, jumpfCollType1, jumpfCallback1);
+	jump_forward.PushBack1({ 1113,63,121,48 }, { 32, 25 }, jumpfcollider1, jumpfhitbox1, jumpfCollType1, jumpfCallback1);
+	jump_forward.PushBack1({ 1235,23,109,88 }, { 32, 25 }, jumpfcollider1, jumpfhitbox1, jumpfCollType1, jumpfCallback1);
+	jump_forward.PushBack1({ 1345,7,52,104 }, { 32, 25 }, jumpfcollider1, jumpfhitbox1, jumpfCollType1, jumpfCallback1);
+	jump_forward.PushBack1({ 1398,30,110,81 }, { 32, 25 }, jumpfcollider1, jumpfhitbox1, jumpfCollType1, jumpfCallback1);;
+	jump_forward.PushBack1({ 1509,45,119,66 }, { 32, 25 }, jumpfcollider1, jumpfhitbox1, jumpfCollType1, jumpfCallback1);
+	jump_forward.PushBack1({ 1629,35,95,76 }, { 32, 25 }, jumpfcollider1, jumpfhitbox1, jumpfCollType1, jumpfCallback1);
+	jump_forward.PushBack1({ 1756, 1, 47, 110 }, { 32, 25 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback);
 	jump_forward.speed = 0.19f;
 	jump_forward.loop = true;
 
 	//jump backward
 
-	jump_backwards.PushBack({ 1756, 1, 47, 110 });
-	jump_backwards.PushBack({ 925,940,50,84 });
-	jump_backwards.PushBack({ 1629,35,95,76 });
-	jump_backwards.PushBack({ 1509,45,119,66 });
-	jump_backwards.PushBack({ 1398,30,110,81 });
-	jump_backwards.PushBack({ 1345,7,52,104 });
-	jump_backwards.PushBack({ 1235,23,109,88 });
-	jump_backwards.PushBack({ 1113,63,121,48 });
-	jump_backwards.PushBack({ 1024,30,88,81 });
-	jump_backwards.PushBack({ 1756, 1, 47, 110 });
+	jump_backwards.PushBack1({ 1756, 1, 47, 110 }, { 32, 25 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback);
+	jump_backwards.PushBack1({ 925,940,50,84 }, { 32, 25 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback);
+	jump_backwards.PushBack1({ 1629,35,95,76 }, { 32, 25 }, jumpfcollider1, jumpfhitbox1, jumpfCollType1, jumpfCallback1);
+	jump_backwards.PushBack1({ 1509,45,119,66 }, { 32, 25 }, jumpfcollider1, jumpfhitbox1, jumpfCollType1, jumpfCallback1);
+	jump_backwards.PushBack1({ 1398,30,110,81 }, { 32, 25 }, jumpfcollider1, jumpfhitbox1, jumpfCollType1, jumpfCallback1);
+	jump_backwards.PushBack1({ 1345,7,52,104 }, { 32, 25 }, jumpfcollider1, jumpfhitbox1, jumpfCollType1, jumpfCallback1);
+	jump_backwards.PushBack1({ 1235,23,109,88 }, { 32, 25 }, jumpfcollider1, jumpfhitbox1, jumpfCollType1, jumpfCallback1);
+	jump_backwards.PushBack1({ 1113,63,121,48 }, { 32, 25 }, jumpfcollider1, jumpfhitbox1, jumpfCollType1, jumpfCallback1);
+	jump_backwards.PushBack1({ 1024,30,88,81 }, { 32, 25 }, jumpfcollider1, jumpfhitbox1, jumpfCollType1, jumpfCallback1);
+	jump_backwards.PushBack1({ 1756, 1, 47, 110 }, { 32, 25 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback);
 	jump_backwards.speed = 0.19f;
 	jump_backwards.loop = true;
 
