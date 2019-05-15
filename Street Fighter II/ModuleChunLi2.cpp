@@ -557,12 +557,12 @@ void ModuleChunLi2::positionlimits() {
 		speedY = 1;
 	}
 
-	if (position.x <= App->scene_dhalsim->background.x - 12) {
-		position.x = App->scene_dhalsim->background.x - 12;
+	if (position.x -20<= App->scene_dhalsim->background.x - 12) {
+		position.x = App->scene_dhalsim->background.x - 12+20;
 	}
 
-	if (position.x >= (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) -90 ) {
-		position.x = (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w)-90 ;
+	if (position.x -32>= (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) -90 ) {
+		position.x = (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w)-90 +32;
 	}
 	
 	if (abs(App->chunli->position.x - position.x) >= SCREEN_WIDTH -80 && position.x>App->chunli->position.x) {
