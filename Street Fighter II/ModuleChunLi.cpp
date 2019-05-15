@@ -583,16 +583,16 @@ void ModuleChunLi::positionlimits() {
 		position.x = (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) - 90 +32;
 	}
 	
-	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH-80 && position.x<App->chunli2->position.x) {
-		App->chunli2->position.x = position.x + SCREEN_WIDTH - 80;
-		position.x = App->chunli2->position.x -SCREEN_WIDTH+80;		
+	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH-20 && position.x<App->chunli2->position.x) {
+		App->chunli2->position.x = position.x + SCREEN_WIDTH - 20;
+		position.x = App->chunli2->position.x -SCREEN_WIDTH + 20;		
 		
 	}
 	
-	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH - 80 && position.x > App->chunli2->position.x) {
+	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH - 20 && position.x > App->chunli2->position.x) {
 
-		App->chunli2->position.x = position.x - SCREEN_WIDTH + 80;
-		position.x = App->chunli2->position.x + SCREEN_WIDTH - 80;
+		App->chunli2->position.x = position.x - SCREEN_WIDTH + 20;
+		position.x = App->chunli2->position.x + SCREEN_WIDTH - 20;
 	}
 
 }
