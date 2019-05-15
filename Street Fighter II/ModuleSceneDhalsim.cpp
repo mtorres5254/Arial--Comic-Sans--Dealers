@@ -90,6 +90,7 @@ bool ModuleSceneDhalsim::Start()
 	App->audio->PlayMusic(music, 5000);
 	
 	Round = 1;
+	newRound = true;
 
 	App->chunli->Enable();
 	App->chunli2->Enable();

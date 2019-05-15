@@ -109,10 +109,14 @@ update_status ModuleUI:: Update()
 		GamepadInfo = false;
 	}
 	
-	/*if (App->scene_dhalsim->newRound)
+	if (App->scene_dhalsim->newRound)
 	{
+		App->scene_dhalsim->fight = false;
 		Round(App->scene_dhalsim->Round);
-	}*/
+		App->scene_dhalsim->newRound = false;
+		App->scene_dhalsim->fight = true;
+	}
+
 	//Render
 	Counter();
 	if (GamepadInfo == true) {
@@ -252,10 +256,9 @@ void ModuleUI::Round(int round)
 	{
 		case 1: 
 			App->font->BlitText(SCREEN_WIDTH/2 - 40, SCREEN_HEIGHT/2 - 5, font_id, "round 1"); 
-			Sleep(2000);
+			//Sleep(2000);
 			App->font->BlitText(SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 - 5, font_id, "fight!");
-			Sleep(1000);
-			App->scene_dhalsim->fight = true;
+			//Sleep(1000);			
 			break;
 		/*case 2: 
 			App->font->BlitText(95, 43, font_id, "round 2"); 
