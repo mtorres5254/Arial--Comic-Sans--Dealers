@@ -24,7 +24,7 @@ public:
 	bool CleanUp();
 
 	void Counter();
-	void Round(int);
+	void Round();
 	void GamepadDebug();
 
 public:
@@ -50,6 +50,7 @@ public:
 	int Counter1;
 	int Counter2;
 	int timenow;
+	int round;
 
 	bool GamepadInfo = false;
 

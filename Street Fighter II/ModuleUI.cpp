@@ -83,6 +83,8 @@ bool ModuleUI::Start()
 	time = 99;
 	Counter1 = 9; //unit
 	Counter2 = 9; //decimal
+
+	round = 1;
 	
 	return ret;
 }
@@ -109,14 +111,17 @@ update_status ModuleUI:: Update()
 		GamepadInfo = false;
 	}
 	
-	if (App->scene_dhalsim->newRound)
+	if (timenow > 4000)
 	{
-		App->scene_dhalsim->fight = false;
-		Round(App->scene_dhalsim->Round);
-		App->scene_dhalsim->newRound = false;
-		App->scene_dhalsim->fight = true;
+		if (App->scene_dhalsim->newRound == true)
+		{
+			App->scene_dhalsim->fight = false;
+			Round();
+			App->scene_dhalsim->newRound = false;
+			App->scene_dhalsim->fight = true;
+			round++;
+		}
 	}
-
 	//Render
 	Counter();
 	if (GamepadInfo == true) {
@@ -250,24 +255,33 @@ void ModuleUI::Counter()
 	}
 }
 
-void ModuleUI::Round(int round)
+void ModuleUI::Round()
 {
+	int sec = SDL_GetTicks();
+	int aux;
 	switch (round)
 	{
 		case 1: 
-			App->font->BlitText(SCREEN_WIDTH/2 - 40, SCREEN_HEIGHT/2 - 5, font_id, "round 1"); 
-			//Sleep(2000);
-			App->font->BlitText(SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 - 5, font_id, "fight!");
-			//Sleep(1000);			
+			App->font->BlitText(SCREEN_WIDTH/2 - 40, SCREEN_HEIGHT/2 - 5, font_id, "round 1"); 		
+			do
+			{
+				aux = SDL_GetTicks() - sec;
+			} while (aux < 2000);
+			App->font->BlitText(SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 - 5, font_id, "fight!");	
+			sec = SDL_GetTicks();
+			do
+			{
+				aux = SDL_GetTicks() - sec;
+			} while (aux < 1000);
 			break;
-		/*case 2: 
-			App->font->BlitText(95, 43, font_id, "round 2"); 
-			App->font->BlitText(95, 43, font_id, "fight!");
+		case 2: 
+			App->font->BlitText(SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 - 5, font_id, "round 2");
+			App->font->BlitText(SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 - 5, font_id, "fight!");
 			break;
 		case 3:
-			App->font->BlitText(95, 43, font_id, "round 3"); 
-			App->font->BlitText(95, 43, font_id, "fight!");
-			break;*/
+			App->font->BlitText(SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 - 5, font_id, "round 3");
+			App->font->BlitText(SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 - 5, font_id, "fight!");
+			break;
 	}	
 }
 

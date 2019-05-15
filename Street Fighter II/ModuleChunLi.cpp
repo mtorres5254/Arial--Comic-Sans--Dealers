@@ -862,7 +862,6 @@ void ModuleChunLi::ResetPlayer() {
 		App->UI->time = 99;
 		App->UI->Counter1 = 9;
 		App->UI->Counter2 = 9;
-		App->scene_dhalsim->Round++; 
 		App->scene_dhalsim->newRound = true;
 	}
 }
