@@ -88,7 +88,9 @@ bool ModuleSceneDhalsim::Start()
 	graphics = App->textures->Load("Assets/Images/Dhalsim_stage.png");
 	music = App->audio->LoadMusic("Assets/Sound/Musics/dhalsim.ogg");
 	App->audio->PlayMusic(music, 5000);
-	//
+	
+	Round = 1;
+
 	App->chunli->Enable();
 	App->chunli2->Enable();
 	App->collision->Enable();
@@ -120,6 +122,12 @@ update_status ModuleSceneDhalsim::Update()
 	Animation * curren_animation = &rightelephant3;
 
 	PivotX = current_animation->pivot[(int)current_animation->current_frame].x;
+	if (newRound)
+	{
+		App->UI->Round(Round);
+		newRound = false;
+		fight = true;
+	}
 	
 
 	// Draw everything --------------------------------------

@@ -108,7 +108,7 @@ update_status ModuleUI:: Update()
 	}
 
 	
-
+	
 	//Render
 	Counter();
 	if (GamepadInfo == true) {
@@ -153,7 +153,8 @@ update_status ModuleUI:: Update()
 }
 
 
-void ModuleUI::Counter() {
+void ModuleUI::Counter() 
+{
 	if (timenow > 0)
 	{
 		if (SDL_GetTicks() - timenow > 1000) {			
@@ -240,6 +241,30 @@ void ModuleUI::Counter() {
 		break;
 	}
 }
+
+void ModuleUI::Round(int round)
+{
+	switch (round)
+	{
+		case 1: 
+			App->font->BlitText(30, 43, font_id, "round 1"); 
+			App->font->BlitText(95, 43, font_id, "fight!");
+			break;
+		case 2: 
+			App->font->BlitText(95, 43, font_id, "round 2"); 
+			App->font->BlitText(95, 43, font_id, "fight!");
+			break;
+		case 3:
+			App->font->BlitText(95, 43, font_id, "round 3"); 
+			App->font->BlitText(95, 43, font_id, "fight!");
+			break;
+	}
+	
+	
+	
+	
+}
+
 
 void ModuleUI::GamepadDebug() {
 	//escriure aqui el codi que mostra la info debug

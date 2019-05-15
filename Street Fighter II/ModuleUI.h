@@ -24,6 +24,7 @@ public:
 	bool CleanUp();
 
 	void Counter();
+	void Round(int);
 	void GamepadDebug();
 
 public:

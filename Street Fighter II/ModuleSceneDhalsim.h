@@ -46,6 +46,9 @@ public:
 	bool forward;
 	int Round;
 
+	bool fight = false;
+	bool newRound = true;
+
 	bool Round1 = true;
 	bool Round2 = false;
 	bool Round3 = false;
