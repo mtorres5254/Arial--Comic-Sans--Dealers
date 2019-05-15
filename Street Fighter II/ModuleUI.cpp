@@ -113,13 +113,20 @@ update_status ModuleUI:: Update()
 	Counter();
 	if (GamepadInfo == true) {
 		GamepadDebug();
-
 	}
+
+	App->font->BlitText(30, 43, font_id, "chun");
+	App->font->BlitText(95, 43, font_id, "li");
+
+	App->font->BlitText(265, 43, font_id, "chun");
+	App->font->BlitText(330, 43, font_id, "li");
+
 
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - RedBar1.w - KObar.w / 2, 20, &RedBar1, false);
 	App->render->Blit(graphics1, SCREEN_WIDTH / 2 - HealthBar1.w - KObar.w / 2, 20, &HealthBar1, false);
 	App->render->BlitSym(graphics1, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &RedBar2, false);
 	App->render->BlitSym(graphics1, SCREEN_WIDTH / 2 + KObar.w / 2, 20, &HealthBar2, false);
+
 
 	if (App->chunli->life > 250 && App->chunli2->life > 250) {
 		App->render->Blit(graphics1, SCREEN_WIDTH / 2 - (KObar.w / 2), 15, &KObar, false);
@@ -237,4 +244,5 @@ void ModuleUI::Counter() {
 void ModuleUI::GamepadDebug() {
 	//escriure aqui el codi que mostra la info debug
 	App->font->BlitText(0, 0, font_id, "hola");
+	
 }
