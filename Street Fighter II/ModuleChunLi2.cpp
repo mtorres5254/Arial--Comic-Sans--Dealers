@@ -340,7 +340,8 @@ update_status ModuleChunLi2::Update()
 						jump_forward_punch.Reset();
 						Crouch_punch.Reset();
 						kick.Reset();
-
+						LightningKick.Reset();
+						move = true;
 
 
 						break;
@@ -656,21 +657,18 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 				position.x -= 1;
 		}
 
-		if (state == ST_WALK_BACKWARD && App->chunli->state == ST_WALK_FORWARD2) {
+		if (state == ST_WALK_BACKWARD && App->chunli->state == ST_WALK_FORWARD2 || state == ST_WALK_FORWARD && App->chunli->state == ST_WALK_BACKWARD2) {
 
 			move = false;
 		}
+
+		
 		else {
 			move = true;
 		}
 		
 	}
 
-	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER && state == ST_WALK_FORWARD)
-	{
-
-		
-	}
 
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER && (state == ST_JUMP_BACKWARD || state == ST_JUMP_FORWARD || state == ST_JUMP_NEUTRAL)) {
 		
