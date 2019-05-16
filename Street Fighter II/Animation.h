@@ -61,9 +61,11 @@ public:
 	
 	void PushBack1(const SDL_Rect& rect, p2Point <int> Pivot, int nColliders, SDL_Rect rhitbox[], COLLIDER_TYPE ctipo[], Module *pcallback[], int dmg)
 	{
+
+		
 		frames[last_frame] = rect;		
 		pivot[last_frame] = Pivot;
-		damage[last_frame] = dmg;
+		damage[last_frame] = dmg/40;
 	
 		maxcolliders[last_frame] = nColliders;
 
