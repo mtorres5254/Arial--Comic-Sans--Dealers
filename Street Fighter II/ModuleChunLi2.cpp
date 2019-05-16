@@ -836,7 +836,7 @@ void ModuleChunLi2::ResetPlayer() {
 
 	life = 1000;
 	position.x = 410; 
-	if (App->chunli->position.x != 100 || App->chunli->life != 1000) {
+	if (App->chunli->position.x != 180 || App->chunli->life != 1000) {
 		ActiveDeath = 0;
 		App->chunli->ResetPlayer();
 		App->UI->time = 99;
