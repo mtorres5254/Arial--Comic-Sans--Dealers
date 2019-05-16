@@ -733,51 +733,51 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 
 
 	//Controller
-	if (App->input->Pad1.button_state == A && App->input->Pad1.key_state == KEY_UP) {
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_UP) { //Teoricament i si deu vol, aixi funcionaria. Esperem que si, recordar provar-ho
 		return false;
 	}
-	if (App->input->Pad1.button_state == B && App->input->Pad1.key_state == KEY_UP) {
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_UP) {
 		return false;
 	}
-	if (App->input->Pad1.button_state == RB && App->input->Pad1.key_state == KEY_UP) {
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_UP) {
 		return false;
 	}
-	if (App->input->Pad1.button_state == DPAD_UP && App->input->Pad1.key_state == KEY_UP) {
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_UP) {
 		up = false;
 	}
-	if (App->input->Pad1.button_state == DPAD_DOWN && App->input->Pad1.key_state == KEY_UP) {
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_UP) {
 		inputs.Push(IN_CROUCH_UP2);
 		down = false;
 	}
-	if (App->input->Pad1.button_state == DPAD_LEFT && App->input->Pad1.key_state == KEY_UP) {
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_UP) {
 		inputs.Push(IN_LEFT_UP2);
 		left = false;
 	}
-	if (App->input->Pad1.button_state == DPAD_RIGHT && App->input->Pad1.key_state == KEY_UP) {
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_UP) {
 		inputs.Push(IN_RIGHT_UP2);
 		right = false;
 	}
 
 
-	if (App->input->Pad1.button_state == A && App->input->Pad1.key_state == KEY_DOWN) {
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
 		inputs.Push(IN_X2);
 	}
-	if (App->input->Pad1.button_state == B && App->input->Pad1.key_state == KEY_DOWN) {
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
 		inputs.Push(IN_C2);
 	}
-	if (App->input->Pad1.button_state == RB && App->input->Pad1.key_state == KEY_DOWN) {
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 		inputs.Push(IN_V2);
 	}
-	if (App->input->Pad1.button_state == DPAD_UP && App->input->Pad1.key_state == KEY_DOWN) {
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN) {
 		up = true;
 	}
-	if (App->input->Pad1.button_state == DPAD_DOWN && App->input->Pad1.key_state == KEY_DOWN) {
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN) {
 		down = true;
 	}
-	if (App->input->Pad1.button_state == DPAD_LEFT && App->input->Pad1.key_state == KEY_DOWN) {
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_DOWN) {
 		left = true;
 	}
-	if (App->input->Pad1.button_state == DPAD_RIGHT && App->input->Pad1.key_state == KEY_DOWN) {
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT]                          == KEY_DOWN) {
 		right = true;
 	}
 	

@@ -9,8 +9,9 @@
 #include <list>
 
 #define MAX_KEYS 300
-#define MAX_PADS 4
+#define MAX_BUTTONS 15
 #define JOYSTICK_DEAD_ZONE 8000
+
 enum KEY_STATE
 {
 	KEY_IDLE = 0,
@@ -19,25 +20,10 @@ enum KEY_STATE
 	KEY_UP
 };
 
-enum BUTTON_STATES
-{
-	A,
-	B,
-	X,
-	Y,
-	DPAD_UP,
-	DPAD_DOWN,
-	DPAD_LEFT,
-	DPAD_RIGHT,
-	LB,
-	RB,
-	IDLE,
-};
-
 struct GamePad {
 	SDL_GameController* Pad;
-	int key_state = KEY_IDLE;
-	Uint8 button_state = IDLE;
+	KEY_STATE button_state[MAX_BUTTONS];
+	Uint8 Pressed[MAX_BUTTONS];
 	float Xaxis_state;
 	float Yaxis_state;
 };
