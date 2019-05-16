@@ -6,8 +6,6 @@
 #include "Application.h"
 #include "SDL/include/SDL.h"
 
-#define MAX_COMMAND_FRAMES 8
-
 
 class ModuleCombos : public Module
 {
@@ -18,39 +16,18 @@ public:
 	bool Init();
 	update_status Update();
 	bool CleanUp();
+
+	bool CheckPunchP1();
+	bool CheckPunchP2();
+
+	bool CheckLightingKickP1();
+	bool CheckLightingKickP2();
+
 public:
+	int actual_frame = 0;
 
-	InputCommand a;
-
+	int lightimgKickCount = 0;
+	int lightimgKickCount2 = 0;
 };
-enum class InputCommandTypes
-{
-	punch,
-	max
-};
-
-struct InputCommand
-{
-	InputCommand();
-
-	InputCommandTypes type = InputCommandTypes::max;
-
-	InputCommand(InputCommandTypes type) : type(type) {}
-
-	virtual bool Check(uint past_frames) const = 0;
-
-
-};
-
-struct CommandPunch : public InputCommand
-{
-
-	CommandPunch() : InputCommand(InputCommandTypes::punch) {}
-	bool Check(uint frames_past) const override;
-
-};
-
-
-
 
 #endif // !_MODULECOMBOS_H
