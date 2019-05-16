@@ -5,8 +5,6 @@
 #include "Globals.h"
 #include "SDL\include\SDL_scancode.h"
 #include "SDL/include/SDL.h"
-#include <iostream>
-#include <list>
 
 #define MAX_KEYS 300
 #define MAX_BUTTONS 15
