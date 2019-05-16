@@ -66,7 +66,7 @@ bool ModuleChunLi2::Start()
 	forward.PushBack1({ 851, 432, 63, 91 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback, {});
 	forward.PushBack1({ 790, 433, 60, 90 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback, {});
 	forward.PushBack1({ 726, 434, 63, 89 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback, {});
-	forward.speed = 0.2f;
+	forward.speed = 0.15f;
 
 
 	//Backward
@@ -87,7 +87,7 @@ bool ModuleChunLi2::Start()
 	backward.PushBack1({ 851, 432, 63, 91 }, { 32,2 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback, {});
 	backward.PushBack1({ 790, 433, 60, 90 }, { 32,2 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback, {});
 	backward.PushBack1({ 726, 434, 63, 89 }, { 32,2 }, bwdcollider, bwdhitbox, bcwCollType, bwdCallback, {});
-	backward.speed = 0.15f;
+	backward.speed = 0.2f;
 
 	//Crouch
 
@@ -173,7 +173,7 @@ bool ModuleChunLi2::Start()
 	Module* punchCallback2[punchcollider2] = { { this },{ this },{ this },{ this },{ this }, {this} };
 	punch.PushBack1({ 139, 533, 78, 87 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
 	punch.PushBack1({ 218, 531, 101, 89 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
-	punch.PushBack1({ 320, 524, 87, 96 }, { 32,2 }, punchcollider2, punchhitbox2, punchCollType2, punchCallback2, 2600);
+	punch.PushBack1({ 320, 524, 87, 96 }, { 32,2 }, punchcollider2, punchhitbox2, punchCollType2, punchCallback2, 2800);
 	punch.PushBack1({ 218, 531, 101, 89 }, { 32, 2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
 	punch.PushBack1({ 139, 533, 78, 87 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
 
@@ -195,7 +195,7 @@ bool ModuleChunLi2::Start()
 
 	kick.PushBack1({ 131,630 , 66, 89 }, { 32,2 },kickcollider, kickhitbox,kickCollType,kickCallback, {});
 	kick.PushBack1({ 198, 626, 71, 93 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
-	kick.PushBack1({ 270, 622, 106,97 }, { 32,20 }, kickcollider2, kickhitbox2, kickCollType2, kickCallback2, 2600);
+	kick.PushBack1({ 270, 622, 106,97 }, { 32,20 }, kickcollider2, kickhitbox2, kickCollType2, kickCallback2, 2800);
 	kick.PushBack1({ 198, 626, 71, 93 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
 	kick.PushBack1({ 131,630 , 66, 89 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
 	kick.speed = 0.2f;
@@ -244,6 +244,30 @@ bool ModuleChunLi2::Start()
 	jump_backward_punch.speed = 0.2f;
 	jump_backward_punch.loop = false;
 
+
+	//Lightning kick
+	const int lkcollider = 9;//Collider num for the idle animation
+	SDL_Rect lkhitbox[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33} , {91,66,31,15}, {57,19,71,39}, {90,42,51,25} , {48,4,83,29} };
+	COLLIDER_TYPE lkCollType[lkcollider] = { {COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY}, {COLLIDER_ENEMY_SHOT }, {COLLIDER_ENEMY_SHOT }, {COLLIDER_ENEMY_SHOT }, {COLLIDER_ENEMY_SHOT } };
+	Module* lkCallback[lkcollider] = { {this},{this},{this},{this},{this},{this},{this},{this},{this} };
+
+
+	SDL_Rect lkhitbox1[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {57,19,71,39} };
+	SDL_Rect lkhitbox2[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {90,42,51,25} };
+	SDL_Rect lkhitbox3[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {48,4,83,29} };
+
+
+
+	//LightningKick.PushBack1({ 1475, 225, 61 , 100 }, { 32, 2 }, {}, {}, {}, {}, {});
+	LightningKick.PushBack1({ 1537, 226, 107, 99 }, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 2400);
+	LightningKick.PushBack1({ 1645,222 , 123, 103 }, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
+	LightningKick.PushBack1({ 1769, 230, 119, 95 }, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 2400);
+	LightningKick.PushBack1({ 1889, 230, 136,95 }, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
+	LightningKick.PushBack1({ 1025, 355, 120, 93 }, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 2400);
+	LightningKick.PushBack1({ 1146, 353, 152, 95 }, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
+	LightningKick.PushBack1({ 1300, 355, 101, 93 }, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 2400);
+	LightningKick.speed = 0.3f;
+	LightningKick.loop = true;
 
 	//Start functions to reset player
 	ResetPlayer();
@@ -298,7 +322,7 @@ update_status ModuleChunLi2::Update()
 				lifecondition(current_animation);			
 
 
-				if (life > 0 && damage_received == false && App->chunli->life > 0) {
+				if (life > 0 && damage_received == false && App->chunli->life > 0 ) {
 
 
 					switch (state)
@@ -325,6 +349,8 @@ update_status ModuleChunLi2::Update()
 
 						current_animation = &forward;
 						punch.Reset();
+
+						if(move)
 						position.x += speedX;
 						break;
 
@@ -332,6 +358,8 @@ update_status ModuleChunLi2::Update()
 
 						current_animation = &backward;
 						punch.Reset();
+
+						if(move)
 						position.x -= speedX;
 
 						break;
@@ -532,9 +560,9 @@ update_status ModuleChunLi2::Update()
 						current_animation = &kick;
 
 						break;
-					case ST_HADOUKEN:
+					case ST_LIGHTNINGKICK:
 
-
+						current_animation = &LightningKick;
 						break;
 					}
 
@@ -619,36 +647,40 @@ void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 }
 
 void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
-	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER &&  state == ST_IDLE)
+	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER)
 	{
-		if (position.x < App->chunli->position.x)
-			position.x -= 1;
+		if (state == ST_IDLE) {
+			if (position.x > App->chunli->position.x)
+				position.x += 1;
+			if (position.x < App->chunli->position.x)
+				position.x -= 1;
+		}
 
-		else if (position.x > App->chunli->position.x)
-			position.x += 1;
-		
+		if (state == ST_WALK_BACKWARD && App->chunli->state == ST_WALK_FORWARD2) {
+
+			move = false;
+		}
+		else {
+			move = true;
+		}
 		
 	}
 
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER && state == ST_WALK_FORWARD)
 	{
 
-		if (position.x < App->chunli2->position.x)
-			position.x -= 1;
-		else if (position.x > App->chunli2->position.x)
-			position.x += 1;
-
+		
 	}
 
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER && (state == ST_JUMP_BACKWARD || state == ST_JUMP_FORWARD || state == ST_JUMP_NEUTRAL)) {
-		speedX = -1;
+		
 
 	}
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER_ATTACK)
 	{
 		int aux = life;
 		if (!damage_received) {
-			life = aux - App->chunli2->dmg;
+			life = aux - App->chunli->dmg;
 		}
 		damage_received = true;
 
@@ -819,7 +851,7 @@ void ModuleChunLi2::internal_input(p2Qeue<ryu_inputs>& inputs)
 	{
 		if (SDL_GetTicks() - hadouken_timer > HADOUKEN_TIME2)
 		{
-			inputs.Push(IN_HADOUKEN_FINISH);
+			inputs.Push(IN_LIGHTNINGKICK_FINISH);
 			hadouken_timer = 0;
 		}
 	}
@@ -866,7 +898,7 @@ ryu_states ModuleChunLi2::process_fsm(p2Qeue<ryu_inputs>& inputs)
 			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 			case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
 			case IN_C: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
-			case IN_V: state = ST_HADOUKEN; hadouken_timer = SDL_GetTicks(); break;
+			case IN_V: state = ST_LIGHTNINGKICK; hadouken_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -881,7 +913,7 @@ ryu_states ModuleChunLi2::process_fsm(p2Qeue<ryu_inputs>& inputs)
 			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 			case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
 			case IN_C: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
-			case IN_V: state = ST_HADOUKEN; hadouken_timer = SDL_GetTicks(); break;
+			case IN_V: state = ST_LIGHTNINGKICK; hadouken_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -896,7 +928,7 @@ ryu_states ModuleChunLi2::process_fsm(p2Qeue<ryu_inputs>& inputs)
 			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 			case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
 			case IN_C: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
-			case IN_V: state = ST_HADOUKEN; hadouken_timer = SDL_GetTicks(); break;
+			case IN_V: state = ST_LIGHTNINGKICK; hadouken_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1001,11 +1033,11 @@ ryu_states ModuleChunLi2::process_fsm(p2Qeue<ryu_inputs>& inputs)
 			}
 		}
 		break;
-		case ST_HADOUKEN:
+		case ST_LIGHTNINGKICK:
 		{
 			switch (last_input)
 			{
-			case IN_HADOUKEN_FINISH: state = ST_IDLE; break;
+			case IN_LIGHTNINGKICK_FINISH: state = ST_IDLE; break;
 			}
 			break;
 		}
@@ -1025,7 +1057,7 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 	}
 
 
-	if (App->chunli->life == 0 && App->UI->victorycount == 0) {
+	if (App->chunli2->life == 0 && App->UI->victorycount == 0) {
 
 		if (acumvictory < 75) {
 			current_animation = &victory;
@@ -1036,7 +1068,7 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 			acumvictory = 0;
 		}
 	}
-	if (App->chunli->life == 0 && App->UI->victorycount == 1) {
+	if (App->chunli2->life == 0 && App->UI->victorycount == 1) {
 
 		if (acumvictory < 75) {
 			current_animation = &victory1;
@@ -1078,31 +1110,11 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 
 		if (damage_received == true) {
 
-
+			current_animation = &damage;
 			if (life == 0) {
 				damage_received = false;
 			}
-			if (acumdamage == 1) {
 
-
-			}
-			if (acumdamage >= 0 && acumdamage < 60 && life > 0) {
-
-
-				current_animation = &damage;
-				acumdamage++;
-			}
-
-			if (acumdamage == 60 && life > 0) {
-
-				acumdamage = 0;
-
-				damage.Reset();
-
-				damage_received = false;
-
-
-			}
 
 		}
 

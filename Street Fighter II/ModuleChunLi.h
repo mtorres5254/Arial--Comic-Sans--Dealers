@@ -15,9 +15,9 @@
 #define JUMP_TIME2 850
 #define PUNCH_TIME2 150
 #define PUNCH_NEUTRAL_JUMP_TIME2 850
-#define KICK_TIME2 400
-#define HADOUKEN_TIME2 1000
-#define DMG_TIME2 150
+#define KICK_TIME2 200
+#define HADOUKEN_TIME2 1200
+#define DMG_TIME2 75
 
 
 
@@ -45,7 +45,7 @@ enum ryu_states2
 	ST_PUNCH_BACKWARD_JUMP2,
 	ST_PUNCH_CROUCH2,
 	ST_KICK_STANDING2,
-	ST_HADOUKEN2,
+	ST_LIGHTNINGKICK2,
 	ST_RECEIVED_PUNCH2,
 };
 
@@ -66,7 +66,7 @@ enum ryu_inputs2
 	IN_JUMP_FINISH2,
 	IN_PUNCH_FINISH2,
 	IN_KICK_FINISH2,
-	IN_HADOUKEN_FINISH2,
+	IN_LIGHTNINGKICK_FINISH2,
 	IN_RECEIVED_PUNCH2,
 };
 class ModuleChunLi : public Module
@@ -107,6 +107,7 @@ public:
 	Animation jump_forward_punch;
 	Animation jump_backward_punch;
 	
+	Animation LightningKick_startup;
 	Animation LightningKick;
 	Animation Death;
 	Animation damage;
@@ -122,7 +123,7 @@ public:
 
 	int PivotX = 0;
 	int PivotY = 0;
-
+	int dmg = 0;
 
 	int DeathCount = 0;
 	int ActiveDeath = 0;
@@ -134,10 +135,12 @@ public:
 	int speed = 1;
 	bool damage_received = false;
 	bool jumpactive = 0;
-	bool prueba = false;
+	bool active = false;
 	int life = 1000;
 	int healthbar;
 
+	bool move = true;
+	int lkcounter = 0;
 	ryu_states2 state;
 
 	Uint32 jump_timer = 0;

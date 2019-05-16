@@ -16,7 +16,7 @@
 #define PUNCH_TIME2 150
 #define PUNCH_NEUTRAL_JUMP_TIME2 850
 #define KICK_TIME2 400
-#define HADOUKEN_TIME2 1000
+#define HADOUKEN_TIME2 1200
 
 #define MAX_FRAME_COLLIDERS 6
 
@@ -41,7 +41,7 @@ enum ryu_states
 	ST_PUNCH_BACKWARD_JUMP,
 	ST_PUNCH_CROUCH,
 	ST_KICK_STANDING,
-	ST_HADOUKEN,
+	ST_LIGHTNINGKICK,
 	ST_RECEIVED_PUNCH,
 };
 
@@ -62,7 +62,7 @@ enum ryu_inputs
 	IN_JUMP_FINISH,
 	IN_PUNCH_FINISH,
 	IN_KICK_FINISH,
-	IN_HADOUKEN_FINISH,
+	IN_LIGHTNINGKICK_FINISH,
 	IN_RECEIVED_PUNCH,
 };
 class ModuleChunLi2 : public Module
@@ -102,13 +102,14 @@ public:
 	Animation jump_neutral_punch;
 	Animation jump_forward_punch;
 	Animation jump_backward_punch;
-
+	
 	Animation Death;
 	Animation damage;
 	Animation victory;
 	Animation victory1;
 	iPoint position;
 
+	Animation LightningKick;
 	Collider* colliders[MAX_COLLIDERS];
 
 	int acumvictory = 0;
@@ -132,6 +133,8 @@ public:
 	bool prueba = false;
 	int life = 1000;
 	int healthbar;
+
+	bool move = true;
 
 	ryu_states state;
 
