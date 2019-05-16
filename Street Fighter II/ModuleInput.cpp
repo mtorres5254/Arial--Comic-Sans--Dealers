@@ -3,6 +3,8 @@
 #include "ModuleInput.h"
 #include "SDL/include/SDL.h"
 #include "ModuleRender.h"
+#include <stdio.h>
+#include <string.h>
 
 ModuleInput::ModuleInput() : Module()
 {

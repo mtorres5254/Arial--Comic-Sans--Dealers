@@ -9,6 +9,7 @@
 #include "ModuleUI.h"
 #include "ModuleInput.h"
 #include "ModuleSceneDhalsim.h"
+#include <string.h>
 
 
 
@@ -69,7 +70,7 @@ bool ModuleUI::Start()
 	bool ret = true;
 
 	graphics1 = App->textures->Load("Assets/Images/Battle_HUD.png"); 
-	font_id = App->font->Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890", 1);
+	font_id = App->font->Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890 ", 1);
 	font_Rounds = App->font->Load("Assets/Images/font_round.png", "r123", 2);
 
 	VoiceRound = App->audio->LoadChunk("Assets/Sound/Round.wav");
@@ -109,11 +110,32 @@ update_status ModuleUI:: Update()
 	else if (App->input->keyboard[SDL_SCANCODE_F7] == KEY_DOWN && GamepadInfo == true) {
 		GamepadInfo = false;
 	}
+
+	if (App->input->keyboard[SDL_SCANCODE_F8] == KEY_DOWN && Historyinfo == false) {
+		Historyinfo = true;
+	}
+	else if (App->input->keyboard[SDL_SCANCODE_F8] == KEY_DOWN && Historyinfo == true) {
+		Historyinfo = false;
+	}
 	
 	//Render
 	Counter();
 	if (GamepadInfo == true) {
 		GamepadDebug();
+	}
+
+	if (Historyinfo == true) {
+		HistoryDebug();
+	}
+	//
+	for (int i = 0; i < 20; i++) {
+		if (Hispos[i].occuped == true) {
+			Hispos[i].count++;
+			if (Hispos[i].count >= 300) {
+				Hispos[i].occuped = false;
+				Hispos[i].count = 0;
+			}
+		}
 	}
 
 	App->font->BlitText(30, 43, font_id, "chun");
@@ -245,6 +267,36 @@ void ModuleUI::Counter()
 
 void ModuleUI::GamepadDebug() {
 	//escriure aqui el codi que mostra la info debug
-	App->font->BlitText(0, 0, font_id, "hola");
-	
+	if (App->input->Gamepad == false && App->input->Gamepad2 == false) {
+		App->font->BlitText(0, 0, font_id, "No gamepads conected");
+	}
+	else if (App->input->Gamepad == true) {
+		App->font->BlitText(0, 0, font_id, "Player 1 controller conected");
+	}
+	else if (App->input->Gamepad == true && App->input->Gamepad2 == true) {
+		App->font->BlitText(0, 0, font_id, "Player 1 and Player 2controller conected");
+	}	
 }
+
+void ModuleUI::HistoryDebug() {
+	for (int i = 0; i < 20; i++) {
+		Hispos[i].Positions = new SDL_Point({0, 150 - (14 * i)});
+	}
+	for (int a = 0; a < SDL_CONTROLLER_BUTTON_MAX; a++) {
+		for (int i = 0; i < MAX_HISTORY; i++) {
+			if (App->input->history[i].keyboard[a] != KEY_IDLE) {
+				if (App->input->history[i].keyboard[a] != App->input->history[i].keyboard[a]) {
+					for (int j = 0; j < 20; j++) {
+						if (Hispos[j].occuped == false) {
+							App->font->BlitText(Hispos[j].Positions->x, Hispos[j].Positions->y, font_id, "hola");
+						}
+					}
+				}
+			}
+		}
+	}
+	
+
+
+}
+

@@ -5,8 +5,6 @@
 #include "Globals.h"
 #include "SDL\include\SDL_scancode.h"
 #include "SDL/include/SDL.h"
-#include <iostream>
-#include <list>
 
 #define MAX_KEYS 300
 #define MAX_BUTTONS 15
@@ -15,17 +13,6 @@
 #define JOYSTICK_DEAD_ZONE 0.2
 #define JOYSTICK_DEAD_ZONE_NEGATIVE -0.2
 #define MAX_HISTORY 180
-
-
-/*
-struct History
-{
-	uint frame = 0u;
-	KEY_STATE keyboard[MAX_KEYS];
-	GamePad pads[MAX_PADS];
-
-};*/
-
 
 enum KEY_STATE
 {
