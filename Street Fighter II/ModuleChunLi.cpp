@@ -640,7 +640,7 @@ void ModuleChunLi::positionlimits() {
 	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH - 130 && position.x > App->chunli2->position.x) {
 
 		App->chunli2->position.x = position.x - SCREEN_WIDTH + 130;
-		position.x = App->chunli2->position.x + SCREEN_WIDTH - 110;
+		position.x = App->chunli2->position.x + SCREEN_WIDTH - 130;
 	}
 
 }
