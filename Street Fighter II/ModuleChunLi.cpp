@@ -734,7 +734,7 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 
 
 	//Controller
-	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_UP) { //Teoricament i si deu vol, aixi funcionaria. Esperem que si, recordar provar-ho
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_UP) {
 		return false;
 	}
 	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_UP) {
