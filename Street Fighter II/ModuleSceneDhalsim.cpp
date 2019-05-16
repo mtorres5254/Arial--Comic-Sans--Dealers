@@ -44,13 +44,13 @@ ModuleSceneDhalsim::ModuleSceneDhalsim()
 
 	leftelephant2.PushBack1({ 761,195,165,133 }, {}, {}, {}, {}, {}, {});
 	leftelephant2.PushBack1({ 928,195,220,133 }, {}, {}, {}, {}, {}, {});
-	leftelephant2.PushBack1({ 1150,195,229,133 }, {}, {}, {}, {}, {}, {});
+	leftelephant2.PushBack1({ 1150,192,228,133 }, {}, {}, {}, {}, {}, {});
 	leftelephant2.PushBack1({ 928,195,220,133 }, {}, {}, {}, {}, {}, {});
 	leftelephant2.speed = 0.05f;
 
 	leftelephant3.PushBack1({ 563,566,217,175 }, {}, {}, {}, {}, {}, {});
 	leftelephant3.PushBack1({ 783,566,291,175 }, {}, {}, {}, {}, {}, {});
-	leftelephant3.PushBack1({ 1077,566,302,175 }, {}, {}, {}, {}, {}, {});
+	leftelephant3.PushBack1({ 1077,563,302,175 }, {}, {}, {}, {}, {}, {});
 	leftelephant3.PushBack1({ 783,563,291,178 }, {}, {}, {}, {}, {}, {});
 	leftelephant3.speed = 0.05f;
 
@@ -65,10 +65,16 @@ ModuleSceneDhalsim::ModuleSceneDhalsim()
 
 	rightelephant2.PushBack1({ 1213,36,165,133 }, { 55,0 }, {}, {}, {}, {}, {});
 	rightelephant2.PushBack1({ 991,36,220,133 }, { 55,0 },  {}, {}, {}, {}, {});
-	rightelephant2.PushBack1({ 762,36,228,133 }, { 55,0 }, {}, {}, {}, {}, {});
+	rightelephant2.PushBack1({ 762,33,228,133 }, { 55,0 }, {}, {}, {}, {}, {});
 	rightelephant2.PushBack1({ 991,36,220,133 }, { 55,0 }, {}, {}, {}, {}, {});
 	rightelephant2.speed = 0.05f;
 	
+	rightelephant3.PushBack1({ 619,361,217,175 }, { 55,0 }, {}, {}, {}, {}, {});
+	rightelephant3.PushBack1({ 325,360,291,175 }, { 55,0 }, {}, {}, {}, {}, {});
+	rightelephant3.PushBack1({ 21,357,302,175 }, { 55,0 }, {}, {}, {}, {}, {});
+	rightelephant3.PushBack1({ 325,360,291,178 }, { 55,0 }, {}, {}, {}, {}, {});
+	rightelephant3.speed = 0.05f;
+
 
 	
 	// for moving the foreground
@@ -116,29 +122,28 @@ bool ModuleSceneDhalsim::CleanUp()
 update_status ModuleSceneDhalsim::Update()
 {
 
-	Animation* current_animation = &rightelephant2;
-	Animation * curren_animation = &rightelephant3;
+	Animation* current_animation1 = &rightelephant2;
+	Animation * current_animation2 = &rightelephant3;
 
-	PivotX = current_animation->pivot[(int)current_animation->current_frame].x;
-
+	PivotX = current_animation1->pivot[(int)current_animation1->current_frame].x;
+	PivotY = current_animation2->pivot[(int)current_animation2->current_frame].x;
 	// Draw everything --------------------------------------
 	
 	
-	SDL_Rect r1 = current_animation->GetCurrentFrame();
-	
+	SDL_Rect r1 = current_animation1->GetCurrentFrame();
+	SDL_Rect r2 = current_animation2->GetCurrentFrame();
 
 	App->render->Blit(graphics, -12, -16, &background, 0.92f); // background
-	App->render->Blit(graphics, -56, 150, &ground);
-	App->render->Blit(graphics, 107, 63, &(leftelephant1.GetCurrentFrame()), 0.92f);
+	App->render->Blit(graphics, -340, 160, &ground);
+	App->render->Blit(graphics, 107, 63, &(leftelephant1.GetCurrentFrame()), 0.92f); // Left elephant in the background 
 	App->render->Blit(graphics, 378, 63, &(rightelephant1.GetCurrentFrame()), 0.92f); // Right elephant in the background 
 
-	App->render->Blit(graphics, -38, 50, &(leftelephant2.GetCurrentFrame()), 0.92f);//Left elephant in the background 
-
-	App->render->Blit(graphics, 583 -( r1.w - PivotX) , 50, &r1, 0.92f);
-
+	App->render->Blit(graphics, -38, 50, &(leftelephant2.GetCurrentFrame()), 0.92f); //Left elephant in the middle 
+	App->render->Blit(graphics, 583 - (r1.w - PivotX) , 50, &r1, 0.92f);	 //Right elephant in the middle 
 	
 	App->render->Blit(graphics, -150, 23, &(leftelephant3.GetCurrentFrame()), 0.92f);
-	
+	App->render->Blit(graphics, 695 - (r2.w - PivotY), 23, &r2, 0.92f);
+
 	roundpoints();
 	fadeto();
 	
