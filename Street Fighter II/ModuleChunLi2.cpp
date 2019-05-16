@@ -30,10 +30,11 @@ bool ModuleChunLi2::Start()
 	bool ret = true;
 
 	graphics = App->textures->Load("Assets/Images/ChunLi2.png"); // arcade version
-
+	shadow = App->textures->Load("Assets/Images/shadow.png");
 	position.x = 395;
 	position.y = 220;
 
+	
 	// idle animation (arcade sprite sheet)
 
 
@@ -198,7 +199,7 @@ bool ModuleChunLi2::Start()
 	kick.PushBack1({ 270, 622, 106,97 }, { 32,20 }, kickcollider2, kickhitbox2, kickCollType2, kickCallback2, 2800);
 	kick.PushBack1({ 198, 626, 71, 93 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
 	kick.PushBack1({ 131,630 , 66, 89 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
-	kick.speed = 0.2f;
+	kick.speed = 0.3f;
 
 	//crouch punch
 
@@ -638,11 +639,13 @@ void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 
 	
 
-
+	SDL_Rect shadowrect = { 6,8,71,15 };
 	if (position.x < App->chunli->position.x) {
+		//App->render->Blit(shadow, position.x - PivotX, 207, &shadowrect);
 		App->render->Blit(graphics, position.x -PivotX, position.y - r.h, &r);
 	}
 	if (position.x > App->chunli->position.x) {
+	//	App->render->Blit(shadow, position.x - (shadowrect.w + PivotX) +65, 207, &shadowrect);
 		App->render->BlitSym(graphics, position.x-(r.w-PivotX), position.y  - r.h, &r);
 	}
 }

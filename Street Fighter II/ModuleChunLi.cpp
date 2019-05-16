@@ -30,7 +30,8 @@ bool ModuleChunLi::Start()
 	bool ret = true;
 
 	graphics = App->textures->Load("Assets/Images/ChunLi.png"); // arcade version
-	
+	shadow = App->textures->Load("Assets/Images/shadow.png");
+
 	position.x = 180;
 	position.y = 220;
 
@@ -671,11 +672,15 @@ void ModuleChunLi::colliders_and_blit(Animation* current_animation) {
 	}
 
 	r = current_animation->GetCurrentFrame();
-
+	SDL_Rect shadowrect = { 6,8,71,15 };
 	if (position.x < App->chunli2->position.x) {
+		App->render->Blit(shadow, position.x+PivotX, 207, &shadowrect);
+		App->render->Blit(shadow, App->chunli2->position.x - App->chunli2->PivotX - 8, 207, &shadowrect);
 		App->render->Blit(graphics, position.x + PivotX, position.y - r.h, &r);
 	}
 	if (position.x > App->chunli2->position.x) {
+		App->render->Blit(shadow, position.x - (shadowrect.w - PivotX) + 40, 207, &shadowrect);
+		App->render->Blit(shadow, App->chunli2->position.x - (shadowrect.w + App->chunli2->PivotX) + 65, 207, &shadowrect);
 		App->render->BlitSym(graphics, position.x - (r.w - PivotX)+40, position.y - r.h, &r);
 	}
 

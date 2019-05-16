@@ -90,7 +90,7 @@ public:
 public:
 
 	SDL_Texture* graphics = nullptr;
-	
+	SDL_Texture* shadow = nullptr;
 	Animation idle;
 	Animation forward;
 	Animation backward;
