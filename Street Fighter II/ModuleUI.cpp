@@ -165,8 +165,8 @@ void ModuleUI::Counter()
 			if (Counter1 == -1) {
 				Counter1 = 9;
 				Counter2--;
-				
-				if (Counter2 == 0) {
+
+				if (Counter2 <= 0) {
 					Counter2 = 0;
 				}
 

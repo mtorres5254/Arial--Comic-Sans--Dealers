@@ -16,25 +16,27 @@
 #include "ModuleChunLi2.h"
 #include "ModuleFont.h"
 #include "ModuleSceneDhalsim.h"
+#include "ModuleCombos.h"
 
 Application::Application()
 {
 	modules[0] = window = new ModuleWindow();
 	modules[1] = render = new ModuleRender();
 	modules[2] = input = new ModuleInput();
-	modules[3] = textures = new ModuleTextures();
-	modules[4] = audio = new ModuleAudio();
-	modules[5] = congrats_screen = new ModuleCongratsScreen();
-	modules[6] = scene_dhalsim = new ModuleSceneDhalsim();
-	modules[7] = chunli = new ModuleChunLi();
-	modules[8] = chunli2 = new ModuleChunLi2();
-	modules[9] = fade = new ModuleFadeToBlack();
-	modules[10] = welcome_page = new ModuleWelcomePage();
-	modules[11] = particle = new ModuleParticles();
-	modules[12] = collision = new ModuleCollision();
-	modules[13] = UI = new ModuleUI();
-	modules[14] = lose_scene = new ModuleLoseScene();
-	modules[15] = font = new ModuleFont();
+	modules[3] = combo = new  ModuleCombos();
+	modules[4] = textures = new ModuleTextures();
+	modules[5] = audio = new ModuleAudio();
+	modules[6] = congrats_screen = new ModuleCongratsScreen();
+	modules[7] = scene_dhalsim = new ModuleSceneDhalsim();
+	modules[8] = chunli = new ModuleChunLi();
+	modules[9] = chunli2 = new ModuleChunLi2();
+	modules[10] = fade = new ModuleFadeToBlack();
+	modules[11] = welcome_page = new ModuleWelcomePage();
+	modules[12] = particle = new ModuleParticles();
+	modules[13] = collision = new ModuleCollision();
+	modules[14] = UI = new ModuleUI();
+	modules[15] = lose_scene = new ModuleLoseScene();
+	modules[16] = font = new ModuleFont();
 	
 	
 }	
