@@ -10,7 +10,9 @@
 
 #define MAX_KEYS 300
 #define MAX_BUTTONS 15
-#define JOYSTICK_DEAD_ZONE 8000
+#define MAX_AXIS 6
+#define JOYSTICK_DEAD_ZONE 0.2
+#define JOYSTICK_DEAD_ZONE_NEGATIVE -0.2
 
 enum KEY_STATE
 {
@@ -19,13 +21,18 @@ enum KEY_STATE
 	KEY_REPEAT,
 	KEY_UP
 };
+enum AXIS_STATE
+{
+AXIS_IDLE = 0,
+AXIS_MOVE
+};
 
 struct GamePad {
 	SDL_GameController* Pad;
 	KEY_STATE button_state[MAX_BUTTONS];
-	Uint8 Pressed[MAX_BUTTONS];
-	float Xaxis_state;
-	float Yaxis_state;
+	AXIS_STATE axis_state[MAX_AXIS];
+	float Xaxis_state = 0.f;
+	float Yaxis_state = 0.f;
 };
 
 class ModuleInput : public Module
@@ -38,7 +45,6 @@ public:
 	bool Init();
 	update_status PreUpdate();
 	bool CleanUp();
-	void GetGamepadButton(GamePad*);
 	void GetGamepadAxis(GamePad*);
 
 public:
