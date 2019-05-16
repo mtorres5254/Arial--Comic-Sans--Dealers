@@ -12,6 +12,7 @@
 #include "p2Qeue.h"
 #include "Application.h"
 #include "ModuleSceneDhalsim.h"
+#include "ModuleCombos.h"
 
 
 
@@ -812,9 +813,10 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 	}
 
 
-	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
+	/*if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
 		inputs.Push(IN_X2);
-	}
+	}*/
+	if(App->combo.)
 	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
 		inputs.Push(IN_C2);
 	}

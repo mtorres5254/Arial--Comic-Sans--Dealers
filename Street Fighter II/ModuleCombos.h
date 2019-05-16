@@ -20,7 +20,7 @@ public:
 	bool CleanUp();
 public:
 
-	
+	InputCommand a;
 
 };
 enum class InputCommandTypes
@@ -31,6 +31,8 @@ enum class InputCommandTypes
 
 struct InputCommand
 {
+	InputCommand();
+
 	InputCommandTypes type = InputCommandTypes::max;
 
 	InputCommand(InputCommandTypes type) : type(type) {}

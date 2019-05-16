@@ -6,6 +6,7 @@
 
 ModuleCombos::ModuleCombos() : Module()
 {
+
 }
 
 // Destructor
