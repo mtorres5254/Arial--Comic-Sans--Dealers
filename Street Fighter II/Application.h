@@ -3,7 +3,7 @@
 
 #include "Globals.h"
 
-#define NUM_MODULES 16
+#define NUM_MODULES 17
 
 class ModuleWindow;
 class ModuleInput;
@@ -22,6 +22,7 @@ class ModuleFont;
 class ModuleSceneDhalsim;
 class ModuleRender;
 class ModuleChunLi2;
+class ModuleCombos;
 
 class Application
 {
@@ -44,6 +45,7 @@ public:
 	ModuleLoseScene* lose_scene;
 	ModuleChunLi2* chunli2;
 	ModuleFont* font;
+	ModuleCombos* combo;
 
 	int plyDistance;
 

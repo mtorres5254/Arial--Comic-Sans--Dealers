@@ -171,7 +171,7 @@ bool ModuleChunLi::Start()
 	Module* punchCallback2[punchcollider2] = { { this },{ this },{ this },{ this },{ this }, {this} };
 	punch.PushBack1({ 139, 533, 78, 87 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
 	punch.PushBack1({ 218, 531, 101, 89 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
-	punch.PushBack1({ 320, 524, 87, 96 }, {32,2 }, punchcollider2, punchhitbox2, punchCollType2, punchCallback2, 26000*0.153);
+	punch.PushBack1({ 320, 524, 87, 96 }, {32,2 }, punchcollider2, punchhitbox2, punchCollType2, punchCallback2, 2800);
 	punch.PushBack1({ 218, 531, 101, 89 }, { 32, 2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
 	punch.PushBack1({ 139, 533, 78, 87 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
 
@@ -193,7 +193,7 @@ bool ModuleChunLi::Start()
 
 	kick.PushBack1({ 131,630 , 66, 89 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
 	kick.PushBack1({ 198, 626, 71, 93 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
-	kick.PushBack1({ 270, 622, 106,97 }, { 32,2 }, kickcollider2, kickhitbox2, kickCollType2, kickCallback2, 2600* 0.153);
+	kick.PushBack1({ 270, 622, 106,97 }, { 32,2 }, kickcollider2, kickhitbox2, kickCollType2, kickCallback2, 2800);
 	kick.PushBack1({ 198, 626, 71, 93 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
 	kick.PushBack1({ 131,630 , 66, 89 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
 	kick.speed = 0.2f;
@@ -241,6 +241,31 @@ bool ModuleChunLi::Start()
 	jump_backward_punch.speed = 0.2f;
 	jump_backward_punch.loop = false;	
 	
+	//Lightning Kick
+
+	const int lkcollider = 9;//Collider num for the idle animation
+	SDL_Rect lkhitbox[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33} , {91,66,31,15}, {57,19,71,39}, {90,42,51,25} , {48,4,83,29} };
+	COLLIDER_TYPE lkCollType[lkcollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER}, {COLLIDER_PLAYER_ATTACK }, {COLLIDER_PLAYER_ATTACK }, {COLLIDER_PLAYER_ATTACK }, {COLLIDER_PLAYER_ATTACK } };
+	Module* lkCallback[lkcollider] = { {this},{this},{this},{this},{this},{this},{this},{this},{this} };
+
+	
+	SDL_Rect lkhitbox1[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {57,19,71,39} };
+	SDL_Rect lkhitbox2[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {90,42,51,25} };
+	SDL_Rect lkhitbox3[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {48,4,83,29} };
+	
+
+
+	//LightningKick.PushBack1({ 1475, 225, 61 , 100 }, { 32, 2 }, {}, {}, {}, {}, {});
+	LightningKick.PushBack1({ 1537, 226, 107, 99}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 2400);
+	LightningKick.PushBack1({ 1645,222 , 123, 103}, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
+	LightningKick.PushBack1({ 1769, 230, 119, 95}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 2400);
+	LightningKick.PushBack1({ 1889, 230, 136,95 }, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
+	LightningKick.PushBack1({ 1025, 355, 120, 93}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 2400);
+	LightningKick.PushBack1({ 1146, 353, 152, 95}, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
+	LightningKick.PushBack1({ 1300, 355, 101, 93 }, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 2400);
+	LightningKick.speed = 0.3f;
+	LightningKick.loop = true;
+
 
 	//damage animation 
 
@@ -248,6 +273,8 @@ bool ModuleChunLi::Start()
 	SDL_Rect dmgHitbox[dmgCollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33} };
 	COLLIDER_TYPE dmgCollType[dmgCollider] = { {COLLIDER_NONE},{COLLIDER_NONE},{COLLIDER_NONE},{COLLIDER_NONE},{COLLIDER_NONE} };
 	Module* dmgCallBack[dmgCollider] = { {this},{this},{this},{this},{this} };
+
+	
 
 	damage.PushBack1({ 1307,465,72,80 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage.PushBack1({ 1385, 458, 79, 87}, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
@@ -319,7 +346,7 @@ update_status ModuleChunLi::Update()
 				}
 			
 
-				if (life > 0 && damage_received == false && App->chunli2->life > 0) {
+				if (life > 0 && damage_received == false && App->chunli2->life > 0 ) {
 
 
 					switch (state)
@@ -337,6 +364,8 @@ update_status ModuleChunLi::Update()
 						jump_forward_punch.Reset();
 						Crouch_punch.Reset();	
 						kick.Reset();
+						LightningKick.Reset();
+						move = true;
 						
 
 						break;
@@ -345,6 +374,8 @@ update_status ModuleChunLi::Update()
 
 						current_animation = &forward;
 						punch.Reset();
+
+						if(move)
 						position.x += speedX;
 						break;
 
@@ -352,6 +383,8 @@ update_status ModuleChunLi::Update()
 
 						current_animation = &backward;
 						punch.Reset();
+
+						if(move)
 						position.x -= speedX;
 
 						break;
@@ -549,12 +582,19 @@ update_status ModuleChunLi::Update()
 
 						break;
 					case ST_KICK_STANDING2:
+
 						current_animation = &kick;
 
+
+						
+
 						break;
-					case ST_HADOUKEN2:
+					case ST_LIGHTNINGKICK2:
 
-
+					
+						current_animation = &LightningKick;
+					
+						
 						break;
 					}
 
@@ -602,7 +642,7 @@ void ModuleChunLi::colliders_and_blit(Animation* current_animation) {
 
 	PivotX = current_animation->pivot[(int)current_animation->current_frame].x;
 	PivotY = current_animation->pivot[(int)current_animation->current_frame].y;
-
+	dmg = current_animation->damage[(int)current_animation->current_frame];
 	
 	for (int i = 0; i < MAX_COLLIDERS; i++)//deletes all the hitboxes at the start of the frame
 	{
@@ -622,7 +662,7 @@ void ModuleChunLi::colliders_and_blit(Animation* current_animation) {
 		colliders[i] = App->collision->AddCollider({ position.x + PivotX + r.x , position.y + PivotY- r.h - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
 
 		if (position.x > App->chunli2->position.x)
-			colliders[i] = App->collision->AddCollider({ position.x - (r.w - PivotX) - r.x , position.y - r.h + PivotY - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
+			colliders[i] = App->collision->AddCollider({ position.x - (r.w - PivotX)+40 - r.x , position.y - r.h + PivotY - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
 	}
 	r = current_animation->GetCurrentFrame();
 
@@ -631,35 +671,38 @@ void ModuleChunLi::colliders_and_blit(Animation* current_animation) {
 		App->render->Blit(graphics, position.x + PivotX, position.y - r.h, &r);
 	}
 	if (position.x > App->chunli2->position.x) {
-		App->render->BlitSym(graphics, position.x - (r.w - PivotX), position.y - r.h, &r);
+		App->render->BlitSym(graphics, position.x - (r.w - PivotX)+40, position.y - r.h, &r);
 	}
+
+
 }
 
 void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
-
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && state == ST_IDLE2)
-	{		
-		if (position.x < App->chunli2->position.x)
-			position.x -= 1;
-
-		else if (position.x > App->chunli2->position.x)
-			position.x += 1;
-
-	}
-
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && state == ST_WALK_FORWARD2)
-	{
-		if (position.x < App->chunli2->position.x)
-			position.x -= 1;
-
-		else if (position.x > App->chunli2->position.x)
-			position.x += 1;
 	
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY)
+	{		
+		if (state == ST_IDLE2) {
+			if (position.x < App->chunli2->position.x)
+				position.x -= 1;
+			if (position.x > App->chunli2->position.x)
+				position.x += 1;
+			
+		}
+		if (state == ST_WALK_FORWARD2 && App->chunli2->state == ST_WALK_BACKWARD || state == ST_WALK_BACKWARD2 && App->chunli2->state == ST_WALK_FORWARD) {
+
+			move = false;
+		}
+
+		else {
+			move = true;
+		}
 	}
+
+	
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && (state == ST_JUMP_BACKWARD2 || state == ST_JUMP_FORWARD2 || state == ST_JUMP_NEUTRAL2)) {
-		speedX = -1;
+		
 
 	}
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY_SHOT)
@@ -671,6 +714,8 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 		damage_received = true;
 		
 	}
+
+	
 
 }
 
@@ -847,7 +892,7 @@ void ModuleChunLi::internal_input(p2Qeue<ryu_inputs2>& inputs)
 	{
 		if (SDL_GetTicks() - hadouken_timer > HADOUKEN_TIME2)
 		{
-			inputs.Push(IN_HADOUKEN_FINISH2);
+			inputs.Push(IN_LIGHTNINGKICK_FINISH2);
 			hadouken_timer = 0;
 		}
 	}
@@ -894,7 +939,7 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			case IN_CROUCH_DOWN2: state = ST_CROUCH2; break;
 			case IN_X2: state = ST_PUNCH_STANDING2; punch_timer = SDL_GetTicks();  break;
 			case IN_C2: state = ST_KICK_STANDING2; kick_timer = SDL_GetTicks(); break;
-			case IN_V2: state = ST_HADOUKEN2; hadouken_timer = SDL_GetTicks(); break;
+			case IN_V2: state = ST_LIGHTNINGKICK2; hadouken_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -909,7 +954,7 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			case IN_CROUCH_DOWN2: state = ST_CROUCH2; break;
 			case IN_X2: state = ST_PUNCH_STANDING2; punch_timer = SDL_GetTicks();  break;
 			case IN_C2: state = ST_KICK_STANDING2; kick_timer = SDL_GetTicks(); break;
-			case IN_V2: state = ST_HADOUKEN2; hadouken_timer = SDL_GetTicks(); break;
+			case IN_V2: state = ST_LIGHTNINGKICK2; hadouken_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -924,7 +969,7 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			case IN_CROUCH_DOWN2: state = ST_CROUCH2; break;
 			case IN_X2: state = ST_PUNCH_STANDING2; punch_timer = SDL_GetTicks();  break;
 			case IN_C2: state = ST_KICK_STANDING2; kick_timer = SDL_GetTicks(); break;
-			case IN_V2: state = ST_HADOUKEN2; hadouken_timer = SDL_GetTicks(); break;
+			case IN_V2: state = ST_LIGHTNINGKICK2; hadouken_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1029,11 +1074,11 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			}
 		}
 		break;
-		case ST_HADOUKEN2:
+		case ST_LIGHTNINGKICK2:
 		{
 			switch (last_input)
 			{
-			case IN_HADOUKEN_FINISH2: state = ST_IDLE2; break;
+			case IN_LIGHTNINGKICK_FINISH2: state = ST_IDLE2; break;
 			}
 			break;
 		}

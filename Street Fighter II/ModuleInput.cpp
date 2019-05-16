@@ -23,7 +23,7 @@ bool ModuleInput::Init()
 	SDL_Init(SDL_INIT_GAMECONTROLLER);
 
 	//Load joystick
-
+	
 	if (SDL_NumJoysticks() >= 1) {
 		Pad1.Pad = SDL_GameControllerOpen(0);
 		Pads[0] = &Pad1;
@@ -50,6 +50,10 @@ bool ModuleInput::Init()
 // Called every draw update
 update_status ModuleInput::PreUpdate()
 {
+
+
+	
+
 	SDL_PumpEvents();
 
 	if (history_count < MAX_HISTORY) {
