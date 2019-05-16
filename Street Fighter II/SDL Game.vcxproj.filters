@@ -83,6 +83,9 @@
     <ClInclude Include="ModuleChunLi2.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleCombos.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -140,6 +143,9 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleChunLi2.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleCombos.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>

@@ -13,6 +13,16 @@
 #define MAX_AXIS 6
 #define JOYSTICK_DEAD_ZONE 0.2
 #define JOYSTICK_DEAD_ZONE_NEGATIVE -0.2
+#define MAX_HISTORY 180
+#define MAX_PADS 2
+/*
+struct History
+{
+	uint frame = 0u;
+	KEY_STATE keyboard[MAX_KEYS];
+	GamePad pads[MAX_PADS];
+
+};*/
 
 enum KEY_STATE
 {
@@ -55,6 +65,7 @@ public:
 	GamePad Pad1;
 	GamePad Pad2;
 	SDL_Event event;
+	
 };
 
 #endif // __ModuleInput_H__

@@ -21,7 +21,7 @@ bool ModuleInput::Init()
 	SDL_Init(SDL_INIT_GAMECONTROLLER);
 
 	//Load joystick
-
+	
 	if (SDL_NumJoysticks() >= 1) {
 		Pad1.Pad = SDL_GameControllerOpen(0);
 		Gamepad = true;
@@ -46,6 +46,10 @@ bool ModuleInput::Init()
 // Called every draw update
 update_status ModuleInput::PreUpdate()
 {
+
+
+	
+
 	SDL_PumpEvents();
 
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
