@@ -6,6 +6,7 @@
 #include "Application.h"
 #include "SDL/include/SDL.h"
 
+#define LIGHTNINGKICK 35
 
 class ModuleCombos : public Module
 {
@@ -24,7 +25,8 @@ public:
 	bool CheckLightingKickP2();
 
 public:
-	int actual_frame = 0;
+	int actual_frameP1LK = 0;
+	int actual_frameP2LK = 0;
 
 	int lightimgKickCount = 0;
 	int lightimgKickCount2 = 0;

@@ -48,8 +48,8 @@ bool ModuleCombos::CheckPunchP2() {
 }
 
 bool ModuleCombos::CheckLightingKickP1() {
-	actual_frame++;
-	if (actual_frame <= 21) {
+	actual_frameP1LK++;
+	if (actual_frameP1LK <= LIGHTNINGKICK) {
 		switch (lightimgKickCount)
 		{
 		case 0:
@@ -69,18 +69,17 @@ bool ModuleCombos::CheckLightingKickP1() {
 			}
 			break;
 		}
-		
 	}
 	else {
-		actual_frame = 0;
+		actual_frameP1LK = 0;
 		lightimgKickCount = 0;
 		return false;
 	}
 }
 
 bool ModuleCombos::CheckLightingKickP2() {
-	actual_frame++;
-	if (actual_frame <= 21) {
+	actual_frameP2LK++;
+	if (actual_frameP2LK <= LIGHTNINGKICK) {
 		switch (lightimgKickCount2)
 		{
 		case 0:
@@ -100,10 +99,9 @@ bool ModuleCombos::CheckLightingKickP2() {
 			}
 			break;
 		}
-
 	}
 	else {
-		actual_frame = 0;
+		actual_frameP2LK = 0;
 		lightimgKickCount2 = 0;
 		return false;
 	}
