@@ -590,19 +590,19 @@ void ModuleChunLi2::positionlimits() {
 		position.x = App->scene_dhalsim->background.x - 12+20;
 	}
 
-	if (position.x -32>= (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) -90 ) {
-		position.x = (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w)-90 +32;
+	if (position.x -40>= (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) -90 ) {
+		position.x = (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w)-90 +40;
 	}
 	
-	if (abs(App->chunli->position.x - position.x) >= SCREEN_WIDTH - 80 && position.x>App->chunli->position.x) {
-		App->chunli->position.x = position.x - SCREEN_WIDTH + 80;
-		position.x = App->chunli->position.x + SCREEN_WIDTH - 80;		
+	if (abs(App->chunli->position.x - position.x) >= SCREEN_WIDTH - 10 && position.x>App->chunli->position.x) {
+		App->chunli->position.x = position.x - SCREEN_WIDTH + 10;
+		position.x = App->chunli->position.x + SCREEN_WIDTH - 10;		
 	}
 
-	if (abs(App->chunli->position.x - position.x) >= SCREEN_WIDTH - 80 && position.x < App->chunli->position.x) {
+	if (abs(App->chunli->position.x - position.x) >= SCREEN_WIDTH - 130 && position.x < App->chunli->position.x) {
 		
-		App->chunli->position.x = position.x + SCREEN_WIDTH - 80;
-		position.x = App->chunli->position.x - SCREEN_WIDTH + 80;
+		App->chunli->position.x = position.x + SCREEN_WIDTH - 130;
+		position.x = App->chunli->position.x - SCREEN_WIDTH + 130;
 	}
 }
 
@@ -676,9 +676,8 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER && (state == ST_JUMP_BACKWARD || state == ST_JUMP_FORWARD || state == ST_JUMP_NEUTRAL)) {
 		
-		speedX = -1;
-	}
 
+	}
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER_ATTACK)
 	{
 		int aux = life;
