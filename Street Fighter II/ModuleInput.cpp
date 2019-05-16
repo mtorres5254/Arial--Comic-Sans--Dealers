@@ -24,10 +24,12 @@ bool ModuleInput::Init()
 	
 	if (SDL_NumJoysticks() >= 1) {
 		Pad1.Pad = SDL_GameControllerOpen(0);
+		Pads[0] = &Pad1;
 		Gamepad = true;
 	}
 	if (SDL_NumJoysticks() == 2) {
 		Pad2.Pad = SDL_GameControllerOpen(1);
+		Pads[1] = &Pad2;
 		Gamepad2 = true;
 	}
 			
@@ -52,23 +54,34 @@ update_status ModuleInput::PreUpdate()
 
 	SDL_PumpEvents();
 
+	if (history_count < MAX_HISTORY) {
+		history_count++;
+	}
+	if (history_count == MAX_HISTORY) {
+		history_count = 0;
+	}
+
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 
 	if (Gamepad == false && SDL_NumJoysticks() >= 1) {
 		Pad1.Pad = SDL_GameControllerOpen(0);
+		Pads[0] = &Pad1;
 		Gamepad = true;
 	}
 	if (Gamepad == true && SDL_NumJoysticks() == 0) {
 		SDL_GameControllerClose(Pad1.Pad);
+		Pads[0] = nullptr;
 		Gamepad = false;
 	}
 
 	if (Gamepad2 == false && SDL_NumJoysticks() >= 2) {
 		Pad2.Pad = SDL_GameControllerOpen(1);
+		Pads[1] = &Pad2;
 		Gamepad2 = true;
 	}
 	if (Gamepad2 == true && SDL_NumJoysticks() < 2) {
 		SDL_GameControllerClose(Pad2.Pad);
+		Pads[1] = nullptr;
 		Gamepad2 = false;
 	}
 	
@@ -179,6 +192,9 @@ update_status ModuleInput::PreUpdate()
 		if (event.type == SDL_QUIT) { return update_status::UPDATE_STOP; }
 	}
 	
+
+	memcpy(history[history_count].keyboard, keyboard, sizeof(KEY_STATE)*MAX_KEYS);
+	memcpy(history[history_count].Pads, Pads, sizeof(GamePad)*MAX_PADS);
 
 	return update_status::UPDATE_CONTINUE;
 }

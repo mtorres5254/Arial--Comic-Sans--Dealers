@@ -162,10 +162,10 @@ void ModuleUI::Counter()
 			time--;
 			
 			Counter1--;
-			if (Counter1 == 0) {
+			if (Counter1 == -1) {
 				Counter2--;
-				
-				if (Counter2 == 0) {
+				Counter1 = 9;
+				if (Counter2 <= 0) {
 					Counter2 = 0;
 				}
 
