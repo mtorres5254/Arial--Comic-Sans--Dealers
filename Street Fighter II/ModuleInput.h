@@ -52,6 +52,7 @@ public:
 	update_status PreUpdate();
 	bool CleanUp();
 	void GetGamepadAxis(GamePad*);
+	History GetPrevious(int);
 
 public:
 	KEY_STATE keyboard[MAX_KEYS];

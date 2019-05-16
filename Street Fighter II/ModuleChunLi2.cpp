@@ -675,9 +675,13 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 
 
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER && (state == ST_JUMP_BACKWARD || state == ST_JUMP_FORWARD || state == ST_JUMP_NEUTRAL)) {
+
 		
 
+		speedX = -1;
 	}
+
+
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER_ATTACK)
 	{
 		int aux = life;

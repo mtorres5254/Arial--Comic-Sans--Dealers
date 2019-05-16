@@ -27,11 +27,13 @@ bool ModuleInput::Init()
 	if (SDL_NumJoysticks() >= 1) {
 		Pad1.Pad = SDL_GameControllerOpen(0);
 		Pads[0] = &Pad1;
+		history->Pads[0] = &Pad1;
 		Gamepad = true;
 	}
 	if (SDL_NumJoysticks() == 2) {
 		Pad2.Pad = SDL_GameControllerOpen(1);
 		Pads[1] = &Pad2;
+		history->Pads[1] = &Pad2;
 		Gamepad2 = true;
 	}
 			
@@ -68,22 +70,26 @@ update_status ModuleInput::PreUpdate()
 	if (Gamepad == false && SDL_NumJoysticks() >= 1) {
 		Pad1.Pad = SDL_GameControllerOpen(0);
 		Pads[0] = &Pad1;
+		history->Pads[0] = &Pad1;
 		Gamepad = true;
 	}
 	if (Gamepad == true && SDL_NumJoysticks() == 0) {
 		SDL_GameControllerClose(Pad1.Pad);
 		Pads[0] = nullptr;
+		history->Pads[1] = nullptr;
 		Gamepad = false;
 	}
 
 	if (Gamepad2 == false && SDL_NumJoysticks() >= 2) {
 		Pad2.Pad = SDL_GameControllerOpen(1);
 		Pads[1] = &Pad2;
+		history->Pads[1] = &Pad2;
 		Gamepad2 = true;
 	}
 	if (Gamepad2 == true && SDL_NumJoysticks() < 2) {
 		SDL_GameControllerClose(Pad2.Pad);
 		Pads[1] = nullptr;
+		history->Pads[1] = nullptr;
 		Gamepad2 = false;
 	}
 	
@@ -216,4 +222,16 @@ void ModuleInput::GetGamepadAxis(GamePad* gamepad) {
 
 	gamepad->Xaxis_state = auxX / 32767;
 	gamepad->Yaxis_state = auxY / 32767;
+}
+
+History ModuleInput::GetPrevious(int previous) {
+	 History ret;
+	for (int i = 0; i < MAX_PADS; i++) {
+		ret.Pads[i] = history[history_count - previous].Pads[i];
+	}
+	for (int i = 0; i < MAX_KEYS; i++) {
+		ret.keyboard[i] = history[history_count - previous].keyboard[i];
+	}
+	
+	return ret;
 }

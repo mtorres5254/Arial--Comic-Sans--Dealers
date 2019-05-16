@@ -318,6 +318,10 @@ update_status ModuleChunLi::Update()
 	ryu_states2 current_state = ST_UNKNOWN2;
 	
 	positionlimits();
+
+	if (App->input->keyboard[SDL_SCANCODE_F6] == KEY_DOWN) {
+		life = 0;
+	}
 	   
 
 	if (death == false) {
@@ -705,7 +709,6 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 	}	
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && (state == ST_JUMP_BACKWARD2 || state == ST_JUMP_FORWARD2 || state == ST_JUMP_NEUTRAL2)) {
-		
 		speedX = -1;
 	}
 
