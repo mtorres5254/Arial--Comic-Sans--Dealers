@@ -12,6 +12,7 @@
 #include "p2Qeue.h"
 #include "Application.h"
 #include "ModuleSceneDhalsim.h"
+#include "ModuleCombos.h"
 
 
 
@@ -751,7 +752,7 @@ bool ModuleChunLi2::external_input(p2Qeue<ryu_inputs>& inputs)
 		inputs.Push(IN_C);
 	}
 	if (App->input->keyboard[SDL_SCANCODE_L] == KEY_DOWN) {
-		inputs.Push(IN_V);
+		inputs.Push(IN_LIGHTINGKICK);
 	}
 
 
@@ -783,14 +784,14 @@ bool ModuleChunLi2::external_input(p2Qeue<ryu_inputs>& inputs)
 	}
 
 
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
+	if (App->combo->CheckPunchP2() == true) {
 		inputs.Push(IN_X);
 	}
 	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
 		inputs.Push(IN_C);
 	}
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
-		inputs.Push(IN_V);
+	if (App->combo->CheckLightingKickP2() == true) {
+		inputs.Push(IN_LIGHTINGKICK);
 	}
 	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN) {
 		up = true;
@@ -907,7 +908,7 @@ ryu_states ModuleChunLi2::process_fsm(p2Qeue<ryu_inputs>& inputs)
 			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 			case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
 			case IN_C: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
-			case IN_V: state = ST_LIGHTNINGKICK; hadouken_timer = SDL_GetTicks(); break;
+			case IN_LIGHTINGKICK: state = ST_LIGHTNINGKICK; hadouken_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -922,7 +923,7 @@ ryu_states ModuleChunLi2::process_fsm(p2Qeue<ryu_inputs>& inputs)
 			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 			case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
 			case IN_C: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
-			case IN_V: state = ST_LIGHTNINGKICK; hadouken_timer = SDL_GetTicks(); break;
+			case IN_LIGHTINGKICK: state = ST_LIGHTNINGKICK; hadouken_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -937,7 +938,7 @@ ryu_states ModuleChunLi2::process_fsm(p2Qeue<ryu_inputs>& inputs)
 			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 			case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
 			case IN_C: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
-			case IN_V: state = ST_LIGHTNINGKICK; hadouken_timer = SDL_GetTicks(); break;
+			case IN_LIGHTINGKICK: state = ST_LIGHTNINGKICK; hadouken_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;

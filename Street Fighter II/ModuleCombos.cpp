@@ -2,10 +2,13 @@
 #include "Application.h"
 #include "ModuleCombos.h"
 #include "ModuleInput.h"
+#include "ModuleChunLi.h"
+#include "ModuleChunLi2.h"
 #include "SDL/include/SDL.h"
 
 ModuleCombos::ModuleCombos() : Module()
 {
+
 }
 
 // Destructor
@@ -30,23 +33,78 @@ update_status ModuleCombos::Update() {
 	return update_status::UPDATE_CONTINUE;
 }
 
-bool CommandPunch::Check(uint frames_past) const
-{
-	int count = 0;
-	uint frames = 0u;
-
-	for (uint i = 1u; i < frames_past; ++i) {
-		if (count > 0 && (i - frames) > MAX_COMMAND_FRAMES) {
-			return false;
-		}
-		History history = App->input->GetPrevious(i);
-
-		const GamePad* pad = (history.Pads[0]);
-
-		switch (count)
-		{
-		case 0: { if (pad->button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) { return true; } } break;
-		}
+bool ModuleCombos::CheckPunchP1() {
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
+		return true;
 	}
 	return false;
+}
+
+bool ModuleCombos::CheckPunchP2() {
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
+		return true;
+	}
+	return false;
+}
+
+bool ModuleCombos::CheckLightingKickP1() {
+	actual_frame++;
+	if (actual_frame <= 21) {
+		switch (lightimgKickCount)
+		{
+		case 0:
+			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+				lightimgKickCount++;
+			}
+			break;
+		case 1:
+			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+				lightimgKickCount++;
+			}
+			break;
+		case 2:
+			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+				lightimgKickCount = 0;
+				return true;
+			}
+			break;
+		}
+		
+	}
+	else {
+		actual_frame = 0;
+		lightimgKickCount = 0;
+		return false;
+	}
+}
+
+bool ModuleCombos::CheckLightingKickP2() {
+	actual_frame++;
+	if (actual_frame <= 21) {
+		switch (lightimgKickCount2)
+		{
+		case 0:
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+				lightimgKickCount2++;
+			}
+			break;
+		case 1:
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+				lightimgKickCount2++;
+			}
+			break;
+		case 2:
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+				lightimgKickCount2 = 0;
+				return true;
+			}
+			break;
+		}
+
+	}
+	else {
+		actual_frame = 0;
+		lightimgKickCount2 = 0;
+		return false;
+	}
 }

@@ -51,7 +51,7 @@ update_status ModuleWelcomePage::Update()
 	App->render->Blit(graphics, 0, 0, &background);
 
 
-	if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) {
+	if (App->input->keyboard[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_START] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_START] == KEY_DOWN) {
 		App->fade->FadeToBlack(App->welcome_page, App->scene_dhalsim, 2.0f);		
 		App->audio->PlayChunk(start_sound, 0);
 		App->audio->StopMusic(250);
