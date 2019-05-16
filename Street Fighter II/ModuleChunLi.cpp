@@ -241,6 +241,19 @@ bool ModuleChunLi::Start()
 	jump_backward_punch.speed = 0.2f;
 	jump_backward_punch.loop = false;	
 	
+	//Lightning Kick
+
+	LightningKick.PushBack1({ 1475, 225, 61 , 100 }, { 32, 2 }, {}, {}, {}, {}, {});
+	LightningKick.PushBack1({ 1537, 226, 107, 99}, { 32, 2 }, {}, {}, {}, {}, {});
+	LightningKick.PushBack1({ 1645,222 , 123, 103}, { 32, 2 }, {}, {}, {}, {}, {});
+	LightningKick.PushBack1({ 1769, 230, 119, 95}, { 32, 2 }, {}, {}, {}, {}, {});
+	LightningKick.PushBack1({ 1889, 230, 136,95 }, { 32, 2 }, {}, {}, {}, {}, {});
+	LightningKick.PushBack1({ 1025, 355, 120, 93}, { 32, 2 }, {}, {}, {}, {}, {});
+	LightningKick.PushBack1({ 1146, 353, 152, 95}, { 32, 2 }, {}, {}, {}, {}, {});
+	LightningKick.PushBack1({ 1300, 355, 101, 93}, { 32, 2 }, {}, {}, {}, {}, {});
+	LightningKick.speed = 0.1f;
+	LightningKick.loop = false;
+
 
 	//damage animation 
 
@@ -337,6 +350,7 @@ update_status ModuleChunLi::Update()
 						jump_forward_punch.Reset();
 						Crouch_punch.Reset();	
 						kick.Reset();
+						LightningKick.Reset();
 						
 
 						break;
@@ -554,7 +568,7 @@ update_status ModuleChunLi::Update()
 						break;
 					case ST_HADOUKEN2:
 
-
+						current_animation = &LightningKick;
 						break;
 					}
 

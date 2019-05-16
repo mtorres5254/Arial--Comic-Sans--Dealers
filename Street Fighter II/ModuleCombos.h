@@ -18,7 +18,7 @@ public:
 	bool CleanUp();
 public:
 
-	CommandPunch pnch;
+	
 
 };
 enum class InputCommandTypes

@@ -32,10 +32,7 @@ update_status ModuleCombos::Update() {
 
 bool CommandPunch::Check(uint frames_past) const
 {
-	int count=0;
-	uint frame = 0u;
-
-	//for (uint i = 1u; i < frames_past; i++) {}
+	
 
 	return false;
 }

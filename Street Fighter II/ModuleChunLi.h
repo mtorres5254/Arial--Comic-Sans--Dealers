@@ -107,6 +107,7 @@ public:
 	Animation jump_forward_punch;
 	Animation jump_backward_punch;
 	
+	Animation LightningKick;
 	Animation Death;
 	Animation damage;
 	Animation victory;
