@@ -621,24 +621,25 @@ void ModuleChunLi::positionlimits() {
 		speedX = 1;
 		speedY = 1;
 	}
-	if (position.x+32 <= App->scene_dhalsim->background.x - 12) {
-		position.x = App->scene_dhalsim->background.x - 12 -32;
+	if (position.x+50 <= App->scene_dhalsim->background.x - 12) {
+
+		position.x = App->scene_dhalsim->background.x - 12 -50;
 	}
 
-	if (position.x-32 >= (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) - 90) {
-		position.x = (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) - 90 +32;
+	if (position.x >= (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) - 90) {
+		position.x = (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) - 90 ;
 	}
 	
-	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH - 80 && position.x<App->chunli2->position.x) {
-		App->chunli2->position.x = position.x + SCREEN_WIDTH - 80;
-		position.x = App->chunli2->position.x -SCREEN_WIDTH + 80;		
+	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH - 10 && position.x<App->chunli2->position.x) {
+		App->chunli2->position.x = position.x + SCREEN_WIDTH - 10;
+		position.x = App->chunli2->position.x -SCREEN_WIDTH + 10;		
 		
 	}
 	
-	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH - 80 && position.x > App->chunli2->position.x) {
+	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH - 130 && position.x > App->chunli2->position.x) {
 
-		App->chunli2->position.x = position.x - SCREEN_WIDTH + 80;
-		position.x = App->chunli2->position.x + SCREEN_WIDTH - 80;
+		App->chunli2->position.x = position.x - SCREEN_WIDTH + 130;
+		position.x = App->chunli2->position.x + SCREEN_WIDTH - 110;
 	}
 
 }
@@ -669,8 +670,8 @@ void ModuleChunLi::colliders_and_blit(Animation* current_animation) {
 		if (position.x > App->chunli2->position.x)
 			colliders[i] = App->collision->AddCollider({ position.x - (r.w - PivotX)+40 - r.x , position.y - r.h + PivotY - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
 	}
-	r = current_animation->GetCurrentFrame();
 
+	r = current_animation->GetCurrentFrame();
 
 	if (position.x < App->chunli2->position.x) {
 		App->render->Blit(graphics, position.x + PivotX, position.y - r.h, &r);
@@ -678,7 +679,6 @@ void ModuleChunLi::colliders_and_blit(Animation* current_animation) {
 	if (position.x > App->chunli2->position.x) {
 		App->render->BlitSym(graphics, position.x - (r.w - PivotX)+40, position.y - r.h, &r);
 	}
-
 
 }
 
