@@ -565,15 +565,15 @@ void ModuleChunLi2::positionlimits() {
 		position.x = (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w)-90 +32;
 	}
 	
-	if (abs(App->chunli->position.x - position.x) >= SCREEN_WIDTH -20 && position.x>App->chunli->position.x) {
-		App->chunli->position.x = position.x - SCREEN_WIDTH + 20;
-		position.x = App->chunli->position.x + SCREEN_WIDTH - 20;		
+	if (abs(App->chunli->position.x - position.x) >= SCREEN_WIDTH - 80 && position.x>App->chunli->position.x) {
+		App->chunli->position.x = position.x - SCREEN_WIDTH + 80;
+		position.x = App->chunli->position.x + SCREEN_WIDTH - 80;		
 	}
 
-	if (abs(App->chunli->position.x - position.x) >= SCREEN_WIDTH - 20 && position.x < App->chunli->position.x) {
+	if (abs(App->chunli->position.x - position.x) >= SCREEN_WIDTH - 80 && position.x < App->chunli->position.x) {
 		
-		App->chunli->position.x = position.x + SCREEN_WIDTH - 20;
-		position.x = App->chunli->position.x - SCREEN_WIDTH + 20;
+		App->chunli->position.x = position.x + SCREEN_WIDTH - 80;
+		position.x = App->chunli->position.x - SCREEN_WIDTH + 80;
 	}
 }
 
@@ -714,51 +714,51 @@ bool ModuleChunLi2::external_input(p2Qeue<ryu_inputs>& inputs)
 
 
 	//Controller
-	if (App->input->Pad2.button_state == A && App->input->Pad2.key_state == KEY_UP) {
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_UP) {
 		return false;
 	}
-	if (App->input->Pad2.button_state == B && App->input->Pad2.key_state == KEY_UP) {
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_UP) {
 		return false;
 	}
-	if (App->input->Pad2.button_state == RB && App->input->Pad2.key_state == KEY_UP) {
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_UP) {
 		return false;
 	}
-	if (App->input->Pad2.button_state == DPAD_UP && App->input->Pad2.key_state == KEY_UP) {
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_UP) {
 		up = false;
 	}
-	if (App->input->Pad2.button_state == DPAD_DOWN && App->input->Pad2.key_state == KEY_UP) {
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_UP) {
 		inputs.Push(IN_CROUCH_UP);
 		down = false;
 	}
-	if (App->input->Pad2.button_state == DPAD_LEFT && App->input->Pad2.key_state == KEY_UP) {
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_UP) {
 		inputs.Push(IN_LEFT_UP);
 		left = false;
 	}
-	if (App->input->Pad2.button_state == DPAD_RIGHT && App->input->Pad2.key_state == KEY_UP) {
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_UP) {
 		inputs.Push(IN_RIGHT_UP);
 		right = false;
 	}
 
 
-	if (App->input->Pad2.button_state == A && App->input->Pad2.key_state == KEY_DOWN) {
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
 		inputs.Push(IN_X);
 	}
-	if (App->input->Pad2.button_state == B && App->input->Pad2.key_state == KEY_DOWN) {
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
 		inputs.Push(IN_C);
 	}
-	if (App->input->Pad2.button_state == RB && App->input->Pad2.key_state == KEY_DOWN) {
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 		inputs.Push(IN_V);
 	}
-	if (App->input->Pad2.button_state == DPAD_UP && App->input->Pad2.key_state == KEY_DOWN) {
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN) {
 		up = true;
 	}
-	if (App->input->Pad2.button_state == DPAD_DOWN && App->input->Pad2.key_state == KEY_DOWN) {
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN) {
 		down = true;
 	}
-	if (App->input->Pad2.button_state == DPAD_LEFT && App->input->Pad2.key_state == KEY_DOWN) {
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_DOWN) {
 		left = true;
 	}
-	if (App->input->Pad2.button_state == DPAD_RIGHT && App->input->Pad2.key_state == KEY_DOWN) {
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_DOWN) {
 		right = true;
 	}
 
@@ -838,11 +838,10 @@ void ModuleChunLi2::ResetPlayer() {
 	position.x = 410; 
 	if (App->chunli->position.x != 100 || App->chunli->life != 1000) {
 		ActiveDeath = 0;
-		//App->chunli->ResetPlayer();
+		App->chunli->ResetPlayer();
 		App->UI->time = 99;
 		App->UI->Counter1 = 9;
 		App->UI->Counter2 = 9;
-		App->scene_dhalsim->newRound = true;
 	}
 }
 

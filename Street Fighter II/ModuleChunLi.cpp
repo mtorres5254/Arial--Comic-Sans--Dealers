@@ -583,16 +583,16 @@ void ModuleChunLi::positionlimits() {
 		position.x = (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) - 90 +32;
 	}
 	
-	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH-20 && position.x<App->chunli2->position.x) {
-		App->chunli2->position.x = position.x + SCREEN_WIDTH - 20;
-		position.x = App->chunli2->position.x -SCREEN_WIDTH + 20;		
+	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH - 80 && position.x<App->chunli2->position.x) {
+		App->chunli2->position.x = position.x + SCREEN_WIDTH - 80;
+		position.x = App->chunli2->position.x -SCREEN_WIDTH + 80;		
 		
 	}
 	
-	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH - 20 && position.x > App->chunli2->position.x) {
+	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH - 80 && position.x > App->chunli2->position.x) {
 
-		App->chunli2->position.x = position.x - SCREEN_WIDTH + 20;
-		position.x = App->chunli2->position.x + SCREEN_WIDTH - 20;
+		App->chunli2->position.x = position.x - SCREEN_WIDTH + 80;
+		position.x = App->chunli2->position.x + SCREEN_WIDTH - 80;
 	}
 
 }
@@ -862,7 +862,6 @@ void ModuleChunLi::ResetPlayer() {
 		App->UI->time = 99;
 		App->UI->Counter1 = 9;
 		App->UI->Counter2 = 9;
-		App->scene_dhalsim->newRound = true;
 	}
 }
 

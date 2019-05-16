@@ -1,4 +1,3 @@
-#include <windows.h>
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleTextures.h"
@@ -111,17 +110,6 @@ update_status ModuleUI:: Update()
 		GamepadInfo = false;
 	}
 	
-	if (timenow > 4000)
-	{
-		if (App->scene_dhalsim->newRound == true)
-		{
-			App->scene_dhalsim->fight = false;
-			Round();
-			App->scene_dhalsim->newRound = false;
-			App->scene_dhalsim->fight = true;
-			round++;
-		}
-	}
 	//Render
 	Counter();
 	if (GamepadInfo == true) {
@@ -172,10 +160,9 @@ void ModuleUI::Counter()
 	{
 		if (SDL_GetTicks() - timenow > 1000) {			
 			time--;
-			//LOG("%d", time);
+			
 			Counter1--;
-			if (Counter1 == -1) { //if ==0 jump from x1 to x9 (21 to 19 for example)
-				Counter1 = 9;
+			if (Counter1 == -1) {
 				Counter2--;
 				
 				if (Counter2 == 0) {
@@ -254,37 +241,6 @@ void ModuleUI::Counter()
 		break;
 	}
 }
-
-void ModuleUI::Round()
-{
-	int sec = SDL_GetTicks();
-	int aux;
-	switch (round)
-	{
-		case 1: 
-			App->font->BlitText(SCREEN_WIDTH/2 - 40, SCREEN_HEIGHT/2 - 5, font_id, "round 1"); 		
-			do
-			{
-				aux = SDL_GetTicks() - sec;
-			} while (aux < 2000);
-			App->font->BlitText(SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 - 5, font_id, "fight!");	
-			sec = SDL_GetTicks();
-			do
-			{
-				aux = SDL_GetTicks() - sec;
-			} while (aux < 1000);
-			break;
-		case 2: 
-			App->font->BlitText(SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 - 5, font_id, "round 2");
-			App->font->BlitText(SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 - 5, font_id, "fight!");
-			break;
-		case 3:
-			App->font->BlitText(SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 - 5, font_id, "round 3");
-			App->font->BlitText(SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 - 5, font_id, "fight!");
-			break;
-	}	
-}
-
 
 void ModuleUI::GamepadDebug() {
 	//escriure aqui el codi que mostra la info debug
