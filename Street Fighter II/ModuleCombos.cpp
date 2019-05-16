@@ -32,7 +32,21 @@ update_status ModuleCombos::Update() {
 
 bool CommandPunch::Check(uint frames_past) const
 {
-	
+	int count = 0;
+	uint frames = 0u;
 
+	for (uint i = 1u; i < frames_past; ++i) {
+		if (count > 0 && (i - frames) > MAX_COMMAND_FRAMES) {
+			return false;
+		}
+		History history = App->input->GetPrevious(i);
+
+		const GamePad* pad = (history.Pads[0]);
+
+		switch (count)
+		{
+		case 0: { if (pad->button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) { return true; } } break;
+		}
+	}
 	return false;
 }

@@ -6,6 +6,8 @@
 #include "Application.h"
 #include "SDL/include/SDL.h"
 
+#define MAX_COMMAND_FRAMES 8
+
 
 class ModuleCombos : public Module
 {

@@ -223,3 +223,15 @@ void ModuleInput::GetGamepadAxis(GamePad* gamepad) {
 	gamepad->Xaxis_state = auxX / 32767;
 	gamepad->Yaxis_state = auxY / 32767;
 }
+
+History ModuleInput::GetPrevious(int previous) {
+	 History ret;
+	for (int i = 0; i < MAX_PADS; i++) {
+		ret.Pads[i] = history[history_count - previous].Pads[i];
+	}
+	for (int i = 0; i < MAX_KEYS; i++) {
+		ret.keyboard[i] = history[history_count - previous].keyboard[i];
+	}
+	
+	return ret;
+}
