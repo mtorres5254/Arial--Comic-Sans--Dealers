@@ -50,21 +50,21 @@ update_status ModuleInput::PreUpdate()
 
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 
-	if (Gamepad == false && SDL_NumJoysticks() > 0) {
-		Pad1.Pad = SDL_GameControllerOpen(1);
+	if (Gamepad == false && SDL_NumJoysticks() >= 1) {
+		Pad1.Pad = SDL_GameControllerOpen(0);
 		Gamepad = true;
 	}
 	if (Gamepad == true && SDL_NumJoysticks() == 0) {
-		Pad1.Pad = NULL;
+		SDL_GameControllerClose(Pad1.Pad);
 		Gamepad = false;
 	}
 
-	if (Gamepad2 == false && SDL_NumJoysticks() == 2) {
-		Pad2.Pad = SDL_GameControllerOpen(2);
+	if (Gamepad2 == false && SDL_NumJoysticks() >= 2) {
+		Pad2.Pad = SDL_GameControllerOpen(1);
 		Gamepad2 = true;
 	}
 	if (Gamepad2 == true && SDL_NumJoysticks() < 2) {
-		Pad2.Pad = NULL;
+		SDL_GameControllerClose(Pad2.Pad);
 		Gamepad2 = false;
 	}
 	
