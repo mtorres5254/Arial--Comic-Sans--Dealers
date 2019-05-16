@@ -612,7 +612,7 @@ update_status ModuleChunLi::Update()
 
 void ModuleChunLi::positionlimits() {
 
-	if (position.y == 220) {
+	if (position.y == 220 ) {
 		speedX = 1;
 		speedY = 1;
 	}
@@ -689,7 +689,12 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 				position.x += 1;
 			
 		}
-		if (state == ST_WALK_FORWARD2 && App->chunli2->state == ST_WALK_BACKWARD || state == ST_WALK_BACKWARD2 && App->chunli2->state == ST_WALK_FORWARD) {
+		if (state == ST_WALK_FORWARD2 && App->chunli2->state == ST_WALK_BACKWARD 
+			|| state == ST_WALK_BACKWARD2 && App->chunli2->state == ST_WALK_FORWARD 
+			|| state==ST_CROUCH2 && App->chunli2->state==ST_WALK_BACKWARD 
+			|| state == ST_WALK_FORWARD2 && App->chunli2->state==ST_CROUCH
+			|| state == ST_CROUCH2 && App->chunli2->state==ST_WALK_FORWARD
+			|| state== ST_WALK_BACKWARD2 && App->chunli2->state == ST_CROUCH) {
 
 			move = false;
 		}
@@ -697,14 +702,13 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 		else {
 			move = true;
 		}
-	}
-
-	
+	}	
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && (state == ST_JUMP_BACKWARD2 || state == ST_JUMP_FORWARD2 || state == ST_JUMP_NEUTRAL2)) {
 		
-
+		speedX = -1;
 	}
+
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY_SHOT)
 	{
 		int aux = life;
