@@ -88,6 +88,7 @@
     <ClInclude Include="ModuleParticles.h" />
     <ClInclude Include="ModuleRender.h" />
     <ClInclude Include="ModuleSceneDhalsim.h" />
+    <ClInclude Include="ModuleSlowdown.h" />
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleUI.h" />
     <ClInclude Include="ModuleWelcomePage.h" />
@@ -112,6 +113,7 @@
     <ClCompile Include="ModuleParticles.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
     <ClCompile Include="ModuleSceneDhalsim.cpp" />
+    <ClCompile Include="ModuleSlowdown.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleUI.cpp" />
     <ClCompile Include="ModuleWelcomePage.cpp" />

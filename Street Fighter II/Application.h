@@ -3,7 +3,7 @@
 
 #include "Globals.h"
 
-#define NUM_MODULES 17
+#define NUM_MODULES 18
 
 class ModuleWindow;
 class ModuleInput;
@@ -23,6 +23,7 @@ class ModuleSceneDhalsim;
 class ModuleRender;
 class ModuleChunLi2;
 class ModuleCombos;
+class ModuleSlowdown;
 
 class Application
 {
@@ -46,6 +47,7 @@ public:
 	ModuleChunLi2* chunli2;
 	ModuleFont* font;
 	ModuleCombos* combo;
+	ModuleSlowdown* slow;
 
 	int plyDistance;
 

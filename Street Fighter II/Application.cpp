@@ -17,6 +17,7 @@
 #include "ModuleFont.h"
 #include "ModuleSceneDhalsim.h"
 #include "ModuleCombos.h"
+#include "ModuleSlowdown.h"
 
 Application::Application()
 {
@@ -37,7 +38,7 @@ Application::Application()
 	modules[14] = UI = new ModuleUI();
 	modules[15] = lose_scene = new ModuleLoseScene();
 	modules[16] = font = new ModuleFont();
-	
+	modules[17] = slow = new ModuleSlowdown();
 	
 }	
 
