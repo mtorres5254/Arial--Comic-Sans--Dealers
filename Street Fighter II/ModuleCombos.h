@@ -6,7 +6,7 @@
 #include "Application.h"
 #include "SDL/include/SDL.h"
 
-#define LIGHTNINGKICK 35
+#define LIGHTNINGKICK 50
 
 class ModuleCombos : public Module
 {
