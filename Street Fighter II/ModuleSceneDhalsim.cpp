@@ -170,10 +170,10 @@ void ModuleSceneDhalsim::roundpoints() {
 
 	if (App->UI->time <= 0) {
 		if (App->chunli->life > App->chunli2->life) {
-			App->chunli->victorycount++;
+			App->chunli2->life = 0;
 		}
 		if (App->chunli->life < App->chunli2->life) {
-			App->chunli2->victorycount++;
+			App->chunli->life = 0;
 		}
 		else
 		{
