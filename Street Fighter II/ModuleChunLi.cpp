@@ -193,12 +193,35 @@ bool ModuleChunLi::Start()
 	punch_medium.PushBack1({ 408, 536, 101, 84 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback,  3300);
 	punch_medium.PushBack1({ 510, 539, 119, 81 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback,  3300);
 	punch_medium.PushBack1({ 630,539, 143,81 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 3300);
+	punch_medium.PushBack1({ 630,539, 143,81 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 3300);
+	punch_medium.PushBack1({ 630,539, 143,81 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 3300);
 	punch_medium.PushBack1({ 510, 539, 119, 81 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 3300);
 	punch_medium.PushBack1({ 408, 536, 101, 84 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 3300);
 
-	punch_medium.speed = 0.2f;
+	punch_medium.speed = 0.3f;
 	punch_medium.loop = false;
 	
+
+	//Hard punch animation 
+	
+	
+
+	const int punchhcollider2 = 5;
+	SDL_Rect punchhhitbox2[punchhcollider2] = { { 16,3,37,71 },{	28,3,75,37 },{46,35,39,33}, {52,38,35,45},{	60,69,85,13 } };
+	COLLIDER_TYPE punchhCollType2[punchhcollider2] = { { COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER }, {COLLIDER_PLAYER}, {COLLIDER_PLAYER_ATTACK} };
+	Module* punchhCallback2[punchhcollider2] = { { this },{ this },{ this }, {this}, {this} };
+
+	punch_hard.PushBack1({ 774, 536, 101, 84 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 3300);
+	punch_hard.PushBack1({ 876, 541, 119, 79 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 3300);
+	punch_hard.PushBack1({ 0, 643, 130, 76 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 3300);
+	punch_hard.PushBack1({ 0, 643, 130, 76 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 3300);
+
+	punch_hard.PushBack1({ 876, 541, 119, 79 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 3300);
+	punch_hard.PushBack1({ 774, 536, 101, 84 }, { 32,2 }, punchhcollider2, punchhhitbox2, punchhCollType2, punchhCallback2, 3300);
+	punch_hard.speed = 0.3f;
+	punch_hard.loop = false;	
+	
+
 	//kick
 
 	const int kickcollider = 5;//Collider num for the kick animation
@@ -384,6 +407,7 @@ update_status ModuleChunLi::Update()
 						kick.Reset();
 						LightningKick.Reset();
 						punch_medium.Reset();
+						punch_hard.Reset();
 						move = true;
 						
 
@@ -393,6 +417,8 @@ update_status ModuleChunLi::Update()
 
 						current_animation = &forward;
 						punch.Reset();
+						punch_medium.Reset();
+						punch_hard.Reset();
 
 						if(move)
 						position.x += speedX;
@@ -402,6 +428,8 @@ update_status ModuleChunLi::Update()
 
 						current_animation = &backward;
 						punch.Reset();
+						punch_medium.Reset();
+						punch_hard.Reset();
 
 						if(move)
 						position.x -= speedX;
@@ -613,6 +641,11 @@ update_status ModuleChunLi::Update()
 						current_animation = &punch_medium;
 						break;
 
+					case ST_PUNCH_HARD2:
+						
+						current_animation = &punch_hard;
+						break;
+
 					case ST_LIGHTNINGKICK2:
 
 					
@@ -740,7 +773,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY_SHOT)
 	{
 
-		
+		//App->slow->StartSlowdown(50, 50);
 		int aux = life;
 		if (!damage_received) {
 			life = aux - App->chunli2->dmg;
@@ -788,6 +821,9 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 	if (App->input->keyboard[SDL_SCANCODE_1] == KEY_UP) {
 		return false;
 	}
+	if (App->input->keyboard[SDL_SCANCODE_2] == KEY_UP) {
+		return false;
+	}
 
 	//Key down
 	
@@ -814,6 +850,9 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 	}
 	if (App->input->keyboard[SDL_SCANCODE_1] == KEY_DOWN) {
 		inputs.Push(IN_1_2);
+	}
+	if (App->input->keyboard[SDL_SCANCODE_2] == KEY_DOWN) {
+		inputs.Push(IN_2_2);
 	}
 
 
@@ -854,6 +893,10 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 
 	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_X] == KEY_DOWN) {
 		inputs.Push(IN_1_2);
+	}
+
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_LEFTSHOULDER] == KEY_DOWN) {
+		inputs.Push(IN_2_2);
 	}
 	if (App->combo->CheckLightingKickP1() == true) {
 		inputs.Push(IN_LIGHTINGKICK2);
@@ -958,6 +1001,15 @@ void ModuleChunLi::internal_input(p2Qeue<ryu_inputs2>& inputs)
 			punch_medium_timer = 0;
 		}
 	}
+
+	if (punch_hard_timer > 0)
+	{
+		if (SDL_GetTicks() - punch_hard_timer > PUNCH_HARD_TIME2)
+		{
+			inputs.Push(IN_PUNCH_HARD_FINISH2);
+			punch_hard_timer = 0;
+		}
+	}
 }
 
 void ModuleChunLi::ResetPlayer() {
@@ -994,6 +1046,7 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			case IN_C2: state = ST_KICK_STANDING2; kick_timer = SDL_GetTicks(); break;
 			case IN_LIGHTINGKICK2: state = ST_LIGHTNINGKICK2; hadouken_timer = SDL_GetTicks(); break;
 			case IN_1_2: state = ST_PUNCH_MEDIUM2; punch_medium_timer = SDL_GetTicks(); break;
+			case IN_2_2: state = ST_PUNCH_HARD2; punch_hard_timer= SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1010,6 +1063,7 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			case IN_C2: state = ST_KICK_STANDING2; kick_timer = SDL_GetTicks(); break;
 			case IN_LIGHTINGKICK2: state = ST_LIGHTNINGKICK2; hadouken_timer = SDL_GetTicks(); break;
 			case IN_1_2: state = ST_PUNCH_MEDIUM2; punch_medium_timer = SDL_GetTicks(); break;
+			case IN_2_2: state = ST_PUNCH_HARD2; punch_hard_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1026,6 +1080,7 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			case IN_C2: state = ST_KICK_STANDING2; kick_timer = SDL_GetTicks(); break;
 			case IN_LIGHTINGKICK2: state = ST_LIGHTNINGKICK2; hadouken_timer = SDL_GetTicks(); break;
 			case IN_1_2: state = ST_PUNCH_MEDIUM2; punch_medium_timer = SDL_GetTicks(); break;
+			case IN_2_2: state = ST_PUNCH_HARD2; punch_hard_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1143,6 +1198,15 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			switch (last_input)
 			{
 			case IN_PUNCH_MEDIUM_FINISH2: state = ST_IDLE2; break;
+			}
+			break;
+		}
+
+		case ST_PUNCH_HARD2:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_HARD_FINISH2: state = ST_IDLE2; break;
 			}
 			break;
 		}

@@ -14,7 +14,8 @@
 
 #define JUMP_TIME2 850
 #define PUNCH_TIME2 150
-#define PUNCH_MEDIUM_TIME2 250
+#define PUNCH_MEDIUM_TIME2 200
+#define PUNCH_HARD_TIME2 200
 #define PUNCH_NEUTRAL_JUMP_TIME2 850
 #define KICK_TIME2 200
 #define HADOUKEN_TIME2 1200
@@ -49,6 +50,7 @@ enum ryu_states2
 	ST_LIGHTNINGKICK2,
 	ST_RECEIVED_PUNCH2,
 	ST_PUNCH_MEDIUM2,
+	ST_PUNCH_HARD2,
 };
 
 enum ryu_inputs2
@@ -65,10 +67,12 @@ enum ryu_inputs2
 	IN_X2,
 	IN_C2,
 	IN_1_2,
+	IN_2_2,
 	IN_LIGHTINGKICK2,
 	IN_JUMP_FINISH2,
 	IN_PUNCH_FINISH2,
 	IN_PUNCH_MEDIUM_FINISH2,
+	IN_PUNCH_HARD_FINISH2,
 	IN_KICK_FINISH2,
 	IN_LIGHTNINGKICK_FINISH2,
 	IN_RECEIVED_PUNCH2,
@@ -100,6 +104,7 @@ public:
 	Animation backward;
 	Animation punch;
 	Animation punch_medium;
+	Animation punch_hard;
 	Animation kick;
 
 	Animation crouch;
@@ -149,6 +154,7 @@ public:
 	int lkcounter = 0;
 	ryu_states2 state;
 
+	Uint32 punch_hard_timer = 0;
 	Uint32 punch_medium_timer = 0;
 	Uint32 jump_timer = 0;
 	Uint32 punch_timer = 0;
