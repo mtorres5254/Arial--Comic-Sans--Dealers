@@ -13,6 +13,7 @@
 #include "Application.h"
 #include "ModuleSceneDhalsim.h"
 #include "ModuleCombos.h"
+#include "ModuleSlowdown.h"
 
 
 
@@ -161,6 +162,7 @@ bool ModuleChunLi::Start()
 
 
 	//Punch animation
+
 	const int punchcollider = 5;//Collider num for the punch animation
 	SDL_Rect punchhitbox[punchcollider] = { { 0, 3, 44, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 25, 71, 31, 21 },{ 2, 7, 35, 41 } };
 	COLLIDER_TYPE punchCollType[punchcollider] = { { COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER } };
@@ -180,6 +182,23 @@ bool ModuleChunLi::Start()
 	punch.speed = 0.3f;
 	punch.loop = false;
 
+
+	// Medium punch animation
+
+	const int punchmcollider = 5;
+	SDL_Rect punchmhitbox[punchmcollider] = { { 29, 3, 75, 37 },{ 47, 35, 39, 33 },{59, 64, 31, 21 }, {62,55,81,13} };
+	COLLIDER_TYPE punchmCollType[punchmcollider] = { { COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER }, {COLLIDER_PLAYER_ATTACK} };
+	Module* punchmCallback[punchmcollider] = {{ this },{ this },{ this }, {this} };
+
+	punch_medium.PushBack1({ 408, 536, 101, 84 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback,  3300);
+	punch_medium.PushBack1({ 510, 539, 119, 81 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback,  3300);
+	punch_medium.PushBack1({ 630,539, 143,81 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 3300);
+	punch_medium.PushBack1({ 510, 539, 119, 81 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 3300);
+	punch_medium.PushBack1({ 408, 536, 101, 84 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 3300);
+
+	punch_medium.speed = 0.2f;
+	punch_medium.loop = false;
+	
 	//kick
 
 	const int kickcollider = 5;//Collider num for the kick animation
@@ -249,15 +268,11 @@ bool ModuleChunLi::Start()
 	SDL_Rect lkhitbox[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33} , {91,66,31,15}, {57,19,71,39}, {90,42,51,25} , {48,4,83,29} };
 	COLLIDER_TYPE lkCollType[lkcollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER}, {COLLIDER_PLAYER_ATTACK }, {COLLIDER_PLAYER_ATTACK }, {COLLIDER_PLAYER_ATTACK }, {COLLIDER_PLAYER_ATTACK } };
 	Module* lkCallback[lkcollider] = { {this},{this},{this},{this},{this},{this},{this},{this},{this} };
-
 	
 	SDL_Rect lkhitbox1[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {57,19,71,39} };
 	SDL_Rect lkhitbox2[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {90,42,51,25} };
 	SDL_Rect lkhitbox3[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {48,4,83,29} };
-	
 
-
-	//LightningKick.PushBack1({ 1475, 225, 61 , 100 }, { 32, 2 }, {}, {}, {}, {}, {});
 	LightningKick.PushBack1({ 1537, 226, 107, 99}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 2400);
 	LightningKick.PushBack1({ 1645,222 , 123, 103}, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
 	LightningKick.PushBack1({ 1769, 230, 119, 95}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 2400);
@@ -268,15 +283,12 @@ bool ModuleChunLi::Start()
 	LightningKick.speed = 0.3f;
 	LightningKick.loop = true;
 
-
+	
 	//damage animation 
-
 	const int dmgCollider = 5;//Collider num for the idle animation
 	SDL_Rect dmgHitbox[dmgCollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33} };
 	COLLIDER_TYPE dmgCollType[dmgCollider] = { {COLLIDER_NONE},{COLLIDER_NONE},{COLLIDER_NONE},{COLLIDER_NONE},{COLLIDER_NONE} };
 	Module* dmgCallBack[dmgCollider] = { {this},{this},{this},{this},{this} };
-
-	
 
 	damage.PushBack1({ 1307,465,72,80 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage.PushBack1({ 1385, 458, 79, 87}, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
@@ -371,6 +383,7 @@ update_status ModuleChunLi::Update()
 						Crouch_punch.Reset();	
 						kick.Reset();
 						LightningKick.Reset();
+						punch_medium.Reset();
 						move = true;
 						
 
@@ -398,7 +411,7 @@ update_status ModuleChunLi::Update()
 						
 						current_animation = &jump_neutral;											
 
-						//Speed logic of jump
+		
 
 						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2/4.5) {
 							position.y -= 8;
@@ -595,6 +608,11 @@ update_status ModuleChunLi::Update()
 						
 
 						break;
+
+					case ST_PUNCH_MEDIUM2:
+						current_animation = &punch_medium;
+						break;
+
 					case ST_LIGHTNINGKICK2:
 
 					
@@ -706,6 +724,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 			|| state == ST_CROUCH2 && App->chunli2->state==ST_WALK_FORWARD
 			|| state== ST_WALK_BACKWARD2 && App->chunli2->state == ST_CROUCH) {
 
+
 			move = false;
 		}
 
@@ -720,6 +739,8 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY_SHOT)
 	{
+
+		
 		int aux = life;
 		if (!damage_received) {
 			life = aux - App->chunli2->dmg;
@@ -764,6 +785,9 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 	if (App->input->keyboard[SDL_SCANCODE_V] == KEY_UP) {
 		return false;
 	}
+	if (App->input->keyboard[SDL_SCANCODE_1] == KEY_UP) {
+		return false;
+	}
 
 	//Key down
 	
@@ -787,6 +811,9 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 	}
 	if (App->input->keyboard[SDL_SCANCODE_V] == KEY_DOWN) {
 		inputs.Push(IN_LIGHTINGKICK2);
+	}
+	if (App->input->keyboard[SDL_SCANCODE_1] == KEY_DOWN) {
+		inputs.Push(IN_1_2);
 	}
 
 
@@ -823,6 +850,10 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 	}
 	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
 		inputs.Push(IN_C2);
+	}
+
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_X] == KEY_DOWN) {
+		inputs.Push(IN_1_2);
 	}
 	if (App->combo->CheckLightingKickP1() == true) {
 		inputs.Push(IN_LIGHTINGKICK2);
@@ -918,6 +949,15 @@ void ModuleChunLi::internal_input(p2Qeue<ryu_inputs2>& inputs)
 			punch_neutral_jump_timer = 0;
 		}
 	}
+
+	if (punch_medium_timer > 0)
+	{
+		if (SDL_GetTicks() - punch_medium_timer > PUNCH_MEDIUM_TIME2)
+		{
+			inputs.Push(IN_PUNCH_MEDIUM_FINISH2);
+			punch_medium_timer = 0;
+		}
+	}
 }
 
 void ModuleChunLi::ResetPlayer() {
@@ -953,6 +993,7 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			case IN_X2: state = ST_PUNCH_STANDING2; punch_timer = SDL_GetTicks();  break;
 			case IN_C2: state = ST_KICK_STANDING2; kick_timer = SDL_GetTicks(); break;
 			case IN_LIGHTINGKICK2: state = ST_LIGHTNINGKICK2; hadouken_timer = SDL_GetTicks(); break;
+			case IN_1_2: state = ST_PUNCH_MEDIUM2; punch_medium_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -968,6 +1009,7 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			case IN_X2: state = ST_PUNCH_STANDING2; punch_timer = SDL_GetTicks();  break;
 			case IN_C2: state = ST_KICK_STANDING2; kick_timer = SDL_GetTicks(); break;
 			case IN_LIGHTINGKICK2: state = ST_LIGHTNINGKICK2; hadouken_timer = SDL_GetTicks(); break;
+			case IN_1_2: state = ST_PUNCH_MEDIUM2; punch_medium_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -983,6 +1025,7 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			case IN_X2: state = ST_PUNCH_STANDING2; punch_timer = SDL_GetTicks();  break;
 			case IN_C2: state = ST_KICK_STANDING2; kick_timer = SDL_GetTicks(); break;
 			case IN_LIGHTINGKICK2: state = ST_LIGHTNINGKICK2; hadouken_timer = SDL_GetTicks(); break;
+			case IN_1_2: state = ST_PUNCH_MEDIUM2; punch_medium_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1092,6 +1135,14 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			switch (last_input)
 			{
 			case IN_LIGHTNINGKICK_FINISH2: state = ST_IDLE2; break;
+			}
+			break;
+		}
+		case ST_PUNCH_MEDIUM2:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_MEDIUM_FINISH2: state = ST_IDLE2; break;
 			}
 			break;
 		}
