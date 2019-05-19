@@ -175,7 +175,7 @@ bool ModuleChunLi::Start()
 	Module* punchCallback2[punchcollider2] = { { this },{ this },{ this },{ this },{ this }, {this} };
 	punch.PushBack1({ 139, 533, 78, 87 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
 	punch.PushBack1({ 218, 531, 101, 89 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
-	punch.PushBack1({ 320, 524, 87, 96 }, {32,2 }, punchcollider2, punchhitbox2, punchCollType2, punchCallback2, 2800);
+	punch.PushBack1({ 320, 524, 87, 96 }, {32,2 }, punchcollider2, punchhitbox2, punchCollType2, punchCallback2, 4);
 	punch.PushBack1({ 218, 531, 101, 89 }, { 32, 2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
 	punch.PushBack1({ 139, 533, 78, 87 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
 
@@ -190,13 +190,13 @@ bool ModuleChunLi::Start()
 	COLLIDER_TYPE punchmCollType[punchmcollider] = { { COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER }, {COLLIDER_PLAYER_ATTACK} };
 	Module* punchmCallback[punchmcollider] = {{ this },{ this },{ this }, {this} };
 
-	punch_medium.PushBack1({ 408, 536, 101, 84 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback,  3300);
-	punch_medium.PushBack1({ 510, 539, 119, 81 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback,  3300);
-	punch_medium.PushBack1({ 630,539, 143,81 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 3300);
-	punch_medium.PushBack1({ 630,539, 143,81 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 3300);
-	punch_medium.PushBack1({ 630,539, 143,81 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 3300);
-	punch_medium.PushBack1({ 510, 539, 119, 81 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 3300);
-	punch_medium.PushBack1({ 408, 536, 101, 84 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 3300);
+	punch_medium.PushBack1({ 408, 536, 101, 84 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback,  12);
+	punch_medium.PushBack1({ 510, 539, 119, 81 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback,  12);
+	punch_medium.PushBack1({ 630,539, 143,81 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 12);
+	punch_medium.PushBack1({ 630,539, 143,81 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 12);
+	punch_medium.PushBack1({ 630,539, 143,81 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 12);
+	punch_medium.PushBack1({ 510, 539, 119, 81 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 12);
+	punch_medium.PushBack1({ 408, 536, 101, 84 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 12);
 
 	punch_medium.speed = 0.3f;
 	punch_medium.loop = false;
@@ -211,13 +211,13 @@ bool ModuleChunLi::Start()
 	COLLIDER_TYPE punchhCollType2[punchhcollider2] = { { COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER }, {COLLIDER_PLAYER}, {COLLIDER_PLAYER_ATTACK} };
 	Module* punchhCallback2[punchhcollider2] = { { this },{ this },{ this }, {this}, {this} };
 
-	punch_hard.PushBack1({ 774, 536, 101, 84 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 3300);
-	punch_hard.PushBack1({ 876, 541, 119, 79 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 3300);
-	punch_hard.PushBack1({ 0, 643, 130, 76 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 3300);
-	punch_hard.PushBack1({ 0, 643, 130, 76 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 3300);
+	punch_hard.PushBack1({ 774, 536, 101, 84 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 16);
+	punch_hard.PushBack1({ 876, 541, 119, 79 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 16);
+	punch_hard.PushBack1({ 0, 643, 130, 76 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 16);
+	punch_hard.PushBack1({ 0, 643, 130, 76 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 16);
 
-	punch_hard.PushBack1({ 876, 541, 119, 79 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 3300);
-	punch_hard.PushBack1({ 774, 536, 101, 84 }, { 32,2 }, punchhcollider2, punchhhitbox2, punchhCollType2, punchhCallback2, 3300);
+	punch_hard.PushBack1({ 876, 541, 119, 79 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 16);
+	punch_hard.PushBack1({ 774, 536, 101, 84 }, { 32,2 }, punchhcollider2, punchhhitbox2, punchhCollType2, punchhCallback2, 16);
 	punch_hard.speed = 0.3f;
 	punch_hard.loop = false;	
 	
@@ -237,11 +237,49 @@ bool ModuleChunLi::Start()
 
 	kick.PushBack1({ 131,630 , 66, 89 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
 	kick.PushBack1({ 198, 626, 71, 93 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
-	kick.PushBack1({ 270, 622, 106,97 }, { 32,2 }, kickcollider2, kickhitbox2, kickCollType2, kickCallback2, 2800);
+	kick.PushBack1({ 270, 622, 106,97 }, { 32,2 }, kickcollider2, kickhitbox2, kickCollType2, kickCallback2, 8);
 	kick.PushBack1({ 198, 626, 71, 93 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
 	kick.PushBack1({ 131,630 , 66, 89 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
 	kick.speed = 0.2f;
 
+	//kick medium
+
+	const int kickcollider3 = 6;
+	SDL_Rect kickhitbox3[kickcollider3] = { { 0, 3, 44, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 13, 71, 31, 21 },{ 2, 37, 35, 41 }, {54,70,81,19} };
+	COLLIDER_TYPE kickCollType3[kickcollider3] = { { COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER }, {COLLIDER_PLAYER_ATTACK} };
+	Module* kickCallback3[kickcollider3] = { { this },{ this },{ this },{ this },{ this }, {this} };
+
+	kick_medium.PushBack1({ 131,630 , 66, 89 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
+	kick_medium.PushBack1({ 198, 626, 71, 93 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
+	kick_medium.PushBack1({ 377,624,109,95 }, { 32,2 }, kickcollider3, kickhitbox3, kickCollType3, kickCallback3, 12);
+	kick_medium.PushBack1({ 377,624,109,95 }, { 32,2 }, kickcollider3, kickhitbox3, kickCollType3, kickCallback3, 12);
+	kick_medium.PushBack1({ 377,624,109,95 }, { 32,2 }, kickcollider3, kickhitbox3, kickCollType3, kickCallback3, 12);
+	kick_medium.PushBack1({ 198, 626, 71, 93 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
+	kick_medium.PushBack1({ 131,630 , 66, 89 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
+	kick_medium.speed = 0.3f;
+	kick_medium.loop = false;
+
+
+	//kick hard
+
+	const int kickcollider4 = 6;
+	SDL_Rect kickhitbox4[kickcollider4] = { { 0, 3, 44, 33 },{ 8, 4, 51, 54 },{ 15, 3, 37, 71 },{ 38, 66, 77, 33 },{ 2, 37, 35, 41 }, {65,80,79,27} };
+	COLLIDER_TYPE kickCollType4[kickcollider4] = { { COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER }, {COLLIDER_PLAYER_ATTACK} };
+	Module* kickCallback4[kickcollider4] = { { this },{ this },{ this },{ this },{ this }, {this} };
+
+	kick_hard.PushBack1({ 487,641 , 64, 79 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
+	kick_hard.PushBack1({ 552, 627, 70, 92 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
+	kick_hard.PushBack1({ 623,629,82,90 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
+	kick_hard.PushBack1({ 706,622,123,97 }, { 32,2 }, kickcollider4, kickhitbox4, kickCollType4, kickCallback4, 16);
+	kick_hard.PushBack1({ 706,622,123,97 }, { 32,2 }, kickcollider4, kickhitbox4, kickCollType4, kickCallback4, 16);
+	kick_hard.PushBack1({ 706,622,123,97 }, { 32,2 }, kickcollider4, kickhitbox4, kickCollType4, kickCallback4, 16);
+	kick_hard.PushBack1({ 830,636,102,83 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
+	kick_hard.PushBack1({ 933, 638, 70, 81 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
+	
+	kick_hard.speed = 0.32f;
+	kick_hard.loop = false;
+
+	
 	//crouch punch
 	const int crhpnchcollider = 5;//Collider num for the crouch punch animation
 	SDL_Rect crhpnchhitbox[crhpnchcollider] = { { 30, 48, 23, 19 },{ 17, 29, 22, 27 },{ 38, 29, 29, 24 },{ 0, 0, 40, 29 },{ 40, 0, 34, 32 } };
@@ -255,10 +293,42 @@ bool ModuleChunLi::Start()
 	
 	
 	Crouch_punch.PushBack1({ 368, 839, 71, 66 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
-	Crouch_punch.PushBack1({ 518, 841, 107, 64 }, { 32, 2 }, crhpnchcollider2, crhpnchhitbox2, crchpnchCollType2, crhpnchCallback2, {});
+	Crouch_punch.PushBack1({ 518, 841, 107, 64 }, { 32, 2 }, crhpnchcollider2, crhpnchhitbox2, crchpnchCollType2, crhpnchCallback2, 6);
 	Crouch_punch.PushBack1({ 440, 839, 77, 66 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
 	Crouch_punch.speed = 0.13f;
 	Crouch_punch.loop = true;
+
+	//crouch  medium punch
+
+
+	const int crhpnchcollider3 = 6;
+	SDL_Rect crhpnchhitbox3[crhpnchcollider3] = { { 30, 48, 23, 19 },{ 17, 29, 22, 27 },{ 38, 29, 29, 24 },{ 0, 0, 40, 29 },{ 40, 0, 34, 32 },{55, 39, 80, 19} };
+	COLLIDER_TYPE crchpnchCollType3[crhpnchcollider3] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER}, {COLLIDER_PLAYER_ATTACK} };
+	Module* crhpnchCallback3[crhpnchcollider3] = { {this},{this},{this},{this},{this} };
+
+
+	Crouch_medium_punch.PushBack1({ 751, 838, 80, 67 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
+	Crouch_medium_punch.PushBack1({ 832, 838, 100, 67 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
+	Crouch_medium_punch.PushBack1({ 626, 838, 124, 67 }, { 32, 2 }, crhpnchcollider3, crhpnchhitbox3, crchpnchCollType3, crhpnchCallback3, 10);
+	Crouch_medium_punch.PushBack1({ 626, 838, 124, 67 }, { 32, 2 }, crhpnchcollider3, crhpnchhitbox3, crchpnchCollType3, crhpnchCallback3, 10);
+	Crouch_medium_punch.PushBack1({ 626, 838, 124, 67 }, { 32, 2 }, crhpnchcollider3, crhpnchhitbox3, crchpnchCollType3, crhpnchCallback3, 10);
+	Crouch_medium_punch.PushBack1({ 832, 838, 100, 67 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
+	Crouch_medium_punch.PushBack1({ 751, 838, 80, 67 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
+	Crouch_medium_punch.speed = 0.3f;
+	Crouch_medium_punch.loop = false;
+
+	//crouch  hard punch
+
+
+	Crouch_hard_punch.PushBack1({ 751, 838, 80, 67 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
+	Crouch_hard_punch.PushBack1({ 832, 838, 100, 67 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
+	Crouch_hard_punch.PushBack1({ 626, 838, 124, 67 }, { 32, 2 }, crhpnchcollider3, crhpnchhitbox3, crchpnchCollType3, crhpnchCallback3, 16);
+	Crouch_hard_punch.PushBack1({ 626, 838, 124, 67 }, { 32, 2 }, crhpnchcollider3, crhpnchhitbox3, crchpnchCollType3, crhpnchCallback3,16);
+	Crouch_hard_punch.PushBack1({ 626, 838, 124, 67 }, { 32, 2 }, crhpnchcollider3, crhpnchhitbox3, crchpnchCollType3, crhpnchCallback3, 16);
+	Crouch_hard_punch.PushBack1({ 832, 838, 100, 67 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
+	Crouch_hard_punch.PushBack1({ 751, 838, 80, 67 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
+	Crouch_hard_punch.speed = 0.3f;
+	Crouch_hard_punch.loop = false;
 
 	//punch neutral jump
 
@@ -296,14 +366,14 @@ bool ModuleChunLi::Start()
 	SDL_Rect lkhitbox2[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {90,42,51,25} };
 	SDL_Rect lkhitbox3[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {48,4,83,29} };
 
-	LightningKick.PushBack1({ 1537, 226, 107, 99}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 2400);
+	LightningKick.PushBack1({ 1537, 226, 107, 99}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 11);
 	LightningKick.PushBack1({ 1645,222 , 123, 103}, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
-	LightningKick.PushBack1({ 1769, 230, 119, 95}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 2400);
+	LightningKick.PushBack1({ 1769, 230, 119, 95}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 11);
 	LightningKick.PushBack1({ 1889, 230, 136,95 }, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
-	LightningKick.PushBack1({ 1025, 355, 120, 93}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 2400);
+	LightningKick.PushBack1({ 1025, 355, 120, 93}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 11);
 	LightningKick.PushBack1({ 1146, 353, 152, 95}, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
-	LightningKick.PushBack1({ 1300, 355, 101, 93 }, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 2400);
-	LightningKick.speed = 0.3f;
+	LightningKick.PushBack1({ 1300, 355, 101, 93 }, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 11);
+	LightningKick.speed = 0.2f;
 	LightningKick.loop = true;
 
 	
@@ -408,6 +478,8 @@ update_status ModuleChunLi::Update()
 						LightningKick.Reset();
 						punch_medium.Reset();
 						punch_hard.Reset();
+						kick_medium.Reset();
+						kick_hard.Reset();
 						move = true;
 						
 
@@ -419,6 +491,8 @@ update_status ModuleChunLi::Update()
 						punch.Reset();
 						punch_medium.Reset();
 						punch_hard.Reset();
+						kick_medium.Reset();
+						kick_hard.Reset();
 
 						if(move)
 						position.x += speedX;
@@ -430,6 +504,8 @@ update_status ModuleChunLi::Update()
 						punch.Reset();
 						punch_medium.Reset();
 						punch_hard.Reset();
+						kick_medium.Reset();
+						kick_hard.Reset();
 
 						if(move)
 						position.x -= speedX;
@@ -519,6 +595,9 @@ update_status ModuleChunLi::Update()
 						break;
 					case ST_CROUCH2:
 
+						Crouch_punch.Reset();
+						Crouch_medium_punch.Reset();
+						Crouch_hard_punch.Reset();
 						current_animation = &crouch;
 						
 						
@@ -533,9 +612,20 @@ update_status ModuleChunLi::Update()
 						break;
 					case ST_PUNCH_CROUCH2:
 
-						current_animation = &Crouch_punch;
+						current_animation = &Crouch_punch;						
 						
-						
+						break;
+
+					case ST_PUNCH_MEDIUM_CROUCH2:
+
+						current_animation = &Crouch_medium_punch;
+
+						break;
+
+					case ST_PUNCH_HARD_CROUCH2:
+
+						current_animation = &Crouch_hard_punch;
+
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP2:
 
@@ -630,10 +720,7 @@ update_status ModuleChunLi::Update()
 						break;
 					case ST_KICK_STANDING2:
 
-						current_animation = &kick;
-
-
-						
+						current_animation = &kick;					
 
 						break;
 
@@ -644,6 +731,18 @@ update_status ModuleChunLi::Update()
 					case ST_PUNCH_HARD2:
 						
 						current_animation = &punch_hard;
+						break;
+
+					case ST_KICK_MEDIUM_STANDING2:
+
+						current_animation = &kick_medium;
+
+						break;
+
+					case ST_KICK_HARD_STANDING2:
+
+						current_animation = &kick_hard;
+
 						break;
 
 					case ST_LIGHTNINGKICK2:
@@ -824,6 +923,18 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 	if (App->input->keyboard[SDL_SCANCODE_2] == KEY_UP) {
 		return false;
 	}
+	if (App->input->keyboard[SDL_SCANCODE_3] == KEY_UP) {
+		return false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_4] == KEY_UP) {
+		return false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_5] == KEY_UP) {
+		return false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_6] == KEY_UP) {
+		return false;
+	}
 
 	//Key down
 	
@@ -853,6 +964,18 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 	}
 	if (App->input->keyboard[SDL_SCANCODE_2] == KEY_DOWN) {
 		inputs.Push(IN_2_2);
+	}
+	if (App->input->keyboard[SDL_SCANCODE_3] == KEY_DOWN) {
+		inputs.Push(IN_3_2);
+	}
+	if (App->input->keyboard[SDL_SCANCODE_4] == KEY_DOWN) {
+		inputs.Push(IN_4_2);
+	}
+	if (App->input->keyboard[SDL_SCANCODE_5] == KEY_DOWN) {
+		inputs.Push(IN_5_2);
+	}
+	if (App->input->keyboard[SDL_SCANCODE_6] == KEY_DOWN) {
+		inputs.Push(IN_6_2);
 	}
 
 
@@ -897,6 +1020,12 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 
 	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_LEFTSHOULDER] == KEY_DOWN) {
 		inputs.Push(IN_2_2);
+	}
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN) {
+		inputs.Push(IN_3_2);
+	}
+	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
+		inputs.Push(IN_4_2);
 	}
 	if (App->combo->CheckLightingKickP1() == true) {
 		inputs.Push(IN_LIGHTINGKICK2);
@@ -1010,6 +1139,33 @@ void ModuleChunLi::internal_input(p2Qeue<ryu_inputs2>& inputs)
 			punch_hard_timer = 0;
 		}
 	}
+	if (punch_hard_timer > 0)
+	{
+		if (SDL_GetTicks() - punch_hard_timer > PUNCH_HARD_TIME2)
+		{
+			inputs.Push(IN_PUNCH_HARD_FINISH2);
+			punch_hard_timer = 0;
+		}
+	}
+	if (kick_medium_timer > 0)
+	{
+		if (SDL_GetTicks() - kick_medium_timer > KICK_MEDIUM_TIME2)
+		{
+			inputs.Push(IN_KICK_MEDIUM_FINISH2);
+			kick_medium_timer = 0;
+		}
+	}
+
+	if (kick_hard_timer > 0)
+	{
+		if (SDL_GetTicks() - kick_hard_timer > KICK_HARD_TIME2)
+		{
+			inputs.Push(IN_KICK_HARD_FINISH2);
+			kick_hard_timer = 0;
+		}
+	}
+	
+
 }
 
 void ModuleChunLi::ResetPlayer() {
@@ -1047,6 +1203,9 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			case IN_LIGHTINGKICK2: state = ST_LIGHTNINGKICK2; hadouken_timer = SDL_GetTicks(); break;
 			case IN_1_2: state = ST_PUNCH_MEDIUM2; punch_medium_timer = SDL_GetTicks(); break;
 			case IN_2_2: state = ST_PUNCH_HARD2; punch_hard_timer= SDL_GetTicks(); break;
+			case IN_3_2: state = ST_KICK_MEDIUM_STANDING2; kick_medium_timer = SDL_GetTicks(); break;
+			case IN_4_2: state = ST_KICK_HARD_STANDING2; kick_hard_timer = SDL_GetTicks(); break;
+			
 			}
 		}
 		break;
@@ -1064,6 +1223,8 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			case IN_LIGHTINGKICK2: state = ST_LIGHTNINGKICK2; hadouken_timer = SDL_GetTicks(); break;
 			case IN_1_2: state = ST_PUNCH_MEDIUM2; punch_medium_timer = SDL_GetTicks(); break;
 			case IN_2_2: state = ST_PUNCH_HARD2; punch_hard_timer = SDL_GetTicks(); break;
+			case IN_3_2: state = ST_KICK_MEDIUM_STANDING2; kick_medium_timer= SDL_GetTicks(); break;
+			case IN_4_2: state = ST_KICK_HARD_STANDING2; kick_hard_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1081,6 +1242,8 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			case IN_LIGHTINGKICK2: state = ST_LIGHTNINGKICK2; hadouken_timer = SDL_GetTicks(); break;
 			case IN_1_2: state = ST_PUNCH_MEDIUM2; punch_medium_timer = SDL_GetTicks(); break;
 			case IN_2_2: state = ST_PUNCH_HARD2; punch_hard_timer = SDL_GetTicks(); break;
+			case IN_3_2: state = ST_KICK_MEDIUM_STANDING2; kick_medium_timer = SDL_GetTicks(); break;
+			case IN_4_2: state = ST_KICK_HARD_STANDING2; kick_hard_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1160,7 +1323,9 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			{
 			case IN_CROUCH_UP2: state = ST_IDLE2; break;
 			case IN_JUMP_AND_CROUCH2: state = ST_IDLE2; break;
-			case IN_X2: state = ST_PUNCH_CROUCH2; punch_timer = SDL_GetTicks(); break;
+			case IN_X2: state = ST_PUNCH_CROUCH2; punch_hard_timer = SDL_GetTicks(); break;
+			case IN_5_2: state = ST_PUNCH_MEDIUM_CROUCH2; punch_hard_timer = SDL_GetTicks(); break;
+			case IN_6_2: state = ST_PUNCH_HARD_CROUCH2; punch_hard_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1168,7 +1333,33 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_PUNCH_FINISH2:
+			case IN_PUNCH_HARD_FINISH2:
+				if (IN_CROUCH_DOWN2 == true)
+					state = ST_CROUCH2;
+				else
+					state = ST_IDLE2;
+				break;
+			}
+		}
+		break;
+		case ST_PUNCH_MEDIUM_CROUCH2:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_HARD_FINISH2:
+				if (IN_CROUCH_DOWN2 == true)
+					state = ST_CROUCH2;
+				else
+					state = ST_IDLE2;
+				break;
+			}
+		}
+		break;
+		case ST_PUNCH_HARD_CROUCH2:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_HARD_FINISH2:
 				if (IN_CROUCH_DOWN2 == true)
 					state = ST_CROUCH2;
 				else
@@ -1185,22 +1376,43 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			}
 		}
 		break;
+
+		case ST_KICK_MEDIUM_STANDING2:
+		{
+			switch (last_input)
+			{
+			case IN_KICK_MEDIUM_FINISH2: state = ST_IDLE2; break;
+			}
+		}
+		break;
+
+		case ST_KICK_HARD_STANDING2:
+		{
+			switch (last_input)
+			{
+			case IN_KICK_HARD_FINISH2: state = ST_IDLE2; break;
+			}
+		}
+		break;
 		case ST_LIGHTNINGKICK2:
 		{
 			switch (last_input)
 			{
 			case IN_LIGHTNINGKICK_FINISH2: state = ST_IDLE2; break;
 			}
-			break;
+			
 		}
+		break;
 		case ST_PUNCH_MEDIUM2:
 		{
 			switch (last_input)
 			{
 			case IN_PUNCH_MEDIUM_FINISH2: state = ST_IDLE2; break;
 			}
-			break;
+			
 		}
+		break;
+
 
 		case ST_PUNCH_HARD2:
 		{
@@ -1208,8 +1420,9 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			{
 			case IN_PUNCH_HARD_FINISH2: state = ST_IDLE2; break;
 			}
-			break;
+			
 		}
+		break;
 
 		}
 	}

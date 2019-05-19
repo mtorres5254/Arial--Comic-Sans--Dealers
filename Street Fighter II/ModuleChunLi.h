@@ -13,11 +13,18 @@
 
 
 #define JUMP_TIME2 850
+
 #define PUNCH_TIME2 150
 #define PUNCH_MEDIUM_TIME2 200
 #define PUNCH_HARD_TIME2 200
-#define PUNCH_NEUTRAL_JUMP_TIME2 850
+
 #define KICK_TIME2 200
+#define KICK_MEDIUM_TIME2 400
+#define KICK_HARD_TIME2 400
+
+
+
+#define PUNCH_NEUTRAL_JUMP_TIME2 850
 #define HADOUKEN_TIME2 1200
 #define DMG_TIME2 75
 
@@ -46,7 +53,11 @@ enum ryu_states2
 	ST_PUNCH_FORWARD_JUMP2,
 	ST_PUNCH_BACKWARD_JUMP2,
 	ST_PUNCH_CROUCH2,
+	ST_PUNCH_MEDIUM_CROUCH2,
+	ST_PUNCH_HARD_CROUCH2,
 	ST_KICK_STANDING2,
+	ST_KICK_MEDIUM_STANDING2,
+	ST_KICK_HARD_STANDING2,
 	ST_LIGHTNINGKICK2,
 	ST_RECEIVED_PUNCH2,
 	ST_PUNCH_MEDIUM2,
@@ -64,16 +75,24 @@ enum ryu_inputs2
 	IN_CROUCH_UP2,
 	IN_CROUCH_DOWN2,
 	IN_JUMP_AND_CROUCH2,
+	
 	IN_X2,
 	IN_C2,
 	IN_1_2,
 	IN_2_2,
+	IN_3_2,
+	IN_4_2,
+	IN_5_2,
+	IN_6_2,
+	
 	IN_LIGHTINGKICK2,
 	IN_JUMP_FINISH2,
 	IN_PUNCH_FINISH2,
 	IN_PUNCH_MEDIUM_FINISH2,
 	IN_PUNCH_HARD_FINISH2,
 	IN_KICK_FINISH2,
+	IN_KICK_MEDIUM_FINISH2,
+	IN_KICK_HARD_FINISH2,
 	IN_LIGHTNINGKICK_FINISH2,
 	IN_RECEIVED_PUNCH2,
 };
@@ -105,7 +124,10 @@ public:
 	Animation punch;
 	Animation punch_medium;
 	Animation punch_hard;
+
 	Animation kick;
+	Animation kick_medium;
+	Animation kick_hard;
 
 	Animation crouch;
 	Animation jump_neutral;
@@ -114,6 +136,9 @@ public:
 	Animation jump_forward;
 
 	Animation Crouch_punch;
+	Animation Crouch_medium_punch;
+	Animation Crouch_hard_punch;
+
 	Animation jump_neutral_punch;
 	Animation jump_forward_punch;
 	Animation jump_backward_punch;
@@ -159,6 +184,8 @@ public:
 	Uint32 jump_timer = 0;
 	Uint32 punch_timer = 0;
 	Uint32 kick_timer = 0;
+	Uint32 kick_medium_timer = 0;
+	Uint32 kick_hard_timer = 0;
 	Uint32 hadouken_timer = 0;
 	Uint32 punch_neutral_jump_timer = 0;
 	Uint32 dmg_timer = 0;
