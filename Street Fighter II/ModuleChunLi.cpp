@@ -202,9 +202,7 @@ bool ModuleChunLi::Start()
 	punch_medium.loop = false;
 	
 
-	//Hard punch animation 
-	
-	
+	//Hard punch animation 	
 
 	const int punchhcollider2 = 5;
 	SDL_Rect punchhhitbox2[punchhcollider2] = { { 16,3,37,71 },{	28,3,75,37 },{46,35,39,33}, {52,38,35,45},{	60,69,85,13 } };
@@ -329,6 +327,71 @@ bool ModuleChunLi::Start()
 	Crouch_hard_punch.PushBack1({ 751, 838, 80, 67 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
 	Crouch_hard_punch.speed = 0.3f;
 	Crouch_hard_punch.loop = false;
+
+
+	// Crouch kick
+
+	const int crhcollider3 = 4;//Collider num for the crouch animation
+	SDL_Rect crhhitbox3[crhcollider3] = { { 10, 3, 37, 51 },{ 11, 6, 43, 25 },{ 11, 31, 35, 25 },{ 21, 43, 31, 21 } };
+	COLLIDER_TYPE crchCollType3[crhcollider3] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER} };
+	Module* crhCallback3[crhcollider3] = { {this},{this},{this},{this} };
+
+	const int crhcollider4 = 5;//Collider num for the crouch animation
+	SDL_Rect crhhitbox4[crhcollider4] = { { 10, 3, 37, 51 },{ 11, 6, 43, 25 },{ 11, 31, 35, 25 },{ 21, 43, 31, 21 },{ 31, 3, 75, 19 } };
+	COLLIDER_TYPE crchCollType4[crhcollider4] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER_ATTACK} };
+	Module* crhCallback4[crhcollider4] = { {this},{this},{this},{this},{this} };
+
+	Crouch_kick.PushBack1({ 139, 966, 63, 59 }, { 32, 2 }, crhcollider3, crhhitbox3, crchCollType3, crhCallback3, {});
+	Crouch_kick.PushBack1({ 203, 966, 61, 58 }, { 32, 2 }, crhcollider3, crhhitbox3, crchCollType3, crhCallback3, {});
+	Crouch_kick.PushBack1({ 265, 976, 107, 48 }, { 32, 2 }, crhcollider4, crhhitbox4, crchCollType4, crhCallback4, {});
+	Crouch_kick.PushBack1({ 265, 976, 107, 48 }, { 32, 2 }, crhcollider4, crhhitbox4, crchCollType4, crhCallback4, {});
+	Crouch_kick.PushBack1({ 265, 976, 107, 48 }, { 32, 2 }, crhcollider4, crhhitbox4, crchCollType4, crhCallback4, {});
+	
+
+	Crouch_kick.speed = 0.25f;
+	Crouch_kick.loop = false;
+
+	// Crouch kick medium
+
+	const int crhcollider5 = 4;//Collider num for the crouch animation
+	SDL_Rect crhhitbox5[crhcollider5] = { { 10, 3, 37, 51 },{ 24, 3, 83, 23 },{ 11, 31, 35, 25 },{ 21, 43, 31, 21 } };
+	COLLIDER_TYPE crchCollType5[crhcollider5] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER} };
+	Module* crhCallback5[crhcollider5] = { {this},{this},{this},{this} };
+
+	const int crhcollider6 = 5;//Collider num for the crouch animation
+	SDL_Rect crhhitbox6[crhcollider6] = { { 10, 3, 37, 51 },{ 24, 3, 83, 23 },{ 11, 31, 35, 25 },{ 21, 43, 31, 21 },{ 36, 3, 85, 19 } };
+	COLLIDER_TYPE crchCollType6[crhcollider6] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER_ATTACK} };
+	Module* crhCallback6[crhcollider6] = { {this},{this},{this},{this},{this} };
+
+	Crouch_medium_kick.PushBack1({ 373, 961, 77, 63 }, { 32, 2 }, crhcollider5, crhhitbox5, crchCollType5, crhCallback5, {});
+	Crouch_medium_kick.PushBack1({ 451, 969, 115, 55 }, { 32, 2 }, crhcollider6, crhhitbox6, crchCollType6, crhCallback6, {});
+	Crouch_medium_kick.PushBack1({ 567, 962, 76, 62 }, { 32, 2 }, crhcollider5, crhhitbox5, crchCollType5, crhCallback5, {});
+	
+
+	Crouch_medium_kick.speed = 0.20f;
+	Crouch_medium_kick.loop = false;
+
+	// Crouch kick hard
+
+	const int crhcollider1 = 4;//Collider num for the crouch animation
+	SDL_Rect crhhitbox1[crhcollider1] = { { 7, 3, 37, 51 },{ 8, 31, 35, 25 },{ 10, 43, 31, 21 },{ 49, 32, 55, 31 }};
+	COLLIDER_TYPE crchCollType1[crhcollider1] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER} };
+	Module* crhCallback1[crhcollider1] = { {this},{this},{this},{this}};
+
+	const int crhcollider2 = 5;//Collider num for the crouch animation
+	SDL_Rect crhhitbox2[crhcollider2] = { { 7, 3, 37, 51 },{ 8, 31, 35, 25 },{ 18, 43, 31, 21 },{ 57, 32, 55, 31 },{ 46, 32, 89, 33 } };
+	COLLIDER_TYPE crchCollType2[crhcollider2] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER_ATTACK} };
+	Module* crhCallback2[crhcollider2] = { {this},{this},{this},{this},{this} };
+	
+	Crouch_hard_kick.PushBack1({ 644, 962, 72, 62 }, { 32, 2 }, crhcollider1, crhhitbox1, crchCollType1, crhCallback1, {});
+	Crouch_hard_kick.PushBack1({ 717, 960, 60, 64 }, { 32, 2 }, crhcollider1, crhhitbox1, crchCollType1, crhCallback1, {});
+	Crouch_hard_kick.PushBack1({ 796, 951, 128, 73 }, { 32, 2 }, crhcollider2, crhhitbox2, crchCollType2, crhCallback2, {});
+	Crouch_hard_kick.PushBack1({ 717, 960, 60, 64 }, { 32, 2 }, crhcollider1, crhhitbox1, crchCollType1, crhCallback1, {});
+	Crouch_hard_kick.PushBack1({ 644, 962, 72, 62 }, { 32, 2 }, crhcollider1, crhhitbox1, crchCollType1, crhCallback1, {});
+
+
+	Crouch_hard_kick.speed = 0.25f;
+	Crouch_hard_kick.loop = false;
 
 	//punch neutral jump
 
@@ -598,6 +661,9 @@ update_status ModuleChunLi::Update()
 						Crouch_punch.Reset();
 						Crouch_medium_punch.Reset();
 						Crouch_hard_punch.Reset();
+						Crouch_kick.Reset();
+						Crouch_medium_kick.Reset();
+						Crouch_hard_kick.Reset();
 						current_animation = &crouch;
 						
 						
@@ -625,6 +691,22 @@ update_status ModuleChunLi::Update()
 					case ST_PUNCH_HARD_CROUCH2:
 
 						current_animation = &Crouch_hard_punch;
+
+						break;
+
+					case ST_KICK_CROUCH2:
+
+						current_animation = &Crouch_kick;
+
+						break;
+					case ST_KICK_MEDIUM_CROUCH2:
+
+						current_animation = &Crouch_medium_kick;
+
+						break;
+					case ST_KICK_HARD_CROUCH2:
+
+						current_animation = &Crouch_hard_kick;
 
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP2:
@@ -1319,8 +1401,11 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			case IN_CROUCH_UP2: state = ST_IDLE2; break;
 			case IN_JUMP_AND_CROUCH2: state = ST_IDLE2; break;
 			case IN_X2: state = ST_PUNCH_CROUCH2; punch_hard_timer = SDL_GetTicks(); break;
+			case IN_C2: state = ST_KICK_CROUCH2; punch_medium_timer = SDL_GetTicks(); break;
 			case IN_1_2: state = ST_PUNCH_MEDIUM_CROUCH2; punch_hard_timer = SDL_GetTicks(); break;
 			case IN_2_2: state = ST_PUNCH_HARD_CROUCH2; punch_hard_timer = SDL_GetTicks(); break;
+			case IN_3_2: state = ST_KICK_MEDIUM_CROUCH2; punch_medium_timer = SDL_GetTicks(); break;
+			case IN_4_2: state = ST_KICK_HARD_CROUCH2; kick_hard_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1355,6 +1440,45 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			switch (last_input)
 			{
 			case IN_PUNCH_HARD_FINISH2:
+				if (IN_CROUCH_DOWN2 == true)
+					state = ST_CROUCH2;
+				else
+					state = ST_IDLE2;
+				break;
+			}
+		}
+		break;
+		case ST_KICK_CROUCH2:
+		{
+			switch (last_input)
+			{
+				case IN_PUNCH_MEDIUM_FINISH2:
+				if (IN_CROUCH_DOWN2 == true)
+					state = ST_CROUCH2;
+				else
+					state = ST_IDLE2;
+				break;
+			}
+		}
+		break;
+		case ST_KICK_MEDIUM_CROUCH2:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_MEDIUM_FINISH2:
+				if (IN_CROUCH_DOWN2 == true)
+					state = ST_CROUCH2;
+				else
+					state = ST_IDLE2;
+				break;
+			}
+		}
+		break;
+		case ST_KICK_HARD_CROUCH2:
+		{
+			switch (last_input)
+			{
+			case IN_KICK_HARD_FINISH2:
 				if (IN_CROUCH_DOWN2 == true)
 					state = ST_CROUCH2;
 				else

@@ -23,7 +23,6 @@
 #define KICK_HARD_TIME2 400
 
 
-
 #define PUNCH_NEUTRAL_JUMP_TIME2 850
 #define HADOUKEN_TIME2 1200
 #define DMG_TIME2 75
@@ -55,6 +54,9 @@ enum ryu_states2
 	ST_PUNCH_CROUCH2,
 	ST_PUNCH_MEDIUM_CROUCH2,
 	ST_PUNCH_HARD_CROUCH2,
+	ST_KICK_CROUCH2,
+	ST_KICK_MEDIUM_CROUCH2,
+	ST_KICK_HARD_CROUCH2,
 	ST_KICK_STANDING2,
 	ST_KICK_MEDIUM_STANDING2,
 	ST_KICK_HARD_STANDING2,
@@ -136,6 +138,10 @@ public:
 	Animation Crouch_punch;
 	Animation Crouch_medium_punch;
 	Animation Crouch_hard_punch;
+
+	Animation Crouch_kick;
+	Animation Crouch_medium_kick;
+	Animation Crouch_hard_kick;
 
 	Animation jump_neutral_punch;
 	Animation jump_forward_punch;
