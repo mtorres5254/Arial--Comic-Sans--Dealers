@@ -65,7 +65,7 @@ public:
 		
 		frames[last_frame] = rect;		
 		pivot[last_frame] = Pivot;
-		damage[last_frame] = dmg*10;
+		damage[last_frame] = dmg*8;
 	
 		maxcolliders[last_frame] = nColliders;
 
