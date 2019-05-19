@@ -971,12 +971,7 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 	if (App->input->keyboard[SDL_SCANCODE_4] == KEY_DOWN) {
 		inputs.Push(IN_4_2);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_5] == KEY_DOWN) {
-		inputs.Push(IN_5_2);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_6] == KEY_DOWN) {
-		inputs.Push(IN_6_2);
-	}
+	
 
 
 
@@ -1324,8 +1319,8 @@ ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
 			case IN_CROUCH_UP2: state = ST_IDLE2; break;
 			case IN_JUMP_AND_CROUCH2: state = ST_IDLE2; break;
 			case IN_X2: state = ST_PUNCH_CROUCH2; punch_hard_timer = SDL_GetTicks(); break;
-			case IN_5_2: state = ST_PUNCH_MEDIUM_CROUCH2; punch_hard_timer = SDL_GetTicks(); break;
-			case IN_6_2: state = ST_PUNCH_HARD_CROUCH2; punch_hard_timer = SDL_GetTicks(); break;
+			case IN_1_2: state = ST_PUNCH_MEDIUM_CROUCH2; punch_hard_timer = SDL_GetTicks(); break;
+			case IN_2_2: state = ST_PUNCH_HARD_CROUCH2; punch_hard_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;

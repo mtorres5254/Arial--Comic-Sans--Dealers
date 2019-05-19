@@ -82,8 +82,6 @@ enum ryu_inputs2
 	IN_2_2,
 	IN_3_2,
 	IN_4_2,
-	IN_5_2,
-	IN_6_2,
 	
 	IN_LIGHTINGKICK2,
 	IN_JUMP_FINISH2,
