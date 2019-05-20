@@ -66,12 +66,39 @@ update_status ModuleCharacterSelection::Update()
 
 	if (map == false)
 	{
-		if (hide == false)
+		if (p1 == true)
+		{
+			App->render->Blit(graphicsUI, -340, 160, &P1Pointer);
+		}
+		else
+		{
+			if (hide == false)
+			{
+				App->render->Blit(graphicsUI, -340, 160, &P1Pointer);
+				hide = true;
+			}
+		}
+
+
+		if (p2 == true)
+		{
+			App->render->Blit(graphicsUI, -340, 160, &P2Pointer);
+		}
+		else
+		{
+			if (hide == true)
+			{
+				App->render->Blit(graphicsUI, -340, 160, &P1Pointer);
+				hide = false;
+			}
+		}
+
+		/*if (hide == false)
 		{
 			App->render->Blit(graphicsUI, -340, 160, &P1Pointer);
 			App->render->Blit(graphicsUI, -340, 160, &P2Pointer);
 			hide = true;
-		}
+		}*/
 			
 	}
 	else
@@ -102,5 +129,12 @@ update_status ModuleCharacterSelection::Update()
 		App->audio->StopMusic(250);
 	}
 
+	////Temporal////
+	if (App->input->keyboard[SDL_SCANCODE_SPACE] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
+		App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
+		App->audio->PlayChunk(start_sound, 0);
+		App->audio->StopMusic(250);
+	}
+	//////////////
 	return UPDATE_CONTINUE;
 }
