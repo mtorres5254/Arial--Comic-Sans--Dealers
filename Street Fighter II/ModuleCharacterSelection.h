@@ -19,12 +19,11 @@ public:
 
 public:
 
-	SDL_Rect Map;
 	SDL_Rect background;
 	SDL_Rect P1Pointer;
 	SDL_Rect P2Pointer;
-	SDL_Rect Cross;
 
+	bool hide = false,map=false,p1=false,p2=false;
 
 	SDL_Texture* graphicsUI = nullptr;
 	SDL_Texture* graphicsBack = nullptr;

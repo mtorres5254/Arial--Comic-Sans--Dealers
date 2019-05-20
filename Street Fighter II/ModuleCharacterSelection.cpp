@@ -18,18 +18,17 @@ ModuleCharacterSelection::ModuleCharacterSelection()
 	background.h = SCREEN_HEIGHT;
 	background.w = SCREEN_WIDTH;
 
-	//Map
-	Map.x = 53;
-	Map.y = 777;
-	Map.w = 1302;
-	Map.h = 73;
-
-
 	//P2Pointer
-
+	P2Pointer.x = 395;
+	P2Pointer.y = 311;
+	P2Pointer.w = 87;
+	P2Pointer.h = 133;
 
 	//P1Pointer
-
+	P1Pointer.x = 160;
+	P1Pointer.y = 311;
+	P1Pointer.w = 87;
+	P1Pointer.h = 133;
 }
 
 ModuleCharacterSelection::~ModuleCharacterSelection()
@@ -63,15 +62,45 @@ bool ModuleCharacterSelection::CleanUp()
 
 update_status ModuleCharacterSelection::Update()
 {
-
 	App->render->Blit(graphicsBack, 0, 0, &background);
-	App->render->Blit(graphicsUI, -340, 160, &Map);
 
-	/*if (App->input->keyboard[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_START] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_START] == KEY_DOWN) {
+	if (map == false)
+	{
+		if (hide == false)
+		{
+			App->render->Blit(graphicsUI, -340, 160, &P1Pointer);
+			App->render->Blit(graphicsUI, -340, 160, &P2Pointer);
+			hide = true;
+		}
+			
+	}
+	else
+	{
+		if (hide == false)
+		{
+			App->render->Blit(graphicsUI, -340, 160, &P1Pointer);
+			hide = true;
+		}	
+	}
+	
+	if (p1 == true && p2 == true)
+	{
+		map = true;
+	}
+
+	if (App->input->keyboard[SDL_SCANCODE_F11] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
+		p1 = true;
+	}
+
+	if (App->input->keyboard[SDL_SCANCODE_F12] == KEY_DOWN  || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
+		p2 = true;
+	}
+
+	if ((App->input->keyboard[SDL_SCANCODE_SPACE] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) && map==true) {		
 		App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
 		App->audio->PlayChunk(start_sound, 0);
 		App->audio->StopMusic(250);
-	}*/
+	}
 
 	return UPDATE_CONTINUE;
 }
