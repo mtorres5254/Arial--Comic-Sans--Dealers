@@ -19,8 +19,15 @@ public:
 
 public:
 
-	SDL_Texture * graphics = nullptr;
+	SDL_Rect Map;
 	SDL_Rect background;
+	SDL_Rect P1Pointer;
+	SDL_Rect P2Pointer;
+	SDL_Rect Cross;
+
+
+	SDL_Texture* graphicsUI = nullptr;
+	SDL_Texture* graphicsBack = nullptr;
 	Mix_Music* music;
 	Mix_Chunk* start_sound;
 };
