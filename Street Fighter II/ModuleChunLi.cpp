@@ -484,8 +484,8 @@ bool ModuleChunLi::CleanUp()
 update_status ModuleChunLi::Update()
 {
 	Animation* current_animation = &idle;
-	p2Qeue<ryu_inputs2> inputs;
-	ryu_states2 current_state = ST_UNKNOWN2;
+	p2Qeue<chunli_inputs2> inputs;
+	chunli_states2 current_state = ST_UNKNOWN2;
 	
 	positionlimits();
 
@@ -941,7 +941,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
 }
 
-bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
+bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 {
 	static bool left = false;
 	static bool right = false;
@@ -1125,7 +1125,7 @@ bool ModuleChunLi::external_input(p2Qeue<ryu_inputs2>& inputs)
 	return true;
 }
 
-void ModuleChunLi::internal_input(p2Qeue<ryu_inputs2>& inputs)
+void ModuleChunLi::internal_input(p2Qeue<chunli_inputs2>& inputs)
 {
 	if (jump_timer > 0)
 	{
@@ -1232,10 +1232,10 @@ void ModuleChunLi::ResetPlayer() {
 	}
 }
 
-ryu_states2 ModuleChunLi:: process_fsm(p2Qeue<ryu_inputs2>& inputs)
+chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 {
-	static ryu_states2 state = ST_IDLE2;
-	ryu_inputs2 last_input;
+	static chunli_states2 state = ST_IDLE2;
+	chunli_inputs2 last_input;
 
 	while (inputs.Pop(last_input))
 	{
