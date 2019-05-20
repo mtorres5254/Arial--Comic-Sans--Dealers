@@ -36,7 +36,7 @@ struct SDL_Texture;
 
 
 
-enum ryu_states2
+enum chunli_states2
 {
 	ST_UNKNOWN2,
 
@@ -66,7 +66,7 @@ enum ryu_states2
 	ST_PUNCH_HARD2,
 };
 
-enum ryu_inputs2
+enum chunli_inputs2
 {
 	IN_LEFT_DOWN2,
 	IN_LEFT_UP2,
@@ -106,9 +106,9 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void OnCollision(Collider*, Collider*);
-	void internal_input(p2Qeue<ryu_inputs2>&);
-	bool external_input(p2Qeue<ryu_inputs2>&);
-	ryu_states2 process_fsm(p2Qeue<ryu_inputs2>& inputs);
+	void internal_input(p2Qeue<chunli_inputs2>&);
+	bool external_input(p2Qeue<chunli_inputs2>&);
+	chunli_states2 process_fsm(p2Qeue<chunli_inputs2>& inputs);
 	void ResetPlayer();
 	void lifecondition(Animation*);
 	void colliders_and_blit(Animation*);
@@ -181,7 +181,7 @@ public:
 
 	bool move = true;
 	int lkcounter = 0;
-	ryu_states2 state;
+	chunli_states2 state;
 
 	Uint32 punch_hard_timer = 0;
 	Uint32 punch_medium_timer = 0;
