@@ -113,7 +113,8 @@ public:
 	void lifecondition(Animation*);
 	void colliders_and_blit(Animation*);
 	void positionlimits();
-	
+	void resetanimations();
+
 public:
 
 	SDL_Texture* graphics = nullptr;
