@@ -18,6 +18,7 @@
 #include "ModuleSceneDhalsim.h"
 #include "ModuleCombos.h"
 #include "ModuleSlowdown.h"
+#include "ModuleCharacterSelection.h"
 
 Application::Application()
 {
@@ -39,6 +40,7 @@ Application::Application()
 	modules[15] = lose_scene = new ModuleLoseScene();
 	modules[16] = font = new ModuleFont();
 	modules[17] = slow = new ModuleSlowdown();
+	modules[17] = selectionScene = new ModuleCharacterSelection();
 	
 }	
 
@@ -61,6 +63,7 @@ bool Application::Init()
 	congrats_screen->Disable();
 	collision->Disable();
 	UI->Disable();
+	selectionScene->Disable();
 
 	for(int i = 0; i < NUM_MODULES && ret == true; ++i)
 		ret = modules[i]->Init();
