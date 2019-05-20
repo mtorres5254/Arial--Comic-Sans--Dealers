@@ -468,6 +468,34 @@ update_status ModuleChunLi2::Update()
 
 
 						break;
+
+					case ST_PUNCH_MEDIUM_CROUCH:
+
+						current_animation = &Crouch_punch;
+
+						break;
+
+					case ST_PUNCH_HARD_CROUCH:
+
+						current_animation = &Crouch_punch;
+
+						break;
+
+					case ST_KICK_CROUCH:
+
+						current_animation = &Crouch_punch;
+
+						break;
+					case ST_KICK_MEDIUM_CROUCH:
+
+						current_animation = &Crouch_punch;
+
+						break;
+					case ST_KICK_HARD_CROUCH:
+
+						current_animation = &Crouch_punch;
+
+						break;
 					case ST_PUNCH_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_punch;
@@ -563,6 +591,28 @@ update_status ModuleChunLi2::Update()
 						current_animation = &kick;
 
 						break;
+
+					case ST_PUNCH_MEDIUM:
+						current_animation = &kick;
+						break;
+
+					case ST_PUNCH_HARD:
+
+						current_animation = &kick;
+						break;
+
+					case ST_KICK_MEDIUM_STANDING:
+
+						current_animation = &kick;
+
+						break;
+
+					case ST_KICK_HARD_STANDING:
+
+						current_animation = &kick;
+
+						break;
+
 					case ST_LIGHTNINGKICK:
 
 						current_animation = &LightningKick;
@@ -679,10 +729,8 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 
 
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER && (state == ST_JUMP_BACKWARD || state == ST_JUMP_FORWARD || state == ST_JUMP_NEUTRAL)) {
-
-		
-
-		speedX = -1;
+				
+		//speedX = -1;
 	}
 
 
@@ -730,6 +778,24 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	if (App->input->keyboard[SDL_SCANCODE_L] == KEY_UP) {
 		return false;
 	}
+	if (App->input->keyboard[SDL_SCANCODE_1] == KEY_UP) {
+		return false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_2] == KEY_UP) {
+		return false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_3] == KEY_UP) {
+		return false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_4] == KEY_UP) {
+		return false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_5] == KEY_UP) {
+		return false;
+	}
+	if (App->input->keyboard[SDL_SCANCODE_6] == KEY_UP) {
+		return false;
+	}
 
 	//Key down
 
@@ -754,6 +820,19 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	if (App->input->keyboard[SDL_SCANCODE_L] == KEY_DOWN) {
 		inputs.Push(IN_LIGHTINGKICK);
 	}
+	if (App->input->keyboard[SDL_SCANCODE_7] == KEY_DOWN) {
+		inputs.Push(IN_1);
+	}
+	if (App->input->keyboard[SDL_SCANCODE_8] == KEY_DOWN) {
+		inputs.Push(IN_2);
+	}
+	if (App->input->keyboard[SDL_SCANCODE_9] == KEY_DOWN) {
+		inputs.Push(IN_3);
+	}
+	if (App->input->keyboard[SDL_SCANCODE_0] == KEY_DOWN) {
+		inputs.Push(IN_4);
+	}
+
 
 
 
@@ -831,7 +910,7 @@ void ModuleChunLi2::internal_input(p2Qeue<chunli_inputs>& inputs)
 {
 	if (jump_timer > 0)
 	{
-		if (SDL_GetTicks() - jump_timer > JUMP_TIME2)
+		if (SDL_GetTicks() - jump_timer > JUMP_TIME)
 		{
 			inputs.Push(IN_JUMP_FINISH);
 			jump_timer = 0;
@@ -841,7 +920,7 @@ void ModuleChunLi2::internal_input(p2Qeue<chunli_inputs>& inputs)
 
 	if (punch_timer > 0)
 	{
-		if (SDL_GetTicks() - punch_timer > PUNCH_TIME2)
+		if (SDL_GetTicks() - punch_timer > PUNCH_TIME)
 		{
 			inputs.Push(IN_PUNCH_FINISH);
 			punch_timer = 0;
@@ -850,28 +929,55 @@ void ModuleChunLi2::internal_input(p2Qeue<chunli_inputs>& inputs)
 
 	if (kick_timer > 0)
 	{
-		if (SDL_GetTicks() - kick_timer > KICK_TIME2)
+		if (SDL_GetTicks() - kick_timer > KICK_TIME)
 		{
 			inputs.Push(IN_KICK_FINISH);
 			kick_timer = 0;
 		}
 	}
 
-	if (hadouken_timer > 0)
-	{
-		if (SDL_GetTicks() - hadouken_timer > HADOUKEN_TIME2)
-		{
-			inputs.Push(IN_LIGHTNINGKICK_FINISH);
-			hadouken_timer = 0;
-		}
-	}
 
 	if (punch_neutral_jump_timer > 0)
 	{
-		if (SDL_GetTicks() - punch_neutral_jump_timer > PUNCH_NEUTRAL_JUMP_TIME2)
+		if (SDL_GetTicks() - punch_neutral_jump_timer > PUNCH_NEUTRAL_JUMP_TIME)
 		{
 			inputs.Push(IN_PUNCH_FINISH);
 			punch_neutral_jump_timer = 0;
+		}
+	}
+	if (punch_medium_timer > 0)
+	{
+		if (SDL_GetTicks() - punch_medium_timer > PUNCH_MEDIUM_TIME)
+		{
+			inputs.Push(IN_PUNCH_MEDIUM_FINISH);
+			punch_medium_timer = 0;
+		}
+	}
+
+	if (punch_hard_timer > 0)
+	{
+		if (SDL_GetTicks() - punch_hard_timer > PUNCH_HARD_TIME)
+		{
+			inputs.Push(IN_PUNCH_HARD_FINISH);
+			punch_hard_timer = 0;
+		}
+	}
+
+	if (kick_medium_timer > 0)
+	{
+		if (SDL_GetTicks() - kick_medium_timer > KICK_MEDIUM_TIME)
+		{
+			inputs.Push(IN_KICK_MEDIUM_FINISH);
+			kick_medium_timer = 0;
+		}
+	}
+
+	if (kick_hard_timer > 0)
+	{
+		if (SDL_GetTicks() - kick_hard_timer > KICK_HARD_TIME)
+		{
+			inputs.Push(IN_KICK_HARD_FINISH);
+			kick_hard_timer = 0;
 		}
 	}
 }
@@ -909,6 +1015,10 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 			case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
 			case IN_C: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
 			case IN_LIGHTINGKICK: state = ST_LIGHTNINGKICK; hadouken_timer = SDL_GetTicks(); break;
+			case IN_1: state = ST_PUNCH_MEDIUM; punch_medium_timer = SDL_GetTicks(); break;
+			case IN_2: state = ST_PUNCH_HARD; punch_hard_timer = SDL_GetTicks(); break;
+			case IN_3: state = ST_KICK_MEDIUM_STANDING; kick_medium_timer = SDL_GetTicks(); break;
+			case IN_4: state = ST_KICK_HARD_STANDING; kick_hard_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -924,6 +1034,10 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 			case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
 			case IN_C: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
 			case IN_LIGHTINGKICK: state = ST_LIGHTNINGKICK; hadouken_timer = SDL_GetTicks(); break;
+			case IN_1: state = ST_PUNCH_MEDIUM; punch_medium_timer = SDL_GetTicks(); break;
+			case IN_2: state = ST_PUNCH_HARD; punch_hard_timer = SDL_GetTicks(); break;
+			case IN_3: state = ST_KICK_MEDIUM_STANDING; kick_medium_timer = SDL_GetTicks(); break;
+			case IN_4: state = ST_KICK_HARD_STANDING; kick_hard_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -939,6 +1053,10 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 			case IN_X: state = ST_PUNCH_STANDING; punch_timer = SDL_GetTicks();  break;
 			case IN_C: state = ST_KICK_STANDING; kick_timer = SDL_GetTicks(); break;
 			case IN_LIGHTINGKICK: state = ST_LIGHTNINGKICK; hadouken_timer = SDL_GetTicks(); break;
+			case IN_1: state = ST_PUNCH_MEDIUM; punch_medium_timer = SDL_GetTicks(); break;
+			case IN_2: state = ST_PUNCH_HARD; punch_hard_timer = SDL_GetTicks(); break;
+			case IN_3: state = ST_KICK_MEDIUM_STANDING; kick_medium_timer = SDL_GetTicks(); break;
+			case IN_4: state = ST_KICK_HARD_STANDING; kick_hard_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1019,6 +1137,10 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 			case IN_CROUCH_UP: state = ST_IDLE; break;
 			case IN_JUMP_AND_CROUCH: state = ST_IDLE; break;
 			case IN_X: state = ST_PUNCH_CROUCH; punch_timer = SDL_GetTicks(); break;
+			case IN_1: state = ST_PUNCH_MEDIUM_CROUCH; punch_hard_timer = SDL_GetTicks(); break;
+			case IN_2: state = ST_PUNCH_HARD_CROUCH; punch_hard_timer = SDL_GetTicks(); break;
+			case IN_3: state = ST_KICK_MEDIUM_CROUCH; punch_medium_timer = SDL_GetTicks(); break;
+			case IN_4: state = ST_KICK_HARD_CROUCH; kick_hard_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1035,12 +1157,115 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 			}
 		}
 		break;
+		case ST_PUNCH_MEDIUM_CROUCH:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_HARD_FINISH:
+				if (IN_CROUCH_DOWN == true)
+					state = ST_CROUCH;
+				else
+					state = ST_IDLE;
+				break;
+			}
+		}
+		break;
+		case ST_PUNCH_HARD_CROUCH:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_HARD_FINISH:
+				if (IN_CROUCH_DOWN == true)
+					state = ST_CROUCH;
+				else
+					state = ST_IDLE;
+				break;
+			}
+		}
+		break;
+		case ST_KICK_CROUCH:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_MEDIUM_FINISH:
+				if (IN_CROUCH_DOWN == true)
+					state = ST_CROUCH;
+				else
+					state = ST_IDLE;
+				break;
+			}
+		}
+		break;
+		case ST_KICK_MEDIUM_CROUCH:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_MEDIUM_FINISH:
+				if (IN_CROUCH_DOWN == true)
+					state = ST_CROUCH;
+				else
+					state = ST_IDLE;
+				break;
+			}
+		}
+		break;
+		case ST_KICK_HARD_CROUCH:
+		{
+			switch (last_input)
+			{
+			case IN_KICK_HARD_FINISH:
+				if (IN_CROUCH_DOWN == true)
+					state = ST_CROUCH;
+				else
+					state = ST_IDLE;
+				break;
+			}
+		}
+		break;
 		case ST_KICK_STANDING:
 		{
 			switch (last_input)
 			{
 			case IN_KICK_FINISH: state = ST_IDLE; break;
 			}
+		}
+		break;
+		case ST_KICK_MEDIUM_STANDING:
+		{
+			switch (last_input)
+			{
+			case IN_KICK_MEDIUM_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+
+		case ST_KICK_HARD_STANDING:
+		{
+			switch (last_input)
+			{
+			case IN_KICK_HARD_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+
+		case ST_PUNCH_MEDIUM:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_MEDIUM_FINISH: state = ST_IDLE; break;
+			}
+
+		}
+		break;
+
+
+		case ST_PUNCH_HARD:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_HARD_FINISH: state = ST_IDLE; break;
+			}
+
 		}
 		break;
 		case ST_LIGHTNINGKICK:
