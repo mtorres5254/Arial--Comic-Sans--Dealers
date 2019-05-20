@@ -23,12 +23,14 @@ public:
 	SDL_Rect P1Pointer;
 	SDL_Rect P2Pointer;
 
-	bool hide = false,map=false,p1=false,p2=false;
+	bool map=false,p1=false,p2=false;
 
-	SDL_Texture* graphicsUI = nullptr;
-	SDL_Texture* graphicsBack = nullptr;
+	SDL_Texture* graphics = nullptr;
 	Mix_Music* music;
 	Mix_Chunk* start_sound;
+
+private:
+	int frame=0;
 };
 
 #endif 
