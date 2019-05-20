@@ -528,21 +528,8 @@ update_status ModuleChunLi::Update()
 					case ST_IDLE2:
 						
 						current_animation = &idle;
+						resetanimations();
 						crouch.Reset();
-						jump_neutral.Reset();
-						jump_forward.Reset();
-						jump_backwards.Reset();
-						punch.Reset();
-						jump_neutral_punch.Reset();
-						jump_backward_punch.Reset();
-						jump_forward_punch.Reset();
-						Crouch_punch.Reset();	
-						kick.Reset();
-						LightningKick.Reset();
-						punch_medium.Reset();
-						punch_hard.Reset();
-						kick_medium.Reset();
-						kick_hard.Reset();
 						move = true;
 						
 
@@ -551,11 +538,7 @@ update_status ModuleChunLi::Update()
 					case ST_WALK_FORWARD2:
 
 						current_animation = &forward;
-						punch.Reset();
-						punch_medium.Reset();
-						punch_hard.Reset();
-						kick_medium.Reset();
-						kick_hard.Reset();
+						resetanimations();
 
 						if(move)
 						position.x += speedX;
@@ -564,11 +547,7 @@ update_status ModuleChunLi::Update()
 					case ST_WALK_BACKWARD2:
 
 						current_animation = &backward;
-						punch.Reset();
-						punch_medium.Reset();
-						punch_hard.Reset();
-						kick_medium.Reset();
-						kick_hard.Reset();
+						resetanimations();
 
 						if(move)
 						position.x -= speedX;
@@ -658,12 +637,7 @@ update_status ModuleChunLi::Update()
 						break;
 					case ST_CROUCH2:
 
-						Crouch_punch.Reset();
-						Crouch_medium_punch.Reset();
-						Crouch_hard_punch.Reset();
-						Crouch_kick.Reset();
-						Crouch_medium_kick.Reset();
-						Crouch_hard_kick.Reset();
+						resetanimations();
 						current_animation = &crouch;
 						
 						
@@ -1651,4 +1625,30 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 		}
 
 	}
+}
+
+void ModuleChunLi::resetanimations() {
+
+
+	
+	jump_neutral.Reset();
+	jump_forward.Reset();
+	jump_backwards.Reset();
+	punch.Reset();
+	jump_neutral_punch.Reset();
+	jump_backward_punch.Reset();
+	jump_forward_punch.Reset();
+	Crouch_punch.Reset();
+	kick.Reset();
+	LightningKick.Reset();
+	punch_medium.Reset();
+	punch_hard.Reset();
+	kick_medium.Reset();
+	kick_hard.Reset();
+	Crouch_punch.Reset();
+	Crouch_medium_punch.Reset();
+	Crouch_hard_punch.Reset();
+	Crouch_kick.Reset();
+	Crouch_medium_kick.Reset();
+	Crouch_hard_kick.Reset();
 }
