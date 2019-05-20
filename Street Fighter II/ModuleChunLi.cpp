@@ -213,10 +213,9 @@ bool ModuleChunLi::Start()
 	punch_hard.PushBack1({ 876, 541, 119, 79 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 16);
 	punch_hard.PushBack1({ 0, 643, 130, 76 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 16);
 	punch_hard.PushBack1({ 0, 643, 130, 76 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 16);
-
 	punch_hard.PushBack1({ 876, 541, 119, 79 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 16);
 	punch_hard.PushBack1({ 774, 536, 101, 84 }, { 32,2 }, punchhcollider2, punchhhitbox2, punchhCollType2, punchhCallback2, 16);
-	punch_hard.speed = 0.3f;
+	punch_hard.speed = 0.2f;
 	punch_hard.loop = false;	
 	
 
@@ -269,12 +268,11 @@ bool ModuleChunLi::Start()
 	kick_hard.PushBack1({ 552, 627, 70, 92 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
 	kick_hard.PushBack1({ 623,629,82,90 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
 	kick_hard.PushBack1({ 706,622,123,97 }, { 32,2 }, kickcollider4, kickhitbox4, kickCollType4, kickCallback4, 16);
-	kick_hard.PushBack1({ 706,622,123,97 }, { 32,2 }, kickcollider4, kickhitbox4, kickCollType4, kickCallback4, 16);
-	kick_hard.PushBack1({ 706,622,123,97 }, { 32,2 }, kickcollider4, kickhitbox4, kickCollType4, kickCallback4, 16);
+
 	kick_hard.PushBack1({ 830,636,102,83 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
 	kick_hard.PushBack1({ 933, 638, 70, 81 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
 	
-	kick_hard.speed = 0.32f;
+	kick_hard.speed = 0.15f;
 	kick_hard.loop = false;
 
 	
@@ -922,7 +920,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 	}	
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && (state == ST_JUMP_BACKWARD2 || state == ST_JUMP_FORWARD2 || state == ST_JUMP_NEUTRAL2)) {
-		speedX = -1;
+		//speedX = -1;
 	}
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY_SHOT)
@@ -1190,14 +1188,7 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs2>& inputs)
 			punch_hard_timer = 0;
 		}
 	}
-	if (punch_hard_timer > 0)
-	{
-		if (SDL_GetTicks() - punch_hard_timer > PUNCH_HARD_TIME2)
-		{
-			inputs.Push(IN_PUNCH_HARD_FINISH2);
-			punch_hard_timer = 0;
-		}
-	}
+
 	if (kick_medium_timer > 0)
 	{
 		if (SDL_GetTicks() - kick_medium_timer > KICK_MEDIUM_TIME2)

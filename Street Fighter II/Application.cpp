@@ -40,7 +40,7 @@ Application::Application()
 	modules[15] = lose_scene = new ModuleLoseScene();
 	modules[16] = font = new ModuleFont();
 	modules[17] = slow = new ModuleSlowdown();
-	modules[17] = selectionScene = new ModuleCharacterSelection();
+	modules[18] = selectionScene = new ModuleCharacterSelection();
 	
 }	
 

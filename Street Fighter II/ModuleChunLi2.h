@@ -12,11 +12,20 @@
 
 
 
-#define JUMP_TIME2 850
-#define PUNCH_TIME2 150
-#define PUNCH_NEUTRAL_JUMP_TIME2 850
-#define KICK_TIME2 400
-#define HADOUKEN_TIME2 1200
+#define JUMP_TIME 850
+
+#define PUNCH_TIME 150
+#define PUNCH_MEDIUM_TIME 200
+#define PUNCH_HARD_TIME 500
+
+#define KICK_TIME 200
+#define KICK_MEDIUM_TIME 400
+#define KICK_HARD_TIME 500
+
+
+#define PUNCH_NEUTRAL_JUMP_TIME 850
+#define HADOUKEN_TIME 1200
+#define DMG_TIME 75
 
 #define MAX_FRAME_COLLIDERS 6
 
@@ -40,9 +49,18 @@ enum chunli_states
 	ST_PUNCH_FORWARD_JUMP,
 	ST_PUNCH_BACKWARD_JUMP,
 	ST_PUNCH_CROUCH,
+	ST_PUNCH_MEDIUM_CROUCH,
+	ST_PUNCH_HARD_CROUCH,
+	ST_KICK_CROUCH,
+	ST_KICK_MEDIUM_CROUCH,
+	ST_KICK_HARD_CROUCH,
 	ST_KICK_STANDING,
+	ST_KICK_MEDIUM_STANDING,
+	ST_KICK_HARD_STANDING,
 	ST_LIGHTNINGKICK,
 	ST_RECEIVED_PUNCH,
+	ST_PUNCH_MEDIUM,
+	ST_PUNCH_HARD,
 };
 
 enum chunli_inputs
@@ -56,12 +74,22 @@ enum chunli_inputs
 	IN_CROUCH_UP,
 	IN_CROUCH_DOWN,
 	IN_JUMP_AND_CROUCH,
+
 	IN_X,
 	IN_C,
+	IN_1,
+	IN_2,
+	IN_3,
+	IN_4,
+
 	IN_LIGHTINGKICK,
 	IN_JUMP_FINISH,
 	IN_PUNCH_FINISH,
+	IN_PUNCH_MEDIUM_FINISH,
+	IN_PUNCH_HARD_FINISH,
 	IN_KICK_FINISH,
+	IN_KICK_MEDIUM_FINISH,
+	IN_KICK_HARD_FINISH,
 	IN_LIGHTNINGKICK_FINISH,
 	IN_RECEIVED_PUNCH,
 };
@@ -139,6 +167,12 @@ public:
 
 	chunli_states state;
 
+
+
+	Uint32 punch_hard_timer = 0;
+	Uint32 punch_medium_timer = 0;
+	Uint32 kick_medium_timer = 0;
+	Uint32 kick_hard_timer = 0;
 	Uint32 jump_timer = 0;
 	Uint32 punch_timer = 0;
 	Uint32 kick_timer = 0;
