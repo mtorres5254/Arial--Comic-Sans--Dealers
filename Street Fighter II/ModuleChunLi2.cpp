@@ -1541,7 +1541,7 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 			DeathCount = 0;
 			Death.Reset();
 			App->render->camera.x = 0;
-
+			App->UI->Resultinfo = 0;
 			ActiveDeath = 1;
 			ResetPlayer();
 

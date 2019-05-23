@@ -82,9 +82,7 @@ bool ModuleUI::Start()
 	timenow = SDL_GetTicks();
 	time = 99;
 	Counter1 = 9; //unit
-	Counter2 = 9; //decimal
-
-	round = 1;
+	Counter2 = 9; //tens
 	
 	return ret;
 }
@@ -127,7 +125,11 @@ update_status ModuleUI:: Update()
 	if (Historyinfo == true) {
 		HistoryDebug();
 	}
-
+	/*
+	if (Round_Start == true) {
+		Rounds();
+	}
+	*/
 	if (Resultinfo >= 0) {
 		Result();
 	}
@@ -315,5 +317,19 @@ void ModuleUI::Result() {
 		break;
 	}
 
+}
+
+void ModuleUI::Rounds() {
+	/*
+	if (App->chunli->victorycount == 0 && App->chunli2->victorycount == 0)
+	    App->font->BlitText(SCREEN_WIDTH / 2 - 45, 75, font_Rounds, "r 1");
+
+	if ((App->chunli->victorycount == 1 && App->chunli2->victorycount == 0)|| (App->chunli->victorycount == 0 && App->chunli2->victorycount == 1))
+		App->font->BlitText(SCREEN_WIDTH / 2 - 45, 75, font_Rounds, "r 2");
+	
+	if (App->chunli->victorycount == 1 && App->chunli2->victorycount == 1)
+	    App->font->BlitText(SCREEN_WIDTH / 2 - 45, 75, font_Rounds, "r 3");
+		*/
+	
 }
 

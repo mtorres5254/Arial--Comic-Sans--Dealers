@@ -30,7 +30,7 @@ public:
 	bool CleanUp();
 
 	void Counter();
-	// void Rounds();
+	void Rounds();
 	void Result();
 	void GamepadDebug();
 	void HistoryDebug();
@@ -60,11 +60,11 @@ public:
 	int Counter1;
 	int Counter2;
 	int timenow;
-	int round;
 
+	
 	bool GamepadInfo = false;
 	bool Historyinfo = false;
-	
+	bool Round_Start = false;
 	int Resultinfo = -1;
 
 	Mix_Chunk* VoiceRound;
