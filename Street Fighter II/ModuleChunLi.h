@@ -152,6 +152,7 @@ public:
 	Animation LightningKick;
 	Animation Death;
 	Animation damage;
+	Animation damage2;
 	Animation victory;
 	Animation victory1;
 	iPoint position;

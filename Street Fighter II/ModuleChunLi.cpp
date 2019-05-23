@@ -427,13 +427,13 @@ bool ModuleChunLi::Start()
 	SDL_Rect lkhitbox2[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {90,42,51,25} };
 	SDL_Rect lkhitbox3[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {48,4,83,29} };
 
-	LightningKick.PushBack1({ 1537, 226, 107, 99}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 11);
+	LightningKick.PushBack1({ 1537, 226, 107, 99}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 15);
 	LightningKick.PushBack1({ 1645,222 , 123, 103}, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
-	LightningKick.PushBack1({ 1769, 230, 119, 95}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 11);
+	LightningKick.PushBack1({ 1769, 230, 119, 95}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 15);
 	LightningKick.PushBack1({ 1889, 230, 136,95 }, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
-	LightningKick.PushBack1({ 1025, 355, 120, 93}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 11);
+	LightningKick.PushBack1({ 1025, 355, 120, 93}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 15);
 	LightningKick.PushBack1({ 1146, 353, 152, 95}, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
-	LightningKick.PushBack1({ 1300, 355, 101, 93 }, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 11);
+	LightningKick.PushBack1({ 1300, 355, 101, 93 }, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 15);
 	LightningKick.speed = 0.2f;
 	LightningKick.loop = true;
 
@@ -449,9 +449,16 @@ bool ModuleChunLi::Start()
 	damage.PushBack1({ 1465, 458, 76, 87}, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage.PushBack1({ 1542, 462, 72, 83}, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage.speed = 0.2f;
-	damage.loop = false;
+	damage.loop = true;
 	
-		
+	//damage animation 
+
+	damage2.PushBack1({ 1804,453,73,92 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage2.PushBack1({ 1878, 453, 76, 92 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage2.PushBack1({ 1024, 547, 102, 84 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage2.speed = 0.2f;
+	damage2.loop = false;
+
 	//Start functions to reset player
 	ResetPlayer();
 	Death.Reset();
@@ -504,19 +511,21 @@ update_status ModuleChunLi::Update()
 			if (state != current_state)
 			{
 				lifecondition(current_animation);
-
+				
 				if (damage_received == true) {
+					current_animation = &damage2;
+					position.y = 220;
 
-
-	
-					current_animation = &damage;
-
-					//if (SDL_GetTicks() - dmg_timer = DMG_TIME2) {
-						//damage_received = false;
-					//}
+					if (current_animation->current_frame != 0)
+					{
+						if (position.x > App->chunli2->position.x)
+							position.x += 2;
+						else
+							position.x -= 2;
+					}
+						
 
 				}
-			
 
 				if (life > 0 && damage_received == false && App->chunli2->life > 0 ) {
 
@@ -1597,20 +1606,22 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 
 
 		}
-		if (acumdamage >= 0 && acumdamage < 60 && life > 0) {
+		if (acumdamage >= 0 && acumdamage < 20 && life > 0) {
 
 
 			current_animation = &damage;
 			acumdamage++;
 		}
 
-		if (acumdamage == 60 && life > 0) {
+		if (acumdamage == 20 && life > 0) {
 
 			acumdamage = 0;
 
 			damage.Reset();
 
 			damage_received = false;
+
+			
 
 
 		}
@@ -1642,4 +1653,5 @@ void ModuleChunLi::resetanimations() {
 	Crouch_kick.Reset();
 	Crouch_medium_kick.Reset();
 	Crouch_hard_kick.Reset();
+	damage2.Reset();
 }

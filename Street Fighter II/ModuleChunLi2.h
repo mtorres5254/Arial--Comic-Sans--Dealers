@@ -110,6 +110,7 @@ public:
 	void lifecondition(Animation*);
 	void colliders_and_blit(Animation*);
 	void positionlimits();
+	void resetanimations();
 
 public:
 
@@ -120,25 +121,39 @@ public:
 	Animation forward;
 	Animation backward;
 	Animation punch;
+	Animation punch_medium;
+	Animation punch_hard;
+
 	Animation kick;
+	Animation kick_medium;
+	Animation kick_hard;
 
 	Animation crouch;
 	Animation jump_neutral;
+
 	Animation jump_backwards;
 	Animation jump_forward;
 
 	Animation Crouch_punch;
+	Animation Crouch_medium_punch;
+	Animation Crouch_hard_punch;
+
+	Animation Crouch_kick;
+	Animation Crouch_medium_kick;
+	Animation Crouch_hard_kick;
+
 	Animation jump_neutral_punch;
 	Animation jump_forward_punch;
 	Animation jump_backward_punch;
-	
+
+	Animation damage2;
+	Animation LightningKick_startup;
+	Animation LightningKick;
 	Animation Death;
 	Animation damage;
 	Animation victory;
 	Animation victory1;
 	iPoint position;
-
-	Animation LightningKick;
 	Collider* colliders[MAX_COLLIDERS];
 
 	int acumvictory = 0;
