@@ -10,7 +10,7 @@
 #include "ModuleSceneDhalsim.h"
 
 /*
- *Render is not scaling background -> solve 
+ *Image dimensions are not being selected correctly
 */
 
 ModuleCharacterSelection::ModuleCharacterSelection()
@@ -18,20 +18,20 @@ ModuleCharacterSelection::ModuleCharacterSelection()
 	//Background
 	background.x = 0;
 	background.y = 0;
-	background.h = 705;//705
-	background.w = 934;//934
+	background.h = SCREEN_HEIGHT;
+	background.w = SCREEN_WIDTH;
 
 	//P1Pointer
-	P1Pointer.x = 332;
-	P1Pointer.y = 706;
-	P1Pointer.w = 87;
-	P1Pointer.h = 133;
+	P1Pointer.x = 14;
+	P1Pointer.y = 7;
+	P1Pointer.w = 38;
+	P1Pointer.h = 45;
 
 	//P2Pointer
-	P2Pointer.x = 519;
-	P2Pointer.y = 706;
-	P2Pointer.w = 87;
-	P2Pointer.h = 133;
+	P2Pointer.x = 63;
+	P2Pointer.y = 50;
+	P2Pointer.w = 38;
+	P2Pointer.h = 45;
 }
 
 ModuleCharacterSelection::~ModuleCharacterSelection()
@@ -42,7 +42,8 @@ bool ModuleCharacterSelection::Start()
 {
 	LOG("Loading characters selection");
 
-	graphics = App->textures->Load("Assets/Images/Player_Select.png");
+	graphics = App->textures->Load("Assets/Images/Player_Select.png"); 
+	ui = App->textures->Load("Assets/Images/PlayerSelector.png");
 	music = App->audio->LoadMusic("Assets/Sound/Musics/start_music.ogg");
 	App->audio->PlayMusic(music, 300);
 	start_sound = App->audio->LoadChunk("Assets/Sound/start_sound.wav");
@@ -63,44 +64,44 @@ bool ModuleCharacterSelection::CleanUp()
 
 update_status ModuleCharacterSelection::Update()
 {
-	App->render->Blit(graphics, 0, 0, &background);
+	App->render->Blit(graphics, 0, 0, &background,0,0);
 
 	if (map == false)
 	{
 		if (p1 == true)
 		{
-			App->render->Blit(graphics, 100, 100, &P1Pointer);
+			App->render->Blit(ui, 157, 175, &P1Pointer,0,0);
 		}
 		else
 		{
-			if (frame == 3)
+			if (frame == 4)
 			{
-				App->render->Blit(graphics, 100, 100, &P1Pointer);				
+				App->render->Blit(ui, 157, 175, &P1Pointer,0,0);				
 			}
 		}
 
 
 		if (p2 == true)
 		{
-			App->render->Blit(graphics, 100, 150, &P2Pointer);
+			App->render->Blit(ui, 157, 175, &P2Pointer,0,0);
 		}
 		else
 		{
-			if (frame == 3)
+			if (frame == 4)
 			{
-				App->render->Blit(graphics, 130, 100, &P2Pointer);
+				App->render->Blit(ui, 157, 175, &P2Pointer,0,0);
 			}
 		}	
 	}
 	else
 	{
-		if (frame == 3)
+		if (frame == 4)
 		{
-			App->render->Blit(graphics, 150, 100, &P1Pointer);
+			App->render->Blit(ui, 123, 50, &P1Pointer,0,0);
 			frame = 0;
 		}	
 	}
-	if (frame == 3) frame = 0;
+	if (frame == 4) frame = 0;
 	frame++;
 	
 	if (p1 == true && p2 == true)

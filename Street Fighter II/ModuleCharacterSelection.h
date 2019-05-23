@@ -2,7 +2,6 @@
 #define __MODULECHARACTERSELECTION_H__
 
 #include "Module.h"
-#include "Animation.h"
 #include "Globals.h"
 
 #include "SDL_mixer/include/SDL_mixer.h"
@@ -26,6 +25,7 @@ public:
 	bool map=false,p1=false,p2=false;
 
 	SDL_Texture* graphics = nullptr;
+	SDL_Texture* ui = nullptr;
 	Mix_Music* music;
 	Mix_Chunk* start_sound;
 
