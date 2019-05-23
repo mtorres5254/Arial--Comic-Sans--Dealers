@@ -1192,6 +1192,7 @@ void ModuleChunLi2::ResetPlayer() {
 		App->UI->time = 99;
 		App->UI->Counter1 = 9;
 		App->UI->Counter2 = 9;
+		App->UI->Resultinfo = 0;
 	}
 }
 
@@ -1493,10 +1494,11 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 	}
 
 
-	if (App->chunli2->life == 0 && App->UI->victorycount == 0) {
+	if (App->chunli->life == 0 && App->UI->victorycount == 0) {
 
 		if (acumvictory < 75) {
 			current_animation = &victory;
+			App->UI->Resultinfo = 2;
 			acumvictory++;
 		}
 		if (acumvictory == 75) {
@@ -1504,10 +1506,11 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 			acumvictory = 0;
 		}
 	}
-	if (App->chunli2->life == 0 && App->UI->victorycount == 1) {
+	if (App->chunli->life == 0 && App->UI->victorycount == 1) {
 
 		if (acumvictory < 75) {
 			current_animation = &victory1;
+			App->UI->Resultinfo = 2;
 			acumvictory++;
 		}
 		if (acumvictory == 75) {

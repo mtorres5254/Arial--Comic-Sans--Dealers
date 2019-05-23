@@ -1229,6 +1229,7 @@ void ModuleChunLi::ResetPlayer() {
 		App->UI->time = 99;
 		App->UI->Counter1 = 9;
 		App->UI->Counter2 = 9;
+		App->UI->Resultinfo = 0;
 	}
 }
 
@@ -1536,6 +1537,7 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 
 		if (acumvictory < 75) {
 			current_animation = &victory;
+			App->UI->Resultinfo = 1;
 			acumvictory++;
 		}
 		if (acumvictory == 75) {
@@ -1547,6 +1549,7 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 
 		if (acumvictory < 75) {
 			current_animation = &victory1;
+			App->UI->Resultinfo == 1;
 			acumvictory++;
 		}
 		if (acumvictory == 75) {
@@ -1573,11 +1576,12 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 		}
 		if (DeathCount < 80)
 			DeathCount++;
+		App->UI->Resultinfo == 2;
 		if (DeathCount == 80 && ActiveDeath == 0) {
 			DeathCount = 0;
 			Death.Reset();
 			App->render->camera.x = 0;
-
+			App->UI->Resultinfo == 0;
 			ActiveDeath = 1;
 			ResetPlayer();
 

@@ -30,6 +30,8 @@ public:
 	bool CleanUp();
 
 	void Counter();
+	// void Rounds();
+	void Result();
 	void GamepadDebug();
 	void HistoryDebug();
 
@@ -62,6 +64,8 @@ public:
 
 	bool GamepadInfo = false;
 	bool Historyinfo = false;
+	
+	int Resultinfo = -1;
 
 	Mix_Chunk* VoiceRound;
 	Mix_Chunk* Voice1;

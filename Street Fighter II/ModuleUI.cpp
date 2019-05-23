@@ -127,7 +127,10 @@ update_status ModuleUI:: Update()
 	if (Historyinfo == true) {
 		HistoryDebug();
 	}
-	//
+
+	if (Resultinfo >= 0) {
+		Result();
+	}
 	for (int i = 0; i < 20; i++) {
 		if (Hispos[i].occuped == true) {
 			Hispos[i].count++;
@@ -295,8 +298,22 @@ void ModuleUI::HistoryDebug() {
 			}
 		}
 	}
-	
+}
 
+void ModuleUI::Result() {
+	switch (Resultinfo)
+	{
+	case 1:
+		App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_id, "p1 wins");
+		break;
+	case 2:
+		App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_id, "p2 wins");
+		break;
+	default:
+		App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_id, " ");
+		Resultinfo = -1;
+		break;
+	}
 
 }
 
