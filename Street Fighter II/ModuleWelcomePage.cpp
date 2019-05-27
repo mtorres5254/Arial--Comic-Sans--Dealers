@@ -66,11 +66,11 @@ update_status ModuleWelcomePage::Update()
 	else
 	{
 		++timer;
-		if(timer==40)
+		if(timer==20)
 		{
 			finish = true;
 		}
-		if (timer % 10 == 0)
+		if (timer %  7 == 0)
 		{
 			App->render->Blit(pointUI, 100, 180, &pointer);
 		}
@@ -84,7 +84,7 @@ update_status ModuleWelcomePage::Update()
 
 	if (finish==true)
 	{
-		App->fade->FadeToBlack(App->welcome_page, App->selectionScene, 2.0f);
+		App->fade->FadeToBlack(App->welcome_page, App->selectionScene, 0.8f);
 		App->audio->PlayChunk(start_sound, 0);
 		App->audio->StopMusic(250);
 	}
