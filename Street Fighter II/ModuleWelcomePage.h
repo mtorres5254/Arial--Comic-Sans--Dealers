@@ -20,9 +20,14 @@ public:
 public:
 
 	SDL_Texture* graphics = nullptr;
-	SDL_Rect background;
+	SDL_Texture* pointUI = nullptr;
+	SDL_Rect background, pointer;
 	Mix_Music* music;
 	Mix_Chunk* start_sound;
+
+private:
+	bool finish,select;
+	int timer;
 };
 
 #endif // __MODULEWELCOMEPAGE_H__
