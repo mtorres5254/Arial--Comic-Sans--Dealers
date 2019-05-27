@@ -44,7 +44,7 @@ bool ModuleCharacterSelection::Start()
 
 	graphics = App->textures->Load("Assets/Images/Player_Select.png"); 
 	ui = App->textures->Load("Assets/Images/PlayerSelector.png");
-	music = App->audio->LoadMusic("Assets/Sound/Musics/start_music.ogg");
+	music = App->audio->LoadMusic("Assets/Sound/Musics/PlayerSelect.ogg");
 	App->audio->PlayMusic(music, 300);
 	start_sound = App->audio->LoadChunk("Assets/Sound/start_sound.wav");
 	App->render->camera.x = App->render->camera.y = 0;
