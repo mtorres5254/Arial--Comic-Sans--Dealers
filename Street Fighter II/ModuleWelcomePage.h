@@ -23,7 +23,8 @@ public:
 	SDL_Texture* pointUI = nullptr;
 	SDL_Rect background, pointer;
 	Mix_Music* music;
-	Mix_Chunk* start_sound;
+	Mix_Chunk* SelectFX;
+	//Mix_Chunk* start_sound;
 
 private:
 	bool finish,select;

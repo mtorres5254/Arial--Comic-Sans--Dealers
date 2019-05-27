@@ -37,8 +37,9 @@ bool ModuleWelcomePage::Start()
 	graphics = App->textures->Load("Assets/Images/TitleScreen.png");
 	pointUI = App->textures->Load("Assets/Images/MenuPointer.png");
 	music = App->audio->LoadMusic("Assets/Sound/Musics/start_music.ogg");
+	//SelectFX = App->audio->LoadChunk("Assets/Sound/Musics/.ogg");
 	App->audio->PlayMusic(music, 300);
-	start_sound = App->audio->LoadChunk("Assets/Sound/start_sound.wav");
+	//start_sound = App->audio->LoadChunk("Assets/Sound/start_sound.wav");
 	App->render->camera.x = App->render->camera.y = 0;
 	   
 	return true;
@@ -51,6 +52,7 @@ bool ModuleWelcomePage::CleanUp()
 	App->textures->Unload(graphics);
 	App->textures->Unload(pointUI);
 	App->audio->UnloadMusic(music);
+	App->audio->UnloadChunk(SelectFX);
 
 	return true;
 }
@@ -79,13 +81,14 @@ update_status ModuleWelcomePage::Update()
 	if (App->input->keyboard[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_START] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_START] == KEY_DOWN) 
 	{
 		select = true;
+		//App->audio->PlayChunk(SelectFX, 0);
 	}
 
 
 	if (finish==true)
 	{
 		App->fade->FadeToBlack(App->welcome_page, App->selectionScene, 0.8f);
-		App->audio->PlayChunk(start_sound, 0);
+		//App->audio->PlayChunk(start_sound, 0);
 		App->audio->StopMusic(250);
 	}
 	return UPDATE_CONTINUE;
