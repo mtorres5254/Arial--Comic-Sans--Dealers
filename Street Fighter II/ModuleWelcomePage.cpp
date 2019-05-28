@@ -29,12 +29,12 @@ ModuleWelcomePage::ModuleWelcomePage()
 	LicensedBy[0].w = 165;
 
 	LicensedBy[1].x = 112;
-	LicensedBy[1].y = 33;
+	LicensedBy[1].y = 32;
 	LicensedBy[1].h = 14;
 	LicensedBy[1].w = 165;
 
 	LicensedBy[2].x = 112;
-	LicensedBy[2].y = 53;
+	LicensedBy[2].y = 52;
 	LicensedBy[2].h = 14;
 	LicensedBy[2].w = 165;
 
@@ -44,7 +44,7 @@ ModuleWelcomePage::ModuleWelcomePage()
 	LicensedBy[3].w = 165;
 
 	LicensedBy[4].x = 112;
-	LicensedBy[4].y = 94;
+	LicensedBy[4].y = 93;
 	LicensedBy[4].h = 14;
 	LicensedBy[4].w = 165;
 
@@ -54,7 +54,7 @@ ModuleWelcomePage::ModuleWelcomePage()
 	LicensedBy[5].w = 165;
 	
 	LicensedBy[6].x = 112;
-	LicensedBy[6].y = 135;
+	LicensedBy[6].y = 134;
 	LicensedBy[6].h = 14;
 	LicensedBy[6].w = 165;
 
@@ -113,7 +113,7 @@ update_status ModuleWelcomePage::Update()
 		if (timer > 105 && timer < 111)App->render->Blit(Licensed, 120, 100, &LicensedBy[3]);
 		if (timer > 110 && timer < 116)App->render->Blit(Licensed, 120, 100, &LicensedBy[4]);
 		if (timer > 115 && timer <119)App->render->Blit(Licensed, 120, 100, &LicensedBy[5]);
-		if (timer > 118)App->render->Blit(Licensed, 120, 100, &LicensedBy[6]);
+		//if (timer > 118)App->render->Blit(Licensed, 120, 100, &LicensedBy[6]);
 	}
 
 	if (Nintendo == false)
