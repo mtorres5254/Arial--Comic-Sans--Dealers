@@ -53,14 +53,56 @@ ModuleWelcomePage::ModuleWelcomePage()
 	LicensedBy[5].h = 14;
 	LicensedBy[5].w = 165;
 	
-	LicensedBy[6].x = 112;
+	/*LicensedBy[6].x = 112;
 	LicensedBy[6].y = 134;
 	LicensedBy[6].h = 14;
-	LicensedBy[6].w = 165;
+	LicensedBy[6].w = 165;*/
+
+	CapcomLogo[0].x = 35;
+	CapcomLogo[0].y = 20;
+	CapcomLogo[0].h = 31;
+	CapcomLogo[0].w = 144;
+
+	CapcomLogo[1].x = 35;
+	CapcomLogo[1].y = 58;
+	CapcomLogo[1].h = 31;
+	CapcomLogo[1].w = 144;
+
+	CapcomLogo[2].x = 35;
+	CapcomLogo[2].y = 97;
+	CapcomLogo[2].h = 31;
+	CapcomLogo[2].w = 144;
+
+	CapcomLogo[3].x = 35;
+	CapcomLogo[3].y = 135;
+	CapcomLogo[3].h = 31;
+	CapcomLogo[3].w = 144;
+
+	CapcomLogo[4].x = 35;
+	CapcomLogo[4].y = 174;
+	CapcomLogo[4].h = 31;
+	CapcomLogo[4].w = 144;
+	
+	CapcomLogo[5].x = 212;
+	CapcomLogo[5].y = 59;
+	CapcomLogo[5].h = 31;
+	CapcomLogo[5].w = 144;
+
+	CapcomLogo[6].x = 212;
+	CapcomLogo[6].y = 98;
+	CapcomLogo[6].h = 31;
+	CapcomLogo[6].w = 144;
+
+	CapcomLogo[7].x = 212;
+	CapcomLogo[7].y = 137;
+	CapcomLogo[7].h = 31;
+	CapcomLogo[7].w = 144;
+
 
 	finish = false;
 	select = false;
 	Nintendo = true;
+	capcom = false;
 	timer = 0;
 	aux = 0;
 }
@@ -75,6 +117,7 @@ bool ModuleWelcomePage::Start()
 	graphics = App->textures->Load("Assets/Images/TitleScreen.png");
 	pointUI = App->textures->Load("Assets/Images/MenuPointer.png");
 	Licensed = App->textures->Load("Assets/Images/LicensedBy.png");
+	Capcom = App->textures->Load("Assets/Images/Capcom.png");
 	music = App->audio->LoadMusic("Assets/Sound/Musics/start_music.ogg");
 	//SelectFX = App->audio->LoadChunk("Assets/Sound/Musics/.ogg");
 	//start_sound = App->audio->LoadChunk("Assets/Sound/start_sound.wav");
@@ -103,9 +146,9 @@ update_status ModuleWelcomePage::Update()
 		++timer;
 		if (timer == 120)
 		{
-			Nintendo = false;
 			timer = 0;
-			App->audio->PlayMusic(music, 300);
+			Nintendo = false;
+			capcom = true;				
 		}
 		if (timer < 95)App->render->Blit(Licensed, 120, 100, &LicensedBy[0]);
 		if (timer > 94 && timer < 101)App->render->Blit(Licensed, 120, 100, &LicensedBy[1]);
@@ -116,7 +159,35 @@ update_status ModuleWelcomePage::Update()
 		//if (timer > 118)App->render->Blit(Licensed, 120, 100, &LicensedBy[6]);
 	}
 
-	if (Nintendo == false)
+	if (capcom == true)
+	{
+		++timer;
+		if (timer == 200)
+		{
+			capcom = false;
+			timer = 0;
+			App->audio->PlayMusic(music, 300);
+		}
+		if (timer > 60 && timer < 66)App->render->Blit(Capcom, 120, 100, &CapcomLogo[4]);
+		if (timer > 65 && timer < 71)App->render->Blit(Capcom, 120, 100, &CapcomLogo[3]);
+		if (timer > 70 && timer < 76)App->render->Blit(Capcom, 120, 100, &CapcomLogo[2]);
+		if (timer > 75 && timer < 81)App->render->Blit(Capcom, 120, 100, &CapcomLogo[1]);
+		if (timer > 80 && timer < 101)App->render->Blit(Capcom, 120, 100, &CapcomLogo[0]);
+
+		if (timer > 100 && timer < 106)App->render->Blit(Capcom, 120, 100, &CapcomLogo[5]);
+		if (timer > 105 && timer < 111)App->render->Blit(Capcom, 120, 100, &CapcomLogo[6]);
+		if (timer > 110 && timer < 116)App->render->Blit(Capcom, 120, 100, &CapcomLogo[7]);
+		if (timer > 115 && timer < 121)App->render->Blit(Capcom, 120, 100, &CapcomLogo[6]);
+		if (timer > 120 && timer < 126)App->render->Blit(Capcom, 120, 100, &CapcomLogo[5]);
+
+		if (timer > 125 && timer < 156)App->render->Blit(Capcom, 120, 100, &CapcomLogo[0]);
+		if (timer > 155 && timer < 161)App->render->Blit(Capcom, 120, 100, &CapcomLogo[1]);
+		if (timer > 160 && timer < 166)App->render->Blit(Capcom, 120, 100, &CapcomLogo[2]);
+		if (timer > 165 && timer < 171)App->render->Blit(Capcom, 120, 100, &CapcomLogo[3]);
+		if (timer > 170 && timer < 176)App->render->Blit(Capcom, 120, 100, &CapcomLogo[4]);	
+	}
+
+	if (capcom == false && Nintendo ==false)
 	{
 		App->render->Blit(graphics, 0, 0, &background);
 		if (select == false)
