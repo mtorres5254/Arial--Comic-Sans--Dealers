@@ -22,7 +22,7 @@ ModuleWelcomePage::ModuleWelcomePage()
 	pointer.y = 7;
 	pointer.h = 18;
 	pointer.w = 20;
-
+	//////////////////
 	LicensedBy[0].x = 112;
 	LicensedBy[0].y = 12;
 	LicensedBy[0].h = 14;
@@ -57,7 +57,7 @@ ModuleWelcomePage::ModuleWelcomePage()
 	LicensedBy[6].y = 134;
 	LicensedBy[6].h = 14;
 	LicensedBy[6].w = 165;*/
-
+	///////////////////
 	CapcomLogo[0].x = 35;
 	CapcomLogo[0].y = 20;
 	CapcomLogo[0].h = 31;
@@ -97,14 +97,63 @@ ModuleWelcomePage::ModuleWelcomePage()
 	CapcomLogo[7].y = 137;
 	CapcomLogo[7].h = 31;
 	CapcomLogo[7].w = 144;
+	/////////////
+	GameLogo[0].x = 1;//64
+	GameLogo[0].y = 3;//0
+	GameLogo[0].h = 129;//37
+	GameLogo[0].w = 248;//70
 
+	GameLogo[1].x = 25;//69
+	GameLogo[1].y = 161;//39
+	GameLogo[1].h = 197;//55
+	GameLogo[1].w = 225;//63
 
+	GameLogo[2].x = 40;//83
+	GameLogo[2].y = 389;//94
+	GameLogo[2].h = 212;//59
+	GameLogo[2].w = 188;//53
+
+	GameLogo[3].x = 11;//66
+	GameLogo[3].y = 635;//160
+	GameLogo[3].h = 135;//39
+	GameLogo[3].w = 273;//78
+
+	GameLogo[4].x = 299;//142
+	GameLogo[4].y = 3;//0
+	GameLogo[4].h = 220;//62
+	GameLogo[4].w = 256;//72
+
+	GameLogo[5].x = 321;//152
+	GameLogo[5].y = 245;//67
+	GameLogo[5].h = 235;//67
+	GameLogo[5].w = 156;//45
+
+	GameLogo[6].x = 309;//149
+	GameLogo[6].y = 498;//138
+	GameLogo[6].h = 163;//47
+	GameLogo[6].w = 246;//70
+
+	GameLogo[7].x = 661;//247
+	GameLogo[7].y = 19;//4
+	GameLogo[7].h = 254;//72
+	GameLogo[7].w = 230;//65
+
+	GameLogo[8].x = 625;//237
+	GameLogo[8].y = 294;//81
+	GameLogo[8].h = 253;//72
+	GameLogo[8].w = 186;//53
+
+	GameLogo[9].x = 606;//231
+	GameLogo[9].y = 579;//160
+	GameLogo[9].h = 229;//65
+	GameLogo[9].w = 231;//67
+	///////////
 	finish = false;
 	select = false;
 	Nintendo = true;
 	capcom = false;
-	timer = 0;
-	aux = 0;
+	logoOff = false;
+	timer = 0;	
 }
 
 ModuleWelcomePage::~ModuleWelcomePage()
@@ -118,6 +167,7 @@ bool ModuleWelcomePage::Start()
 	pointUI = App->textures->Load("Assets/Images/MenuPointer.png");
 	Licensed = App->textures->Load("Assets/Images/LicensedBy.png");
 	Capcom = App->textures->Load("Assets/Images/Capcom.png");
+	Logo = App->textures->Load("Assets/Images/Logo2.png");
 	music = App->audio->LoadMusic("Assets/Sound/Musics/start_music.ogg");
 	//SelectFX = App->audio->LoadChunk("Assets/Sound/Musics/.ogg");
 	//start_sound = App->audio->LoadChunk("Assets/Sound/start_sound.wav");
@@ -133,6 +183,7 @@ bool ModuleWelcomePage::CleanUp()
 	App->textures->Unload(graphics);
 	App->textures->Unload(pointUI);
 	App->textures->Unload(Licensed);
+	App->textures->Unload(Logo);
 	App->audio->UnloadMusic(music);
 	//App->audio->UnloadChunk(SelectFX);
 
@@ -150,12 +201,12 @@ update_status ModuleWelcomePage::Update()
 			Nintendo = false;
 			capcom = true;				
 		}
-		if (timer < 95)App->render->Blit(Licensed, 120, 100, &LicensedBy[0]);
-		if (timer > 94 && timer < 101)App->render->Blit(Licensed, 120, 100, &LicensedBy[1]);
-		if (timer > 100 && timer < 106)App->render->Blit(Licensed, 120, 100, &LicensedBy[2]);
-		if (timer > 105 && timer < 111)App->render->Blit(Licensed, 120, 100, &LicensedBy[3]);
-		if (timer > 110 && timer < 116)App->render->Blit(Licensed, 120, 100, &LicensedBy[4]);
-		if (timer > 115 && timer <119)App->render->Blit(Licensed, 120, 100, &LicensedBy[5]);
+		if (timer < 95)App->render->Blit(Licensed, 110, 100, &LicensedBy[0]);
+		if (timer > 94 && timer < 101)App->render->Blit(Licensed, 110, 100, &LicensedBy[1]);
+		if (timer > 100 && timer < 106)App->render->Blit(Licensed, 110, 100, &LicensedBy[2]);
+		if (timer > 105 && timer < 111)App->render->Blit(Licensed, 110, 100, &LicensedBy[3]);
+		if (timer > 110 && timer < 116)App->render->Blit(Licensed, 110, 100, &LicensedBy[4]);
+		if (timer > 115 && timer <119)App->render->Blit(Licensed, 110, 100, &LicensedBy[5]);
 		//if (timer > 118)App->render->Blit(Licensed, 120, 100, &LicensedBy[6]);
 	}
 
@@ -165,8 +216,8 @@ update_status ModuleWelcomePage::Update()
 		if (timer == 200)
 		{
 			capcom = false;
+			logoOff = true;
 			timer = 0;
-			App->audio->PlayMusic(music, 300);
 		}
 		if (timer > 60 && timer < 66)App->render->Blit(Capcom, 120, 100, &CapcomLogo[4]);
 		if (timer > 65 && timer < 71)App->render->Blit(Capcom, 120, 100, &CapcomLogo[3]);
@@ -187,7 +238,44 @@ update_status ModuleWelcomePage::Update()
 		if (timer > 170 && timer < 176)App->render->Blit(Capcom, 120, 100, &CapcomLogo[4]);	
 	}
 
-	if (capcom == false && Nintendo ==false)
+	if (logoOff == true)
+	{
+		++timer;
+		if (timer == 230)
+		{
+			logoOff = false;
+			timer = 0;
+			App->audio->PlayMusic(music, 300);
+		}
+		if (timer > 60 && timer < 101)App->render->Blit(Logo, 60, 20, &GameLogo[0]);
+
+		if (timer > 100 && timer < 106)App->render->Blit(Logo, 60, 20, &GameLogo[1]);
+		if (timer > 105 && timer < 111)App->render->Blit(Logo, 60, 20, &GameLogo[2]);
+		if (timer > 110 && timer < 116)App->render->Blit(Logo, 60, 20, &GameLogo[3]);
+		if (timer > 115 && timer < 121)App->render->Blit(Logo, 60, 20, &GameLogo[4]);
+		if (timer > 120 && timer < 126)App->render->Blit(Logo, 60, 20, &GameLogo[5]);
+		if (timer > 125 && timer < 131)App->render->Blit(Logo, 60, 20, &GameLogo[6]);
+		if (timer > 130 && timer < 136)App->render->Blit(Logo, 60, 20, &GameLogo[7]);
+		if (timer > 135 && timer < 141)App->render->Blit(Logo, 60, 20, &GameLogo[8]);
+		if (timer > 140 && timer < 146)App->render->Blit(Logo, 60, 20, &GameLogo[9]);
+		if (timer > 125 && timer < 156)App->render->Blit(Logo, 60, 20, &GameLogo[6]);
+		if (timer > 155 && timer < 161)App->render->Blit(Logo, 60, 20, &GameLogo[8]);
+		if (timer > 160 && timer < 166)App->render->Blit(Logo, 60, 20, &GameLogo[5]);
+		if (timer > 165 && timer < 171)App->render->Blit(Logo, 60, 20, &GameLogo[9]);
+		if (timer > 170 && timer < 176)App->render->Blit(Logo, 60, 20, &GameLogo[6]);
+		if (timer > 175 && timer < 181)App->render->Blit(Logo, 60, 20, &GameLogo[5]);
+		if (timer > 180 && timer < 186)App->render->Blit(Logo, 60, 20, &GameLogo[8]);
+		if (timer > 185 && timer < 191)App->render->Blit(Logo, 60, 20, &GameLogo[7]);
+		if (timer > 190 && timer < 196)App->render->Blit(Logo, 60, 20, &GameLogo[6]);
+		if (timer > 195 && timer < 201)App->render->Blit(Logo, 60, 20, &GameLogo[5]);
+		if (timer > 200 && timer < 206)App->render->Blit(Logo, 60, 20, &GameLogo[4]);
+		if (timer > 205 && timer < 211)App->render->Blit(Logo, 60, 20, &GameLogo[3]);
+		if (timer > 210 && timer < 216)App->render->Blit(Logo, 60, 20, &GameLogo[2]);
+		if (timer > 215 && timer < 221)App->render->Blit(Logo, 60, 20, &GameLogo[1]);
+		if (timer > 220 && timer < 260)App->render->Blit(Logo, 60, 20, &GameLogo[0]);
+	}
+
+	if (capcom == false && Nintendo == false && logoOff == false)
 	{
 		App->render->Blit(graphics, 0, 0, &background);
 		if (select == false)

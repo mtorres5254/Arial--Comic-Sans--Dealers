@@ -23,16 +23,18 @@ public:
 	SDL_Texture* pointUI = nullptr;
 	SDL_Texture* Licensed=nullptr;
 	SDL_Texture* Capcom = nullptr;
+	SDL_Texture* Logo = nullptr;
 	SDL_Rect background, pointer;
 	SDL_Rect LicensedBy[6];
 	SDL_Rect CapcomLogo[8];
+	SDL_Rect GameLogo[10];
 	Mix_Music* music;
 	Mix_Chunk* SelectFX;
 	//Mix_Chunk* start_sound;
 
 private:
-	bool finish,select,Nintendo,capcom;
-	int timer,aux;
+	bool finish,select,Nintendo,capcom,logoOff;
+	int timer;
 };
 
 #endif // __MODULEWELCOMEPAGE_H__
