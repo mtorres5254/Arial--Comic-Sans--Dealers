@@ -52,6 +52,7 @@ public:
 	ModuleCharacterSelection* selectionScene;
 
 	int plyDistance;
+	bool intro;
 
 public:
 

@@ -42,6 +42,7 @@ Application::Application()
 	modules[17] = slow = new ModuleSlowdown();
 	modules[18] = selectionScene = new ModuleCharacterSelection();
 	
+	intro = false;
 }	
 
 Application::~Application()

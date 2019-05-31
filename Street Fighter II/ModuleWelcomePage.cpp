@@ -192,6 +192,11 @@ bool ModuleWelcomePage::CleanUp()
 
 update_status ModuleWelcomePage::Update()
 {	
+	if (App->intro == true)
+	{
+		Nintendo = false;
+	}
+
 	if (Nintendo == true)
 	{
 		++timer;
@@ -244,6 +249,7 @@ update_status ModuleWelcomePage::Update()
 		if (timer == 230)
 		{
 			logoOff = false;
+			App->intro = true;
 			timer = 0;
 			App->audio->PlayMusic(music, 300);
 		}
