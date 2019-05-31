@@ -32,6 +32,8 @@ ModuleCharacterSelection::ModuleCharacterSelection()
 	P2Pointer.y = 50;
 	P2Pointer.w = 38;
 	P2Pointer.h = 45;
+
+	selected = false;
 }
 
 ModuleCharacterSelection::~ModuleCharacterSelection()
@@ -44,6 +46,7 @@ bool ModuleCharacterSelection::Start()
 
 	graphics = App->textures->Load("Assets/Images/Player_Select.png"); 
 	ui = App->textures->Load("Assets/Images/PlayerSelector.png");
+	versus = App->textures->Load("Assets/Images/Versus.png");
 	music = App->audio->LoadMusic("Assets/Sound/Musics/PlayerSelect.ogg");
 	App->audio->PlayMusic(music, 300);
 	start_sound = App->audio->LoadChunk("Assets/Sound/start_sound.wav");
@@ -57,6 +60,8 @@ bool ModuleCharacterSelection::CleanUp()
 	LOG("Unloading Selection page");
 
 	App->textures->Unload(graphics);
+	App->textures->Unload(ui);
+	App->textures->Unload(versus);
 	App->audio->UnloadMusic(music);
 
 	return true;
@@ -64,9 +69,22 @@ bool ModuleCharacterSelection::CleanUp()
 
 update_status ModuleCharacterSelection::Update()
 {
-	App->render->Blit(graphics, 0, 0, &background,0,0);
+	if (selected == false)
+	{
+		App->render->Blit(graphics, 0, 0, &background, 0, 0);
+	}
+	else
+	{
+		App->render->Blit(versus, 0, 0, &background, 0, 0);
+		if (frame == 120)
+		{
+			App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
+			App->audio->PlayChunk(start_sound, 0);
+			App->audio->StopMusic(250);
+		}
+	}
 
-	if (map == false)
+	if (map == false && selected==false)
 	{
 		if (p1 == true)
 		{
@@ -91,17 +109,17 @@ update_status ModuleCharacterSelection::Update()
 			{
 				App->render->Blit(ui, 157, 175, &P2Pointer,0,0);
 			}
-		}	
+		}			
 	}
 	else
 	{
-		if (frame == 4)
+		if (frame == 4 && selected==false)
 		{
-			App->render->Blit(ui, 123, 50, &P1Pointer,0,0);
+			App->render->Blit(ui, 123, 45, &P1Pointer,0,0);
 			frame = 0;
-		}	
-	}
-	if (frame == 4) frame = 0;
+		}		
+	}	
+	if (frame == 4 && selected == false) frame = 0;
 	frame++;
 	
 	if (p1 == true && p2 == true)
@@ -109,18 +127,19 @@ update_status ModuleCharacterSelection::Update()
 		map = true;
 	}
 
-	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) 
+	{
 		p1 = true;
 	}
 
-	if (App->input->keyboard[SDL_SCANCODE_J] == KEY_DOWN  || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_J] == KEY_DOWN  || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) 
+	{
 		p2 = true;
 	}
 
-	if ((App->input->keyboard[SDL_SCANCODE_SPACE] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) && map==true) {		
-		App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
-		App->audio->PlayChunk(start_sound, 0);
-		App->audio->StopMusic(250);
+	if ((App->input->keyboard[SDL_SCANCODE_X] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) && map==true)
+	{		
+		selected = true;		
 	}
 
 	////Temporal////

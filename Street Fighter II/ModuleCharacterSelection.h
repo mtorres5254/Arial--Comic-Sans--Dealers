@@ -26,11 +26,13 @@ public:
 
 	SDL_Texture* graphics = nullptr;
 	SDL_Texture* ui = nullptr;
+	SDL_Texture* versus = nullptr;
 	Mix_Music* music;
 	Mix_Chunk* start_sound;
 
 private:
 	int frame=0;
+	bool selected;
 };
 
 #endif 
