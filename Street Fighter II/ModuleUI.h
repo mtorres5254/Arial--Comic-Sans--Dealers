@@ -30,7 +30,8 @@ public:
 	bool CleanUp();
 
 	void Counter();
-	void Points();
+	void PointsP1();
+	void PointsP2();
 	void Rounds();
 	void Result();
 	void GamepadDebug();
@@ -62,7 +63,7 @@ public:
 	int Counter2;
 	int timenow;
 
-	int PointsP1, PointsP2;
+	int scoreP1, scoreP2;
 
 
 	bool GamepadInfo = false;
