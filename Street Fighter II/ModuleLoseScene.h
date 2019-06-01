@@ -21,6 +21,9 @@ public:
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect background;
 	Mix_Music* music;
+
+private:
+	int timer;
 };
 
 #endif

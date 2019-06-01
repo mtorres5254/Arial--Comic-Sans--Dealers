@@ -45,11 +45,12 @@ bool ModuleCongratsScreen::CleanUp()
 
 update_status ModuleCongratsScreen::Update()
 {
-
+	timer++;
 	App->render->Blit(graphics, 0, 0, &background);
 
-	if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) {
-
+	//if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) {
+	if(timer>180)
+	{
 		App->fade->FadeToBlack(App->congrats_screen, App->welcome_page, 2.0f);
 		App->audio->StopMusic(250);
 	}

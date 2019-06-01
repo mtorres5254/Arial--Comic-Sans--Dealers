@@ -46,8 +46,11 @@ bool ModuleLoseScene::CleanUp() {
 update_status ModuleLoseScene::Update() {
 
 	App->render->Blit(graphics, 0, 0, &background);
+	timer++;
 
-	if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) {
+	//if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) 
+	if (timer > 180)
+	{
 
 		App->fade->FadeToBlack(App->lose_scene, App->welcome_page, 2.0f);
 		App->audio->StopMusic(2500);

@@ -22,6 +22,8 @@ public:
 	SDL_Rect background;
 	Mix_Music* music;
 
+private:
+	int timer;
 };
 
 #endif // __MODULECONGRATSSCREEN_H__
