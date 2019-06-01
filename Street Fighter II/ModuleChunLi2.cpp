@@ -1193,6 +1193,8 @@ void ModuleChunLi2::ResetPlayer() {
 		App->UI->Counter1 = 9;
 		App->UI->Counter2 = 9;
 		App->UI->Resultinfo = 0;
+		App->UI->scoreP1 = 0;
+		App->UI->scoreP2 = 0;
 	}
 }
 

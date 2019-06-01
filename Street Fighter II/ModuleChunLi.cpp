@@ -502,7 +502,6 @@ update_status ModuleChunLi::Update()
 	if (death == false) {
 		while (external_input(inputs))
 		{
-
 			internal_input(inputs);
 
 			state = process_fsm(inputs);
@@ -1230,6 +1229,8 @@ void ModuleChunLi::ResetPlayer() {
 		App->UI->Counter1 = 9;
 		App->UI->Counter2 = 9;
 		App->UI->Resultinfo = 0;
+		App->UI->scoreP1 = 0;
+		App->UI->scoreP2 = 0;
 	}
 }
 
@@ -1334,7 +1335,13 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_PUNCH_FINISH2: state = ST_JUMP_NEUTRAL2; break;
+			case IN_PUNCH_FINISH2:
+				state = ST_JUMP_NEUTRAL2; 
+				if (App->chunli2->damage_received == true)
+				{
+					App->UI->scoreP1 += 200;
+				}
+				break;
 			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
 			}
 		}
@@ -1344,7 +1351,13 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_PUNCH_FINISH2: state = ST_JUMP_FORWARD2; break;
+			case IN_PUNCH_FINISH2: 
+				state = ST_JUMP_FORWARD2; 
+				if (App->chunli2->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
 			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
 			}
 		}
@@ -1354,7 +1367,13 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_PUNCH_FINISH2: state = ST_JUMP_BACKWARD2; break;
+			case IN_PUNCH_FINISH2: 
+				state = ST_JUMP_BACKWARD2;
+				if (App->chunli2->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
 			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
 			}
 		}
@@ -1364,7 +1383,13 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_PUNCH_FINISH2: state = ST_IDLE2; break;
+			case IN_PUNCH_FINISH2: 
+				state = ST_IDLE2;
+				if (App->chunli2->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
 			}
 		}
 		break;
@@ -1393,6 +1418,11 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_CROUCH2;
 				else
 					state = ST_IDLE2;
+
+				if (App->chunli2->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
 				break;
 			}
 		}
@@ -1406,6 +1436,11 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_CROUCH2;
 				else
 					state = ST_IDLE2;
+
+				if (App->chunli2->damage_received == true)
+				{
+					App->UI->scoreP1 += 200;
+				}
 				break;
 			}
 		}
@@ -1419,6 +1454,11 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_CROUCH2;
 				else
 					state = ST_IDLE2;
+
+				if (App->chunli2->damage_received == true)
+				{
+					App->UI->scoreP1 += 300;
+				}
 				break;
 			}
 		}
@@ -1432,6 +1472,11 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_CROUCH2;
 				else
 					state = ST_IDLE2;
+
+				if (App->chunli2->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
 				break;
 			}
 		}
@@ -1445,6 +1490,11 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_CROUCH2;
 				else
 					state = ST_IDLE2;
+
+				if (App->chunli2->damage_received == true)
+				{
+					App->UI->scoreP1 += 200;
+				}
 				break;
 			}
 		}
@@ -1458,6 +1508,11 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_CROUCH2;
 				else
 					state = ST_IDLE2;
+
+				if (App->chunli2->damage_received == true)
+				{
+					App->UI->scoreP1 += 300;
+				}
 				break;
 			}
 		}
@@ -1466,7 +1521,13 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_KICK_FINISH2: state = ST_IDLE2; break;
+				case IN_KICK_FINISH2: 
+					state = ST_IDLE2; 
+					if (App->chunli2->damage_received == true)
+					{
+						App->UI->scoreP1 += 100;
+					}
+					break;
 			}
 		}
 		break;
@@ -1475,7 +1536,13 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_KICK_MEDIUM_FINISH2: state = ST_IDLE2; break;
+				case IN_KICK_MEDIUM_FINISH2: 
+					state = ST_IDLE2; 
+					if (App->chunli2->damage_received == true)
+					{
+						App->UI->scoreP1 += 200;
+					}
+					break;
 			}
 		}
 		break;
@@ -1484,7 +1551,13 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_KICK_HARD_FINISH2: state = ST_IDLE2; break;
+				case IN_KICK_HARD_FINISH2: 
+					state = ST_IDLE2;
+					if (App->chunli2->damage_received == true)
+					{
+						App->UI->scoreP1 += 300;
+					}
+					break;
 			}
 		}
 		break;
@@ -1492,7 +1565,13 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_LIGHTNINGKICK_FINISH2: state = ST_IDLE2; break;
+				case IN_LIGHTNINGKICK_FINISH2: 
+					state = ST_IDLE2; 
+					if (App->chunli2->damage_received == true)
+					{
+						App->UI->scoreP1 += 500;
+					}
+					break;
 			}
 			
 		}
@@ -1501,7 +1580,13 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_PUNCH_MEDIUM_FINISH2: state = ST_IDLE2; break;
+			case IN_PUNCH_MEDIUM_FINISH2: 
+				state = ST_IDLE2; 
+				if (App->chunli2->damage_received == true)
+				{
+					App->UI->scoreP1 += 200;
+				}
+				break;
 			}
 			
 		}
@@ -1512,7 +1597,13 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_PUNCH_HARD_FINISH2: state = ST_IDLE2; break;
+			case IN_PUNCH_HARD_FINISH2: 
+				state = ST_IDLE2; 
+				if (App->chunli2->damage_received == true)
+				{
+					App->UI->scoreP1 += 300;
+				}
+				break;
 			}
 			
 		}

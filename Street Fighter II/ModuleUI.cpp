@@ -105,9 +105,6 @@ update_status ModuleUI:: Update()
 	HealthBar1.w = App->chunli->healthbar;
 	HealthBar2.w = App->chunli2->healthbar;
 
-	scoreP1++;
-	scoreP2++;
-
 	if (App->input->keyboard[SDL_SCANCODE_F7] == KEY_DOWN && GamepadInfo == false) {
 		GamepadInfo = true;
 	}
