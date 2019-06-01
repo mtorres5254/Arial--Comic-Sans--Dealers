@@ -84,8 +84,8 @@ bool ModuleUI::Start()
 	Counter1 = 9; //unit
 	Counter2 = 9; //tens
 	
-	scoreP1 = 555555;
-	scoreP2 = 555555;
+	scoreP1 = 000000;
+	scoreP2 = 000000;
 
 	return ret;
 }
@@ -104,6 +104,9 @@ update_status ModuleUI:: Update()
 	//Logic
 	HealthBar1.w = App->chunli->healthbar;
 	HealthBar2.w = App->chunli2->healthbar;
+
+	scoreP1++;
+	scoreP2++;
 
 	if (App->input->keyboard[SDL_SCANCODE_F7] == KEY_DOWN && GamepadInfo == false) {
 		GamepadInfo = true;
@@ -499,6 +502,210 @@ void ModuleUI::PointsP2()
 	three = scoreP2 / 100 % 10;
 	two = scoreP2 / 10 % 10;
 	one = scoreP2 % 10;
+
+	switch (one)
+	{
+	case 9:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (150), 5, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (150), 5, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (150), 5, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (150), 5, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (150), 5, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (150), 5, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (150), 5, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (150), 5, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (150), 5, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (150), 5, font_id, "0");
+		break;
+	}
+
+	switch (two)
+	{
+	case 9:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (136), 5, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (136), 5, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (136), 5, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (136), 5, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (136), 5, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (136), 5, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (136), 5, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (136), 5, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (136), 5, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (136), 5, font_id, "0");
+		break;
+	}
+
+	switch (three)
+	{
+	case 9:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (122), 5, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (122), 5, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (122), 5, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (122), 5, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (122), 5, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (122), 5, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (122), 5, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (122), 5, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (122), 5, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (122), 5, font_id, "0");
+		break;
+	}
+
+	switch (four)
+	{
+	case 9:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (108), 5, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (108), 5, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (108), 5, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (108), 5, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (108), 5, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (108), 5, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (108), 5, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (108), 5, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (108), 5, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (108), 5, font_id, "0");
+		break;
+	}
+
+	switch (five)
+	{
+	case 9:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (94), 5, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (94), 5, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (94), 5, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (94), 5, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (94), 5, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (94), 5, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (94), 5, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (94), 5, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (94), 5, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (94), 5, font_id, "0");
+		break;
+	}
+
+	switch (six)
+	{
+	case 9:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (80), 5, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (80), 5, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (80), 5, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (80), 5, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (80), 5, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (80), 5, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (80), 5, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (80), 5, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (80), 5, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(SCREEN_WIDTH / 2 + (80), 5, font_id, "0");
+		break;
+	}
 }
 
 void ModuleUI::GamepadDebug() {
