@@ -118,6 +118,7 @@ update_status ModuleUI:: Update()
 	
 	//Render
 	Counter();
+	Points();
 	if (GamepadInfo == true) {
 		GamepadDebug();
 	}
@@ -266,6 +267,43 @@ void ModuleUI::Counter()
 		break;
 	case 0:
 		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2) + 16, 45, font_id, "0");
+		break;
+	}
+}
+
+void ModuleUI::Points()
+{
+	switch (six)
+	{
+	case 9:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(SCREEN_WIDTH / 2 - (KObar.w / 2), 45, font_id, "0");
 		break;
 	}
 }

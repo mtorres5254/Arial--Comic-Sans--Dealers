@@ -30,6 +30,7 @@ public:
 	bool CleanUp();
 
 	void Counter();
+	void Points();
 	void Rounds();
 	void Result();
 	void GamepadDebug();
@@ -61,7 +62,9 @@ public:
 	int Counter2;
 	int timenow;
 
-	
+	int PointsP1, PointsP2;
+
+
 	bool GamepadInfo = false;
 	bool Historyinfo = false;
 	bool Round_Start = false;
@@ -73,6 +76,8 @@ public:
 	Mix_Chunk* Voice3;
 	Mix_Chunk* VoiceFight;
 
+private:
+	int six, five, four, three, two, one;
 	
 };
 
