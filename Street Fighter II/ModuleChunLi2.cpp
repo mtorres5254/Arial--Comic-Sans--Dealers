@@ -1584,14 +1584,18 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 	}
 
 
-	if (App->chunli->life == 0 && App->UI->victorycount == 0) {
+	if (App->chunli->life == 0 && App->UI->victorycount == 0) 
+	{
 
 		if (acumvictory < 75) {
 			current_animation = &victory;
 			App->UI->Resultinfo = 2;
 			acumvictory++;
 		}
-		if (acumvictory == 75) {
+		if (acumvictory == 75) 
+		{
+			App->UI->scoreP2 += App->UI->time*100;
+			App->UI->scoreP2 += this->life;
 			victory.Reset();
 			acumvictory = 0;
 		}
