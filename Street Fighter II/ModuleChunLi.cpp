@@ -505,8 +505,7 @@ update_status ModuleChunLi::Update()
 			internal_input(inputs);
 
 			state = process_fsm(inputs);
-
-
+			
 			if (state != current_state)
 			{
 				lifecondition(current_animation);
@@ -526,9 +525,8 @@ update_status ModuleChunLi::Update()
 
 				}
 
-				if (life > 0 && damage_received == false && App->chunli2->life > 0 ) {
-
-
+				if (life > 0 && damage_received == false && App->chunli2->life > 0 ) 
+				{					
 					switch (state)
 					{
 					case ST_IDLE2:
@@ -948,12 +946,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 }
 
 bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
-{
-	static bool left = false;
-	static bool right = false;
-	static bool down = false;
-	static bool up = false;
-
+{	
 	//Key up
 	if (App->input->keyboard[SDL_SCANCODE_S] == KEY_UP) {
 		inputs.Push(IN_CROUCH_UP2);
@@ -1007,7 +1000,7 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 		down = true;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_DOWN) {
-		left = true;
+		left = true;	
 	}
 	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_DOWN) {
 		right = true;
@@ -1103,11 +1096,9 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 	if (App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTX] == AXIS_MOVE && App->input->Pad2.Xaxis_state > JOYSTICK_DEAD_ZONE) {
 		left = true;
 	}
-	if (App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTX] == AXIS_IDLE) {
+	/*if (App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTX] == AXIS_IDLE) {
 		left = false;
-	}
-
-
+	}*/
 
 
 	if (left && right)

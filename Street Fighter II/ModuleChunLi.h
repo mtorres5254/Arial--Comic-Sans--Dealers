@@ -195,7 +195,12 @@ public:
 	Uint32 hadouken_timer = 0;
 	Uint32 punch_neutral_jump_timer = 0;
 	Uint32 dmg_timer = 0;
-	
+
+private:
+	bool left = false;
+	bool right = false;
+	bool down = false;
+	bool up = false;	
 };
 
 #endif
