@@ -170,7 +170,6 @@ bool ModuleWelcomePage::Start()
 	//start_sound = App->audio->LoadChunk("Assets/Sound/start_sound.wav");
 	App->render->camera.x = App->render->camera.y = 0;
 
-	finish = false;
 	select = false;
 	timer = 0;
 	return true;
@@ -293,7 +292,7 @@ update_status ModuleWelcomePage::Update()
 			++timer;
 			if (timer >= 20)
 			{
-				finish = true;
+				next();
 			}
 			if (timer % 7 == 0)
 			{
@@ -306,17 +305,15 @@ update_status ModuleWelcomePage::Update()
 			select = true;
 			//App->audio->PlayChunk(SelectFX, 0);
 		}
-
-
-		if (finish == true)
-		{
-			App->fade->FadeToBlack(App->welcome_page, App->selectionScene, 0.8f);		
-			//App->audio->PlayChunk(start_sound, 0);
-			App->audio->StopMusic(250);
-			select = false;
-			finish = false;
-		}
 	}
 
 	return UPDATE_CONTINUE;
+}
+void ModuleWelcomePage::next()
+{
+	App->fade->FadeToBlack(App->welcome_page, App->selectionScene, 0.8f);
+	//App->audio->PlayChunk(start_sound, 0);
+	App->audio->StopMusic(250);
+	select = false;
+	finish = false;
 }
