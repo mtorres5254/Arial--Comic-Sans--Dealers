@@ -61,6 +61,27 @@ enum chunli_states
 	ST_RECEIVED_PUNCH,
 	ST_PUNCH_MEDIUM,
 	ST_PUNCH_HARD,
+
+	ST_PUNCH_MEDIUM_NEUTRAL_JUMP,
+	ST_PUNCH_HARD_NEUTRAL_JUMP,
+
+	ST_KICK_NEUTRAL_JUMP,
+	ST_KICK_MEDIUM_NEUTRAL_JUMP,
+	ST_KICK_HARD_NEUTRAL_JUMP,
+
+	ST_PUNCH_MEDIUM_FORWARD_JUMP,
+	ST_PUNCH_HARD_FORWARD_JUMP,
+
+	ST_PUNCH_MEDIUM_BACKWARD_JUMP,
+	ST_PUNCH_HARD_BACKWARD_JUMP,
+
+	ST_KICK_FORWARD_JUMP,
+	ST_KICK_MEDIUM_FORWARD_JUMP,
+	ST_KICK_HARD_FORWARD_JUMP,
+
+	ST_KICK_BACKWARD_JUMP,
+	ST_KICK_MEDIUM_BACKWARD_JUMP,
+	ST_KICK_HARD_BACKWARD_JUMP,
 };
 
 enum chunli_inputs
@@ -143,14 +164,35 @@ public:
 	Animation Crouch_hard_kick;
 
 	Animation jump_neutral_punch;
-	Animation jump_forward_punch;
-	Animation jump_backward_punch;
+	Animation jump_neutral_punch_medium;
+	Animation jump_neutral_punch_hard;
 
-	Animation damage2;
+	Animation jump_neutral_kick;
+	Animation jump_neutral_kick_medium;
+	Animation jump_neutral_kick_hard;
+
+
+	Animation jump_forward_punch;
+	Animation jump_forward_punch_medium;
+	Animation jump_forward_punch_hard;
+
+	Animation jump_forward_kick;
+	Animation jump_forward_kick_medium;
+	Animation jump_forward_kick_hard;
+
+	Animation jump_backward_punch;
+	Animation jump_backward_punch_medium;
+	Animation jump_backward_punch_hard;
+
+	Animation jump_backward_kick;
+	Animation jump_backward_kick_medium;
+	Animation jump_backward_kick_hard;
+
 	Animation LightningKick_startup;
 	Animation LightningKick;
 	Animation Death;
 	Animation damage;
+	Animation damage2;
 	Animation victory;
 	Animation victory1;
 	iPoint position;

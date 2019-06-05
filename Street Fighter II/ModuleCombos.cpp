@@ -162,7 +162,7 @@ bool ModuleCombos::CheckWhirlwindKickP2() {
 				whirlwindKickCount2++;
 			}
 			break;
-		case 1:
+		case 2:
 			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
 				whirlwindKickCount2 = 0;
 				return true;
