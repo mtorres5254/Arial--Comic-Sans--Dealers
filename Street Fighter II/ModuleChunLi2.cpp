@@ -1597,6 +1597,7 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 			App->UI->scoreP2 += App->UI->time*100;
 			App->UI->scoreP2 += this->life;
 			victory.Reset();
+			victorycount++;
 			acumvictory = 0;
 		}
 	}
@@ -1609,6 +1610,7 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 		}
 		if (acumvictory == 75) {
 			victory1.Reset();
+			victorycount++;
 			acumvictory = 0;
 		}
 	}
@@ -1623,8 +1625,7 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 		}
 
 		if (DeathCount == 1) {
-
-			victorycount++;
+			
 			App->UI->time = 99;
 			App->UI->Counter1 = 9;
 			App->UI->Counter2 = 9;
