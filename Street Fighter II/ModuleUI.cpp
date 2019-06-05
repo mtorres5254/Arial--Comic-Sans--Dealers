@@ -95,6 +95,8 @@ bool ModuleUI::CleanUp()
 	LOG("Unloading UI graphics");
 
 	App->textures->Unload(graphics1);
+	App->font->UnLoad(font_id);
+	App->font->UnLoad(font_Rounds);
 
 	return true;
 }
@@ -170,13 +172,13 @@ update_status ModuleUI:: Update()
 
 
 	if (App->chunli2->victorycount == 1 || App->chunli2->victorycount == 2) {
-		App->render->Blit(graphics1, (SCREEN_WIDTH / 2)-153-(KObar.w/2)-20, 20, &RoundBar1, false);
+		App->render->Blit(graphics1, (SCREEN_WIDTH / 2)+153+(KObar.w/2), 20, &RoundBar1, false);
 		victorycount = 1;
 	}
 
 	if (App->chunli->victorycount == 1 || App->chunli->victorycount == 2) {
 	
-		App->render->Blit(graphics2, (SCREEN_WIDTH / 2) + 153 + (KObar.w / 2) , 20, &RoundBar2, false);		
+		App->render->Blit(graphics1, (SCREEN_WIDTH / 2) - 153 - (KObar.w / 2)-20 , 20, &RoundBar2, false);		
 		if(App->chunli->DeathCount==0)
 		victorycount1 = 1;
 	}

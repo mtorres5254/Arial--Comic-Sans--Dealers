@@ -150,8 +150,7 @@ ModuleWelcomePage::ModuleWelcomePage()
 	///////////
 	Nintendo = true;
 	capcom = false;
-	logoOff = false;
-	timer = 0;	
+	logoOff = false;	
 }
 
 ModuleWelcomePage::~ModuleWelcomePage()
@@ -173,7 +172,7 @@ bool ModuleWelcomePage::Start()
 
 	finish = false;
 	select = false;
-
+	timer = 0;
 	return true;
 }
 
@@ -212,7 +211,7 @@ update_status ModuleWelcomePage::Update()
 		if (timer > 100 && timer < 106)App->render->Blit(Licensed, 110, 100, &LicensedBy[2]);
 		if (timer > 105 && timer < 111)App->render->Blit(Licensed, 110, 100, &LicensedBy[3]);
 		if (timer > 110 && timer < 116)App->render->Blit(Licensed, 110, 100, &LicensedBy[4]);
-		if (timer > 115 && timer <121)App->render->Blit(Licensed, 110, 100, &LicensedBy[5]);
+		//if (timer > 115 && timer <121)App->render->Blit(Licensed, 110, 100, &LicensedBy[5]);
 		//if (timer > 118)App->render->Blit(Licensed, 120, 100, &LicensedBy[6]);
 	}
 
@@ -292,7 +291,7 @@ update_status ModuleWelcomePage::Update()
 		else
 		{
 			++timer;
-			if (timer == 20)
+			if (timer >= 20)
 			{
 				finish = true;
 			}

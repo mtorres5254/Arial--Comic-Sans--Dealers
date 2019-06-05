@@ -185,12 +185,12 @@ void ModuleSceneDhalsim::roundpoints() {
 
 void ModuleSceneDhalsim::fadeto() {
 
-	if (App->chunli->victorycount == 2) {
+	if (App->chunli2->victorycount == 2) {
 		App->fade->FadeToBlack(App->scene_dhalsim, App->lose_scene, 2.0f);
 		App->audio->StopMusic(250);
 	}
 
-	if (App->chunli2->victorycount == 2) {
+	if (App->chunli->victorycount == 2) {
 		App->fade->FadeToBlack(App->scene_dhalsim, App->congrats_screen, 2.0f);
 		App->audio->StopMusic(250);
 	}

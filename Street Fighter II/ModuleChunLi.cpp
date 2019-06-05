@@ -465,6 +465,7 @@ bool ModuleChunLi::Start()
 	DeathCount = 0;
 	victorycount = 0;
 
+	state = ST_IDLE2;
 	return ret;
 }
 
@@ -1616,7 +1617,7 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 	}
 
 
-	if (App->chunli2->life == 0 && App->UI->victorycount == 0) {
+	if (App->chunli2->life <= 0 && App->UI->victorycount == 0) {
 
 		if (acumvictory < 75) {
 			current_animation = &victory;
@@ -1625,10 +1626,11 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 		}
 		if (acumvictory == 75) {
 			victory.Reset();
+			victorycount++;
 			acumvictory = 0;
 		}
 	}
-	if (App->chunli2->life == 0 && App->UI->victorycount == 1) {
+	if (App->chunli2->life <= 0 && App->UI->victorycount == 1) {
 
 		if (acumvictory < 75) {
 			current_animation = &victory1;
@@ -1640,6 +1642,7 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 			App->UI->scoreP1 += App->UI->time * 100;
 			App->UI->scoreP1 += this->life;
 			victory1.Reset();
+			victorycount++;
 			acumvictory = 0;
 		}
 	}
@@ -1653,9 +1656,7 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 			position.y += speedY;
 		}
 
-		if (DeathCount == 1) {
-
-			victorycount++;
+		if (DeathCount == 1) {		
 			App->UI->time = 99;
 			App->UI->Counter1 = 9;
 			App->UI->Counter2 = 9;
