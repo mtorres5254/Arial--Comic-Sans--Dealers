@@ -809,10 +809,7 @@ update_status ModuleChunLi::Update()
 
 					
 						current_animation = &LightningKick;
-						/*if (App->chunli2->damage_received == true)
-						{
-							App->UI->scoreP1 += 500;
-						}*/
+					
 						
 						break;
 					}
@@ -1561,8 +1558,8 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			switch (last_input)
 			{
 				case IN_LIGHTNINGKICK_FINISH2: 
-					state = ST_IDLE2; 	
-					if(App->chunli2->damage_received == true)
+					state = ST_IDLE2; 
+					if (App->chunli2->damage_received == true)
 					{
 						App->UI->scoreP1 += 500;
 					}

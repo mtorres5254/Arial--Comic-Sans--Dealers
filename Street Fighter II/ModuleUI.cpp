@@ -50,7 +50,7 @@ ModuleUI::ModuleUI() {
 	RoundBar1.h = 20;
 
 	//RoundBar2
-	RoundBar2.x = 247;
+	RoundBar2.x = 247 ;
 	RoundBar2.y = 39;
 	RoundBar2.w = 17;
 	RoundBar2.h = 20;
@@ -170,7 +170,7 @@ update_status ModuleUI:: Update()
 
 
 	if (App->chunli2->victorycount == 1 || App->chunli2->victorycount == 2) {
-		App->render->Blit(graphics1, (SCREEN_WIDTH / 2)+153+(KObar.w/2), 20, &RoundBar1, false);
+		App->render->Blit(graphics1, (SCREEN_WIDTH / 2)-153-(KObar.w/2)-20, 20, &RoundBar1, false);
 		victorycount = 1;
 	}
 
