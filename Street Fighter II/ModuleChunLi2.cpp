@@ -393,28 +393,169 @@ bool ModuleChunLi2::Start()
 
 	//punch neutral jump
 
-	jump_neutral_punch.PushBack({ 1966, 22, 66,89 });
-	jump_neutral_punch.PushBack({ 1024, 131,53 ,90 });
-	jump_neutral_punch.PushBack({ 1078, 146, 85, 75 });
-	jump_neutral_punch.PushBack({ 1164, 144, 87, 77 });
 
-	jump_neutral_punch.speed = 0.4f;
+
+	const int jumppunchcollider = 6;
+	SDL_Rect jumppunchhitbox[jumppunchcollider] = { { 5, 53, 37, 19 },{ 2, 4, 51, 54 },{ 9, 55, 37, 39 },{ 20, 86, 31, 21 },{ 8, 68, 31, 27 }, {29,30,53,35} };
+	COLLIDER_TYPE jumppunchCollType[jumppunchcollider] = { {COLLIDER_ENEMY},{COLLIDER_NONE},{COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY}, {COLLIDER_ENEMY_SHOT} };
+	Module* jumppunchCallback[jumppunchcollider] = { {this},{this},{this},{this},{this},{this} };
+
+	jump_neutral_punch.PushBack1({ 1966, 22, 66,89 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_punch.PushBack1({ 1024, 131,53 ,90 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_punch.PushBack1({ 1078, 146, 85, 75 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_punch.PushBack1({ 1164, 144, 87, 77 }, { 32, 2 }, jumppunchcollider, jumppunchhitbox, jumppunchCollType, jumppunchCallback, 10);
+	jump_neutral_punch.speed = 0.45f;
 	jump_neutral_punch.loop = false;
+
+	//punch neutral jump medium
+
+
+	jump_neutral_punch_medium.PushBack1({ 1966, 22, 66,89 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_punch_medium.PushBack1({ 1024, 131,53 ,90 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_punch_medium.PushBack1({ 1078, 146, 85, 75 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_punch_medium.PushBack1({ 1164, 144, 87, 77 }, { 32, 2 }, jumppunchcollider, jumppunchhitbox, jumppunchCollType, jumppunchCallback, 14);
+	jump_neutral_punch_medium.speed = 0.45f;
+	jump_neutral_punch_medium.loop = false;
+
+	//punch neutral jump hard
+
+
+	jump_neutral_punch_hard.PushBack1({ 1966, 22, 66,89 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_punch_hard.PushBack1({ 1024, 131,53 ,90 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_punch_hard.PushBack1({ 1078, 146, 85, 75 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_punch_hard.PushBack1({ 1164, 144, 87, 77 }, { 32, 2 }, jumppunchcollider, jumppunchhitbox, jumppunchCollType, jumppunchCallback, 16);
+	jump_neutral_punch_hard.speed = 0.45f;
+	jump_neutral_punch_hard.loop = false;
 
 	//punch forward jump
 
-	jump_forward_punch.PushBack({ 1252, 147, 53, 74 });
-	jump_forward_punch.PushBack({ 1306, 146, 59,75 });
-	jump_forward_punch.PushBack({ 1366, 144,83, 77 });
+	jump_forward_punch.PushBack1({ 1252, 147, 53, 74 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_punch.PushBack1({ 1306, 146, 59,75 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_punch.PushBack1({ 1366, 144,83, 77 }, { 32, 2 }, jumppunchcollider, jumppunchhitbox, jumppunchCollType, jumppunchCallback, 10);
 	jump_forward_punch.speed = 0.2f;
 	jump_forward_punch.loop = false;
 
+	//punch forward jump medium
+
+	jump_forward_punch_medium.PushBack1({ 1252, 147, 53, 74 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_punch_medium.PushBack1({ 1306, 146, 59,75 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_punch_medium.PushBack1({ 1366, 144,83, 77 }, { 32, 2 }, jumppunchcollider, jumppunchhitbox, jumppunchCollType, jumppunchCallback, 14);
+	jump_forward_punch_medium.speed = 0.2f;
+	jump_forward_punch_medium.loop = false;
+
+	//punch forward jump hard 
+
+	jump_forward_punch_hard.PushBack1({ 1252, 147, 53, 74 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_punch_hard.PushBack1({ 1306, 146, 59,75 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_punch_hard.PushBack1({ 1366, 144,83, 77 }, { 32, 2 }, jumppunchcollider, jumppunchhitbox, jumppunchCollType, jumppunchCallback, 16);
+	jump_forward_punch_hard.speed = 0.2f;
+	jump_forward_punch_hard.loop = false;
+
 	//punch backward jump
-	jump_backward_punch.PushBack({ 1252, 147, 53, 74 });
-	jump_backward_punch.PushBack({ 1306, 146, 59,75 });
-	jump_backward_punch.PushBack({ 1366, 144,83, 77 });
+
+	jump_backward_punch.PushBack1({ 1252, 147, 53, 74 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_punch.PushBack1({ 1306, 146, 59,75 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_punch.PushBack1({ 1366, 144,83, 77 }, { 32, 2 }, jumppunchcollider, jumppunchhitbox, jumppunchCollType, jumppunchCallback, 10);
 	jump_backward_punch.speed = 0.2f;
 	jump_backward_punch.loop = false;
+
+	//punch backward jump medium
+
+	jump_backward_punch_medium.PushBack1({ 1252, 147, 53, 74 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_punch_medium.PushBack1({ 1306, 146, 59,75 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_punch_medium.PushBack1({ 1366, 144,83, 77 }, { 32, 2 }, jumppunchcollider, jumppunchhitbox, jumppunchCollType, jumppunchCallback, 14);
+	jump_backward_punch_medium.speed = 0.2f;
+	jump_backward_punch_medium.loop = false;
+
+	//punch backward jump hard 
+
+	jump_backward_punch_hard.PushBack1({ 1252, 147, 53, 74 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_punch_hard.PushBack1({ 1306, 146, 59,75 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_punch_hard.PushBack1({ 1366, 144,83, 77 }, { 32, 2 }, jumppunchcollider, jumppunchhitbox, jumppunchCollType, jumppunchCallback, 16);
+	jump_backward_punch_hard.speed = 0.2f;
+	jump_backward_punch_hard.loop = false;
+
+	//KICK forward jump
+
+
+	const int jumpkCollider2 = 6;//Collider num for the crouch animation
+	SDL_Rect jumpkhitbox2[jumpkCollider2] = { { 7, 3, 37, 51 },{ 8, 31, 35, 25 },{ 18, 43, 31, 21 },{ 57, 32, 55, 31 },{ 46, 32, 89, 33 }, {43,10,63,27} };
+	COLLIDER_TYPE jumpkCollType2[jumpkCollider2] = { {COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY_SHOT} };
+	Module* jumpkCallback2[jumpkCollider2] = { {this},{this},{this},{this},{this},{this} };
+
+	jump_forward_kick.PushBack1({ 1806,158,57,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_kick.PushBack1({ 1864,158,72,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_kick.PushBack1({ 1937,165,111,56 }, { 32, 2 }, jumpkCollider2, jumpkhitbox2, jumpkCollType2, jumpkCallback2, 10);
+	jump_forward_kick.PushBack1({ 1937,165,111,56 }, { 32, 2 }, jumpkCollider2, jumpkhitbox2, jumpkCollType2, jumpkCallback2, 10);
+	jump_forward_kick.PushBack1({ 1864,158,72,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_kick.PushBack1({ 1806,158,57,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_kick.speed = 0.2f;
+	jump_forward_kick.loop = false;
+
+	//KICK forward jump medium
+
+	jump_forward_kick_medium.PushBack1({ 1806,158,57,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_kick_medium.PushBack1({ 1864,158,72,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_kick_medium.PushBack1({ 1937,165,111,56 }, { 32, 2 }, jumpkCollider2, jumpkhitbox2, jumpkCollType2, jumpkCallback2, 12);
+	jump_forward_kick_medium.PushBack1({ 1937,165,111,56 }, { 32, 2 }, jumpkCollider2, jumpkhitbox2, jumpkCollType2, jumpkCallback2, 12);
+	jump_forward_kick_medium.PushBack1({ 1864,158,72,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_kick_medium.PushBack1({ 1806,158,57,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_kick_medium.speed = 0.2f;
+	jump_forward_kick_medium.loop = false;
+
+	//KICK forward jump hard 
+
+
+	const int jumpkCollider = 6;//Collider num for the crouch animation
+	SDL_Rect jumpkhitbox[jumpkCollider] = { { 7, 3, 37, 51 },{ 8, 31, 35, 25 },{ 18, 43, 31, 21 },{ 57, 32, 55, 31 },{ 46, 32, 89, 33 }, {29,45,61,41} };
+	COLLIDER_TYPE jumpkCollType[jumpkCollider] = { {COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY_SHOT} };
+	Module* jumpkCallback[jumpkCollider] = { {this},{this},{this},{this},{this},{this} };
+
+	jump_forward_kick_hard.PushBack1({ 1450, 126, 57, 95 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_kick_hard.PushBack1({ 1450, 126, 57, 95 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_kick_hard.PushBack1({ 1508, 127, 84, 94 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_kick_hard.PushBack1({ 1592,122,63,99 }, { 32, 2 }, jumpkCollider, jumpkhitbox, jumpkCollType, jumpkCallback, 16);
+	jump_forward_kick_hard.PushBack1({ 1592,122,63,99 }, { 32, 2 }, jumpkCollider, jumpkhitbox, jumpkCollType, jumpkCallback, 16);
+	jump_forward_kick_hard.PushBack1({ 1592,122,63,99 }, { 32, 2 }, jumpkCollider, jumpkhitbox, jumpkCollType, jumpkCallback, 16);
+	jump_forward_kick_hard.PushBack1({ 1656,128,86,93 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_kick_hard.PushBack1({ 1450, 126, 57, 95 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_forward_kick_hard.speed = 0.25f;
+	jump_forward_kick_hard.loop = false;
+
+	//KICK forward jump
+
+	jump_backward_kick.PushBack1({ 1806,158,57,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_kick.PushBack1({ 1864,158,72,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_kick.PushBack1({ 1937,165,111,56 }, { 32, 2 }, jumpkCollider2, jumpkhitbox2, jumpkCollType2, jumpkCallback2, 10);
+	jump_backward_kick.PushBack1({ 1937,165,111,56 }, { 32, 2 }, jumpkCollider2, jumpkhitbox2, jumpkCollType2, jumpkCallback2, 10);
+	jump_backward_kick.PushBack1({ 1864,158,72,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_kick.PushBack1({ 1806,158,57,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_kick.speed = 0.2f;
+	jump_backward_kick.loop = false;
+
+	//KICK forward jump medium
+
+	jump_backward_kick_medium.PushBack1({ 1806,158,57,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_kick_medium.PushBack1({ 1864,158,72,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_kick_medium.PushBack1({ 1937,165,111,56 }, { 32, 2 }, jumpkCollider2, jumpkhitbox2, jumpkCollType2, jumpkCallback2, 12);
+	jump_backward_kick_medium.PushBack1({ 1937,165,111,56 }, { 32, 2 }, jumpkCollider2, jumpkhitbox2, jumpkCollType2, jumpkCallback2, 12);
+	jump_backward_kick_medium.PushBack1({ 1864,158,72,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_kick_medium.PushBack1({ 1806,158,57,63 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_kick_medium.speed = 0.2f;
+	jump_backward_kick_medium.loop = false;
+
+	//KICK forward jump hard 
+
+	jump_backward_kick_hard.PushBack1({ 1450, 126, 57, 95 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_kick_hard.PushBack1({ 1450, 126, 57, 95 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_kick_hard.PushBack1({ 1508, 127, 84, 94 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_kick_hard.PushBack1({ 1592,122,63,99 }, { 32, 2 }, jumpkCollider, jumpkhitbox, jumpkCollType, jumpkCallback, 16);
+	jump_backward_kick_hard.PushBack1({ 1592,122,63,99 }, { 32, 2 }, jumpkCollider, jumpkhitbox, jumpkCollType, jumpkCallback, 16);
+	jump_backward_kick_hard.PushBack1({ 1592,122,63,99 }, { 32, 2 }, jumpkCollider, jumpkhitbox, jumpkCollType, jumpkCallback, 16);
+	jump_backward_kick_hard.PushBack1({ 1656,128,86,93 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_kick_hard.PushBack1({ 1450, 126, 57, 95 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_backward_kick_hard.speed = 0.25f;
+	jump_backward_kick_hard.loop = false;
 
 	//Lightning Kick
 
@@ -436,6 +577,52 @@ bool ModuleChunLi2::Start()
 	LightningKick.PushBack1({ 1300, 355, 101, 93 }, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 15);
 	LightningKick.speed = 0.2f;
 	LightningKick.loop = true;
+
+
+	// JUMP NEUTRAL KICK
+
+	jump_neutral_kick.PushBack1({ 1450, 126, 57, 95 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_kick.PushBack1({ 1508, 127, 84, 94 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_kick.PushBack1({ 1592,122,63,99 }, { 32, 2 }, jumpkCollider, jumpkhitbox, jumpkCollType, jumpkCallback, 10);
+	jump_neutral_kick.PushBack1({ 1592,122,63,99 }, { 32, 2 }, jumpkCollider, jumpkhitbox, jumpkCollType, jumpkCallback, 10);
+	jump_neutral_kick.PushBack1({ 1592,122,63,99 }, { 32, 2 }, jumpkCollider, jumpkhitbox, jumpkCollType, jumpkCallback, 10);
+	jump_neutral_kick.PushBack1({ 1656,128,86,93 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_kick.PushBack1({ 1450, 126, 57, 95 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+
+	jump_neutral_kick.speed = 0.25f;
+	jump_neutral_kick.loop = false;
+
+	// JUMP NEUTRAL KICK MEIDUM
+
+
+	jump_neutral_kick_medium.PushBack1({ 1450, 126, 57, 95 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_kick_medium.PushBack1({ 1508, 127, 84, 94 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_kick_medium.PushBack1({ 1592,122,63,99 }, { 32, 2 }, jumpkCollider, jumpkhitbox, jumpkCollType, jumpkCallback, 12);
+	jump_neutral_kick_medium.PushBack1({ 1592,122,63,99 }, { 32, 2 }, jumpkCollider, jumpkhitbox, jumpkCollType, jumpkCallback, 12);
+	jump_neutral_kick_medium.PushBack1({ 1592,122,63,99 }, { 32, 2 }, jumpkCollider, jumpkhitbox, jumpkCollType, jumpkCallback, 12);
+	jump_neutral_kick_medium.PushBack1({ 1656,128,86,93 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_kick_medium.PushBack1({ 1450, 126, 57, 95 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+
+	jump_neutral_kick_medium.speed = 0.25f;
+	jump_neutral_kick_medium.loop = false;
+
+	// JUMP NEUTRAL KICK HARD
+
+	const int jumpkCollider1 = 6;//Collider num for the crouch animation
+	SDL_Rect jumpkhitbox1[jumpkCollider1] = { { 7, 3, 37, 51 },{ 8, 31, 35, 25 },{ 18, 43, 31, 21 },{ 57, 32, 55, 31 },{ 46, 32, 89, 33 }, {56,53,66,35} };
+	COLLIDER_TYPE jumpkCollType1[jumpkCollider1] = { {COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY_SHOT} };
+	Module* jumpkCallback1[jumpkCollider1] = { {this},{this},{this},{this},{this},{this} };
+
+	jump_neutral_kick_hard.PushBack1({ 1024,228,57,97 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+	jump_neutral_kick_hard.PushBack1({ 1112,260,99,65 }, { 32, 2 }, jumpkCollider1, jumpkhitbox1, jumpkCollType1, jumpkCallback1, 16);
+	jump_neutral_kick_hard.PushBack1({ 1112,260,99,65 }, { 32, 2 }, jumpkCollider1, jumpkhitbox1, jumpkCollType1, jumpkCallback1, 16);
+	jump_neutral_kick_hard.PushBack1({ 1212,255,110,70 }, { 32, 2 }, jumpkCollider1, jumpkhitbox1, jumpkCollType1, jumpkCallback1, 16);
+	jump_neutral_kick_hard.PushBack1({ 1212,255,110,70 }, { 32, 2 }, jumpkCollider1, jumpkhitbox1, jumpkCollType1, jumpkCallback1, 16);
+	jump_neutral_kick_hard.PushBack1({ 1323,232,86,93 }, { 32, 2 }, jumpkCollider1, jumpkhitbox1, jumpkCollType1, jumpkCallback1, 16);
+	jump_neutral_kick_hard.PushBack1({ 1450, 126, 57, 95 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
+
+	jump_neutral_kick_hard.speed = 0.3f;
+	jump_neutral_kick_hard.loop = false;
 
 
 	//damage animation 
@@ -648,11 +835,36 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_STANDING:
 
 						current_animation = &punch;
+											   						 					  
+						break;
+					case ST_KICK_STANDING:
 
-
-
+						current_animation = &kick;
 
 						break;
+
+					case ST_PUNCH_MEDIUM:
+						current_animation = &punch_medium;
+						break;
+
+					case ST_PUNCH_HARD:
+
+						current_animation = &punch_hard;
+						break;
+
+					case ST_KICK_MEDIUM_STANDING:
+
+						current_animation = &kick_medium;
+
+						break;
+
+					case ST_KICK_HARD_STANDING:
+
+						current_animation = &kick_hard;
+
+						break;
+
+
 					case ST_PUNCH_CROUCH:
 
 						current_animation = &Crouch_punch;
@@ -720,6 +932,74 @@ update_status ModuleChunLi2::Update()
 
 
 						break;
+
+					case ST_PUNCH_MEDIUM_NEUTRAL_JUMP:
+
+						current_animation = &jump_neutral_punch_medium;
+
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 4.5) {
+							position.y -= 8;
+						}
+
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.28) {
+							position.y += 10;
+						}
+
+
+						if (SDL_GetTicks() - punch_neutral_jump_timer > PUNCH_NEUTRAL_JUMP_TIME2) {
+							jump_neutral_punch_medium.Reset();
+							jump_neutral.current_frame = 9;
+
+						}
+
+
+
+						break;
+
+					case ST_PUNCH_HARD_NEUTRAL_JUMP:
+
+						current_animation = &jump_neutral_punch_hard;
+
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 4.5) {
+							position.y -= 8;
+						}
+
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.28) {
+							position.y += 10;
+						}
+
+
+						if (SDL_GetTicks() - punch_neutral_jump_timer > PUNCH_NEUTRAL_JUMP_TIME2) {
+							jump_neutral_punch_hard.Reset();
+							jump_neutral.current_frame = 9;
+
+						}
+
+
+
+						break;
 					case ST_PUNCH_FORWARD_JUMP:
 
 
@@ -753,6 +1033,176 @@ update_status ModuleChunLi2::Update()
 						}
 
 						break;
+
+					case ST_PUNCH_MEDIUM_FORWARD_JUMP:
+
+
+						current_animation = &jump_forward_punch_medium;
+
+						position.x += 3;
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+							position.y -= 8;
+
+						}
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
+							position.y += 8;
+						}
+
+						if (SDL_GetTicks() - punch_neutral_jump_timer == PUNCH_NEUTRAL_JUMP_TIME2) {
+							jump_forward_punch_medium.Reset();
+
+						}
+
+						break;
+
+					case ST_PUNCH_HARD_FORWARD_JUMP:
+
+
+						current_animation = &jump_forward_punch_hard;
+
+						position.x += 3;
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+							position.y -= 8;
+
+						}
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
+							position.y += 8;
+						}
+
+						if (SDL_GetTicks() - punch_neutral_jump_timer == PUNCH_NEUTRAL_JUMP_TIME2) {
+							jump_forward_punch_hard.Reset();
+
+						}
+
+						break;
+
+					case ST_KICK_FORWARD_JUMP:
+
+
+						current_animation = &jump_forward_kick;
+
+						position.x += 3;
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+							position.y -= 8;
+
+						}
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
+							position.y += 8;
+						}
+
+						if (SDL_GetTicks() - punch_neutral_jump_timer == PUNCH_NEUTRAL_JUMP_TIME2) {
+							jump_forward_kick.Reset();
+
+						}
+
+						break;
+
+					case ST_KICK_MEDIUM_FORWARD_JUMP:
+
+
+						current_animation = &jump_forward_kick_medium;
+
+						position.x += 3;
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+							position.y -= 8;
+
+						}
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
+							position.y += 8;
+						}
+
+						if (SDL_GetTicks() - punch_neutral_jump_timer == PUNCH_NEUTRAL_JUMP_TIME2) {
+							jump_forward_kick_medium.Reset();
+
+						}
+
+						break;
+
+					case ST_KICK_HARD_FORWARD_JUMP:
+
+
+						current_animation = &jump_forward_kick_hard;
+
+						position.x += 3;
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+							position.y -= 8;
+
+						}
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
+							position.y += 8;
+						}
+
+						if (SDL_GetTicks() - punch_neutral_jump_timer == PUNCH_NEUTRAL_JUMP_TIME2) {
+							jump_forward_kick_hard.Reset();
+
+						}
+
+						break;
 					case ST_PUNCH_BACKWARD_JUMP:
 						current_animation = &jump_backward_punch;
 
@@ -779,36 +1229,240 @@ update_status ModuleChunLi2::Update()
 
 						break;
 
-					
-					case ST_KICK_STANDING:
-						current_animation = &kick;
+					case ST_PUNCH_MEDIUM_BACKWARD_JUMP:
+						current_animation = &jump_backward_punch_medium;
+
+						position.x -= 3;
+
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+							position.y -= 8;
+
+						}
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
+							position.y += 8;
+						}
 
 						break;
 
-					case ST_PUNCH_MEDIUM:
-						current_animation = &punch_medium;
+					case ST_PUNCH_HARD_BACKWARD_JUMP:
+						current_animation = &jump_backward_punch_hard;
+
+						position.x -= 3;
+
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+							position.y -= 8;
+
+						}
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
+							position.y += 8;
+						}
+
+						break;
+					case ST_KICK_BACKWARD_JUMP:
+						current_animation = &jump_backward_kick;
+
+						position.x -= 3;
+
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+							position.y -= 8;
+
+						}
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
+							position.y += 8;
+						}
+
 						break;
 
-					case ST_PUNCH_HARD:
+					case ST_KICK_MEDIUM_BACKWARD_JUMP:
+						current_animation = &jump_backward_kick_medium;
 
-						current_animation = &punch_hard;
+						position.x -= 3;
+
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+							position.y -= 8;
+
+						}
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
+							position.y += 8;
+						}
+
 						break;
 
-					case ST_KICK_MEDIUM_STANDING:
+					case ST_KICK_HARD_BACKWARD_JUMP:
+						current_animation = &jump_backward_kick_hard;
 
-						current_animation = &kick_medium;
+						position.x -= 3;
 
-						break;
 
-					case ST_KICK_HARD_STANDING:
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+							position.y -= 8;
 
-						current_animation = &kick_hard;
+						}
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
+							position.y += 8;
+						}
 
 						break;
 
 					case ST_LIGHTNINGKICK:
 
 						current_animation = &LightningKick;
+						break;
+
+					case ST_KICK_NEUTRAL_JUMP:
+
+						current_animation = &jump_neutral_kick;
+
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 4.5) {
+							position.y -= 8;
+						}
+
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.28) {
+							position.y += 10;
+						}
+
+
+						if (SDL_GetTicks() - punch_neutral_jump_timer > PUNCH_NEUTRAL_JUMP_TIME2) {
+							jump_neutral_kick.Reset();
+							jump_neutral.current_frame = 9;
+
+						}
+
+
+
+						break;
+
+					case ST_KICK_MEDIUM_NEUTRAL_JUMP:
+
+						current_animation = &jump_neutral_kick_medium;
+
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 4.5) {
+							position.y -= 8;
+						}
+
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.28) {
+							position.y += 10;
+						}
+
+
+						if (SDL_GetTicks() - punch_neutral_jump_timer > PUNCH_NEUTRAL_JUMP_TIME2) {
+							jump_neutral_kick_medium.Reset();
+							jump_neutral.current_frame = 9;
+
+						}
+
+
+
+						break;
+
+					case ST_KICK_HARD_NEUTRAL_JUMP:
+
+						current_animation = &jump_neutral_kick_hard;
+
+
+						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 4.5) {
+							position.y -= 8;
+						}
+
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
+							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+								position.y -= 3;
+							}
+
+							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+								position.y += 3;
+							}
+						}
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.28) {
+							position.y += 10;
+						}
+
+
+						if (SDL_GetTicks() - punch_neutral_jump_timer > PUNCH_NEUTRAL_JUMP_TIME2) {
+							jump_neutral_kick_hard.Reset();
+							jump_neutral.current_frame = 9;
+
+						}
+
+
+
 						break;
 					}
 
@@ -1268,6 +1922,11 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 			{
 			case IN_JUMP_FINISH: state = ST_IDLE; break;
 			case IN_X: state = ST_PUNCH_NEUTRAL_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+			case IN_1: state = ST_PUNCH_MEDIUM_NEUTRAL_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+			case IN_2: state = ST_PUNCH_HARD_NEUTRAL_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+			case IN_C: state = ST_KICK_NEUTRAL_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+			case IN_3:state = ST_KICK_MEDIUM_NEUTRAL_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+			case IN_4:state = ST_KICK_HARD_NEUTRAL_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1278,6 +1937,11 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 			{
 			case IN_JUMP_FINISH: state = ST_IDLE; break;
 			case IN_X: state = ST_PUNCH_FORWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+			case IN_C: state = ST_KICK_FORWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+			case IN_1: state = ST_PUNCH_MEDIUM_FORWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+			case IN_2: state = ST_PUNCH_HARD_FORWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+			case IN_3: state = ST_KICK_MEDIUM_FORWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+			case IN_4: state = ST_KICK_HARD_FORWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1288,6 +1952,11 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 			{
 			case IN_JUMP_FINISH: state = ST_IDLE; break;
 			case IN_X: state = ST_PUNCH_BACKWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+			case IN_C: state = ST_KICK_BACKWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+			case IN_1: state = ST_PUNCH_MEDIUM_BACKWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+			case IN_2: state = ST_PUNCH_HARD_BACKWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+			case IN_3: state = ST_KICK_MEDIUM_BACKWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+			case IN_4: state = ST_KICK_HARD_BACKWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1296,14 +1965,94 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-				case IN_PUNCH_FINISH: 
-					state = ST_JUMP_NEUTRAL;
-					if (App->chunli->damage_received == false)
-					{
-						App->UI->scoreP2 += 200;
-					}
-					break;
-				case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_NEUTRAL;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 200;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+
+		case ST_PUNCH_MEDIUM_NEUTRAL_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_NEUTRAL;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 200;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+
+		case ST_PUNCH_HARD_NEUTRAL_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_NEUTRAL;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 200;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+
+		case ST_KICK_NEUTRAL_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_NEUTRAL;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 200;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+
+		case ST_KICK_MEDIUM_NEUTRAL_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_NEUTRAL;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 200;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+
+		case ST_KICK_HARD_NEUTRAL_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_NEUTRAL;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 200;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
 			}
 		}
 		break;
@@ -1312,14 +2061,94 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-				case IN_PUNCH_FINISH: 
-					state = ST_JUMP_FORWARD; 
-					if (App->chunli->damage_received == false)
-					{
-						App->UI->scoreP2 += 100;
-					}
-					break;
-				case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_FORWARD;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+
+		case ST_PUNCH_MEDIUM_FORWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_FORWARD;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+
+		case ST_PUNCH_HARD_FORWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_FORWARD;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+
+		case ST_KICK_FORWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_FORWARD;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+
+		case ST_KICK_MEDIUM_FORWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_FORWARD;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+
+		case ST_KICK_HARD_FORWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_FORWARD;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
 			}
 		}
 		break;
@@ -1328,29 +2157,104 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-				case IN_PUNCH_FINISH: 
-					state = ST_JUMP_BACKWARD; 
-					if (App->chunli->damage_received == false)
-					{
-						App->UI->scoreP2 += 100;
-					}
-					break;
-				case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_BACKWARD;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+		case ST_PUNCH_MEDIUM_BACKWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_BACKWARD;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+		case ST_PUNCH_HARD_BACKWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_BACKWARD;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
 			}
 		}
 		break;
 
+		case ST_KICK_BACKWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_BACKWARD;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+		case ST_KICK_MEDIUM_BACKWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_BACKWARD;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
+		case ST_KICK_HARD_BACKWARD_JUMP:
+		{
+			switch (last_input)
+			{
+			case IN_PUNCH_FINISH:
+				state = ST_JUMP_BACKWARD;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			}
+		}
+		break;
 		case ST_PUNCH_STANDING:
 		{
 			switch (last_input)
 			{
-				case IN_PUNCH_FINISH: 
-					state = ST_IDLE; 
-					if (App->chunli->damage_received == false)
-					{
-						App->UI->scoreP2 += 100;
-					}
-					break;
+			case IN_PUNCH_FINISH:
+				state = ST_IDLE;
+				if (App->chunli->damage_received == true)
+				{
+					App->UI->scoreP1 += 100;
+				}
+				break;
 			}
 		}
 		break;
@@ -1695,6 +2599,8 @@ void ModuleChunLi2::resetanimations() {
 	jump_backwards.Reset();
 	punch.Reset();
 	jump_neutral_punch.Reset();
+	jump_neutral_punch_medium.Reset();
+	jump_neutral_punch_hard.Reset();
 	jump_backward_punch.Reset();
 	jump_forward_punch.Reset();
 	Crouch_punch.Reset();
@@ -1710,4 +2616,22 @@ void ModuleChunLi2::resetanimations() {
 	Crouch_kick.Reset();
 	Crouch_medium_kick.Reset();
 	Crouch_hard_kick.Reset();
+	damage2.Reset();
+	jump_neutral_kick.Reset();
+	jump_neutral_kick_medium.Reset();
+	jump_neutral_kick_hard.Reset();
+
+	jump_forward_punch_medium.Reset();
+	jump_forward_punch_hard.Reset();
+
+	jump_backward_punch_medium.Reset();
+	jump_backward_punch_hard.Reset();
+
+	jump_forward_kick.Reset();
+	jump_forward_kick_medium.Reset();
+	jump_forward_kick_hard.Reset();
+
+	jump_backward_kick.Reset();
+	jump_backward_kick_medium.Reset();
+	jump_backward_kick_hard.Reset();
 }
