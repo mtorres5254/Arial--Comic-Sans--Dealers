@@ -210,7 +210,7 @@ update_status ModuleWelcomePage::Update()
 		if (timer > 100 && timer < 106)App->render->Blit(Licensed, 110, 100, &LicensedBy[2]);
 		if (timer > 105 && timer < 111)App->render->Blit(Licensed, 110, 100, &LicensedBy[3]);
 		if (timer > 110 && timer < 116)App->render->Blit(Licensed, 110, 100, &LicensedBy[4]);
-		//if (timer > 115 && timer <121)App->render->Blit(Licensed, 110, 100, &LicensedBy[5]);
+		if (timer > 115 && timer <121)App->render->Blit(Licensed, 110, 100, &LicensedBy[5]);
 		//if (timer > 118)App->render->Blit(Licensed, 120, 100, &LicensedBy[6]);
 	}
 
@@ -314,6 +314,5 @@ void ModuleWelcomePage::next()
 	App->fade->FadeToBlack(App->welcome_page, App->selectionScene, 0.8f);
 	//App->audio->PlayChunk(start_sound, 0);
 	App->audio->StopMusic(250);
-	select = false;
-	finish = false;
+	//select = false;
 }
