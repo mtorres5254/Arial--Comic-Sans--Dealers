@@ -670,6 +670,18 @@ bool ModuleChunLi2::Start()
 	damage4.speed = 0.2f;
 	damage4.loop = false;
 
+	//damage animation
+
+	damage5.PushBack1({ 1825,556,95,76 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage5.PushBack1({ 1921, 572, 83, 60 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage5.PushBack1({ 1024, 681, 117, 48 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage5.PushBack1({ 1142, 691, 139, 38 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage5.PushBack1({ 1284, 672, 104, 57 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage5.PushBack1({ 1389, 658, 94, 71 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage5.PushBack1({ 1284, 672, 104, 57 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage5.PushBack1({ 1142, 691, 139, 38 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage5.speed = 0.1f;
+	damage5.loop = false;
 	//Block standing 
 
 	block_standing.PushBack1({ 1667,546,84,85 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
@@ -1078,6 +1090,30 @@ update_status ModuleChunLi2::Update()
 						damage_received = 0;
 						break;
 
+					case ST_DAMAGE_AIR:
+
+						current_animation = &damage5;
+
+						if (position.x < App->chunli->position.x)
+							position.x -= 2;
+						else
+							position.x += 2;
+
+						if (SDL_GetTicks() - jump_timer > JUMP_TIME / 2) {
+							position.y += 4;
+						}
+
+
+						if (SDL_GetTicks() - jump_timer >= JUMP_TIME / 1.28) {
+							position.y += 5;
+						}
+						if (position.y >= 220) {
+							position.y = 220;
+						}
+
+
+						move = false;
+						break;
 					case ST_BLOCK:
 						block_damage = 0;
 						current_animation = &block_standing;
@@ -1246,11 +1282,11 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			else if (state == ST_CROUCH) {
 				damage_received = 4;
 			}
+			else{
+				damage_received = 5;
+			}
 			
 		}
-		
-
-
 	}
 
 }
@@ -1258,7 +1294,6 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 {
 	
-
 	//Key up
 	if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_UP) {
 		inputs.Push(IN_CROUCH_UP);
@@ -1404,6 +1439,9 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	}
 	if (damage_received == 4) {
 		inputs.Push(IN_DAMAGE_CROUCH);
+	}
+	if (damage_received == 5) {
+		inputs.Push(IN_DAMAGE_AIR);
 	}
 	if (block_damage == 1) {
 		inputs.Push(IN_BLOCK);
@@ -1659,6 +1697,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_C: state = ST_KICK_NEUTRAL_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
 				case IN_3:state = ST_KICK_MEDIUM_NEUTRAL_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
 				case IN_4:state = ST_KICK_HARD_NEUTRAL_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+				case IN_DAMAGE_AIR:state = ST_DAMAGE_AIR; dmg_fall_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -1674,6 +1713,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_2: state = ST_PUNCH_HARD_FORWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
 				case IN_3: state = ST_KICK_MEDIUM_FORWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
 				case IN_4: state = ST_KICK_HARD_FORWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+				case IN_DAMAGE_AIR:state = ST_DAMAGE_AIR; dmg_fall_timer = SDL_GetTicks(); break;
 				
 				}
 			}
@@ -1690,6 +1730,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_2: state = ST_PUNCH_HARD_BACKWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
 				case IN_3: state = ST_KICK_MEDIUM_BACKWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
 				case IN_4: state = ST_KICK_HARD_BACKWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
+				case IN_DAMAGE_AIR:state = ST_DAMAGE_AIR; dmg_fall_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -2235,6 +2276,14 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				}
 			}
 			break;
+
+			case ST_DAMAGE_AIR:
+			{
+				switch (last_input)
+				{
+				case IN_DAMAGE_FINISH:state = ST_IDLE; damage_received = 0; break;
+				}
+			}
 			case ST_BLOCK:
 			{
 				switch (last_input)
@@ -2312,7 +2361,7 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 
 void ModuleChunLi2::resetanimations() {
 
-
+	damage_received = 0;
 
 	jump_neutral.Reset();
 	jump_forward.Reset();
@@ -2340,6 +2389,7 @@ void ModuleChunLi2::resetanimations() {
 	damage2.Reset();
 	damage3.Reset();
 	damage4.Reset();
+	damage5.Reset();
 	jump_neutral_kick.Reset();
 	jump_neutral_kick_medium.Reset();
 	jump_neutral_kick_hard.Reset();
