@@ -686,7 +686,7 @@ bool ModuleChunLi::Start()
 	Death.Reset();
 	DeathCount = 0;
 	victorycount = 0;
-
+	force = 0;
 	
 	return ret;
 }
@@ -724,8 +724,15 @@ update_status ModuleChunLi::Update()
 		while (external_input(inputs))
 		{
 			internal_input(inputs);
-
-			state = process_fsm(inputs);
+			if (force < idleForce)
+			{
+				state = ST_IDLE2;
+				force++;
+			}
+			else
+			{
+				state = process_fsm(inputs);
+			}			
 			
 			if (state != current_state)
 			{

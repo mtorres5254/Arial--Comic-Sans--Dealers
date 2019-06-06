@@ -28,6 +28,7 @@
 #define DMG_TIME 200
 
 #define MAX_FRAME_COLLIDERS 6
+#define idleForce 5
 
 struct SDL_Texture;
 
@@ -274,6 +275,7 @@ public:
 		bool right = false;
 		bool down = false;
 		bool up = false;
+		int force = 0;
 
 };
 

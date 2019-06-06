@@ -26,6 +26,7 @@
 #define PUNCH_NEUTRAL_JUMP_TIME2 850
 #define HADOUKEN_TIME2 1200
 #define DMG_TIME2 200
+#define idleForce 5
 
 
 
@@ -280,6 +281,7 @@ private:
 	bool right = false;
 	bool down = false;
 	bool up = false;	
+	int force = 0;
 };
 
 #endif
