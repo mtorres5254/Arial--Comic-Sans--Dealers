@@ -87,6 +87,7 @@ enum chunli_states
 	ST_DAMAGE,
 	ST_DAMAGE_HARD,
 	ST_DAMAGE_FALL,
+	ST_DAMAGE_AIR,
 	ST_DAMAGE_CROUCH,
 
 	ST_BLOCK,
@@ -107,6 +108,7 @@ enum chunli_inputs
 	IN_DAMAGE,
 	IN_DAMAGE_HARD,
 	IN_DAMAGE_FALL,
+	IN_DAMAGE_AIR,
 	IN_DAMAGE_CROUCH,
 
 	IN_X,
@@ -221,6 +223,7 @@ public:
 	Animation damage2;
 	Animation damage3;
 	Animation damage4;
+	Animation damage5;
 	Animation victory;
 	Animation victory1;
 	iPoint position;
