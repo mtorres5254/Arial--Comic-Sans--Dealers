@@ -78,7 +78,7 @@ enum chunli_states2
 	ST_PUNCH_MEDIUM_BACKWARD_JUMP2,
 	ST_PUNCH_HARD_BACKWARD_JUMP2,
 
-	ST_KICK_FORWARD_JUMP2,	
+	ST_KICK_FORWARD_JUMP2,
 	ST_KICK_MEDIUM_FORWARD_JUMP2,
 	ST_KICK_HARD_FORWARD_JUMP2,
 
@@ -87,6 +87,8 @@ enum chunli_states2
 	ST_KICK_HARD_BACKWARD_JUMP2,
 
 	ST_DAMAGE2,
+	ST_DAMAGE_HARD2,
+	ST_DAMAGE_FALL2,
 
 
 };
@@ -103,7 +105,9 @@ enum chunli_inputs2
 	IN_CROUCH_DOWN2,
 	IN_JUMP_AND_CROUCH2,
 	IN_DAMAGE2,
-	
+	IN_DAMAGE_HARD2,
+	IN_DAMAGE_FALL2,
+
 	IN_X2,
 	IN_C2,
 	IN_1_2,
@@ -206,6 +210,7 @@ public:
 	Animation Death;
 	Animation damage;
 	Animation damage2;
+	Animation damage3;
 	Animation victory;
 	Animation victory1;
 	iPoint position;
@@ -229,7 +234,7 @@ public:
 	int acumdamage = 0;
 	int jumpHeight = 0;
 	int speed = 1;
-	bool damage_received = false;
+	int damage_received = 0;
 	bool jumpactive = 0;
 	bool active = false;
 	int life = 1000;
@@ -249,7 +254,8 @@ public:
 	Uint32 hadouken_timer = 0;
 	Uint32 punch_neutral_jump_timer = 0;
 	Uint32 dmg_timer = 0;
-	
+	Uint32 dmg_hard_timer = 0;
+	Uint32 dmg_fall_timer = 0;
 private:
 	bool left = false;
 	bool right = false;
