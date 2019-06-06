@@ -86,6 +86,7 @@ enum chunli_states
 	ST_DAMAGE,
 	ST_DAMAGE_HARD,
 	ST_DAMAGE_FALL,
+	ST_DAMAGE_CROUCH,
 
 	ST_BLOCK,
 	ST_BLOCK_CROUCH,
@@ -105,6 +106,7 @@ enum chunli_inputs
 	IN_DAMAGE,
 	IN_DAMAGE_HARD,
 	IN_DAMAGE_FALL,
+	IN_DAMAGE_CROUCH,
 
 	IN_X,
 	IN_C,
@@ -217,6 +219,7 @@ public:
 	Animation damage;
 	Animation damage2;
 	Animation damage3;
+	Animation damage4;
 	Animation victory;
 	Animation victory1;
 	iPoint position;
@@ -266,6 +269,11 @@ public:
 	Uint32 dmg_fall_timer = 0;
 	Uint32 block_timer = 0;
 
+	private:
+		bool left = false;
+		bool right = false;
+		bool down = false;
+		bool up = false;
 
 };
 

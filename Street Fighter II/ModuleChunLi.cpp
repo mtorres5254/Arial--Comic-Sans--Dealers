@@ -386,7 +386,7 @@ bool ModuleChunLi::Start()
 	Crouch_hard_kick.PushBack1({ 796, 951, 128, 73 }, { 32, 2 }, crhcollider2, crhhitbox2, crchCollType2, crhCallback2,14);
 	Crouch_hard_kick.PushBack1({ 717, 960, 60, 64 }, { 32, 2 }, crhcollider1, crhhitbox1, crchCollType1, crhCallback1, {});
 	Crouch_hard_kick.PushBack1({ 644, 962, 72, 62 }, { 32, 2 }, crhcollider1, crhhitbox1, crchCollType1, crhCallback1, {});
-
+	Crouch_hard_kick.PushBack1({ 147, 839, 72, 65 }, { 32, 2 }, crhcollider1, crhhitbox1, crchCollType1, crhCallback1, {});
 
 	Crouch_hard_kick.speed = 0.25f;
 	Crouch_hard_kick.loop = false;
@@ -637,14 +637,14 @@ bool ModuleChunLi::Start()
 	damage.PushBack1({ 1465, 458, 76, 87}, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage.PushBack1({ 1542, 462, 72, 83}, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage.speed = 0.1f;
-	damage.loop = true;
+	damage.loop = false;
 	
 	//damage animation 
 
 	damage2.PushBack1({ 1804,453,73,92 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage2.PushBack1({ 1878, 453, 76, 92 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage2.PushBack1({ 1024, 547, 102, 84 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
-	damage2.speed = 0.2f;
+	damage2.speed = 0.4f;
 	damage2.loop = false;
 
 	//damage animation
@@ -659,13 +659,27 @@ bool ModuleChunLi::Start()
 	damage3.PushBack1({ 1142, 691, 139, 38 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage3.speed = 0.2f;
 	damage3.loop = false;
+
+	//Damage Crouch
+
+	damage4.PushBack1({ 1350,562,72,69 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage4.PushBack1({ 1423, 560, 73, 71 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage4.PushBack1({ 1497, 564, 76, 67 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage4.PushBack1({ 1574, 570, 92, 61 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});	
+	damage4.speed = 0.2f;
+	damage4.loop = false;
 	
 	//Block standing 
 	
-	block_standing.PushBack1({ 1667,546,84,85 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
-	
+	block_standing.PushBack1({ 1667,546,84,85 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});	
 	block_standing.speed = 0.1f;
 	block_standing.loop = false;
+
+	//Block standing 
+
+	block_crouch.PushBack1({ 1751,564,74,67 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	block_crouch.speed = 0.1f;
+	block_crouch.loop = false;
 
 	//Start functions to reset player
 	ResetPlayer();
@@ -1023,9 +1037,9 @@ update_status ModuleChunLi::Update()
 						if (current_animation->current_frame != 0)
 						{
 							if (position.x > App->chunli2->position.x)
-								position.x += 2;
+								position.x += 3;
 							else
-								position.x -= 2;
+								position.x -= 3;
 						}
 						move = false;
 
@@ -1034,7 +1048,11 @@ update_status ModuleChunLi::Update()
 					case ST_DAMAGE_FALL2:
 						current_animation = &damage3;
 						damage_received = 0;
+
+						if(position.x < App->chunli2->position.x)
 						position.x -= 3;
+						else
+							position.x += 3;
 						
 						if (SDL_GetTicks() - dmg_fall_timer <= JUMP_TIME2 /4)  {
 							position.y -= 12;
@@ -1052,12 +1070,23 @@ update_status ModuleChunLi::Update()
 						
 						break;
 
+					case ST_DAMAGE_CROUCH2:
+						current_animation = &damage4;
+						damage_received = 0;
+						break;
+
 					case ST_BLOCK2:
-						block_damage = 0;
+						block_damage = 0;					
+
 						current_animation = &block_standing;
+
 						break;
 					
 					case ST_BLOCK_CROUCH2:
+
+						block_damage = 0;
+
+						current_animation = &block_crouch;
 						break;
 					}
 
@@ -1079,6 +1108,7 @@ void ModuleChunLi::positionlimits() {
 		speedX = 1;
 		speedY = 1;
 	}
+
 	if (position.x+50 <= App->scene_dhalsim->background.x - 12) {
 
 		position.x = App->scene_dhalsim->background.x - 12 -50;
@@ -1186,20 +1216,41 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 			block_damage = 1;
 
 		}
+		else if (state == ST_CROUCH2 && left && App->chunli2->position.x > position.x) {
+			block_damage = 2;
+		}
+
+		else if (state == ST_CROUCH2 && right && App->chunli2->position.x < position.x) {
+			block_damage = 2;
+		}
+
 		else {
-			//App->slow->StartSlowdown(50, 50);
+			
 			int aux = life;
 			if (!damage_received) {
 				life = aux - App->chunli2->dmg;
 			}
 
-			if (App->chunli2->state == ST_KICK_HARD_CROUCH) {
-				damage_received = 3;
-				App->slow->StartSlowdown(JUMP_TIME2, 50);
-			}
+			if (state == ST_WALK_BACKWARD2 || state == ST_WALK_FORWARD2 || state == ST_IDLE2) {
+				if (App->chunli2->state == ST_KICK_HARD_CROUCH) {
+					damage_received = 3;
+					App->slow->StartSlowdown(JUMP_TIME2, 50);
+				}
+				else if (App->chunli2->state == ST_KICK_HARD_NEUTRAL_JUMP) {
+					damage_received = 3;
+					App->slow->StartSlowdown(JUMP_TIME2, 50);
+				}
+				else if (App->chunli2->state == ST_KICK_HARD_STANDING) {
+					damage_received = 2;
+					App->slow->StartSlowdown(400, 50);
+				}
+				else {
+					damage_received = 1;
+				}
 
-			else {
-				damage_received = 1;
+			}
+			else if (state == ST_CROUCH2) {
+				damage_received = 4;
 			}
 
 		}
@@ -1362,10 +1413,11 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 		right = true;
 	}
 	//Axis
+	/*
 	if (App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTX] == AXIS_MOVE && App->input->Pad2.Xaxis_state > JOYSTICK_DEAD_ZONE) {
 		left = true;
 	}
-	/*if (App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTX] == AXIS_IDLE) {
+	if (App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTX] == AXIS_IDLE) {
 		left = false;
 	}*/
 
@@ -1377,6 +1429,9 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 	}
 	if (damage_received == 3) {
 		inputs.Push(IN_DAMAGE_FALL2);
+	}
+	if (damage_received == 4) {
+		inputs.Push(IN_DAMAGE_CROUCH2);
 	}
 
 	if (block_damage == 1) {
@@ -1484,7 +1539,7 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs2>& inputs)
 
 	if (kick_hard_timer > 0)
 	{
-		if (SDL_GetTicks() - kick_hard_timer > KICK_HARD_TIME2)
+		if (SDL_GetTicks() - kick_hard_timer > JUMP_TIME2)
 		{
 			inputs.Push(IN_KICK_HARD_FINISH2);
 			kick_hard_timer = 0;
@@ -1502,7 +1557,7 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs2>& inputs)
 
 	if (dmg_hard_timer > 0)
 	{
-		if (SDL_GetTicks() - dmg_hard_timer > PUNCH_TIME2)
+		if (SDL_GetTicks() - dmg_hard_timer > DMG_TIME2)
 		{
 			inputs.Push(IN_DAMAGE_FINISH2);
 			dmg_hard_timer = 0;
@@ -1983,9 +2038,12 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			case IN_2_2: state = ST_PUNCH_HARD_CROUCH2; punch_hard_timer = SDL_GetTicks(); break;
 			case IN_3_2: state = ST_KICK_MEDIUM_CROUCH2; punch_medium_timer = SDL_GetTicks(); break;
 			case IN_4_2: state = ST_KICK_HARD_CROUCH2; kick_hard_timer = SDL_GetTicks(); break;
+			case IN_DAMAGE_CROUCH2: state = ST_DAMAGE_CROUCH2;dmg_hard_timer = SDL_GetTicks(); break;
+			case IN_BLOCK_CROUCH2: state = ST_BLOCK_CROUCH2;block_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
+		
 		case ST_PUNCH_CROUCH2:
 		{
 			switch (last_input)
@@ -2219,6 +2277,24 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			}
 		}
 		break;
+
+		case ST_BLOCK_CROUCH2:
+		{
+			switch (last_input)
+			{
+			case IN_BLOCK_FINISH2:state = ST_IDLE2; block_damage = 0; break;
+			}
+		}
+		break;
+
+		case ST_DAMAGE_CROUCH2:
+		{
+			switch (last_input)
+			{
+				case IN_DAMAGE_FINISH2:state = ST_IDLE2; damage_received = 0; break;
+			}
+		}
+		break;
 		}
 	}
 	return state;
@@ -2295,6 +2371,7 @@ void ModuleChunLi::resetanimations() {
 	damage.Reset();
 	damage2.Reset();
 	damage3.Reset();
+	damage4.Reset();
 	jump_neutral_kick.Reset();
 	jump_neutral_kick_medium.Reset();
 	jump_neutral_kick_hard.Reset();

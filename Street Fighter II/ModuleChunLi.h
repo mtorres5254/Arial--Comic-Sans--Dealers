@@ -89,6 +89,7 @@ enum chunli_states2
 	ST_DAMAGE2,
 	ST_DAMAGE_HARD2,
 	ST_DAMAGE_FALL2,
+	ST_DAMAGE_CROUCH2,
 
 	ST_BLOCK2,
 	ST_BLOCK_CROUCH2,
@@ -110,6 +111,7 @@ enum chunli_inputs2
 	IN_DAMAGE2,
 	IN_DAMAGE_HARD2,
 	IN_DAMAGE_FALL2,
+	IN_DAMAGE_CROUCH2,
 
 	IN_X2,
 	IN_C2,
@@ -222,6 +224,7 @@ public:
 	Animation damage;
 	Animation damage2;
 	Animation damage3;
+	Animation damage4;
 	Animation victory;
 	Animation victory1;
 	iPoint position;
@@ -234,7 +237,7 @@ public:
 	bool GodMode = false;
 
 	bool death = false;
-
+	
 	int PivotX = 0;
 	int PivotY = 0;
 	int dmg = 0;
