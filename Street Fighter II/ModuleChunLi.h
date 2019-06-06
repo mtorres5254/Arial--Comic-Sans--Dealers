@@ -138,6 +138,9 @@ public:
 	void positionlimits();
 	void resetanimations();
 	void debugcommands();
+	void jump_neutral_logic();
+	void jump_forward_logic();
+	void jump_backward_logic();
 
 public:
 

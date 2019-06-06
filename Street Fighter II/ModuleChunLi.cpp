@@ -699,7 +699,13 @@ update_status ModuleChunLi::Update()
 				
 				if (damage_received == true) {
 					current_animation = &damage2;
-					position.y = 220;
+
+					if (position.y < 220) {
+						position.y++;
+					}
+					else {
+						position.y = 220;
+					}
 
 					if (current_animation->current_frame != 0)
 					{
@@ -746,27 +752,8 @@ update_status ModuleChunLi::Update()
 						break;
 					case ST_JUMP_NEUTRAL2:						
 						
-						current_animation = &jump_neutral;											
-
-		
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2/4.5) {
-							position.y -= 8;
-						}
-
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 4;
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y +=4;
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2/1.28) {
-							position.y += 10;
-						}
+						current_animation = &jump_neutral;									
+						jump_neutral_logic();					
 
 						break;
 
@@ -774,28 +761,7 @@ update_status ModuleChunLi::Update()
 
 			
 						current_animation = &jump_forward;
-						position.x += (3 * speedX);
-
-						
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
-							position.y -= 9;
-							
-						}
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 5;
-								
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 7;
-							
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
-							position.y += 8;
-						}
+						jump_forward_logic();
 
 						break;
 
@@ -803,28 +769,7 @@ update_status ModuleChunLi::Update()
 
 
 						current_animation = &jump_backwards;
-						position.x -= (3 * speedX);
-
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
-							position.y -= 9;
-
-						}
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 5;
-
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 7;
-
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
-							position.y += 8;
-						}
+						jump_backward_logic();
 						break;
 					case ST_CROUCH2:
 
@@ -835,9 +780,7 @@ update_status ModuleChunLi::Update()
 						break;
 					case ST_PUNCH_STANDING2:
 						
-						current_animation = &punch;
-
-		
+						current_animation = &punch;	
 
 						
 						break;
@@ -879,64 +822,14 @@ update_status ModuleChunLi::Update()
 						current_animation = &jump_neutral_punch;
 
 						
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 4.5) {
-							position.y -= 8;
-						}
-
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.28) {
-							position.y += 10;
-						}
-
-						
-						if (SDL_GetTicks() - punch_neutral_jump_timer > PUNCH_NEUTRAL_JUMP_TIME2) {
-							jump_neutral_punch.Reset();
-							jump_neutral.current_frame = 9;			
-							
-						}
-						
+						jump_neutral_logic();					
 						
 
 						break;
 
 					case ST_PUNCH_MEDIUM_NEUTRAL_JUMP2:
 
-						current_animation = &jump_neutral_punch_medium;
-
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 4.5) {
-							position.y -= 8;
-						}
-
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.28) {
-							position.y += 10;
-						}
-
-
-						if (SDL_GetTicks() - punch_neutral_jump_timer > PUNCH_NEUTRAL_JUMP_TIME2) {
-							jump_neutral_punch_medium.Reset();
-							jump_neutral.current_frame = 9;
-
-						}
+						jump_neutral_logic();
 
 
 
@@ -947,30 +840,7 @@ update_status ModuleChunLi::Update()
 						current_animation = &jump_neutral_punch_hard;
 
 
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 4.5) {
-							position.y -= 8;
-						}
-
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.28) {
-							position.y += 10;
-						}
-
-
-						if (SDL_GetTicks() - punch_neutral_jump_timer > PUNCH_NEUTRAL_JUMP_TIME2) {
-							jump_neutral_punch_hard.Reset();
-							jump_neutral.current_frame = 9;
-
-						}
+						jump_neutral_logic();	
 
 
 
@@ -980,32 +850,7 @@ update_status ModuleChunLi::Update()
 					
 						current_animation = &jump_forward_punch;
 
-						position.x += 3;
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
-							position.y -= 8;
-
-						}
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
-							position.y += 8;
-						}
-
-						if (SDL_GetTicks() - punch_neutral_jump_timer == PUNCH_NEUTRAL_JUMP_TIME2) {
-							jump_forward_punch.Reset();
-							
-						}
+						jump_forward_logic();
 
 						break;
 
@@ -1014,32 +859,7 @@ update_status ModuleChunLi::Update()
 
 						current_animation = &jump_forward_punch_medium;
 
-						position.x += 3;
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
-							position.y -= 8;
-
-						}
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
-							position.y += 8;
-						}
-
-						if (SDL_GetTicks() - punch_neutral_jump_timer == PUNCH_NEUTRAL_JUMP_TIME2) {
-							jump_forward_punch_medium.Reset();
-
-						}
+						jump_forward_logic();
 
 						break;
 
@@ -1048,32 +868,7 @@ update_status ModuleChunLi::Update()
 
 						current_animation = &jump_forward_punch_hard;
 
-						position.x += 3;
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
-							position.y -= 8;
-
-						}
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
-							position.y += 8;
-						}
-
-						if (SDL_GetTicks() - punch_neutral_jump_timer == PUNCH_NEUTRAL_JUMP_TIME2) {
-							jump_forward_punch_hard.Reset();
-
-						}
+						jump_forward_logic();
 
 						break;
 
@@ -1082,32 +877,7 @@ update_status ModuleChunLi::Update()
 
 						current_animation = &jump_forward_kick;
 
-						position.x += 3;
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
-							position.y -= 8;
-
-						}
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
-							position.y += 8;
-						}
-
-						if (SDL_GetTicks() - punch_neutral_jump_timer == PUNCH_NEUTRAL_JUMP_TIME2) {
-							jump_forward_kick.Reset();
-
-						}
+						jump_forward_logic();
 
 						break;
 
@@ -1116,32 +886,7 @@ update_status ModuleChunLi::Update()
 
 						current_animation = &jump_forward_kick_medium;
 
-						position.x += 3;
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
-							position.y -= 8;
-
-						}
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
-							position.y += 8;
-						}
-
-						if (SDL_GetTicks() - punch_neutral_jump_timer == PUNCH_NEUTRAL_JUMP_TIME2) {
-							jump_forward_kick_medium.Reset();
-
-						}
+						jump_forward_logic();
 
 						break;
 
@@ -1150,186 +895,46 @@ update_status ModuleChunLi::Update()
 
 						current_animation = &jump_forward_kick_hard;
 
-						position.x += 3;
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
-							position.y -= 8;
-
-						}
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
-							position.y += 8;
-						}
-
-						if (SDL_GetTicks() - punch_neutral_jump_timer == PUNCH_NEUTRAL_JUMP_TIME2) {
-							jump_forward_kick_hard.Reset();
-
-						}
+						jump_forward_logic();
 
 						break;
 					case ST_PUNCH_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch;
 
-						position.x -= 3;
-
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
-							position.y -= 8;
-
-						}
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
-							position.y += 8;
-						}
+						jump_backward_logic();
 
 						break;
 
 					case ST_PUNCH_MEDIUM_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch_medium;
 
-						position.x -= 3;
-
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
-							position.y -= 8;
-
-						}
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
-							position.y += 8;
-						}
+						jump_backward_logic();
 
 						break;
 
 					case ST_PUNCH_HARD_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch_hard;
 
-						position.x -= 3;
-
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
-							position.y -= 8;
-
-						}
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
-							position.y += 8;
-						}
+						jump_backward_logic();
 
 						break;
 					case ST_KICK_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick;
 
-						position.x -= 3;
-
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
-							position.y -= 8;
-
-						}
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
-							position.y += 8;
-						}
-
+						jump_backward_logic();
 						break;
 
 					case ST_KICK_MEDIUM_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick_medium;
 
-						position.x -= 3;
-
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
-							position.y -= 8;
-
-						}
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
-							position.y += 8;
-						}
+						jump_backward_logic();
 
 						break;
 
 					case ST_KICK_HARD_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick_hard;
 
-						position.x -= 3;
-
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
-							position.y -= 8;
-
-						}
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
-							position.y += 8;
-						}
+						jump_backward_logic();
 
 						break;
 					case ST_KICK_STANDING2:
@@ -1372,30 +977,7 @@ update_status ModuleChunLi::Update()
 						current_animation = &jump_neutral_kick;
 
 
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 4.5) {
-							position.y -= 8;
-						}
-
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.28) {
-							position.y += 10;
-						}
-
-
-						if (SDL_GetTicks() - punch_neutral_jump_timer > PUNCH_NEUTRAL_JUMP_TIME2) {
-							jump_neutral_kick.Reset();
-							jump_neutral.current_frame = 9;
-
-						}
+						jump_neutral_logic();
 
 
 
@@ -1404,68 +986,14 @@ update_status ModuleChunLi::Update()
 					case ST_KICK_MEDIUM_NEUTRAL_JUMP2:
 
 						current_animation = &jump_neutral_kick_medium;
-
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 4.5) {
-							position.y -= 8;
-						}
-
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.28) {
-							position.y += 10;
-						}
-
-
-						if (SDL_GetTicks() - punch_neutral_jump_timer > PUNCH_NEUTRAL_JUMP_TIME2) {
-							jump_neutral_kick_medium.Reset();
-							jump_neutral.current_frame = 9;
-
-						}
-
+						jump_neutral_logic();
 
 
 						break;
 
 					case ST_KICK_HARD_NEUTRAL_JUMP2:
 
-						current_animation = &jump_neutral_kick_hard;
-
-
-						if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 4.5) {
-							position.y -= 8;
-						}
-
-						if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
-							if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-								position.y -= 3;
-							}
-
-							if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-								position.y += 3;
-							}
-						}
-
-						if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.28) {
-							position.y += 10;
-						}
-
-
-						if (SDL_GetTicks() - punch_neutral_jump_timer > PUNCH_NEUTRAL_JUMP_TIME2) {
-							jump_neutral_kick_hard.Reset();
-							jump_neutral.current_frame = 9;
-
-						}
-
-
+						jump_neutral_logic();
 
 						break;
 					}
@@ -1584,9 +1112,6 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 		}
 	}	
 
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY && (state == ST_JUMP_BACKWARD2 || state == ST_JUMP_FORWARD2 || state == ST_JUMP_NEUTRAL2)) {
-		//speedX = -1;
-	}
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY_SHOT)
 	{
@@ -1897,6 +1422,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		case ST_IDLE2:
 		{
 			switch (last_input)
+
 			{
 			case IN_RIGHT_DOWN2: state = ST_WALK_FORWARD2; break;
 			case IN_LEFT_DOWN2: state = ST_WALK_BACKWARD2; break;
@@ -2691,6 +2217,81 @@ void ModuleChunLi::debugcommands() {
 			GodMode = false;
 		}
 
+	}
+
+}
+
+void ModuleChunLi::jump_neutral_logic() {
+
+	if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 4.5) {
+		position.y -= 8;
+	}
+
+	if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
+		if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+			position.y -= 4;
+		}
+
+		if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+			position.y += 4;
+		}
+	}
+
+	if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.28) {
+		position.y += 10;
+	}
+}
+
+void ModuleChunLi::jump_forward_logic() {
+
+	position.x += (3 * speedX);
+
+
+	if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+		position.y -= 9;
+
+	}
+	if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+		if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+			position.y -= 5;
+
+		}
+
+		if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+			position.y += 7;
+
+		}
+	}
+
+	if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
+		position.y += 8;
+	}
+
+}
+
+void ModuleChunLi::jump_backward_logic() {
+
+	position.x -= (3 * speedX);
+
+
+	if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 5) {
+		position.y -= 9;
+
+	}
+	if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.25) {
+		if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+			position.y -= 5;
+
+		}
+
+		if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+			position.y += 7;
+
+		}
+	}
+
+	if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.25) {
+		position.y += 8;
 	}
 
 }

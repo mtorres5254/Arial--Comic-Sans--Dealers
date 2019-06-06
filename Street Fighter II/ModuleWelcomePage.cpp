@@ -311,7 +311,7 @@ update_status ModuleWelcomePage::Update()
 }
 void ModuleWelcomePage::next()
 {
-	App->fade->FadeToBlack(App->welcome_page, App->selectionScene, 0.8f);
+	App->fade->FadeToBlack(App->welcome_page, App->scene_dhalsim, 0.8f);
 	//App->audio->PlayChunk(start_sound, 0);
 	App->audio->StopMusic(250);
 	//select = false;
