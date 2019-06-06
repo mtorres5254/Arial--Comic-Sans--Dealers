@@ -25,7 +25,7 @@
 
 #define PUNCH_NEUTRAL_JUMP_TIME2 850
 #define HADOUKEN_TIME2 1200
-#define DMG_TIME2 75
+#define DMG_TIME2 200
 
 
 
@@ -86,6 +86,8 @@ enum chunli_states2
 	ST_KICK_MEDIUM_BACKWARD_JUMP2,
 	ST_KICK_HARD_BACKWARD_JUMP2,
 
+	ST_DAMAGE2,
+
 
 };
 
@@ -100,6 +102,7 @@ enum chunli_inputs2
 	IN_CROUCH_UP2,
 	IN_CROUCH_DOWN2,
 	IN_JUMP_AND_CROUCH2,
+	IN_DAMAGE2,
 	
 	IN_X2,
 	IN_C2,
@@ -118,6 +121,8 @@ enum chunli_inputs2
 	IN_KICK_HARD_FINISH2,
 	IN_LIGHTNINGKICK_FINISH2,
 	IN_RECEIVED_PUNCH2,
+
+	IN_DAMAGE_FINISH2,
 };
 class ModuleChunLi : public Module
 {
@@ -244,7 +249,7 @@ public:
 	Uint32 hadouken_timer = 0;
 	Uint32 punch_neutral_jump_timer = 0;
 	Uint32 dmg_timer = 0;
-
+	
 private:
 	bool left = false;
 	bool right = false;

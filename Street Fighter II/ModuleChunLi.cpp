@@ -696,10 +696,10 @@ update_status ModuleChunLi::Update()
 			if (state != current_state)
 			{
 				lifecondition(current_animation);
-				
+				/*
 				if (damage_received == true) {
-					current_animation = &damage2;
-
+				//	current_animation = &damage2;
+					move = false;
 					if (position.y < 220) {
 						position.y++;
 					}
@@ -716,9 +716,9 @@ update_status ModuleChunLi::Update()
 					}
 						
 
-				}
+				}*/
 
-				if (life > 0 && damage_received == false && App->chunli2->life > 0 ) 
+				if (life > 0  && App->chunli2->life > 0 ) 
 				{					
 					switch (state)
 					{
@@ -739,6 +739,7 @@ update_status ModuleChunLi::Update()
 
 						if(move)
 						position.x += speedX;
+						move = true;
 						break;
 
 					case ST_WALK_BACKWARD2:
@@ -748,28 +749,35 @@ update_status ModuleChunLi::Update()
 
 						if(move)
 						position.x -= speedX;
+						move = true;
 
 						break;
 					case ST_JUMP_NEUTRAL2:						
 						
-						current_animation = &jump_neutral;									
-						jump_neutral_logic();					
-
+						if (move) {
+							current_animation = &jump_neutral;
+							jump_neutral_logic();
+						}										
+						move = true;
 						break;
 
 					case ST_JUMP_FORWARD2:
 
-			
-						current_animation = &jump_forward;
-						jump_forward_logic();
+						if (move) {
+							current_animation = &jump_forward;
+							jump_forward_logic();
+						}
+						move = true;
 
 						break;
 
 					case ST_JUMP_BACKWARD2:
 
-
-						current_animation = &jump_backwards;
-						jump_backward_logic();
+						if (move) {
+							current_animation = &jump_backwards;
+							jump_backward_logic();
+						}
+						move = true;
 						break;
 					case ST_CROUCH2:
 
@@ -993,7 +1001,14 @@ update_status ModuleChunLi::Update()
 
 					case ST_KICK_HARD_NEUTRAL_JUMP2:
 
+						current_animation = &jump_neutral_kick_hard;
 						jump_neutral_logic();
+
+						break;
+
+					case ST_DAMAGE2:
+						current_animation = &damage;
+						move = false;
 
 						break;
 					}
@@ -1287,7 +1302,9 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 		left = false;
 	}*/
 
-
+	if (damage_received) {
+		inputs.Push(IN_DAMAGE2);
+	}
 	if (left && right)
 		inputs.Push(IN_LEFT_AND_RIGHT2);
 	{
@@ -1392,6 +1409,16 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs2>& inputs)
 			kick_hard_timer = 0;
 		}
 	}
+
+	if (dmg_timer > 0)
+	{
+		if (SDL_GetTicks() - dmg_timer > DMG_TIME2)
+		{
+			inputs.Push(IN_DAMAGE_FINISH2);
+			dmg_timer = 0;
+		}
+	}
+
 	
 
 }
@@ -1435,6 +1462,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			case IN_2_2: state = ST_PUNCH_HARD2; punch_hard_timer= SDL_GetTicks(); break;
 			case IN_3_2: state = ST_KICK_MEDIUM_STANDING2; kick_medium_timer = SDL_GetTicks(); break;
 			case IN_4_2: state = ST_KICK_HARD_STANDING2; kick_hard_timer = SDL_GetTicks(); break;
+			case IN_DAMAGE2: state = ST_DAMAGE2; dmg_timer = SDL_GetTicks(); break;
 			
 			}
 		}
@@ -2037,6 +2065,14 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		}
 		break;
 
+		case ST_DAMAGE2:
+		{
+			switch (last_input)
+			{
+			case IN_DAMAGE_FINISH2:state = ST_IDLE2; damage_received = false; break;
+			}
+		}
+		break;
 		}
 	}
 	return state;
@@ -2108,47 +2144,18 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 			ResetPlayer();
 
 		}
-
+		/*
 		if (damage_received == true) {
 
 			current_animation = &damage;
 			if (life == 0) {
 				damage_received = false;
 			}
-		}
+		}*/
 
 		//ResetPlayer();
 	}
-
-	if (damage_received == true) {
-
-
-		if (life == 0) {
-			damage_received = false;
-		}
-		if (acumdamage == 1) {
-
-
-		}
-		if (acumdamage >= 0 && acumdamage < 20 && life > 0) {
-
-
-			current_animation = &damage;
-			acumdamage++;
-		}
-
-		if (acumdamage == 20 && life > 0) {
-
-			acumdamage = 0;
-
-			damage.Reset();
-
-			damage_received = false;	
-
-
-		}
-
-	}
+	
 }
 
 void ModuleChunLi::resetanimations() {
@@ -2223,23 +2230,26 @@ void ModuleChunLi::debugcommands() {
 
 void ModuleChunLi::jump_neutral_logic() {
 
-	if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 4.5) {
-		position.y -= 8;
-	}
-
-	if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
-		if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
-			position.y -= 4;
+	
+		if (SDL_GetTicks() - jump_timer <= JUMP_TIME2 / 4.5) {
+			position.y -= 8;
 		}
 
-		if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
-			position.y += 4;
-		}
-	}
+		if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 4.5 && SDL_GetTicks() - jump_timer < JUMP_TIME2 / 1.28) {
+			if (SDL_GetTicks() - jump_timer < JUMP_TIME2 / 2) {
+				position.y -= 4;
+			}
 
-	if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.28) {
-		position.y += 10;
-	}
+			if (SDL_GetTicks() - jump_timer > JUMP_TIME2 / 2) {
+				position.y += 4;
+			}
+		}
+
+		if (SDL_GetTicks() - jump_timer >= JUMP_TIME2 / 1.28) {
+			position.y += 10;
+		}
+	
+	
 }
 
 void ModuleChunLi::jump_forward_logic() {
