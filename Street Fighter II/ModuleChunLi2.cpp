@@ -685,6 +685,7 @@ update_status ModuleChunLi2::Update()
 	chunli_states current_state = ST_UNKNOWN;
 
 	positionlimits();
+	debugcommands();
 
 
 	if (death == false) {
@@ -1529,11 +1530,14 @@ void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 	{
 		r = current_animation->hitbox[i];
 
-		if (position.x > App->chunli->position.x)
-			colliders[i] = App->collision->AddCollider({ position.x -(r.w-PivotX) - r.x , position.y - r.h +PivotY - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
+		if (!GodMode) {
+			if (position.x > App->chunli->position.x)
+				colliders[i] = App->collision->AddCollider({ position.x - (r.w - PivotX) - r.x , position.y - r.h + PivotY - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
 
-		if (position.x < App->chunli->position.x)
-			colliders[i] = App->collision->AddCollider({ position.x  -  PivotX + r.x , position.y + PivotY - r.h - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
+			if (position.x < App->chunli->position.x)
+				colliders[i] = App->collision->AddCollider({ position.x - PivotX + r.x , position.y + PivotY - r.h - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
+		}
+		
 
 	}
 	r = current_animation->GetCurrentFrame();
@@ -2637,4 +2641,29 @@ void ModuleChunLi2::resetanimations() {
 	jump_backward_kick.Reset();
 	jump_backward_kick_medium.Reset();
 	jump_backward_kick_hard.Reset();
+}
+
+void ModuleChunLi2::debugcommands() {
+
+
+	if (App->input->keyboard[SDL_SCANCODE_F5] == KEY_DOWN) {
+		life = 0;
+	}
+
+	if (App->input->keyboard[SDL_SCANCODE_F4] == KEY_DOWN)
+	{
+		if (!GodMode) {
+			for (int i = 0; i < MAX_COLLIDERS; i++)
+			{
+				if (colliders[i] != nullptr)
+					colliders[i]->to_delete = true;
+			}
+			GodMode = true;
+		}
+		else {
+			GodMode = false;
+		}
+
+	}
+
 }

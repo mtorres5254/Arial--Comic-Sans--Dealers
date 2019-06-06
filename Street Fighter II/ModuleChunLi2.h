@@ -132,6 +132,7 @@ public:
 	void colliders_and_blit(Animation*);
 	void positionlimits();
 	void resetanimations();
+	void debugcommands();
 
 public:
 
@@ -199,6 +200,7 @@ public:
 	Collider* colliders[MAX_COLLIDERS];
 
 	int acumvictory = 0;
+	bool GodMode = false;
 
 	bool death = false;
 
