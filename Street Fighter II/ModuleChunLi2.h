@@ -86,6 +86,9 @@ enum chunli_states
 	ST_DAMAGE,
 	ST_DAMAGE_HARD,
 	ST_DAMAGE_FALL,
+
+	ST_BLOCK,
+	ST_BLOCK_CROUCH,
 };
 
 enum chunli_inputs
@@ -120,7 +123,12 @@ enum chunli_inputs
 	IN_KICK_HARD_FINISH,
 	IN_LIGHTNINGKICK_FINISH,
 	IN_RECEIVED_PUNCH,
-	IN_DAMAGE_FINISH
+	IN_DAMAGE_FINISH,
+
+	IN_BLOCK,
+	IN_BLOCK_CROUCH,
+
+	IN_BLOCK_FINISH,
 };
 class ModuleChunLi2 : public Module
 {
@@ -200,6 +208,9 @@ public:
 	Animation jump_backward_kick_medium;
 	Animation jump_backward_kick_hard;
 
+	Animation block_standing;
+	Animation block_crouch;
+
 	Animation LightningKick_startup;
 	Animation LightningKick;
 	Animation Death;
@@ -229,6 +240,7 @@ public:
 	int jumpHeight = 0;
 	int speed = 1;
 	int damage_received = 0;
+	int block_damage = 0;
 	bool jumpactive = 0;
 	bool prueba = false;
 	int life = 1000;
@@ -252,6 +264,7 @@ public:
 	Uint32 dmg_timer = 0;
 	Uint32 dmg_hard_timer = 0;
 	Uint32 dmg_fall_timer = 0;
+	Uint32 block_timer = 0;
 
 
 };

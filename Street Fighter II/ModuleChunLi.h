@@ -90,6 +90,9 @@ enum chunli_states2
 	ST_DAMAGE_HARD2,
 	ST_DAMAGE_FALL2,
 
+	ST_BLOCK2,
+	ST_BLOCK_CROUCH2,
+
 
 };
 
@@ -127,6 +130,11 @@ enum chunli_inputs2
 	IN_RECEIVED_PUNCH2,
 
 	IN_DAMAGE_FINISH2,
+
+	IN_BLOCK2,
+	IN_BLOCK_CROUCH2,
+
+	IN_BLOCK_FINISH2,
 };
 class ModuleChunLi : public Module
 {
@@ -205,6 +213,9 @@ public:
 	Animation jump_backward_kick_medium;
 	Animation jump_backward_kick_hard;
 	
+	Animation block_standing;
+	Animation block_crouch;
+
 	Animation LightningKick_startup;
 	Animation LightningKick;
 	Animation Death;
@@ -214,6 +225,8 @@ public:
 	Animation victory;
 	Animation victory1;
 	iPoint position;
+
+	
 
 	Collider* colliders[MAX_COLLIDERS];
 
@@ -226,6 +239,7 @@ public:
 	int PivotY = 0;
 	int dmg = 0;
 
+
 	int DeathCount = 0;
 	int ActiveDeath = 0;
 	int victorycount = 0;
@@ -235,6 +249,7 @@ public:
 	int jumpHeight = 0;
 	int speed = 1;
 	int damage_received = 0;
+	int block_damage = 0;
 	bool jumpactive = 0;
 	bool active = false;
 	int life = 1000;
@@ -256,6 +271,7 @@ public:
 	Uint32 dmg_timer = 0;
 	Uint32 dmg_hard_timer = 0;
 	Uint32 dmg_fall_timer = 0;
+	Uint32 block_timer = 0;
 private:
 	bool left = false;
 	bool right = false;
