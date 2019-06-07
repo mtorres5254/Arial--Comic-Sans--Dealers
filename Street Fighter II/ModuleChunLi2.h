@@ -244,6 +244,8 @@ public:
 	bool GodMode = false;
 
 	bool death = false;
+	bool leftLimit = false;
+	bool RightLimit = false;
 
 	int PivotX = 0; 
 	int PivotY = 0;

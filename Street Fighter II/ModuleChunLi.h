@@ -257,6 +257,8 @@ public:
 	int PivotY = 0;
 	int dmg = 0;
 
+	bool leftLimit = false;
+	bool RightLimit = false;
 
 	int DeathCount = 0;
 	int ActiveDeath = 0;
