@@ -30,7 +30,7 @@
 #define MAX_FRAME_COLLIDERS 6
 #define idleForce 5
 
-#define WHIRLWINDKICK_TIME 1100
+#define WHIRLWINDKICK_TIME 1500
 
 struct SDL_Texture;
 
