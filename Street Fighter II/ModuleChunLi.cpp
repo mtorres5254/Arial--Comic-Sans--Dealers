@@ -1519,9 +1519,9 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 		inputs.Push(IN_LEFT_AND_RIGHT2);
 	{
 		if (left == true) { inputs.Push(IN_LEFT_DOWN2); }
-		if (left == false) { inputs.Push(IN_LEFT_UP2); }
+		else if (left == false) { inputs.Push(IN_LEFT_UP2); }
 		if (right == true) { inputs.Push(IN_RIGHT_DOWN2); }
-		if (right == false) { inputs.Push(IN_RIGHT_UP2); }
+		else if (right == false) { inputs.Push(IN_RIGHT_UP2); }
 	}
 
 	if (up && down)
@@ -1531,7 +1531,7 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 		if (down == true) {
 			inputs.Push(IN_CROUCH_DOWN2);
 		}
-		if (down == false) {
+		else if (down == false) {
 			inputs.Push(IN_CROUCH_UP2);
 		}
 		if (up == true) {
