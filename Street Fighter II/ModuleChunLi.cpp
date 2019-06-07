@@ -1183,24 +1183,24 @@ void ModuleChunLi::colliders_and_blit(Animation* current_animation) {
 				colliders[i] = App->collision->AddCollider({ position.x + PivotX + r.x , position.y + PivotY - r.h - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
 
 			if (position.x > App->chunli2->position.x )
-				colliders[i] = App->collision->AddCollider({ position.x - (r.w - PivotX) + 40 - r.x , position.y - r.h + PivotY - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
+				colliders[i] = App->collision->AddCollider({ position.x - (r.w - PivotX) + 50 - r.x , position.y - r.h + PivotY - r.y,r.w,r.h }, current_animation->type[i], current_animation->callback[i]);
 		}
 		
 	}
 
 	r = current_animation->GetCurrentFrame();
 	SDL_Rect shadowrect = { 6,8,71,15 };
-	if (position.x < App->chunli2->position.x && (!RightLimit || position.y != 220) || leftLimit) {
+	if (position.x + PivotX < App->chunli2->position.x && (!RightLimit || position.y != 220) || leftLimit) {
 
 		App->render->Blit(shadow, position.x+PivotX, 207, &shadowrect);
 		App->render->Blit(shadow, App->chunli2->position.x - App->chunli2->PivotX - 8, 207, &shadowrect);
 		App->render->Blit(graphics, position.x + PivotX, position.y - r.h, &r);
 	}
-	if (position.x > App->chunli2->position.x && !leftLimit || (RightLimit && position.y == 220)) {
+	if (position.x + PivotX > App->chunli2->position.x && !leftLimit || (RightLimit && position.y == 220)) {
 
-		App->render->Blit(shadow, position.x - (shadowrect.w - PivotX) + 40, 207, &shadowrect);
+		App->render->Blit(shadow, position.x - (shadowrect.w - PivotX) + 50, 207, &shadowrect);
 		App->render->Blit(shadow, App->chunli2->position.x - (shadowrect.w + App->chunli2->PivotX) + 65, 207, &shadowrect);		
-		App->render->BlitSym(graphics, position.x - (r.w - PivotX)+40, position.y - r.h, &r);
+		App->render->BlitSym(graphics, position.x - (r.w - PivotX)+ 50, position.y - r.h, &r);
 	}
 
 }

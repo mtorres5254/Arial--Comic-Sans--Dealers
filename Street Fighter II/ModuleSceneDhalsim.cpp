@@ -14,6 +14,7 @@
 #include "ModuleChunLi.h"
 #include "ModuleChunLi2.h"
 #include "Animation.h"
+#include <time.h>
 
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA

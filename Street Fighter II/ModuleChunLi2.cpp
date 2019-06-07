@@ -602,26 +602,26 @@ bool ModuleChunLi2::Start()
 	COLLIDER_TYPE wkCollType1[wkcollider1] = { {COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY_SHOT} };
 	Module* wkCallback1[wkcollider1] = { {this},{this},{this} };
 
-	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
-	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
-	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
-	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
-	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 32, 2 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 32, 2 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 32, 2 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 32, 2 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 32, 2 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.speed = 0.24f;
 	//WhirlwindKick.loop = true;
 
@@ -1319,11 +1319,11 @@ void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 	
 
 	SDL_Rect shadowrect = { 6,8,71,15 };
-	if (position.x < App->chunli->position.x && !RightLimit || (leftLimit && position.y==220)) {
+	if (position.x < App->chunli->position.x + App->chunli->PivotX && !RightLimit || (leftLimit && position.y==220)) {
 		
 		App->render->Blit(graphics, position.x -PivotX, position.y - r.h, &r);
 	}
-	if (position.x > App->chunli->position.x && (!leftLimit || position.y !=220) || RightLimit) {
+	if (position.x > App->chunli->position.x + App->chunli->PivotX && (!leftLimit || position.y !=220) || RightLimit) {
 	
 		App->render->BlitSym(graphics, position.x-(r.w-PivotX), position.y  - r.h, &r);
 	}
