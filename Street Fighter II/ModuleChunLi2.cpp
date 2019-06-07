@@ -1563,6 +1563,34 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 		if (App->combo->CheckWhirlwindKickP2() == true) {
 			inputs.Push(IN_WHIRLWINDKICK);
 		}
+
+		//Axis
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
+			up = true;
+		}
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE) {
+			down = true;
+		}
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
+			left = true;
+		}
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE) {
+			right = true;
+		}
+
+
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE) {
+			up = false;
+		}
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE) {
+			down = false;
+		}
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE) {
+			left = false;
+		}
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE) {
+			right = false;
+		}
 	}
 	
 
@@ -1592,20 +1620,25 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	if (left && right)
 		inputs.Push(IN_LEFT_AND_RIGHT);
 	{
-		if (left)
-			inputs.Push(IN_LEFT_DOWN);
-		if (right)
-			inputs.Push(IN_RIGHT_DOWN);
+		if (left == true) { inputs.Push(IN_LEFT_DOWN); }
+		if (left == false) { inputs.Push(IN_LEFT_UP); }
+		if (right == true) { inputs.Push(IN_RIGHT_DOWN); }
+		if (right == false) { inputs.Push(IN_RIGHT_UP); }
 	}
 
 	if (up && down)
 		inputs.Push(IN_JUMP_AND_CROUCH);
 	else
 	{
-		if (down)
+		if (down == true) {
 			inputs.Push(IN_CROUCH_DOWN);
-		if (up)
+		}
+		if (down == false) {
+			inputs.Push(IN_CROUCH_UP);
+		}
+		if (up == true) {
 			inputs.Push(IN_JUMP);
+		}
 	}
 	return true;
 }

@@ -10,8 +10,8 @@
 #define MAX_BUTTONS 15
 #define MAX_AXIS 6
 #define MAX_PADS 4
-#define JOYSTICK_DEAD_ZONE 0.2
-#define JOYSTICK_DEAD_ZONE_NEGATIVE -0.2
+#define JOYSTICK_DEAD_ZONE 6553
+#define JOYSTICK_DEAD_ZONE_NEGATIVE -6553
 #define MAX_HISTORY 180
 
 enum KEY_STATE
@@ -21,18 +21,13 @@ enum KEY_STATE
 	KEY_REPEAT,
 	KEY_UP
 };
-enum AXIS_STATE
-{
-AXIS_IDLE = 0,
-AXIS_MOVE
-};
+
+
 
 struct GamePad {
 	SDL_GameController* Pad;
 	KEY_STATE button_state[MAX_BUTTONS];
-	AXIS_STATE axis_state[MAX_AXIS];
-	float Xaxis_state = 0.f;
-	float Yaxis_state = 0.f;
+	Sint16 axis_state[MAX_AXIS];
 };
 
 struct History {
