@@ -1237,15 +1237,15 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY_SHOT)
 	{
-		if (state == ST_WALK_BACKWARD2 && App->chunli2->position.x>position.x) {
-			block_damage = 1;						
+		if (state == ST_WALK_BACKWARD2 && App->chunli2->position.x > position.x) {
+			block_damage = 1;
 
 		}
 		else if (state == ST_WALK_FORWARD2 && App->chunli2->position.x < position.x) {
 			block_damage = 1;
 
 		}
-		
+
 		else if (state == ST_CROUCH2 && left && App->chunli2->position.x > position.x) {
 			block_damage = 2;
 		}
@@ -1255,7 +1255,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 		}
 
 		else {
-			
+
 			int aux = life;
 			if (!damage_received) {
 				life = aux - App->chunli2->dmg;
@@ -1270,32 +1270,27 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 					damage_received = 2;
 					App->slow->StartSlowdown(200, 50);
 					//App->chunli2->move = false;
-					
+
 				}
 				else if (App->chunli2->state == ST_KICK_HARD_STANDING) {
 					damage_received = 2;
 					App->slow->StartSlowdown(400, 50);
 				}
 				else {
-					damage_received = 1;					
+					damage_received = 1;
 				}
 
 			}
 			else if (state == ST_CROUCH2) {
 				damage_received = 4;
 			}
-			
+
 			else {
 				damage_received = 5;
 			}
-
 		}
-		
-		
+		App->audio->PlayChunk(medium_damage, 1);
 	}
-
-	
-
 }
 
 bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
