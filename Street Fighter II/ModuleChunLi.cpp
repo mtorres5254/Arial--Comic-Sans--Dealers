@@ -40,7 +40,7 @@ bool ModuleChunLi::Start()
 	//Effects
 	LightningKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_yap.wav");
 	WhirlwindKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_kick.wav");
-
+	hit_effect = 
 
 
 	// idle animation (arcade sprite sheet)

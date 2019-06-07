@@ -166,7 +166,7 @@ bool ModuleWelcomePage::Start()
 	Capcom = App->textures->Load("Assets/Images/Capcom.png");
 	Logo = App->textures->Load("Assets/Images/Logo2.png");
 	music = App->audio->LoadMusic("Assets/Sound/Musics/start_music.ogg");
-	//SelectFX = App->audio->LoadChunk("Assets/Sound/Musics/.ogg");
+	SelectFX = App->audio->LoadChunk("Assets/Sound/Effects/title_selection.wav");
 	//start_sound = App->audio->LoadChunk("Assets/Sound/start_sound.wav");
 	App->render->camera.x = App->render->camera.y = 0;
 
@@ -184,7 +184,7 @@ bool ModuleWelcomePage::CleanUp()
 	App->textures->Unload(Licensed);
 	App->textures->Unload(Logo);
 	App->audio->UnloadMusic(music);
-	//App->audio->UnloadChunk(SelectFX);
+	App->audio->UnloadChunk(SelectFX);
 
 	return true;
 }
@@ -303,7 +303,7 @@ update_status ModuleWelcomePage::Update()
 		if (App->input->keyboard[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_START] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_START] == KEY_DOWN)
 		{
 			select = true;
-			//App->audio->PlayChunk(SelectFX, 0);
+			App->audio->PlayChunk(SelectFX, 1);
 		}
 	}
 

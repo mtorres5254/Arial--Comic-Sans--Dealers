@@ -28,7 +28,9 @@ public:
 	SDL_Texture* ui = nullptr;
 	SDL_Texture* versus = nullptr;
 	Mix_Music* music;
-	Mix_Chunk* start_sound;
+	Mix_Chunk* character_effect;
+	Mix_Chunk* map_effect;
+	Mix_Chunk* plane_effect;
 
 private:
 	int frame=0;

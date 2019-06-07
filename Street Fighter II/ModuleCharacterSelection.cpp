@@ -49,7 +49,9 @@ bool ModuleCharacterSelection::Start()
 	versus = App->textures->Load("Assets/Images/Versus.png");
 	music = App->audio->LoadMusic("Assets/Sound/Musics/PlayerSelect.ogg");
 	App->audio->PlayMusic(music, 300);
-	start_sound = App->audio->LoadChunk("Assets/Sound/start_sound.wav");
+	character_effect = App->audio->LoadChunk("Assets/Sound/Effects/character_selection.wav");
+    map_effect = App->audio->LoadChunk("Assets/Sound/Effects/map_selection.wav");
+	plane_effect = App->audio->LoadChunk("Assets/Sound/Effects/plane.wav");
 	App->render->camera.x = App->render->camera.y = 0;
 
 	return true;
@@ -58,7 +60,11 @@ bool ModuleCharacterSelection::Start()
 bool ModuleCharacterSelection::CleanUp()
 {
 	LOG("Unloading Selection page");
-
+	selected = false;
+	map = false;
+	p1 = false;
+	p2 = false;
+	frame = 0;
 	App->textures->Unload(graphics);
 	App->textures->Unload(ui);
 	App->textures->Unload(versus);
@@ -79,7 +85,6 @@ update_status ModuleCharacterSelection::Update()
 		if (frame == 120)
 		{
 			App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
-			App->audio->PlayChunk(start_sound, 0);
 			App->audio->StopMusic(250);
 		}
 	}
@@ -130,22 +135,24 @@ update_status ModuleCharacterSelection::Update()
 	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) 
 	{
 		p1 = true;
+		App->audio->PlayChunk(character_effect, 1);
 	}
 
 	if (App->input->keyboard[SDL_SCANCODE_J] == KEY_DOWN  || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) 
 	{
 		p2 = true;
+		App->audio->PlayChunk(character_effect, 1);
 	}
 
-	if ((App->input->keyboard[SDL_SCANCODE_X] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) && map==true)
+	if ((App->input->keyboard[SDL_SCANCODE_X] == KEY_DOWN && map == true || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) && map==true)
 	{		
-		selected = true;		
+		selected = true;	
+		App->audio->PlayChunk(map_effect, 1);
 	}
 
 	////Temporal////
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
 		App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
-		App->audio->PlayChunk(start_sound, 0);
 		App->audio->StopMusic(250);
 	}
 	//////////////

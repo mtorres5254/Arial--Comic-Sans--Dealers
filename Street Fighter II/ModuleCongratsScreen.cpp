@@ -24,10 +24,10 @@ ModuleCongratsScreen::~ModuleCongratsScreen()
 bool ModuleCongratsScreen::Start()
 {
 	LOG("Loading CongratsScreen");
-
+	timer = 0;
 	graphics = App->textures->Load("Assets/Images/CongratsScreen.png");	
-	music = App->audio->LoadMusic("Assets/Sound/Musics/congrats.ogg");
-	App->audio->PlayMusic(music, 300);
+	music = App->audio->LoadChunk("Assets/Sound/Effects/lose_screen.wav");
+	App->audio->PlayChunk(music, 1);
 	App->render->camera.x = App->render->camera.y = 0;
 
 	return true;
@@ -36,9 +36,8 @@ bool ModuleCongratsScreen::Start()
 bool ModuleCongratsScreen::CleanUp()
 {
 	LOG("Unloading Congrats Screen");
-
 	App->textures->Unload(graphics);
-	App->audio->UnloadMusic(music);
+	App->audio->UnloadChunk(music);
 
 	return true;
 }
@@ -49,10 +48,9 @@ update_status ModuleCongratsScreen::Update()
 	App->render->Blit(graphics, 0, 0, &background);
 
 	//if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) {
-	if(timer>180)
+	if(timer>250)
 	{
 		App->fade->FadeToBlack(App->congrats_screen, App->welcome_page, 2.0f);
-		App->audio->StopMusic(250);
 	}
 
 	return UPDATE_CONTINUE;

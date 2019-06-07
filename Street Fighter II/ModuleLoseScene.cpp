@@ -24,10 +24,10 @@ ModuleLoseScene::~ModuleLoseScene() {
 
 bool ModuleLoseScene::Start() {
 	LOG("Loading Lose Screen");
-
+	timer = 0;
 	graphics = App->textures->Load("Assets/Images/Lose.png");
-	music = App->audio->LoadMusic("Assets/Sound/Musics/lose_scene.ogg");
-	App->audio->PlayMusic(music, 300);
+	music = App->audio->LoadChunk("Assets/Sound/Effects/lose_screen.wav");
+	App->audio->PlayChunk(music, 1);
 	App->render->camera.x = App->render->camera.y = 0;
 
 	return true;
@@ -38,7 +38,7 @@ bool ModuleLoseScene::CleanUp() {
 	LOG("Unloading Lose Screen");
 
 	App->textures->Unload(graphics);
-	App->audio->UnloadMusic(music);
+	App->audio->UnloadChunk(music);
 
 	return true;
 }
@@ -49,11 +49,10 @@ update_status ModuleLoseScene::Update() {
 	timer++;
 
 	//if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) 
-	if (timer > 180)
+	if (timer > 250)
 	{
 
 		App->fade->FadeToBlack(App->lose_scene, App->welcome_page, 2.0f);
-		App->audio->StopMusic(2500);
 	}
 
 	return UPDATE_CONTINUE;

@@ -244,6 +244,7 @@ public:
 
 	Mix_Chunk* LightningKick_effect;
 	Mix_Chunk* WhirlwindKick_effect;
+	Mix_Chunk* hit_effect;
 
 	Collider* colliders[MAX_COLLIDERS];
 
