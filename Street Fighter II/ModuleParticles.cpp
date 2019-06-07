@@ -22,7 +22,16 @@ ModuleParticles::~ModuleParticles()
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
-	
+	graphics = App->textures->Load("Assets/Images/SFX.png");
+
+	hit.anim.PushBack1({ 71, 95, 13, 17 }, { 31,2 }, 0, {}, {}, {}, {});
+	hit.anim.PushBack1({ 85, 93, 22, 19 }, { 31,2 }, 0, {}, {}, {}, {});
+	hit.anim.PushBack1({ 109, 87, 27, 26 }, { 31,2 }, 0, {}, {}, {}, {});
+	hit.anim.loop = true;
+	hit.anim.speed = 0.2f;
+	hit.speed.x = 0;
+	hit.life = 500;
+
 	return true;
 }
 
@@ -39,6 +48,7 @@ bool ModuleParticles::CleanUp()
 			active[i] = nullptr;
 		}
 	}
+	App->textures->Unload(graphics);
 
 	return true;
 }

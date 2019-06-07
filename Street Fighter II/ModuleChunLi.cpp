@@ -1255,6 +1255,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 	{
 		if (state == ST_WALK_BACKWARD2 && App->chunli2->position.x > position.x) {
 			block_damage = 1;
+			App->particle->AddParticle(App->particle->hit, position.x + PivotX + 25, position.y - 70, COLLIDER_NONE, 0);
 
 		}
 		else if (state == ST_WALK_FORWARD2 && App->chunli2->position.x < position.x) {

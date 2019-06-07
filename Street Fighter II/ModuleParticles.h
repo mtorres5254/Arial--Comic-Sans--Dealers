@@ -52,7 +52,7 @@ private:
 	Particle* active[MAX_ACTIVE_PARTICLES];
 
 public:
-
+	Particle hit;
 	
 	
 };
