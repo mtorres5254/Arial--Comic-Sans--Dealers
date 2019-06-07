@@ -948,9 +948,9 @@ update_status ModuleChunLi::Update()
 							whirlwindMove = true;
 						}
 						if (whirlwindMove == true) {
-							if (position.x < App->chunli2->position.x) { position.x += 3; }
-							if (position.x > App->chunli2->position.x) { position.x -= 3; }
-							position.y = 190;
+							if (position.x < App->chunli2->position.x) { position.x += 2; }
+							if (position.x > App->chunli2->position.x) { position.x -= 2; }
+							position.y = 180;
 						}
 						if (wkcounter >= 80) {
 							position.y = 220;
@@ -1162,7 +1162,8 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 				position.x += 1;
 			
 		}
-		if (state == ST_WALK_FORWARD2 && App->chunli2->state == ST_WALK_BACKWARD 
+
+		else if (state == ST_WALK_FORWARD2 && App->chunli2->state == ST_WALK_BACKWARD 
 			|| state == ST_WALK_BACKWARD2 && App->chunli2->state == ST_WALK_FORWARD 
 			|| state==ST_CROUCH2 && App->chunli2->state==ST_WALK_BACKWARD 
 			|| state == ST_WALK_FORWARD2 && App->chunli2->state==ST_CROUCH
@@ -1172,7 +1173,8 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
 			move = false;
 		}
-		if (state == ST_WHIRLWIND2) {
+		
+		else if (state == ST_WHIRLWIND2) {
 			whirlwindMove = false;
 		}
 
@@ -1209,13 +1211,14 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 			}
 
 			if (state == ST_WALK_BACKWARD2 || state == ST_WALK_FORWARD2 || state == ST_IDLE2) {
-				if (App->chunli2->state == ST_KICK_HARD_CROUCH) {
+				if (App->chunli2->state == ST_KICK_HARD_CROUCH || App->chunli2->state == ST_KICK_HARD_NEUTRAL_JUMP) {
 					damage_received = 3;
 					App->slow->StartSlowdown(JUMP_TIME2, 50);
 				}
-				else if (App->chunli2->state == ST_KICK_HARD_NEUTRAL_JUMP) {
-					damage_received = 3;
-					App->slow->StartSlowdown(JUMP_TIME2, 50);
+				else if (App->chunli2->state ==ST_WHIRLWIND) {
+					damage_received = 2;
+					move = true;
+					App->slow->StartSlowdown(400, 50);
 				}
 				else if (App->chunli2->state == ST_KICK_HARD_STANDING) {
 					damage_received = 2;
@@ -1245,6 +1248,10 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 {	
 
+	bool left = false;
+	bool right = false;
+	bool down = false;
+	bool up = false;	
 	
 	//Key up
 	if (App->input->keyboard[SDL_SCANCODE_S] == KEY_UP) {
@@ -1554,7 +1561,7 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs2>& inputs)
 
 	if (dmg_fall_timer > 0)
 	{
-		if (SDL_GetTicks() - dmg_fall_timer > JUMP_TIME2)
+		if (SDL_GetTicks() - dmg_fall_timer > 1000)
 		{
 			inputs.Push(IN_DAMAGE_FINISH2);
 			dmg_fall_timer = 0;
@@ -2225,6 +2232,8 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				{
 					App->UI->scoreP1 += 500;
 				}
+				position.y = 220;
+				move = true;
 			}
 		}
 		break;
