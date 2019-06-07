@@ -28,7 +28,7 @@
 #define DMG_TIME2 200
 #define idleForce 5
 
-#define WHIRLWINDKICK_TIME2 1100
+#define WHIRLWINDKICK_TIME2 1500
 
 
 
