@@ -585,37 +585,26 @@ bool ModuleChunLi2::Start()
 	LightningKick.loop = true;
 
 
-	const int wkcollider = 2;//Collider num for the WhirlwindKick animation
-	SDL_Rect wkhitbox[wkcollider] = { {25,41,31,49},{30,55,37,39} };
-	COLLIDER_TYPE wkCollType[wkcollider] = { {COLLIDER_ENEMY},{COLLIDER_ENEMY} };
-	Module* wkCallback[wkcollider] = { {this},{this} };
+	//Wirlhwind Kick
 
-	const int wkcollider1 = 3;//Collider num for the WhirlwindKick animation
-	SDL_Rect wkhitbox1[wkcollider1] = { {25,41,31,49},{30,55,37,39}, {1,59,151,41} };
-	COLLIDER_TYPE wkCollType1[wkcollider1] = { {COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY_SHOT} };
-	Module* wkCallback1[wkcollider1] = { {this},{this},{this} };
+	const int wkcollider = 3;//Collider num for the WhirlwindKick animation
+	SDL_Rect wkhitbox[wkcollider] = { };
+	COLLIDER_TYPE wkCollType[wkcollider] = { };
+	Module* wkCallback[wkcollider] = {  };
 
-	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
-	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
-	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
-	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
-	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.speed = 0.24f;
+	WhirlwindKick.PushBack1({ 1402,326,55,122 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1458,333,55,115 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1514,375,101,73 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1616,376,54,71 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1671,375,101,73 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1773,379,149,69 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1920,379,96,69 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1024,477,48,68 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1073,476,86,69 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1160,475,146,70 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1458,333,55,115 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1402,326,55,122 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.speed = 0.2f;
 	//WhirlwindKick.loop = true;
 
 	// JUMP NEUTRAL KICK
@@ -792,9 +781,9 @@ update_status ModuleChunLi2::Update()
 
 			if (state != current_state)
 			{
-				lifecondition(current_animation);
+				lifecondition(current_animation);				
 
-				if (life > 0 && App->chunli->life > 0) {
+				if (life > 0  && App->chunli->life > 0 ) {
 
 
 					switch (state)
@@ -813,8 +802,8 @@ update_status ModuleChunLi2::Update()
 						current_animation = &forward;
 						resetanimations();
 
-						if (move)
-							position.x += speedX;
+						if(move)
+						position.x += speedX;
 
 						move = true;
 						break;
@@ -824,8 +813,8 @@ update_status ModuleChunLi2::Update()
 						current_animation = &backward;
 						resetanimations();
 
-						if (move)
-							position.x -= speedX;
+						if(move)
+						position.x -= speedX;
 
 						move = true;
 						break;
@@ -838,9 +827,9 @@ update_status ModuleChunLi2::Update()
 
 					case ST_JUMP_FORWARD:
 
-
+						
 						current_animation = &jump_forward;
-
+							
 						jump_forward_logic();
 
 						break;
@@ -860,7 +849,7 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_STANDING:
 
 						current_animation = &punch;
-
+											   						 					  
 						break;
 					case ST_KICK_STANDING:
 
@@ -1057,23 +1046,18 @@ update_status ModuleChunLi2::Update()
 							wkcounter++;
 						}
 						if (wkcounter >= 15 && wkcounter < 48) {
-
-							if (wkcounter >= 15 && wkcounter < 80) {
-								wkcounter++;
-								whirlwindMove = true;
-							}
-							if (whirlwindMove == true) {
-								if (position.x < App->chunli->position.x) { position.x += 2; }
-								if (position.x > App->chunli->position.x) { position.x -= 2; }
-								position.y = 180;
-							}
-							if (wkcounter >= 48) {
-								if (wkcounter >= 80) {
-									position.y = 220;
-								}
-								break;
-							}
+							wkcounter++;
+							whirlwindMove = true;
 						}
+						if (whirlwindMove == true) {
+							if (position.x < App->chunli->position.x) { position.x += 3; }
+							if (position.x > App->chunli->position.x) { position.x -= 3; }
+							position.y = 190;
+						}
+						if (wkcounter >= 48) {
+							position.y = 220;
+						}
+						break;
 						break;
 
 					case ST_KICK_NEUTRAL_JUMP:
@@ -1134,9 +1118,9 @@ update_status ModuleChunLi2::Update()
 						current_animation = &damage3;
 						damage_received = 0;
 
-						if (position.x > App->chunli->position.x)
+						if(position.x>App->chunli->position.x)
 							position.x += 3;
-
+						
 						else
 							position.x -= 3;
 
@@ -1196,17 +1180,18 @@ update_status ModuleChunLi2::Update()
 
 						current_animation = &block_crouch;
 						break;
-							}
+					}
 
-						current_state = state;
-
-						colliders_and_blit(current_animation);
-
-						return UPDATE_CONTINUE;
 				}
+				current_state = state;
+
+				colliders_and_blit(current_animation);
+
+				return UPDATE_CONTINUE;
 			}
 		}
 	}
+}
 
 
 void ModuleChunLi2::positionlimits() {
@@ -1292,21 +1277,17 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 				position.x -= 1;
 		}
 
-		else if (state == ST_WALK_BACKWARD && App->chunli->state == ST_WALK_FORWARD2 
+		if (state == ST_WALK_BACKWARD && App->chunli->state == ST_WALK_FORWARD2 
 			|| state == ST_WALK_FORWARD && App->chunli->state == ST_WALK_BACKWARD2
 			|| state == ST_WALK_BACKWARD && App->chunli->state ==  ST_CROUCH2
 			|| state == ST_CROUCH && App->chunli->state== ST_WALK_FORWARD2 
 			|| state == ST_WALK_FORWARD && App->chunli->state == ST_CROUCH2) {
-			
+
 			move = false;
 		}
 
-		else if (state == ST_WHIRLWIND) {
-			whirlwindMove = false;
-		}
-
+		
 		else {
-			
 			move = true;
 		}
 		
@@ -1337,13 +1318,13 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			}
 
 			if (state == ST_WALK_BACKWARD || state == ST_WALK_FORWARD || state == ST_IDLE) {
-				if (App->chunli->state == ST_KICK_HARD_CROUCH2 || App->chunli->state == ST_KICK_HARD_NEUTRAL_JUMP2) {
+				if (App->chunli->state == ST_KICK_HARD_CROUCH2) {
 					damage_received = 3;
 					App->slow->StartSlowdown(JUMP_TIME, 50);
 				}
-				else if (App->chunli->state == ST_WHIRLWIND2) {
-					damage_received = 2;
-					App->slow->StartSlowdown(400, 50);
+				else if (App->chunli->state == ST_KICK_HARD_NEUTRAL_JUMP2) {
+					damage_received = 3;
+					App->slow->StartSlowdown(JUMP_TIME, 50);
 				}
 				else if (App->chunli->state == ST_KICK_HARD_STANDING2) {
 					damage_received = 2;
@@ -1367,10 +1348,7 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 
 bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 {
-	bool left = false;
-	bool right = false;
-	bool down = false;
-	bool up = false;
+	
 	//Key up
 	if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_UP) {
 		inputs.Push(IN_CROUCH_UP);
@@ -1669,7 +1647,7 @@ void ModuleChunLi2::internal_input(p2Qeue<chunli_inputs>& inputs)
 
 	if (dmg_fall_timer > 0)
 	{
-		if (SDL_GetTicks() - dmg_fall_timer > 1000)
+		if (SDL_GetTicks() - dmg_fall_timer > JUMP_TIME)
 		{
 			inputs.Push(IN_DAMAGE_FINISH);
 			dmg_fall_timer = 0;
@@ -2366,7 +2344,6 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					{
 						App->UI->scoreP2 += 500;
 					}
-					position.y = 220;
 				}
 			}
 			break;

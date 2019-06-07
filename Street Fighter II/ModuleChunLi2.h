@@ -288,8 +288,10 @@ public:
 	Uint32 whirlwind_timer = 0;
 
 	private:
-		bool left =false;
-		bool right=false;
+		bool left = false;
+		bool right = false;
+		bool down = false;
+		bool up = false;
 		int force = 0;
 
 };
