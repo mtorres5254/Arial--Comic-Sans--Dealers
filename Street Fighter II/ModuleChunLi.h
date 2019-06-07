@@ -313,7 +313,12 @@ public:
 private:
 
 	bool left = false;
+	bool left1 = false;
+	bool left2 = false;
 	bool right = false;
+	bool right1 = false;
+	bool right2 = false;
+	
 	int force = 0;
 };
 

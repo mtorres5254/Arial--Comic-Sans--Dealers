@@ -29,6 +29,7 @@ ModuleChunLi::~ModuleChunLi()
 bool ModuleChunLi::Start()
 {
 	
+	
 	bool ret = true;
 
 	graphics = App->textures->Load("Assets/Images/ChunLi.png"); // arcade version
@@ -44,9 +45,6 @@ bool ModuleChunLi::Start()
 	medium_damage = App->audio->LoadChunk("Assets/Sound/Effects/medium_attack.wav");
 	high_damage = App->audio->LoadChunk("Assets/Sound/Effects/high_attack.wav");
 	attack = App->audio->LoadChunk("Assets/Sound/Effects/attack.wav");
-
-
-
 
 	// idle animation (arcade sprite sheet)
 	const int idleCollider = 5;//Collider num for the idle animation
@@ -1260,15 +1258,17 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 		}
 		else if (state == ST_WALK_FORWARD2 && App->chunli2->position.x < position.x) {
 			block_damage = 1;
+			App->particle->AddParticle(App->particle->hit, position.x + PivotX , position.y - 70, COLLIDER_NONE, 0);
 
 		}
-
-		else if (state == ST_CROUCH2 && left && App->chunli2->position.x > position.x) {
+		else if (state == ST_CROUCH2 && (left || left1 || left2) && App->chunli2->position.x > position.x) {
 			block_damage = 2;
+			App->particle->AddParticle(App->particle->hit, position.x + PivotX + 25, position.y - 70, COLLIDER_NONE, 0);
 		}
 
-		else if (state == ST_CROUCH2 && right && App->chunli2->position.x < position.x) {
+		else if (state == ST_CROUCH2 && (right || right1 || right2) && App->chunli2->position.x < position.x) {
 			block_damage = 2;
+			App->particle->AddParticle(App->particle->hit, position.x + PivotX, position.y - 70, COLLIDER_NONE, 0);
 		}
 
 		else {
@@ -1322,12 +1322,14 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 		return false;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_A] == KEY_UP) {
-		inputs.Push(IN_LEFT_UP2);
 		left = false;
+		inputs.Push(IN_LEFT_UP2);
+		
 	}
 	if (App->input->keyboard[SDL_SCANCODE_D] == KEY_UP) {
-		inputs.Push(IN_RIGHT_UP2);
 		right = false;
+		inputs.Push(IN_RIGHT_UP2);
+		
 	}
 	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_UP) {
 		return false;
@@ -1414,11 +1416,11 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 			inputs.Push(IN_CROUCH_UP2);
 		}
 		if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_UP) {
-			left = false;
+			left1 = false;
 			inputs.Push(IN_LEFT_UP2);;
 		}
 		if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_UP) {
-			right = false;
+			right1 = false;
 			inputs.Push(IN_RIGHT_UP2);
 		}
 
@@ -1448,11 +1450,11 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 			inputs.Push(IN_CROUCH_DOWN2);
 		}
 		if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_REPEAT) {
-			left = true;
+			left1 = true;
 			inputs.Push(IN_LEFT_DOWN2);
 		}
 		if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_REPEAT) {
-			right = true;
+			right1 = true;
 			inputs.Push(IN_RIGHT_DOWN2);
 		}
 
@@ -1471,11 +1473,11 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 			inputs.Push(IN_CROUCH_DOWN2);
 		}
 		if (App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE_NEGATIVE) {			
-			left = true;
+			left2 = true;
 			inputs.Push(IN_LEFT_DOWN2);
 		}
 		if (App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE) {
-			right = true;
+			right2 = true;
 			inputs.Push(IN_RIGHT_DOWN2);
 		}
 
@@ -1487,11 +1489,11 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 			inputs.Push(IN_CROUCH_UP2);
 		}
 		if (App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE && App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE) {
-			left = false;
+			left2 = false;
 			inputs.Push(IN_LEFT_UP2);
 		}
 		if (App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE && App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			right = false;
+			right2 = false;
 			inputs.Push(IN_RIGHT_UP2);
 		}
 
