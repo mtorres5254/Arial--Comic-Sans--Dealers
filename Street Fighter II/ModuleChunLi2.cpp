@@ -1196,18 +1196,17 @@ update_status ModuleChunLi2::Update()
 
 						current_animation = &block_crouch;
 						break;
-					}
+							}
 
-					current_state = state;
+						current_state = state;
 
-					colliders_and_blit(current_animation);
+						colliders_and_blit(current_animation);
 
-					return UPDATE_CONTINUE;
+						return UPDATE_CONTINUE;
 				}
 			}
 		}
 	}
-}
 
 
 void ModuleChunLi2::positionlimits() {
