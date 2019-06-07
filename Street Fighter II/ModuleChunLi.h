@@ -274,7 +274,9 @@ public:
 	int healthbar;
 
 	bool move = true;
+	bool whirlwindMove = false;
 	int lkcounter = 0;
+	int wkcounter = 0;
 	chunli_states2 state;
 
 	Uint32 punch_hard_timer = 0;

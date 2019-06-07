@@ -53,17 +53,17 @@ bool ModuleCombos::CheckLightingKickP1() {
 		switch (lightimgKickCount)
 		{
 		case 0:
-			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 				lightimgKickCount++;
 			}
 			break;
 		case 1:
-			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 				lightimgKickCount++;
 			}
 			break;
 		case 2:
-			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 				lightimgKickCount = 0;
 				return true;
 			}
@@ -83,17 +83,17 @@ bool ModuleCombos::CheckLightingKickP2() {
 		switch (lightimgKickCount2)
 		{
 		case 0:
-			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 				lightimgKickCount2++;
 			}
 			break;
 		case 1:
-			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 				lightimgKickCount2++;
 			}
 			break;
 		case 2:
-			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 				lightimgKickCount2 = 0;
 				return true;
 			}
@@ -124,7 +124,7 @@ bool ModuleCombos::CheckWhirlwindKickP1() {
 			}
 			break;
 		case 1:
-			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 				whirlwindKickCount = 0;
 				return true;
 			}
@@ -154,7 +154,7 @@ bool ModuleCombos::CheckWhirlwindKickP2() {
 			}
 			break;
 		case 1:
-			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 				whirlwindKickCount2 = 0;
 				return true;
 			}

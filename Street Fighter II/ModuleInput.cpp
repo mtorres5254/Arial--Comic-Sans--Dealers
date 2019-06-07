@@ -52,10 +52,6 @@ bool ModuleInput::Init()
 // Called every draw update
 update_status ModuleInput::PreUpdate()
 {
-
-
-	
-
 	SDL_PumpEvents();
 
 	if (history_count < MAX_HISTORY) {

@@ -790,6 +790,8 @@ update_status ModuleChunLi::Update()
 						current_animation = &idle;
 						resetanimations();						
 						crouch.Reset();
+						wkcounter = 0;
+						whirlwindMove = false;
 						move = true;			
 						break;
 					case ST_WALK_FORWARD2:
@@ -925,6 +927,21 @@ update_status ModuleChunLi::Update()
 					case ST_WHIRLWIND2:
 						current_animation = &WhirlwindKick;
 						App->audio->PlayChunk(WhirlwindKick_effect, 1);
+						if (wkcounter < 15) {
+							wkcounter++;
+						}
+						if (wkcounter >= 15 && wkcounter < 48) {
+							wkcounter++;
+							whirlwindMove = true;
+						}
+						if (whirlwindMove == true) {
+							if (position.x < App->chunli2->position.x) { position.x += 4; }
+							if (position.x > App->chunli2->position.x) { position.x -= 4; }
+							position.y = 190;
+						}
+						if (wkcounter >= 48) {
+							position.y = 220;
+						}
 						break;
 					case ST_KICK_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_kick;
@@ -1141,6 +1158,9 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
 
 			move = false;
+		}
+		if (state == ST_WHIRLWIND2) {
+			whirlwindMove = false;
 		}
 
 		else {
