@@ -983,9 +983,12 @@ update_status ModuleChunLi::Update()
 							wkcounter++;
 							whirlwindMove = true;
 						}
-						if (whirlwindMove == true) {
-							if (position.x < App->chunli2->position.x) { position.x += 3; }
-							if (position.x > App->chunli2->position.x) { position.x -= 3; }
+						if (whirlwindMove  ) {
+							if (abs(App->chunli2->position.x - position.x) >= 120) {
+								if (position.x < App->chunli2->position.x) { position.x += 3; }
+								if (position.x > App->chunli2->position.x) { position.x -= 3; }
+							}
+							
 							position.y = 190;
 						}
 						if (wkcounter >= 80) {
@@ -1124,10 +1127,20 @@ void ModuleChunLi::positionlimits() {
 	if (position.x+50 <= App->scene_dhalsim->background.x - 12) {
 
 		position.x = App->scene_dhalsim->background.x - 12 -50;
+		leftLimit = true;
+		App->chunli2->move = false;
+	}
+	else {
+		leftLimit = false;
+		App->chunli2->move = true;
 	}
 
 	if (position.x >= (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) - 90) {
 		position.x = (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) - 90 ;
+		RightLimit = true;
+	}
+	else {
+		RightLimit = false;
 	}
 	
 	if (abs(App->chunli2->position.x - position.x) >= SCREEN_WIDTH - 10 && position.x<App->chunli2->position.x) {
@@ -1194,14 +1207,15 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 	
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY)
 	{		
-		if (state == ST_IDLE2) {
+		if (state == ST_IDLE2 && (!leftLimit || !RightLimit)) {
 			if (position.x < App->chunli2->position.x)
 				position.x -= 1;
-			if (position.x > App->chunli2->position.x)
+			else if (position.x > App->chunli2->position.x)
 				position.x += 1;
 			
+			
 		}
-		if (state == ST_WALK_FORWARD2 && App->chunli2->state == ST_WALK_BACKWARD 
+		else if (state == ST_WALK_FORWARD2 && App->chunli2->state == ST_WALK_BACKWARD 
 			|| state == ST_WALK_BACKWARD2 && App->chunli2->state == ST_WALK_FORWARD 
 			|| state==ST_CROUCH2 && App->chunli2->state==ST_WALK_BACKWARD 
 			|| state == ST_WALK_FORWARD2 && App->chunli2->state==ST_CROUCH
@@ -1211,7 +1225,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
 			move = false;
 		}
-		if (state == ST_WHIRLWIND2) {
+		else if (state == ST_WHIRLWIND2) {
 			whirlwindMove = false;
 		}
 
@@ -1255,6 +1269,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 				else if (App->chunli2->state == ST_WHIRLWIND) {
 					damage_received = 2;
 					App->slow->StartSlowdown(200, 50);
+					//App->chunli2->move = false;
 					
 				}
 				else if (App->chunli2->state == ST_KICK_HARD_STANDING) {
@@ -1269,6 +1284,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 			else if (state == ST_CROUCH2) {
 				damage_received = 4;
 			}
+			
 			else {
 				damage_received = 5;
 			}
