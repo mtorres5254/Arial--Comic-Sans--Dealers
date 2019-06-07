@@ -247,6 +247,7 @@ public:
 	int acumvictory = 0;
 	bool GodMode = false;
 
+	bool crouchAttack = false;
 	bool death = false;
 	bool leftLimit = false;
 	bool RightLimit = false;

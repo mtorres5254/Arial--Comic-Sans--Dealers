@@ -603,19 +603,19 @@ bool ModuleChunLi::Start()
 	WhirlwindKick.PushBack1({1514,375,101,73}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({1616,376,54,71}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({1671,375,101,73}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({1773,379,149,69}, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({1773,379,149,69}, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
 	WhirlwindKick.PushBack1({1920,379,96,69}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({1024,477,48,68}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({1073,476,86,69}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({1160,475,146,70}, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({1160,475,146,70}, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
 	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
 	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
 	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.speed = 0.24f;
@@ -852,22 +852,27 @@ update_status ModuleChunLi::Update()
 					case ST_PUNCH_CROUCH2:
 						current_animation = &Crouch_punch;		
 						App->audio->PlayChunk(attack, 1);
+						crouchAttack = true;
 						break;
 					case ST_PUNCH_MEDIUM_CROUCH2:
 						current_animation = &Crouch_medium_punch;
 						App->audio->PlayChunk(attack, 1);
+						crouchAttack = true;
 						break;
 					case ST_PUNCH_HARD_CROUCH2:
 						current_animation = &Crouch_hard_punch;
 						App->audio->PlayChunk(attack, 1);
+						crouchAttack = true;
 						break;
 					case ST_KICK_CROUCH2:
 						current_animation = &Crouch_kick;
 						App->audio->PlayChunk(attack, 1);
+						crouchAttack = true;
 						break;
 					case ST_KICK_MEDIUM_CROUCH2:
 						current_animation = &Crouch_medium_kick;
 						App->audio->PlayChunk(attack, 1);
+						crouchAttack = true;
 						break;
 					case ST_KICK_HARD_CROUCH2:
 						current_animation = &Crouch_hard_kick;
@@ -1251,12 +1256,12 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY_SHOT)
 	{
-		if (state == ST_WALK_BACKWARD2 && App->chunli2->position.x > position.x) {
+		if (state == ST_WALK_BACKWARD2 && App->chunli2->position.x > position.x && !App->chunli2->crouchAttack) {
 			block_damage = 1;
 			App->particle->AddParticle(App->particle->hit, position.x + PivotX + 25, position.y - 70, COLLIDER_NONE, 0);
 
 		}
-		else if (state == ST_WALK_FORWARD2 && App->chunli2->position.x < position.x) {
+		else if (state == ST_WALK_FORWARD2 && App->chunli2->position.x < position.x  && !App->chunli2->crouchAttack) {
 			block_damage = 1;
 			App->particle->AddParticle(App->particle->hit, position.x + PivotX , position.y - 70, COLLIDER_NONE, 0);
 
@@ -1280,29 +1285,36 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
 			if (state == ST_WALK_BACKWARD2 || state == ST_WALK_FORWARD2 || state == ST_IDLE2) {
 				if (App->chunli2->state == ST_KICK_HARD_CROUCH || App->chunli2->state == ST_KICK_HARD_NEUTRAL_JUMP) {
+					App->particle->AddParticle(App->particle->hit, position.x + PivotX, position.y - 70, COLLIDER_NONE, 0);
 					damage_received = 3;
 					App->slow->StartSlowdown(JUMP_TIME2, 50);
+
 				}
 				else if (App->chunli2->state == ST_WHIRLWIND) {
+					App->particle->AddParticle(App->particle->hit, position.x + PivotX, position.y - 70, COLLIDER_NONE, 0);
 					damage_received = 2;
 					App->slow->StartSlowdown(200, 50);
 					//App->chunli2->move = false;
 
 				}
 				else if (App->chunli2->state == ST_KICK_HARD_STANDING) {
+					App->particle->AddParticle(App->particle->hit, position.x + PivotX, position.y - 70, COLLIDER_NONE, 0);
 					damage_received = 2;
 					App->slow->StartSlowdown(400, 50);
 				}
 				else {
+					App->particle->AddParticle(App->particle->hit, position.x + PivotX, position.y - 70, COLLIDER_NONE, 0);
 					damage_received = 1;
 				}
 
 			}
 			else if (state == ST_CROUCH2) {
+				App->particle->AddParticle(App->particle->hit, position.x + PivotX, position.y - 70, COLLIDER_NONE, 0);
 				damage_received = 4;
 			}
 
 			else {
+				App->particle->AddParticle(App->particle->hit, position.x + PivotX, position.y - 70, COLLIDER_NONE, 0);
 				damage_received = 5;
 			}
 		}
@@ -2141,6 +2153,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				{
 					App->UI->scoreP1 += 100;
 				}
+				crouchAttack = false;
 				break;
 			}
 		}
@@ -2159,6 +2172,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				{
 					App->UI->scoreP1 += 200;
 				}
+				crouchAttack = false;
 				break;
 			}
 		}
@@ -2177,6 +2191,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				{
 					App->UI->scoreP1 += 300;
 				}
+				crouchAttack = false;
 				break;
 			}
 		}
@@ -2195,6 +2210,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				{
 					App->UI->scoreP1 += 100;
 				}
+				crouchAttack = false;
 				break;
 			}
 		}
@@ -2213,6 +2229,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				{
 					App->UI->scoreP1 += 200;
 				}
+				crouchAttack = false;
 				break;
 			}
 		}

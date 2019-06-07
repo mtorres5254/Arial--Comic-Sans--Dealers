@@ -607,19 +607,19 @@ bool ModuleChunLi2::Start()
 	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
 	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
 	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
 	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
 	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.speed = 0.24f;
@@ -907,7 +907,7 @@ update_status ModuleChunLi2::Update()
 
 						current_animation = &Crouch_punch;
 						App->audio->PlayChunk(attack, 1);
-
+						crouchAttack = true;
 
 						break;
 
@@ -915,6 +915,7 @@ update_status ModuleChunLi2::Update()
 
 						current_animation = &Crouch_medium_punch;
 						App->audio->PlayChunk(attack, 1);
+						crouchAttack = true;
 
 						break;
 
@@ -922,6 +923,7 @@ update_status ModuleChunLi2::Update()
 
 						current_animation = &Crouch_hard_punch;
 						App->audio->PlayChunk(attack, 1);
+						crouchAttack = true;
 
 						break;
 
@@ -929,18 +931,21 @@ update_status ModuleChunLi2::Update()
 
 						current_animation = &Crouch_kick;
 						App->audio->PlayChunk(attack, 1);
+						crouchAttack = true;
 
 						break;
 					case ST_KICK_MEDIUM_CROUCH:
 
 						current_animation = &Crouch_medium_kick;
 						App->audio->PlayChunk(attack, 1);
+						crouchAttack = true;
 
 						break;
 					case ST_KICK_HARD_CROUCH:
 
 						current_animation = &Crouch_hard_kick;
 						App->audio->PlayChunk(attack, 1);
+						
 
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP:
@@ -1375,11 +1380,11 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER_ATTACK)
 	{
 
-		if (state == ST_WALK_FORWARD && position.x>App->chunli->position.x) {
+		if (state == ST_WALK_FORWARD && position.x>App->chunli->position.x && !App->chunli->crouchAttack) {
 			block_damage = 1;
 			App->particle->AddParticle(App->particle->hit, position.x - PivotX, position.y - 70, COLLIDER_NONE, 0);
 		}
-		else if (state == ST_WALK_BACKWARD && position.x < App->chunli->position.x) {
+		else if (state == ST_WALK_BACKWARD && position.x < App->chunli->position.x && !App->chunli->crouchAttack) {
 			block_damage = 1;
 			App->particle->AddParticle(App->particle->hit, position.x - PivotX + 30, position.y - 70, COLLIDER_NONE, 0);
 		}
@@ -2247,6 +2252,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					{
 						App->UI->scoreP2 += 100;
 					}
+					crouchAttack = false;
 					break;
 				}
 			}
@@ -2265,6 +2271,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					{
 						App->UI->scoreP2 += 200;
 					}
+					crouchAttack = false;
 					break;
 				}
 			}
@@ -2283,6 +2290,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					{
 						App->UI->scoreP2 += 300;
 					}
+					crouchAttack = false;
 					break;
 				}
 			}
@@ -2301,6 +2309,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					{
 						App->UI->scoreP2 += 100;
 					}
+					crouchAttack = false;
 					break;
 				}
 			}
@@ -2319,6 +2328,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					{
 						App->UI->scoreP2 += 200;
 					}
+					crouchAttack = false;
 					break;
 				}
 			}
@@ -2337,6 +2347,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					{
 						App->UI->scoreP2 += 300;
 					}
+					
 					break;
 				}
 			}

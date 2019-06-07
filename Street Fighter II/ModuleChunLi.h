@@ -289,6 +289,7 @@ public:
 	int life = 1000;
 	int healthbar;
 
+	bool crouchAttack = false;
 	bool move = true;
 	bool whirlwindMove = false;
 	int lkcounter = 0;
