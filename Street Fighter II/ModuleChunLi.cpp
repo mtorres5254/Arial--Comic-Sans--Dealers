@@ -1189,7 +1189,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 					App->slow->StartSlowdown(400, 50);
 				}
 				else {
-					damage_received = 4;					
+					damage_received = 1;					
 				}
 
 			}

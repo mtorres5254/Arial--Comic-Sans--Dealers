@@ -1446,6 +1446,20 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	if (App->combo->CheckPunchP2() == true) {
 		inputs.Push(IN_X);
 	}
+	
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_X] == KEY_DOWN) {
+		inputs.Push(IN_1);
+	}
+
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_LEFTSHOULDER] == KEY_DOWN) {
+		inputs.Push(IN_2);
+	}
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN) {
+		inputs.Push(IN_3);
+	}
+	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
+		inputs.Push(IN_4);
+	}
 	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
 		inputs.Push(IN_C);
 	}
