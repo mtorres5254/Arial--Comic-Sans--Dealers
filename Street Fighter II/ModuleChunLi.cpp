@@ -587,12 +587,13 @@ bool ModuleChunLi::Start()
 	const int wkcollider = 2;//Collider num for the WhirlwindKick animation
 	SDL_Rect wkhitbox[wkcollider] = { {25,41,31,49},{30,55,37,39} };
 	COLLIDER_TYPE wkCollType[wkcollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER} };
-	Module* wkCallback[wkcollider] = { {this},{this}};
+	Module* wkCallback[wkcollider] = { {this},{this} };
 
 	const int wkcollider1 = 3;//Collider num for the WhirlwindKick animation
 	SDL_Rect wkhitbox1[wkcollider1] = { {25,41,31,49},{30,55,37,39}, {1,59,151,41} };
-	COLLIDER_TYPE wkCollType1[wkcollider1] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER_ATTACK}};
-	Module* wkCallback1[wkcollider1] = {  {this},{this},{this} };
+	COLLIDER_TYPE wkCollType1[wkcollider1] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER_ATTACK} };
+	Module* wkCallback1[wkcollider1] = { {this},{this},{this} };
+
 
 	WhirlwindKick.PushBack1({1402,326,55,122}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({1458,333,55,115}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
@@ -1209,13 +1210,14 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 			}
 
 			if (state == ST_WALK_BACKWARD2 || state == ST_WALK_FORWARD2 || state == ST_IDLE2) {
-				if (App->chunli2->state == ST_KICK_HARD_CROUCH) {
+				if (App->chunli2->state == ST_KICK_HARD_CROUCH || App->chunli2->state == ST_KICK_HARD_NEUTRAL_JUMP) {
 					damage_received = 3;
 					App->slow->StartSlowdown(JUMP_TIME2, 50);
 				}
-				else if (App->chunli2->state == ST_KICK_HARD_NEUTRAL_JUMP) {
-					damage_received = 3;
-					App->slow->StartSlowdown(JUMP_TIME2, 50);
+				else if (App->chunli2->state == ST_WHIRLWIND) {
+					damage_received = 2;
+					App->slow->StartSlowdown(200, 50);
+					
 				}
 				else if (App->chunli2->state == ST_KICK_HARD_STANDING) {
 					damage_received = 2;
@@ -2225,6 +2227,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				{
 					App->UI->scoreP1 += 500;
 				}
+				position.y = 220;
 			}
 		}
 		break;
