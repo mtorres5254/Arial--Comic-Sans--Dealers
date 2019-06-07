@@ -1453,16 +1453,16 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	if (App->input->keyboard[SDL_SCANCODE_L] == KEY_UP) {
 		return false;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_1] == KEY_UP) {
+	if (App->input->keyboard[SDL_SCANCODE_7] == KEY_UP) {
 		return false;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_2] == KEY_UP) {
+	if (App->input->keyboard[SDL_SCANCODE_8] == KEY_UP) {
 		return false;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_3] == KEY_UP) {
+	if (App->input->keyboard[SDL_SCANCODE_9] == KEY_UP) {
 		return false;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_4] == KEY_UP) {
+	if (App->input->keyboard[SDL_SCANCODE_0] == KEY_UP) {
 		return false;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_5] == KEY_UP) {
@@ -1497,16 +1497,16 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	if (App->input->keyboard[SDL_SCANCODE_L] == KEY_DOWN) {
 		inputs.Push(IN_LIGHTINGKICK);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_1] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_7] == KEY_DOWN) {
 		inputs.Push(IN_1);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_2] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_8] == KEY_DOWN) {
 		inputs.Push(IN_2);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_3] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_9] == KEY_DOWN) {
 		inputs.Push(IN_3);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_4] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_0] == KEY_DOWN) {
 		inputs.Push(IN_4);
 	}
 
