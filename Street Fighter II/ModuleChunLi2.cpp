@@ -1056,19 +1056,18 @@ update_status ModuleChunLi2::Update()
 						if (wkcounter < 15) {
 							wkcounter++;
 						}
-						if (wkcounter >= 15 && wkcounter < 50) {
+						if (wkcounter >= 15 && wkcounter < 80) {
 							wkcounter++;
 							whirlwindMove = true;
 						}
 						if (whirlwindMove == true) {
-							if (position.x < App->chunli->position.x) { position.x += 3; }
-							if (position.x > App->chunli->position.x) { position.x -= 3; }
-							position.y = 190;
+							if (position.x < App->chunli->position.x) { position.x += 2; }
+							if (position.x > App->chunli->position.x) { position.x -= 2; }
+							position.y = 180;
 						}
-						if (wkcounter >= 50) {
+						if (wkcounter >= 80) {
 							position.y = 220;
 						}
-						break;
 						break;
 
 					case ST_KICK_NEUTRAL_JUMP:
@@ -1288,7 +1287,7 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 				position.x -= 1;
 		}
 
-		if (state == ST_WALK_BACKWARD && App->chunli->state == ST_WALK_FORWARD2 
+		else if (state == ST_WALK_BACKWARD && App->chunli->state == ST_WALK_FORWARD2 
 			|| state == ST_WALK_FORWARD && App->chunli->state == ST_WALK_BACKWARD2
 			|| state == ST_WALK_BACKWARD && App->chunli->state ==  ST_CROUCH2
 			|| state == ST_CROUCH && App->chunli->state== ST_WALK_FORWARD2 
@@ -1297,7 +1296,10 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			move = false;
 		}
 
-		
+		else if (state == ST_WHIRLWIND) {
+			whirlwindMove = false;
+		}
+
 		else {
 			
 			move = true;
@@ -1659,7 +1661,7 @@ void ModuleChunLi2::internal_input(p2Qeue<chunli_inputs>& inputs)
 
 	if (dmg_fall_timer > 0)
 	{
-		if (SDL_GetTicks() - dmg_fall_timer > JUMP_TIME)
+		if (SDL_GetTicks() - dmg_fall_timer > 1000)
 		{
 			inputs.Push(IN_DAMAGE_FINISH);
 			dmg_fall_timer = 0;

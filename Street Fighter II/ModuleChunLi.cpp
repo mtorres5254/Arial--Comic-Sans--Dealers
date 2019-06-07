@@ -805,21 +805,21 @@ update_status ModuleChunLi::Update()
 						crouch.Reset();
 						wkcounter = 0;
 						whirlwindMove = false;
-						//move = true;			
+						move = true;			
 						break;
 					case ST_WALK_FORWARD2:
 						current_animation = &forward;
 						resetanimations();
 						if(move)
 						position.x += speedX;						
-						//move = true;
+						move = true;
 						break;
 					case ST_WALK_BACKWARD2:
 						current_animation = &backward;
 						resetanimations();
 						if(move)
 						position.x -= speedX;						
-						//move = true;
+						move = true;
 						break;
 					case ST_JUMP_NEUTRAL2:								
 						current_animation = &jump_neutral;
@@ -1163,7 +1163,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 			
 		}
 
-		if (state == ST_WALK_FORWARD2 && App->chunli2->state == ST_WALK_BACKWARD 
+		else if (state == ST_WALK_FORWARD2 && App->chunli2->state == ST_WALK_BACKWARD 
 			|| state == ST_WALK_BACKWARD2 && App->chunli2->state == ST_WALK_FORWARD 
 			|| state==ST_CROUCH2 && App->chunli2->state==ST_WALK_BACKWARD 
 			|| state == ST_WALK_FORWARD2 && App->chunli2->state==ST_CROUCH
@@ -1174,7 +1174,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 			move = false;
 		}
 		
-		if (state == ST_WHIRLWIND2) {
+		else if (state == ST_WHIRLWIND2) {
 			whirlwindMove = false;
 		}
 
@@ -1211,13 +1211,14 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 			}
 
 			if (state == ST_WALK_BACKWARD2 || state == ST_WALK_FORWARD2 || state == ST_IDLE2) {
-				if (App->chunli2->state == ST_KICK_HARD_CROUCH || App->chunli2->state == ST_WHIRLWIND) {
+				if (App->chunli2->state == ST_KICK_HARD_CROUCH || App->chunli2->state == ST_KICK_HARD_NEUTRAL_JUMP) {
 					damage_received = 3;
 					App->slow->StartSlowdown(JUMP_TIME2, 50);
 				}
-				else if (App->chunli2->state == ST_KICK_HARD_NEUTRAL_JUMP) {
-					damage_received = 3;
-					App->slow->StartSlowdown(JUMP_TIME2, 50);
+				else if (App->chunli2->state ==ST_WHIRLWIND) {
+					damage_received = 2;
+					move = true;
+					App->slow->StartSlowdown(400, 50);
 				}
 				else if (App->chunli2->state == ST_KICK_HARD_STANDING) {
 					damage_received = 2;
@@ -1559,7 +1560,7 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs2>& inputs)
 
 	if (dmg_fall_timer > 0)
 	{
-		if (SDL_GetTicks() - dmg_fall_timer > JUMP_TIME2)
+		if (SDL_GetTicks() - dmg_fall_timer > 1000)
 		{
 			inputs.Push(IN_DAMAGE_FINISH2);
 			dmg_fall_timer = 0;
@@ -2231,6 +2232,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					App->UI->scoreP1 += 500;
 				}
 				position.y = 220;
+				move = true;
 			}
 		}
 		break;
