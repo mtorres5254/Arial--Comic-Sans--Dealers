@@ -1336,7 +1336,7 @@ void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 
 void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 
-	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER)
+	if (c1->type == COLLIDER_ENEMY && (c2->type == COLLIDER_PLAYER || c2->type == COLLIDER_NONE))
 	{
 		if (state == ST_IDLE) {
 			if (position.x > App->chunli->position.x)
@@ -1344,8 +1344,16 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			if (position.x < App->chunli->position.x)
 				position.x -= 1;
 		}
-		else if (App->chunli->leftLimit == true && state == ST_WALK_BACKWARD) {
+		else if (App->chunli->leftLimit == true && state == ST_WALK_BACKWARD && App->chunli->position.y == position.y) {
 			move = false;
+		}
+		
+		else if (App->chunli->leftLimit == true && state == ST_WALK_BACKWARD && App->chunli->position.y>position.y) {
+			position.x += 2;
+		}
+
+		else if (App->chunli->leftLimit == true && state == ST_JUMP_BACKWARD) {
+			position.x += 2;
 		}
 
 		else if (App->chunli->RightLimit == true && state == ST_WALK_FORWARD) {
