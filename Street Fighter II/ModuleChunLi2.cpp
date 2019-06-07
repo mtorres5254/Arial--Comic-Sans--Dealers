@@ -1319,12 +1319,12 @@ void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 	
 
 	SDL_Rect shadowrect = { 6,8,71,15 };
-	if (position.x < App->chunli->position.x && !RightLimit || leftLimit) {
-		//App->render->Blit(shadow, position.x - PivotX, 207, &shadowrect);
+	if (position.x < App->chunli->position.x && !RightLimit || (leftLimit && position.y==220)) {
+		
 		App->render->Blit(graphics, position.x -PivotX, position.y - r.h, &r);
 	}
-	if (position.x > App->chunli->position.x && !leftLimit || RightLimit) {
-	//	App->render->Blit(shadow, position.x - (shadowrect.w + PivotX) +65, 207, &shadowrect);
+	if (position.x > App->chunli->position.x && (!leftLimit || position.y !=220) || RightLimit) {
+	
 		App->render->BlitSym(graphics, position.x-(r.w-PivotX), position.y  - r.h, &r);
 	}
 }
