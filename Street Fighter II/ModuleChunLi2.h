@@ -142,6 +142,14 @@ enum chunli_inputs
 	IN_WHIRLWINDKICK,
 	IN_WHIRLWINDKICK_FINISH,
 };
+
+struct MoveBooleans2 {
+	bool left = false;
+	bool right = false;
+	bool down = false;
+	bool up = false;
+};
+
 class ModuleChunLi2 : public Module
 {
 public:
@@ -294,11 +302,9 @@ public:
 	Uint32 whirlwind_timer = 0;
 
 	private:
-		bool left = false;
-		bool right = false;
-		bool down = false;
-		bool up = false;
-		int force = 0;
+	MoveBooleans2 MoveKeys;
+	MoveBooleans2 MoveAxis;
+	int force = 0;
 
 };
 

@@ -1382,11 +1382,11 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			block_damage = 1;
 		}
 		
-		else if (state == ST_CROUCH && right && App->chunli->position.x < position.x) {
+		else if (state == ST_CROUCH && MoveKeys.right && App->chunli->position.x < position.x) {
 			block_damage = 2;
 		}
 
-		else if (state == ST_CROUCH && left && App->chunli->position.x > position.x) {
+		else if (state == ST_CROUCH && MoveKeys.left && App->chunli->position.x > position.x) {
 			block_damage = 2;
 		}
 
@@ -1432,18 +1432,18 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	//Key up
 	if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_UP) {
 		inputs.Push(IN_CROUCH_UP);
-		down = false;
+		MoveKeys.down = false;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_UP) {
-		up = false;
+		MoveKeys.up = false;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_UP) {
 		inputs.Push(IN_LEFT_UP);
-		left = false;
+		MoveKeys.left = false;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_UP) {
 		inputs.Push(IN_RIGHT_UP);
-		right = false;
+		MoveKeys.right = false;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_J] == KEY_UP) {
 		return false;
@@ -1476,16 +1476,16 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	//Key down
 
 	if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_DOWN) {
-		up = true;
+		MoveKeys.up = true;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_DOWN) {
-		down = true;
+		MoveKeys.down = true;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_DOWN) {
-		left = true;
+		MoveKeys.left = true;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_DOWN) {
-		right = true;
+		MoveKeys.right = true;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_J] == KEY_DOWN) {
 		inputs.Push(IN_X);
@@ -1524,19 +1524,19 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 			return false;
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_UP) {
-			up = false;
+			MoveKeys.up = false;
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_UP) {
 			inputs.Push(IN_CROUCH_UP);
-			down = false;
+			MoveKeys.down = false;
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_UP) {
 			inputs.Push(IN_LEFT_UP);
-			left = false;
+			MoveKeys.left = false;
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_UP) {
 			inputs.Push(IN_RIGHT_UP);
-			right = false;
+			MoveKeys.right = false;
 		}
 
 
@@ -1561,16 +1561,16 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 			inputs.Push(IN_C);
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN) {
-			up = true;
+			MoveKeys.up = true;
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN) {
-			down = true;
+			MoveKeys.down = true;
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_DOWN) {
-			left = true;
+			MoveKeys.left = true;
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_DOWN) {
-			right = true;
+			MoveKeys.right = true;
 		}
 
 		if (App->combo->CheckLightingKickP2() == true) {
@@ -1582,30 +1582,30 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 
 		//Axis
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			up = true;
+			MoveAxis.up = true;
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE) {
-			down = true;
+			MoveAxis.down = true;
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			left = true;
+			MoveAxis.left = true;
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE) {
-			right = true;
+			MoveAxis.right = true;
 		}
 
 
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE) {
-			up = false;
+			MoveAxis.up = false;
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			down = false;
+			MoveAxis.down = false;
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE) {
-			left = false;
+			MoveAxis.left = false;
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			right = false;
+			MoveAxis.right = false;
 		}
 	}
 	
@@ -1633,29 +1633,35 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	}
 
 
-	if (left && right)
+	//Keyboard moves logic
+	if (MoveKeys.left && MoveKeys.right)
 		inputs.Push(IN_LEFT_AND_RIGHT);
 	{
-		if (left == true) { inputs.Push(IN_LEFT_DOWN); }
-		if (left == false) { inputs.Push(IN_LEFT_UP); }
-		if (right == true) { inputs.Push(IN_RIGHT_DOWN); }
-		if (right == false) { inputs.Push(IN_RIGHT_UP); }
+		if (MoveKeys.left == true) { inputs.Push(IN_LEFT_DOWN); }
+		if (MoveKeys.right == true) { inputs.Push(IN_RIGHT_DOWN); }
 	}
 
-	if (up && down)
+	if (MoveKeys.up && MoveKeys.down)
 		inputs.Push(IN_JUMP_AND_CROUCH);
 	else
 	{
-		if (down == true) {
+		if (MoveKeys.down == true) {
 			inputs.Push(IN_CROUCH_DOWN);
 		}
-		if (down == false) {
-			inputs.Push(IN_CROUCH_UP);
-		}
-		if (up == true) {
+		if (MoveKeys.up == true) {
 			inputs.Push(IN_JUMP);
 		}
 	}
+	//Axis moves logic
+	if (MoveAxis.up == true) { inputs.Push(IN_JUMP); }
+	if (MoveAxis.down == true) { inputs.Push(IN_CROUCH_DOWN); }
+	else if (MoveAxis.down == false) { inputs.Push(IN_CROUCH_UP); }
+	if (MoveAxis.left == true) { inputs.Push(IN_LEFT_DOWN); }
+	else if (MoveAxis.left == false) { inputs.Push(IN_LEFT_UP); }
+	if (MoveAxis.right == true) { inputs.Push(IN_RIGHT_DOWN); }
+	else if (MoveAxis.right == false) { inputs.Push(IN_RIGHT_UP); }
+
+
 	return true;
 }
 
