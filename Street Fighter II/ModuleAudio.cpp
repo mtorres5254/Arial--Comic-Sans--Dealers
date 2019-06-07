@@ -80,9 +80,7 @@ bool ModuleAudio::StopMusic(int delay) {
 }
 
 bool ModuleAudio::PlayChunk(Mix_Chunk * chunk, int repeats) {
-
-	Mix_PlayChannel(-1, chunk, repeats);
-
+	Mix_PlayChannel(-1, chunk, repeats - 1);
 	return true;
 }
 
@@ -154,7 +152,7 @@ bool ModuleAudio::UnloadChunk(Mix_Chunk *effect)
 				break;
 			}
 		}
-		Mix_FreeChunk(effect);
+	//	Mix_FreeChunk(effect);
 	}
 
 	return ret;

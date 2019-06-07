@@ -30,6 +30,8 @@
 #define MAX_FRAME_COLLIDERS 6
 #define idleForce 5
 
+#define WHIRLWINDKICK_TIME 1100
+
 struct SDL_Texture;
 
 
@@ -92,6 +94,8 @@ enum chunli_states
 
 	ST_BLOCK,
 	ST_BLOCK_CROUCH,
+
+	ST_WHIRLWIND,
 };
 
 enum chunli_inputs
@@ -134,6 +138,9 @@ enum chunli_inputs
 	IN_BLOCK_CROUCH,
 
 	IN_BLOCK_FINISH,
+
+	IN_WHIRLWINDKICK,
+	IN_WHIRLWINDKICK_FINISH,
 };
 class ModuleChunLi2 : public Module
 {
@@ -218,6 +225,7 @@ public:
 
 	Animation LightningKick_startup;
 	Animation LightningKick;
+	Animation WhirlwindKick;
 	Animation Death;
 	Animation damage;
 	Animation damage2;
@@ -228,6 +236,9 @@ public:
 	Animation victory1;
 	iPoint position;
 	Collider* colliders[MAX_COLLIDERS];
+
+	Mix_Chunk* LightningKick_effect;
+	Mix_Chunk* WhirlwindKick_effect;
 
 	int acumvictory = 0;
 	bool GodMode = false;
@@ -272,6 +283,7 @@ public:
 	Uint32 dmg_hard_timer = 0;
 	Uint32 dmg_fall_timer = 0;
 	Uint32 block_timer = 0;
+	Uint32 whirlwind_timer = 0;
 
 	private:
 		bool left = false;

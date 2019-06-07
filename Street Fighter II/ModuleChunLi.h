@@ -28,6 +28,7 @@
 #define DMG_TIME2 200
 #define idleForce 5
 
+#define WHIRLWINDKICK_TIME2 1100
 
 
 
@@ -96,7 +97,7 @@ enum chunli_states2
 	ST_BLOCK2,
 	ST_BLOCK_CROUCH2,
 
-
+	ST_WHIRLWIND2,
 };
 
 enum chunli_inputs2
@@ -124,6 +125,7 @@ enum chunli_inputs2
 	IN_4_2,
 	
 	IN_LIGHTINGKICK2,
+
 	IN_JUMP_FINISH2,
 	IN_PUNCH_FINISH2,
 	IN_PUNCH_MEDIUM_FINISH2,
@@ -135,6 +137,9 @@ enum chunli_inputs2
 	IN_RECEIVED_PUNCH2,
 
 	IN_DAMAGE_FINISH2,
+
+	IN_WHIRLWINDKICK2,
+	IN_WHIRLWINDKICK2_FINISH2,
 
 	IN_BLOCK2,
 	IN_BLOCK_CROUCH2,
@@ -171,6 +176,7 @@ public:
 	Animation idle;
 	Animation forward;
 	Animation backward;
+
 	Animation punch;
 	Animation punch_medium;
 	Animation punch_hard;
@@ -223,6 +229,9 @@ public:
 
 	Animation LightningKick_startup;
 	Animation LightningKick;
+
+	Animation WhirlwindKick;
+
 	Animation Death;
 	Animation damage;
 	Animation damage2;
@@ -233,7 +242,8 @@ public:
 	Animation victory1;
 	iPoint position;
 
-	
+	Mix_Chunk* LightningKick_effect;
+	Mix_Chunk* WhirlwindKick_effect;
 
 	Collider* colliders[MAX_COLLIDERS];
 
@@ -280,6 +290,7 @@ public:
 	Uint32 dmg_hard_timer = 0;
 	Uint32 dmg_fall_timer = 0;
 	Uint32 block_timer = 0;
+	Uint32 whirlwind_timer = 0;
 
 private:
 	bool left = false;

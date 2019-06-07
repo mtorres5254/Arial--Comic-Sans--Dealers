@@ -110,24 +110,20 @@ bool ModuleCombos::CheckLightingKickP2() {
 bool ModuleCombos::CheckWhirlwindKickP1() {
 	actual_frameP1WK++;
 	if (actual_frameP1WK <= WHIRLWINDKICK) {
-		switch (whirlwindKickCount) {
+		switch (whirlwindKickCount) 
+		{
 		case 0:
-			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN) {
+			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_IDLE) {
 				HoldWKP1++;
 			}
-			else{
-				if (HoldWKP1 > 10 && HoldWKP1 < 20) {
+			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_UP) {
+				if (HoldWKP1 > 10) {
 					HoldWKP1 = 0;
 					whirlwindKickCount++;
 				}
 			}
 			break;
 		case 1:
-			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN) {
-				whirlwindKickCount++;
-			}
-			break;
-		case 2:
 			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
 				whirlwindKickCount = 0;
 				return true;
@@ -147,27 +143,22 @@ bool ModuleCombos::CheckWhirlwindKickP2() {
 	if (actual_frameP2WK <= WHIRLWINDKICK) {
 		switch (whirlwindKickCount2) {
 		case 0:
-			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN) {
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_IDLE) {
 				HoldWKP2++;
 			}
-			else {
-				if (HoldWKP2 > 10 && HoldWKP2 < 20) {
+			if(App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_UP) {
+				if (HoldWKP2 > 10) {
 					HoldWKP2 = 0;
 					whirlwindKickCount2++;
 				}
 			}
 			break;
 		case 1:
-			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN) {
-				whirlwindKickCount2++;
-			}
-			break;
-		case 2:
 			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
 				whirlwindKickCount2 = 0;
 				return true;
 			}
-			break;
+			break;			
 		}
 	}
 	else {

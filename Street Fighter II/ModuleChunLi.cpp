@@ -37,9 +37,13 @@ bool ModuleChunLi::Start()
 	position.x = 180;
 	position.y = 220;
 
+	//Effects
+	LightningKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_yap.wav");
+	WhirlwindKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_kick.wav");
+
+
+
 	// idle animation (arcade sprite sheet)
-
-
 	const int idleCollider = 5;//Collider num for the idle animation
 	SDL_Rect idleHitbox[idleCollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33} };
 	COLLIDER_TYPE idleCollType[idleCollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER} };
@@ -578,6 +582,28 @@ bool ModuleChunLi::Start()
 	LightningKick.speed = 0.2f;
 	LightningKick.loop = true;
 
+	//Wirlhwind Kick
+
+	const int wkcollider = 3;//Collider num for the WhirlwindKick animation
+	SDL_Rect wkhitbox[wkcollider] = { };
+	COLLIDER_TYPE wkCollType[wkcollider] = { };
+	Module* wkCallback[wkcollider] = {  };
+
+	WhirlwindKick.PushBack1({1402,326,55,122}, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({1458,333,55,115}, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({1514,375,101,73}, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({1616,376,54,71}, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({1671,375,101,73}, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({1773,379,149,69}, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({1920,379,96,69}, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({1024,477,48,68}, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({1073,476,86,69}, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({1160,475,146,70}, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1458,333,55,115 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1402,326,55,122 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.speed = 0.2f;
+	//WhirlwindKick.loop = true;
+
 
 	// JUMP NEUTRAL KICK
 
@@ -720,6 +746,9 @@ bool ModuleChunLi::CleanUp()
 		}
 	}
 
+	App->audio->UnloadChunk(LightningKick_effect);
+	App->audio->UnloadChunk(WhirlwindKick_effect);
+
 	return true;
 }
 
@@ -757,292 +786,160 @@ update_status ModuleChunLi::Update()
 				{					
 					switch (state)
 					{
-					case ST_IDLE2:
-						
+					case ST_IDLE2:						
 						current_animation = &idle;
-						resetanimations();
-						
+						resetanimations();						
 						crouch.Reset();
-						move = true;
-						
-
+						move = true;			
 						break;
-
 					case ST_WALK_FORWARD2:
-
 						current_animation = &forward;
 						resetanimations();
-
 						if(move)
-						position.x += speedX;
-						
+						position.x += speedX;						
 						move = true;
 						break;
-
 					case ST_WALK_BACKWARD2:
-
 						current_animation = &backward;
 						resetanimations();
-
 						if(move)
-						position.x -= speedX;
-						
+						position.x -= speedX;						
 						move = true;
-
 						break;
-					case ST_JUMP_NEUTRAL2:						
-						
-						
+					case ST_JUMP_NEUTRAL2:								
 						current_animation = &jump_neutral;
-						jump_neutral_logic();
-															
-						
+						jump_neutral_logic();													
 						break;
-
-					case ST_JUMP_FORWARD2:
-
-						
+					case ST_JUMP_FORWARD2:						
 						current_animation = &jump_forward;
-						jump_forward_logic();
-						
-						
-
+						jump_forward_logic();	
 						break;
-
-					case ST_JUMP_BACKWARD2:
-
-						
+					case ST_JUMP_BACKWARD2:						
 						current_animation = &jump_backwards;
-						jump_backward_logic();
-						
-						
+						jump_backward_logic();	
 						break;
 					case ST_CROUCH2:
-
 						resetanimations();
-						current_animation = &crouch;
-						
-						
+						current_animation = &crouch;					
 						break;
-					case ST_PUNCH_STANDING2:
-						
-						current_animation = &punch;	
-
-						
+					case ST_PUNCH_STANDING2:						
+						current_animation = &punch;						
 						break;
 					case ST_PUNCH_CROUCH2:
-
-						current_animation = &Crouch_punch;						
-						
+						current_animation = &Crouch_punch;				
 						break;
-
 					case ST_PUNCH_MEDIUM_CROUCH2:
-
 						current_animation = &Crouch_medium_punch;
-
 						break;
-
 					case ST_PUNCH_HARD_CROUCH2:
-
 						current_animation = &Crouch_hard_punch;
-
 						break;
-
 					case ST_KICK_CROUCH2:
-
 						current_animation = &Crouch_kick;
-
 						break;
 					case ST_KICK_MEDIUM_CROUCH2:
-
 						current_animation = &Crouch_medium_kick;
-
 						break;
 					case ST_KICK_HARD_CROUCH2:
-
 						current_animation = &Crouch_hard_kick;
-
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP2:
-
 						current_animation = &jump_neutral_punch;						
-						jump_neutral_logic();				
-						
-
+						jump_neutral_logic();
 						break;
-
 					case ST_PUNCH_MEDIUM_NEUTRAL_JUMP2:
-
 						current_animation = &jump_forward_punch_medium;
 						jump_neutral_logic();
 						break;
-
 					case ST_PUNCH_HARD_NEUTRAL_JUMP2:
-
 						current_animation = &jump_neutral_punch_hard;
-
-
 						jump_neutral_logic();	
-
-
-
 						break;
-					case ST_PUNCH_FORWARD_JUMP2:
-
-					
+					case ST_PUNCH_FORWARD_JUMP2:					
 						current_animation = &jump_forward_punch;
-
 						jump_forward_logic();
-
 						break;
-
 					case ST_PUNCH_MEDIUM_FORWARD_JUMP2:
-
-
 						current_animation = &jump_forward_punch_medium;
-
 						jump_forward_logic();
-
 						break;
-
 					case ST_PUNCH_HARD_FORWARD_JUMP2:
-
-
 						current_animation = &jump_forward_punch_hard;
-
 						jump_forward_logic();
-
 						break;
-
 					case ST_KICK_FORWARD_JUMP2:
-
-
 						current_animation = &jump_forward_kick;
-
 						jump_forward_logic();
-
 						break;
-
 					case ST_KICK_MEDIUM_FORWARD_JUMP2:
-
-
 						current_animation = &jump_forward_kick_medium;
-
 						jump_forward_logic();
-
 						break;
-
 					case ST_KICK_HARD_FORWARD_JUMP2:
-
-
 						current_animation = &jump_forward_kick_hard;
-
 						jump_forward_logic();
-
 						break;
 					case ST_PUNCH_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch;
-
 						jump_backward_logic();
-
 						break;
-
 					case ST_PUNCH_MEDIUM_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch_medium;
-
 						jump_backward_logic();
-
 						break;
-
 					case ST_PUNCH_HARD_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch_hard;
-
 						jump_backward_logic();
-
 						break;
 					case ST_KICK_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick;
-
 						jump_backward_logic();
 						break;
-
 					case ST_KICK_MEDIUM_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick_medium;
-
 						jump_backward_logic();
-
 						break;
-
 					case ST_KICK_HARD_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick_hard;
-
 						jump_backward_logic();
-
 						break;
 					case ST_KICK_STANDING2:
-
-						current_animation = &kick;					
-
+						current_animation = &kick;
 						break;
-
 					case ST_PUNCH_MEDIUM2:
 						current_animation = &punch_medium;
 						break;
-
-					case ST_PUNCH_HARD2:
-						
+					case ST_PUNCH_HARD2:						
 						current_animation = &punch_hard;
 						break;
-
 					case ST_KICK_MEDIUM_STANDING2:
-
 						current_animation = &kick_medium;
-
 						break;
-
 					case ST_KICK_HARD_STANDING2:
-
 						current_animation = &kick_hard;
-
 						break;
-
 					case ST_LIGHTNINGKICK2:
-
-					
-						current_animation = &LightningKick;
-					
-						
+						current_animation = &LightningKick;	
+						App->audio->PlayChunk(LightningKick_effect, 3);
 						break;
-
+					case ST_WHIRLWIND2:
+						current_animation = &WhirlwindKick;
+						App->audio->PlayChunk(WhirlwindKick_effect, 1);
+						break;
 					case ST_KICK_NEUTRAL_JUMP2:
-
 						current_animation = &jump_neutral_kick;
-
-
 						jump_neutral_logic();
-
-
-
 						break;
-
 					case ST_KICK_MEDIUM_NEUTRAL_JUMP2:
-
 						current_animation = &jump_neutral_kick_medium;
 						jump_neutral_logic();
-
-
 						break;
-
 					case ST_KICK_HARD_NEUTRAL_JUMP2:
-
 						current_animation = &jump_neutral_kick_hard;
 						jump_neutral_logic();
-
 						break;
-
 					case ST_DAMAGE2:
 						current_animation = &damage;
-
 						if (current_animation->current_frame != 0)
 						{
 							if (position.x > App->chunli2->position.x)
@@ -1051,9 +948,7 @@ update_status ModuleChunLi::Update()
 								position.x -= 1;
 						}
 						move = false;
-
 						break;
-
 					case ST_DAMAGE_HARD2:
 						current_animation = &damage2;
 
@@ -1448,12 +1343,6 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 		inputs.Push(IN_4_2);
 	}
-	if (App->combo->CheckLightingKickP1() == true) {
-		inputs.Push(IN_LIGHTINGKICK2);
-	}
-	if (App->combo->CheckWhirlwindKickP1() == true) {
-		//inputs.Push(IN_LIGHTINGKICK2);
-	}
 	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN) {
 		up = true;
 	}
@@ -1466,6 +1355,14 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 	if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_DOWN) {
 		right = true;
 	}
+
+	if (App->combo->CheckLightingKickP1() == true) {
+		inputs.Push(IN_LIGHTINGKICK2);
+	}
+	if (App->combo->CheckWhirlwindKickP1() == true) {
+		inputs.Push(IN_WHIRLWINDKICK2);
+	}
+
 	//Axis
 	/*
 	if (App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTX] == AXIS_MOVE && App->input->Pad2.Xaxis_state > JOYSTICK_DEAD_ZONE) {
@@ -1639,6 +1536,15 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs2>& inputs)
 		}
 	}
 
+	if (whirlwind_timer > 0)
+	{
+		if (SDL_GetTicks() - whirlwind_timer > WHIRLWINDKICK_TIME2)
+		{
+			inputs.Push(IN_WHIRLWINDKICK2_FINISH2);
+			whirlwind_timer = 0;
+		}
+	}
+
 
 	
 
@@ -1686,6 +1592,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			case IN_DAMAGE2: state = ST_DAMAGE2; dmg_timer = SDL_GetTicks(); break;
 			case IN_DAMAGE_HARD2: state = ST_DAMAGE_HARD2; dmg_hard_timer = SDL_GetTicks(); break;
 			case IN_DAMAGE_FALL2: state = ST_DAMAGE_FALL2; dmg_fall_timer = SDL_GetTicks(); break;
+			case IN_WHIRLWINDKICK2: state = ST_WHIRLWIND2; whirlwind_timer = SDL_GetTicks(); break;
 			
 			}
 		}
@@ -1710,6 +1617,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			case IN_DAMAGE_HARD2: state = ST_DAMAGE_HARD2; dmg_hard_timer = SDL_GetTicks(); break;
 			case IN_DAMAGE_FALL2: state = ST_DAMAGE_FALL2; dmg_fall_timer = SDL_GetTicks(); break;
 			case IN_BLOCK2: state = ST_BLOCK2; block_timer = SDL_GetTicks(); break;
+			case IN_WHIRLWINDKICK2: state = ST_WHIRLWIND2; whirlwind_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -1733,6 +1641,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			case IN_DAMAGE_HARD2: state = ST_DAMAGE_HARD2; dmg_hard_timer = SDL_GetTicks(); break;
 			case IN_DAMAGE_FALL2: state = ST_DAMAGE_FALL2; dmg_fall_timer = SDL_GetTicks(); break;
 			case IN_BLOCK2: state = ST_BLOCK2; block_timer = SDL_GetTicks(); break;
+			case IN_WHIRLWINDKICK2: state = ST_WHIRLWIND2; whirlwind_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -2272,6 +2181,19 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			
 		}
 		break;
+		case ST_WHIRLWIND2:
+		{
+			switch (last_input)
+			{
+			case IN_WHIRLWINDKICK2_FINISH2:
+				state = ST_IDLE2;
+				if(App->chunli2->damage_received == true)
+				{
+					App->UI->scoreP1 += 500;
+				}
+			}
+		}
+		break;
 		case ST_PUNCH_MEDIUM2:
 		{
 			switch (last_input)
@@ -2427,6 +2349,7 @@ void ModuleChunLi::resetanimations() {
 	Crouch_punch.Reset();
 	kick.Reset();
 	LightningKick.Reset();
+	WhirlwindKick.Reset();
 	punch_medium.Reset();
 	punch_hard.Reset();
 	kick_medium.Reset();

@@ -39,6 +39,9 @@ bool ModuleChunLi2::Start()
 	
 	// idle animation (arcade sprite sheet)
 
+	//Effects
+	LightningKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_yap.wav");
+	WhirlwindKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_kick.wav");
 
 	const int idleCollider = 5;//Collider num for the idle animation
 	SDL_Rect idleHitbox[idleCollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 },{ 9,4,51,54 },{ 1,3,45,33 } };
@@ -582,6 +585,28 @@ bool ModuleChunLi2::Start()
 	LightningKick.loop = true;
 
 
+	//Wirlhwind Kick
+
+	const int wkcollider = 3;//Collider num for the WhirlwindKick animation
+	SDL_Rect wkhitbox[wkcollider] = { };
+	COLLIDER_TYPE wkCollType[wkcollider] = { };
+	Module* wkCallback[wkcollider] = {  };
+
+	WhirlwindKick.PushBack1({ 1402,326,55,122 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1458,333,55,115 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1514,375,101,73 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1616,376,54,71 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1671,375,101,73 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1773,379,149,69 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1920,379,96,69 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1024,477,48,68 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1073,476,86,69 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1160,475,146,70 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1458,333,55,115 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1402,326,55,122 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.speed = 0.2f;
+	//WhirlwindKick.loop = true;
+
 	// JUMP NEUTRAL KICK
 
 	jump_neutral_kick.PushBack1({ 1450, 126, 57, 95 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
@@ -719,6 +744,9 @@ bool ModuleChunLi2::CleanUp()
 			colliders[i] = nullptr;
 		}
 	}
+
+	App->audio->UnloadChunk(LightningKick_effect);
+	App->audio->UnloadChunk(WhirlwindKick_effect);
 
 	return true;
 }
@@ -1008,8 +1036,12 @@ update_status ModuleChunLi2::Update()
 						break;
 
 					case ST_LIGHTNINGKICK:
-
 						current_animation = &LightningKick;
+						App->audio->PlayChunk(LightningKick_effect, 3);
+						break;
+					case ST_WHIRLWIND:
+						current_animation = &WhirlwindKick;
+						App->audio->PlayChunk(WhirlwindKick_effect, 1);
 						break;
 
 					case ST_KICK_NEUTRAL_JUMP:
@@ -1417,9 +1449,6 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
 		inputs.Push(IN_C);
 	}
-	if (App->combo->CheckLightingKickP2() == true) {
-		inputs.Push(IN_LIGHTINGKICK);
-	}
 	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN) {
 		up = true;
 	}
@@ -1433,7 +1462,12 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 		right = true;
 	}
 
-
+	if (App->combo->CheckLightingKickP2() == true) {
+		inputs.Push(IN_LIGHTINGKICK);
+	}
+	if (App->combo->CheckWhirlwindKickP2() == true) {
+		inputs.Push(IN_WHIRLWINDKICK);
+	}
 
 	if (damage_received == 1) {
 		inputs.Push(IN_DAMAGE);
@@ -1596,6 +1630,14 @@ void ModuleChunLi2::internal_input(p2Qeue<chunli_inputs>& inputs)
 		}
 	}
 
+	if (whirlwind_timer > 0)
+	{
+		if (SDL_GetTicks() - whirlwind_timer > WHIRLWINDKICK_TIME2)
+		{
+			inputs.Push(IN_WHIRLWINDKICK_FINISH);
+			whirlwind_timer = 0;
+		}
+	}
 }
 
 void ModuleChunLi2::ResetPlayer() {
@@ -1642,6 +1684,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_DAMAGE: state = ST_DAMAGE; dmg_timer = SDL_GetTicks(); break;
 				case IN_DAMAGE_HARD: state = ST_DAMAGE_HARD; dmg_hard_timer = SDL_GetTicks(); break;
 				case IN_DAMAGE_FALL: state = ST_DAMAGE_FALL; dmg_fall_timer = SDL_GetTicks(); break;
+				case IN_WHIRLWINDKICK: state = ST_WHIRLWIND; whirlwind_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -1665,6 +1708,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_DAMAGE_HARD: state = ST_DAMAGE_HARD; dmg_hard_timer = SDL_GetTicks(); break;
 				case IN_DAMAGE_FALL: state = ST_DAMAGE_FALL; dmg_fall_timer = SDL_GetTicks(); break;
 				case IN_BLOCK: state = ST_BLOCK; block_timer = SDL_GetTicks(); break;
+				case IN_WHIRLWINDKICK: state = ST_WHIRLWIND; whirlwind_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -1688,7 +1732,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_DAMAGE_HARD: state = ST_DAMAGE_HARD; dmg_hard_timer = SDL_GetTicks(); break;
 				case IN_DAMAGE_FALL: state = ST_DAMAGE_FALL; dmg_fall_timer = SDL_GetTicks(); break;
 				case IN_BLOCK: state = ST_BLOCK; block_timer = SDL_GetTicks(); break;
-				
+				case IN_WHIRLWINDKICK: state = ST_WHIRLWIND; whirlwind_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -2257,6 +2301,19 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 			}
 			break;
+			case ST_WHIRLWIND:
+			{
+				switch (last_input)
+				{
+				case IN_WHIRLWINDKICK_FINISH:
+					state = ST_IDLE;
+					if (App->chunli->damage_received == true)
+					{
+						App->UI->scoreP2 += 500;
+					}
+				}
+			}
+			break;
 
 			case ST_DAMAGE:
 			{
@@ -2414,6 +2471,8 @@ void ModuleChunLi2::resetanimations() {
 	jump_backward_kick.Reset();
 	jump_backward_kick_medium.Reset();
 	jump_backward_kick_hard.Reset();
+
+	WhirlwindKick.Reset();
 }
 
 void ModuleChunLi2::debugcommands() {
