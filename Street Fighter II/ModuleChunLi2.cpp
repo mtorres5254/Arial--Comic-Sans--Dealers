@@ -585,26 +585,37 @@ bool ModuleChunLi2::Start()
 	LightningKick.loop = true;
 
 
-	//Wirlhwind Kick
+	const int wkcollider = 2;//Collider num for the WhirlwindKick animation
+	SDL_Rect wkhitbox[wkcollider] = { {25,41,31,49},{30,55,37,39} };
+	COLLIDER_TYPE wkCollType[wkcollider] = { {COLLIDER_ENEMY},{COLLIDER_ENEMY} };
+	Module* wkCallback[wkcollider] = { {this},{this} };
 
-	const int wkcollider = 3;//Collider num for the WhirlwindKick animation
-	SDL_Rect wkhitbox[wkcollider] = { };
-	COLLIDER_TYPE wkCollType[wkcollider] = { };
-	Module* wkCallback[wkcollider] = {  };
+	const int wkcollider1 = 3;//Collider num for the WhirlwindKick animation
+	SDL_Rect wkhitbox1[wkcollider1] = { {25,41,31,49},{30,55,37,39}, {1,59,151,41} };
+	COLLIDER_TYPE wkCollType1[wkcollider1] = { {COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY_SHOT} };
+	Module* wkCallback1[wkcollider1] = { {this},{this},{this} };
 
-	WhirlwindKick.PushBack1({ 1402,326,55,122 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1458,333,55,115 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1514,375,101,73 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1616,376,54,71 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1671,375,101,73 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1773,379,149,69 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1920,379,96,69 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1024,477,48,68 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1073,476,86,69 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1160,475,146,70 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1458,333,55,115 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1402,326,55,122 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.speed = 0.2f;
+	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.speed = 0.24f;
 	//WhirlwindKick.loop = true;
 
 	// JUMP NEUTRAL KICK
@@ -1282,12 +1293,13 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			|| state == ST_WALK_BACKWARD && App->chunli->state ==  ST_CROUCH2
 			|| state == ST_CROUCH && App->chunli->state== ST_WALK_FORWARD2 
 			|| state == ST_WALK_FORWARD && App->chunli->state == ST_CROUCH2) {
-
+			
 			move = false;
 		}
 
 		
 		else {
+			
 			move = true;
 		}
 		
@@ -1318,13 +1330,13 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			}
 
 			if (state == ST_WALK_BACKWARD || state == ST_WALK_FORWARD || state == ST_IDLE) {
-				if (App->chunli->state == ST_KICK_HARD_CROUCH2) {
+				if (App->chunli->state == ST_KICK_HARD_CROUCH2 || App->chunli->state == ST_KICK_HARD_NEUTRAL_JUMP2) {
 					damage_received = 3;
 					App->slow->StartSlowdown(JUMP_TIME, 50);
 				}
-				else if (App->chunli->state == ST_KICK_HARD_NEUTRAL_JUMP2) {
-					damage_received = 3;
-					App->slow->StartSlowdown(JUMP_TIME, 50);
+				else if (App->chunli->state == ST_WHIRLWIND2) {
+					damage_received = 2;
+					App->slow->StartSlowdown(400, 50);
 				}
 				else if (App->chunli->state == ST_KICK_HARD_STANDING2) {
 					damage_received = 2;
@@ -1348,7 +1360,10 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 
 bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 {
-	
+	bool left = false;
+	bool right = false;
+	bool down = false;
+	bool up = false;
 	//Key up
 	if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_UP) {
 		inputs.Push(IN_CROUCH_UP);
@@ -2341,6 +2356,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					{
 						App->UI->scoreP2 += 500;
 					}
+					position.y = 220;
 				}
 			}
 			break;

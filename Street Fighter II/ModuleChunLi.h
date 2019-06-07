@@ -297,8 +297,6 @@ public:
 private:
 	bool left = false;
 	bool right = false;
-	bool down = false;
-	bool up = false;	
 	int force = 0;
 };
 

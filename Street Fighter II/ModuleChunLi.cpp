@@ -805,21 +805,21 @@ update_status ModuleChunLi::Update()
 						crouch.Reset();
 						wkcounter = 0;
 						whirlwindMove = false;
-						move = true;			
+						//move = true;			
 						break;
 					case ST_WALK_FORWARD2:
 						current_animation = &forward;
 						resetanimations();
 						if(move)
 						position.x += speedX;						
-						move = true;
+						//move = true;
 						break;
 					case ST_WALK_BACKWARD2:
 						current_animation = &backward;
 						resetanimations();
 						if(move)
 						position.x -= speedX;						
-						move = true;
+						//move = true;
 						break;
 					case ST_JUMP_NEUTRAL2:								
 						current_animation = &jump_neutral;
@@ -948,9 +948,9 @@ update_status ModuleChunLi::Update()
 							whirlwindMove = true;
 						}
 						if (whirlwindMove == true) {
-							if (position.x < App->chunli2->position.x) { position.x += 3; }
-							if (position.x > App->chunli2->position.x) { position.x -= 3; }
-							position.y = 190;
+							if (position.x < App->chunli2->position.x) { position.x += 2; }
+							if (position.x > App->chunli2->position.x) { position.x -= 2; }
+							position.y = 180;
 						}
 						if (wkcounter >= 80) {
 							position.y = 220;
@@ -1162,6 +1162,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 				position.x += 1;
 			
 		}
+
 		if (state == ST_WALK_FORWARD2 && App->chunli2->state == ST_WALK_BACKWARD 
 			|| state == ST_WALK_BACKWARD2 && App->chunli2->state == ST_WALK_FORWARD 
 			|| state==ST_CROUCH2 && App->chunli2->state==ST_WALK_BACKWARD 
@@ -1172,6 +1173,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
 			move = false;
 		}
+		
 		if (state == ST_WHIRLWIND2) {
 			whirlwindMove = false;
 		}
@@ -1209,7 +1211,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 			}
 
 			if (state == ST_WALK_BACKWARD2 || state == ST_WALK_FORWARD2 || state == ST_IDLE2) {
-				if (App->chunli2->state == ST_KICK_HARD_CROUCH) {
+				if (App->chunli2->state == ST_KICK_HARD_CROUCH || App->chunli2->state == ST_WHIRLWIND) {
 					damage_received = 3;
 					App->slow->StartSlowdown(JUMP_TIME2, 50);
 				}
@@ -1245,6 +1247,10 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 {	
 
+	bool left = false;
+	bool right = false;
+	bool down = false;
+	bool up = false;	
 	
 	//Key up
 	if (App->input->keyboard[SDL_SCANCODE_S] == KEY_UP) {
@@ -2224,6 +2230,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				{
 					App->UI->scoreP1 += 500;
 				}
+				position.y = 220;
 			}
 		}
 		break;
