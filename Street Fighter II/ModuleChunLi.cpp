@@ -40,6 +40,10 @@ bool ModuleChunLi::Start()
 	//Effects
 	LightningKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_yap.wav");
 	WhirlwindKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_kick.wav");
+	light_damage = App->audio->LoadChunk("Asstes/Sound/Effects/light_attack.wav");
+	medium_damage = App->audio->LoadChunk("Assets/Sound/Effects/medium_attack.wav");
+	high_damage = App->audio->LoadChunk("Assets/Sound/Effects/high_attack.wav");
+	attack = App->audio->LoadChunk("Assets/Sound/Effects/attack.wav");
 
 
 
@@ -762,6 +766,10 @@ bool ModuleChunLi::CleanUp()
 
 	App->audio->UnloadChunk(LightningKick_effect);
 	App->audio->UnloadChunk(WhirlwindKick_effect);
+	App->audio->UnloadChunk(light_damage);
+	App->audio->UnloadChunk(medium_damage);
+	App->audio->UnloadChunk(high_damage);
+	App->audio->UnloadChunk(attack);
 
 	return true;
 }
@@ -839,100 +847,127 @@ update_status ModuleChunLi::Update()
 						current_animation = &crouch;					
 						break;
 					case ST_PUNCH_STANDING2:						
-						current_animation = &punch;						
+						current_animation = &punch;		
+						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_PUNCH_CROUCH2:
-						current_animation = &Crouch_punch;				
+						current_animation = &Crouch_punch;		
+						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_PUNCH_MEDIUM_CROUCH2:
 						current_animation = &Crouch_medium_punch;
+						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_PUNCH_HARD_CROUCH2:
 						current_animation = &Crouch_hard_punch;
+						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_KICK_CROUCH2:
 						current_animation = &Crouch_kick;
+						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_KICK_MEDIUM_CROUCH2:
 						current_animation = &Crouch_medium_kick;
+						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_KICK_HARD_CROUCH2:
 						current_animation = &Crouch_hard_kick;
+						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP2:
-						current_animation = &jump_neutral_punch;						
+						current_animation = &jump_neutral_punch;		
+						App->audio->PlayChunk(attack, 1);
 						jump_neutral_logic();
 						break;
 					case ST_PUNCH_MEDIUM_NEUTRAL_JUMP2:
 						current_animation = &jump_forward_punch_medium;
+						App->audio->PlayChunk(attack, 1);
 						jump_neutral_logic();
 						break;
 					case ST_PUNCH_HARD_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_punch_hard;
+						App->audio->PlayChunk(attack, 1);
 						jump_neutral_logic();	
 						break;
 					case ST_PUNCH_FORWARD_JUMP2:					
 						current_animation = &jump_forward_punch;
+						App->audio->PlayChunk(attack, 1);
 						jump_forward_logic();
 						break;
 					case ST_PUNCH_MEDIUM_FORWARD_JUMP2:
 						current_animation = &jump_forward_punch_medium;
+						App->audio->PlayChunk(attack, 1);
 						jump_forward_logic();
 						break;
 					case ST_PUNCH_HARD_FORWARD_JUMP2:
 						current_animation = &jump_forward_punch_hard;
+						App->audio->PlayChunk(attack, 1);
 						jump_forward_logic();
 						break;
 					case ST_KICK_FORWARD_JUMP2:
 						current_animation = &jump_forward_kick;
+						App->audio->PlayChunk(attack, 1);
 						jump_forward_logic();
 						break;
 					case ST_KICK_MEDIUM_FORWARD_JUMP2:
 						current_animation = &jump_forward_kick_medium;
+						App->audio->PlayChunk(attack, 1);
 						jump_forward_logic();
 						break;
 					case ST_KICK_HARD_FORWARD_JUMP2:
 						current_animation = &jump_forward_kick_hard;
+						App->audio->PlayChunk(attack, 1);
 						jump_forward_logic();
 						break;
 					case ST_PUNCH_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch;
+						App->audio->PlayChunk(attack, 1);
 						jump_backward_logic();
 						break;
 					case ST_PUNCH_MEDIUM_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch_medium;
+						App->audio->PlayChunk(attack, 1);
 						jump_backward_logic();
 						break;
 					case ST_PUNCH_HARD_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch_hard;
+						App->audio->PlayChunk(attack, 1);
 						jump_backward_logic();
 						break;
 					case ST_KICK_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick;
+						App->audio->PlayChunk(attack, 1);
 						jump_backward_logic();
 						break;
 					case ST_KICK_MEDIUM_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick_medium;
+						App->audio->PlayChunk(attack, 1);
 						jump_backward_logic();
 						break;
 					case ST_KICK_HARD_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick_hard;
+						App->audio->PlayChunk(attack, 1);
 						jump_backward_logic();
 						break;
 					case ST_KICK_STANDING2:
 						current_animation = &kick;
+						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_PUNCH_MEDIUM2:
 						current_animation = &punch_medium;
+						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_PUNCH_HARD2:						
 						current_animation = &punch_hard;
+						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_KICK_MEDIUM_STANDING2:
 						current_animation = &kick_medium;
+						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_KICK_HARD_STANDING2:
 						current_animation = &kick_hard;
+						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_LIGHTNINGKICK2:
 						current_animation = &LightningKick;	
@@ -963,14 +998,17 @@ update_status ModuleChunLi::Update()
 					case ST_KICK_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_kick;
 						jump_neutral_logic();
+						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_KICK_MEDIUM_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_kick_medium;
 						jump_neutral_logic();
+						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_KICK_HARD_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_kick_hard;
 						jump_neutral_logic();
+						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_DAMAGE2:
 						current_animation = &damage;
@@ -1211,15 +1249,15 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY_SHOT)
 	{
-		if (state == ST_WALK_BACKWARD2 && App->chunli2->position.x>position.x) {
-			block_damage = 1;						
+		if (state == ST_WALK_BACKWARD2 && App->chunli2->position.x > position.x) {
+			block_damage = 1;
 
 		}
 		else if (state == ST_WALK_FORWARD2 && App->chunli2->position.x < position.x) {
 			block_damage = 1;
 
 		}
-		
+
 		else if (state == ST_CROUCH2 && left && App->chunli2->position.x > position.x) {
 			block_damage = 2;
 		}
@@ -1229,7 +1267,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 		}
 
 		else {
-			
+
 			int aux = life;
 			if (!damage_received) {
 				life = aux - App->chunli2->dmg;
@@ -1244,32 +1282,27 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 					damage_received = 2;
 					App->slow->StartSlowdown(200, 50);
 					//App->chunli2->move = false;
-					
+
 				}
 				else if (App->chunli2->state == ST_KICK_HARD_STANDING) {
 					damage_received = 2;
 					App->slow->StartSlowdown(400, 50);
 				}
 				else {
-					damage_received = 1;					
+					damage_received = 1;
 				}
 
 			}
 			else if (state == ST_CROUCH2) {
 				damage_received = 4;
 			}
-			
+
 			else {
 				damage_received = 5;
 			}
-
 		}
-		
-		
+		App->audio->PlayChunk(medium_damage, 1);
 	}
-
-	
-
 }
 
 bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
