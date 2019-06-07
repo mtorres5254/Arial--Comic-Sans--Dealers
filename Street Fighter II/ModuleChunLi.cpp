@@ -1128,11 +1128,11 @@ void ModuleChunLi::positionlimits() {
 
 		position.x = App->scene_dhalsim->background.x - 12 -50;
 		leftLimit = true;
-		App->chunli2->move = false;
+		
 	}
 	else {
 		leftLimit = false;
-		App->chunli2->move = true;
+		
 	}
 
 	if (position.x >= (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) - 90) {
@@ -1189,12 +1189,14 @@ void ModuleChunLi::colliders_and_blit(Animation* current_animation) {
 
 	r = current_animation->GetCurrentFrame();
 	SDL_Rect shadowrect = { 6,8,71,15 };
-	if (position.x < App->chunli2->position.x) {
+	if (position.x < App->chunli2->position.x && (!RightLimit || position.y != 220) || leftLimit) {
+
 		App->render->Blit(shadow, position.x+PivotX, 207, &shadowrect);
 		App->render->Blit(shadow, App->chunli2->position.x - App->chunli2->PivotX - 8, 207, &shadowrect);
 		App->render->Blit(graphics, position.x + PivotX, position.y - r.h, &r);
 	}
-	if (position.x > App->chunli2->position.x) {
+	if (position.x > App->chunli2->position.x && !leftLimit || (RightLimit && position.y == 220)) {
+
 		App->render->Blit(shadow, position.x - (shadowrect.w - PivotX) + 40, 207, &shadowrect);
 		App->render->Blit(shadow, App->chunli2->position.x - (shadowrect.w + App->chunli2->PivotX) + 65, 207, &shadowrect);		
 		App->render->BlitSym(graphics, position.x - (r.w - PivotX)+40, position.y - r.h, &r);
@@ -1207,7 +1209,8 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 	
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY)
 	{		
-		if (state == ST_IDLE2 && (!leftLimit || !RightLimit)) {
+		
+		if (state == ST_IDLE2 ) {
 			if (position.x < App->chunli2->position.x)
 				position.x -= 1;
 			else if (position.x > App->chunli2->position.x)
@@ -1215,13 +1218,25 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 			
 			
 		}
+		else if (leftLimit == true && App->chunli2->state == ST_WALK_BACKWARD) {
+			move = false;
+		}
+		else if (RightLimit == true && App->chunli2->state == ST_WALK_FORWARD) {
+			move = false;
+		}
+		else if (App->chunli2->leftLimit == true && state == ST_WALK_BACKWARD2) {
+			move = false;
+		}
+
+		else if (App->chunli2->RightLimit == true && state == ST_WALK_FORWARD2) {
+			move = false;
+		}
 		else if (state == ST_WALK_FORWARD2 && App->chunli2->state == ST_WALK_BACKWARD 
 			|| state == ST_WALK_BACKWARD2 && App->chunli2->state == ST_WALK_FORWARD 
 			|| state==ST_CROUCH2 && App->chunli2->state==ST_WALK_BACKWARD 
 			|| state == ST_WALK_FORWARD2 && App->chunli2->state==ST_CROUCH
 			|| state == ST_CROUCH2 && App->chunli2->state==ST_WALK_FORWARD
 			|| state== ST_WALK_BACKWARD2 && App->chunli2->state == ST_CROUCH) {
-
 
 			move = false;
 		}
