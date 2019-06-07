@@ -1229,10 +1229,12 @@ void ModuleChunLi2::positionlimits() {
 	if (position.x -40>= (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) -90 ) {
 		position.x = (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w)-90 +40;
 		RightLimit = true;
+		
 	}
 
 	else {
 		RightLimit = false;
+		
 	}
 	
 	if (abs(App->chunli->position.x - position.x) >= SCREEN_WIDTH - 10 && position.x>App->chunli->position.x) {
@@ -1297,11 +1299,25 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER)
 	{
-		if (state == ST_IDLE && (!leftLimit || !RightLimit)) {
+		if (state == ST_IDLE) {
 			if (position.x > App->chunli->position.x)
 				position.x += 1;
 			if (position.x < App->chunli->position.x)
 				position.x -= 1;
+		}
+		else if (App->chunli->leftLimit == true && state == ST_WALK_BACKWARD) {
+			move = false;
+		}
+
+		else if (App->chunli->RightLimit == true && state == ST_WALK_FORWARD) {
+			move = false;
+		}
+
+		else if (leftLimit == true && App->chunli->state == ST_WALK_BACKWARD2) {
+			move = false;
+		}
+		else if (RightLimit == true && App->chunli->state == ST_WALK_FORWARD2) {
+			move = false;
 		}
 
 		else if (state == ST_WALK_BACKWARD && App->chunli->state == ST_WALK_FORWARD2 
