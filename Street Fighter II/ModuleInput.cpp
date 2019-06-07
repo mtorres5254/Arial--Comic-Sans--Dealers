@@ -111,16 +111,7 @@ update_status ModuleInput::PreUpdate()
 			}
 		}
 		for (int i = 0; i < SDL_CONTROLLER_AXIS_MAX; ++i) {
-			if (SDL_GameControllerGetAxis(Pad1.Pad, (SDL_GameControllerAxis)i) == 1) {
-				if (Pad1.axis_state[i] == AXIS_IDLE) {
-					Pad1.axis_state[i] = AXIS_MOVE;
-				}
-			}
-			else {
-				if (Pad1.axis_state[i] == AXIS_MOVE) {
-					Pad1.axis_state[i] = AXIS_IDLE;
-				}
-			}
+			Pad1.axis_state[i] = SDL_GameControllerGetAxis(Pad1.Pad, (SDL_GameControllerAxis)i);
 		}
 	}
    
@@ -146,16 +137,7 @@ update_status ModuleInput::PreUpdate()
 		}
 		//GetGamepadAxis
 		for (int i = 0; i < SDL_CONTROLLER_AXIS_MAX; ++i) {
-			if (SDL_GameControllerGetAxis(Pad2.Pad, (SDL_GameControllerAxis)i) == 1) {
-				if (Pad2.axis_state[i] == AXIS_IDLE) {
-					Pad2.axis_state[i] = AXIS_MOVE;
-				}
-			}
-			else {
-				if (Pad2.axis_state[i] == AXIS_MOVE) {
-					Pad2.axis_state[i] = AXIS_IDLE;
-				}
-			}
+			Pad2.axis_state[i] = SDL_GameControllerGetAxis(Pad2.Pad, (SDL_GameControllerAxis)i);
 		}
 	}
 	
@@ -209,15 +191,6 @@ bool ModuleInput::CleanUp()
 	LOG("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER);
 	return true;
-}
-
-void ModuleInput::GetGamepadAxis(GamePad* gamepad) {
-	float auxX, auxY;
-	auxX = SDL_GameControllerGetAxis(gamepad->Pad, SDL_CONTROLLER_AXIS_LEFTX);
-	auxY = SDL_GameControllerGetAxis(gamepad->Pad, SDL_CONTROLLER_AXIS_LEFTY);
-
-	gamepad->Xaxis_state = auxX / 32767;
-	gamepad->Yaxis_state = auxY / 32767;
 }
 
 History ModuleInput::GetPrevious(int previous) {

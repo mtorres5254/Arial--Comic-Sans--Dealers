@@ -30,7 +30,7 @@
 #define MAX_FRAME_COLLIDERS 6
 #define idleForce 5
 
-#define WHIRLWINDKICK_TIME 1100
+#define WHIRLWINDKICK_TIME 1500
 
 struct SDL_Texture;
 
@@ -239,11 +239,17 @@ public:
 
 	Mix_Chunk* LightningKick_effect;
 	Mix_Chunk* WhirlwindKick_effect;
+	Mix_Chunk* light_damage;
+	Mix_Chunk* medium_damage;
+	Mix_Chunk* high_damage;
+	Mix_Chunk* attack;
 
 	int acumvictory = 0;
 	bool GodMode = false;
 
 	bool death = false;
+	bool leftLimit = false;
+	bool RightLimit = false;
 
 	int PivotX = 0; 
 	int PivotY = 0;

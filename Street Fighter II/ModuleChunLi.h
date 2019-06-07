@@ -244,7 +244,12 @@ public:
 
 	Mix_Chunk* LightningKick_effect;
 	Mix_Chunk* WhirlwindKick_effect;
-	Mix_Chunk* hit_effect;
+
+	Mix_Chunk* light_damage;
+	Mix_Chunk* medium_damage;
+	Mix_Chunk* high_damage;
+	Mix_Chunk* attack;
+
 
 	Collider* colliders[MAX_COLLIDERS];
 
@@ -258,6 +263,8 @@ public:
 	int PivotY = 0;
 	int dmg = 0;
 
+	bool leftLimit = false;
+	bool RightLimit = false;
 
 	int DeathCount = 0;
 	int ActiveDeath = 0;

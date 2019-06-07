@@ -42,6 +42,10 @@ bool ModuleChunLi2::Start()
 	//Effects
 	LightningKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_yap.wav");
 	WhirlwindKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_kick.wav");
+	light_damage = App->audio->LoadChunk("Asstes/Sound/Effects/light_attack.wav");
+	medium_damage = App->audio->LoadChunk("Assets/Sound/Effects/medium_attack.wav");
+	high_damage = App->audio->LoadChunk("Assets/Sound/Effects/high_attack.wav");
+	attack = App->audio->LoadChunk("Assets/Sound/Effects/attack.wav");
 
 	const int idleCollider = 5;//Collider num for the idle animation
 	SDL_Rect idleHitbox[idleCollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 },{ 9,4,51,54 },{ 1,3,45,33 } };
@@ -587,24 +591,38 @@ bool ModuleChunLi2::Start()
 
 	//Wirlhwind Kick
 
-	const int wkcollider = 3;//Collider num for the WhirlwindKick animation
-	SDL_Rect wkhitbox[wkcollider] = { };
-	COLLIDER_TYPE wkCollType[wkcollider] = { };
-	Module* wkCallback[wkcollider] = {  };
+	
+	const int wkcollider = 2;//Collider num for the WhirlwindKick animation
+	SDL_Rect wkhitbox[wkcollider] = { {25,41,31,49},{30,55,37,39} };
+	COLLIDER_TYPE wkCollType[wkcollider] = { {COLLIDER_ENEMY},{COLLIDER_ENEMY} };
+	Module* wkCallback[wkcollider] = { {this},{this} };
 
-	WhirlwindKick.PushBack1({ 1402,326,55,122 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1458,333,55,115 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1514,375,101,73 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1616,376,54,71 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1671,375,101,73 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1773,379,149,69 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1920,379,96,69 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1024,477,48,68 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1073,476,86,69 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1160,475,146,70 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1458,333,55,115 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1402,326,55,122 }, {  }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.speed = 0.2f;
+	const int wkcollider1 = 3;//Collider num for the WhirlwindKick animation
+	SDL_Rect wkhitbox1[wkcollider1] = { {25,41,31,49},{30,55,37,39}, {1,59,151,41} };
+	COLLIDER_TYPE wkCollType1[wkcollider1] = { {COLLIDER_ENEMY},{COLLIDER_ENEMY},{COLLIDER_ENEMY_SHOT} };
+	Module* wkCallback1[wkcollider1] = { {this},{this},{this} };
+
+	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.speed = 0.24f;
 	//WhirlwindKick.loop = true;
 
 	// JUMP NEUTRAL KICK
@@ -849,32 +867,38 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_STANDING:
 
 						current_animation = &punch;
+						App->audio->PlayChunk(attack, 1);
 											   						 					  
 						break;
 					case ST_KICK_STANDING:
 
 						current_animation = &kick;
+						App->audio->PlayChunk(attack, 1);
 
 						break;
 
 					case ST_PUNCH_MEDIUM:
 						current_animation = &punch_medium;
+						App->audio->PlayChunk(attack, 1);
 						break;
 
 					case ST_PUNCH_HARD:
 
 						current_animation = &punch_hard;
+						App->audio->PlayChunk(attack, 1);
 						break;
 
 					case ST_KICK_MEDIUM_STANDING:
 
 						current_animation = &kick_medium;
+						App->audio->PlayChunk(attack, 1);
 
 						break;
 
 					case ST_KICK_HARD_STANDING:
 
 						current_animation = &kick_hard;
+						App->audio->PlayChunk(attack, 1);
 
 						break;
 
@@ -882,6 +906,7 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_CROUCH:
 
 						current_animation = &Crouch_punch;
+						App->audio->PlayChunk(attack, 1);
 
 
 						break;
@@ -889,33 +914,39 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_MEDIUM_CROUCH:
 
 						current_animation = &Crouch_medium_punch;
+						App->audio->PlayChunk(attack, 1);
 
 						break;
 
 					case ST_PUNCH_HARD_CROUCH:
 
 						current_animation = &Crouch_hard_punch;
+						App->audio->PlayChunk(attack, 1);
 
 						break;
 
 					case ST_KICK_CROUCH:
 
 						current_animation = &Crouch_kick;
+						App->audio->PlayChunk(attack, 1);
 
 						break;
 					case ST_KICK_MEDIUM_CROUCH:
 
 						current_animation = &Crouch_medium_kick;
+						App->audio->PlayChunk(attack, 1);
 
 						break;
 					case ST_KICK_HARD_CROUCH:
 
 						current_animation = &Crouch_hard_kick;
+						App->audio->PlayChunk(attack, 1);
 
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_punch;
+						App->audio->PlayChunk(attack, 1);
 
 
 						jump_neutral_logic();
@@ -927,6 +958,7 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_MEDIUM_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_punch_medium;
+						App->audio->PlayChunk(attack, 1);
 
 
 						jump_neutral_logic();
@@ -937,6 +969,7 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_HARD_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_punch_hard;
+						App->audio->PlayChunk(attack, 1);
 
 
 						jump_neutral_logic();
@@ -947,6 +980,7 @@ update_status ModuleChunLi2::Update()
 
 
 						current_animation = &jump_forward_punch;
+						App->audio->PlayChunk(attack, 1);
 
 						jump_forward_logic();
 
@@ -956,6 +990,7 @@ update_status ModuleChunLi2::Update()
 
 
 						current_animation = &jump_forward_punch_medium;
+						App->audio->PlayChunk(attack, 1);
 
 						jump_forward_logic();
 
@@ -965,6 +1000,7 @@ update_status ModuleChunLi2::Update()
 
 
 						current_animation = &jump_forward_punch_hard;
+						App->audio->PlayChunk(attack, 1);
 
 						jump_forward_logic();
 
@@ -974,6 +1010,7 @@ update_status ModuleChunLi2::Update()
 
 
 						current_animation = &jump_forward_kick;
+						App->audio->PlayChunk(attack, 1);
 
 						jump_forward_logic();
 
@@ -983,6 +1020,7 @@ update_status ModuleChunLi2::Update()
 
 
 						current_animation = &jump_forward_kick_medium;
+						App->audio->PlayChunk(attack, 1);
 
 						jump_forward_logic();
 
@@ -992,18 +1030,21 @@ update_status ModuleChunLi2::Update()
 
 
 						current_animation = &jump_forward_kick_hard;
+						App->audio->PlayChunk(attack, 1);
 
 						jump_forward_logic();
 
 						break;
 					case ST_PUNCH_BACKWARD_JUMP:
 						current_animation = &jump_backward_punch;
+						App->audio->PlayChunk(attack, 1);
 
 						jump_backward_logic();
 						break;
 
 					case ST_PUNCH_MEDIUM_BACKWARD_JUMP:
 						current_animation = &jump_backward_punch_medium;
+						App->audio->PlayChunk(attack, 1);
 
 						jump_backward_logic();
 
@@ -1011,18 +1052,21 @@ update_status ModuleChunLi2::Update()
 
 					case ST_PUNCH_HARD_BACKWARD_JUMP:
 						current_animation = &jump_backward_punch_hard;
+						App->audio->PlayChunk(attack, 1);
 
 						jump_backward_logic();
 
 						break;
 					case ST_KICK_BACKWARD_JUMP:
 						current_animation = &jump_backward_kick;
+						App->audio->PlayChunk(attack, 1);
 
 						jump_backward_logic();
 						break;
 
 					case ST_KICK_MEDIUM_BACKWARD_JUMP:
 						current_animation = &jump_backward_kick_medium;
+						App->audio->PlayChunk(attack, 1);
 
 						jump_backward_logic();
 
@@ -1030,6 +1074,7 @@ update_status ModuleChunLi2::Update()
 
 					case ST_KICK_HARD_BACKWARD_JUMP:
 						current_animation = &jump_backward_kick_hard;
+						App->audio->PlayChunk(attack, 1);
 
 						jump_backward_logic();
 
@@ -1045,24 +1090,28 @@ update_status ModuleChunLi2::Update()
 						if (wkcounter < 15) {
 							wkcounter++;
 						}
-						if (wkcounter >= 15 && wkcounter < 48) {
+						if (wkcounter >= 15 && wkcounter < 80) {
 							wkcounter++;
 							whirlwindMove = true;
 						}
-						if (whirlwindMove == true) {
-							if (position.x < App->chunli->position.x) { position.x += 3; }
-							if (position.x > App->chunli->position.x) { position.x -= 3; }
+						if (whirlwindMove) {
+							if (abs(App->chunli->position.x - position.x) >= 120) {
+								if (position.x < App->chunli->position.x) { position.x += 3; }
+								if (position.x > App->chunli->position.x) { position.x -= 3; }
+							}
+
 							position.y = 190;
 						}
-						if (wkcounter >= 48) {
+						if (wkcounter >= 80) {
 							position.y = 220;
 						}
-						break;
+						
 						break;
 
 					case ST_KICK_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_kick;
+						App->audio->PlayChunk(attack, 1);
 
 						jump_neutral_logic();
 						break;
@@ -1070,6 +1119,7 @@ update_status ModuleChunLi2::Update()
 					case ST_KICK_MEDIUM_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_kick_medium;
+						App->audio->PlayChunk(attack, 1);
 
 						jump_neutral_logic();
 
@@ -1079,6 +1129,7 @@ update_status ModuleChunLi2::Update()
 					case ST_KICK_HARD_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_kick_hard;
+						App->audio->PlayChunk(attack, 1);
 
 
 						jump_neutral_logic();
@@ -1203,10 +1254,21 @@ void ModuleChunLi2::positionlimits() {
 
 	if (position.x -20<= App->scene_dhalsim->background.x - 12) {
 		position.x = App->scene_dhalsim->background.x - 12+20;
+		leftLimit = true;
+	}
+	else{
+		leftLimit = false;
 	}
 
 	if (position.x -40>= (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w) -90 ) {
 		position.x = (App->scene_dhalsim->background.x + App->scene_dhalsim->background.w)-90 +40;
+		RightLimit = true;
+		
+	}
+
+	else {
+		RightLimit = false;
+		
 	}
 	
 	if (abs(App->chunli->position.x - position.x) >= SCREEN_WIDTH - 10 && position.x>App->chunli->position.x) {
@@ -1257,17 +1319,18 @@ void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 	
 
 	SDL_Rect shadowrect = { 6,8,71,15 };
-	if (position.x < App->chunli->position.x) {
-		//App->render->Blit(shadow, position.x - PivotX, 207, &shadowrect);
+	if (position.x < App->chunli->position.x && !RightLimit || (leftLimit && position.y==220)) {
+		
 		App->render->Blit(graphics, position.x -PivotX, position.y - r.h, &r);
 	}
-	if (position.x > App->chunli->position.x) {
-	//	App->render->Blit(shadow, position.x - (shadowrect.w + PivotX) +65, 207, &shadowrect);
+	if (position.x > App->chunli->position.x && (!leftLimit || position.y !=220) || RightLimit) {
+	
 		App->render->BlitSym(graphics, position.x-(r.w-PivotX), position.y  - r.h, &r);
 	}
 }
 
 void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
+
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER)
 	{
 		if (state == ST_IDLE) {
@@ -1276,8 +1339,22 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			if (position.x < App->chunli->position.x)
 				position.x -= 1;
 		}
+		else if (App->chunli->leftLimit == true && state == ST_WALK_BACKWARD) {
+			move = false;
+		}
 
-		if (state == ST_WALK_BACKWARD && App->chunli->state == ST_WALK_FORWARD2 
+		else if (App->chunli->RightLimit == true && state == ST_WALK_FORWARD) {
+			move = false;
+		}
+
+		else if (leftLimit == true && App->chunli->state == ST_WALK_BACKWARD2) {
+			move = false;
+		}
+		else if (RightLimit == true && App->chunli->state == ST_WALK_FORWARD2) {
+			move = false;
+		}
+
+		else if (state == ST_WALK_BACKWARD && App->chunli->state == ST_WALK_FORWARD2 
 			|| state == ST_WALK_FORWARD && App->chunli->state == ST_WALK_BACKWARD2
 			|| state == ST_WALK_BACKWARD && App->chunli->state ==  ST_CROUCH2
 			|| state == ST_CROUCH && App->chunli->state== ST_WALK_FORWARD2 
@@ -1285,7 +1362,9 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 
 			move = false;
 		}
-
+		else if (state == ST_WHIRLWIND2) {
+			whirlwindMove = false;
+		}
 		
 		else {
 			move = true;
@@ -1318,13 +1397,14 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			}
 
 			if (state == ST_WALK_BACKWARD || state == ST_WALK_FORWARD || state == ST_IDLE) {
-				if (App->chunli->state == ST_KICK_HARD_CROUCH2) {
+				if (App->chunli->state == ST_KICK_HARD_CROUCH2 || App->chunli->state == ST_KICK_HARD_NEUTRAL_JUMP2) {
 					damage_received = 3;
 					App->slow->StartSlowdown(JUMP_TIME, 50);
 				}
-				else if (App->chunli->state == ST_KICK_HARD_NEUTRAL_JUMP2) {
-					damage_received = 3;
-					App->slow->StartSlowdown(JUMP_TIME, 50);
+				else if (App->chunli->state == ST_WHIRLWIND2) {
+					damage_received = 2;
+					App->slow->StartSlowdown(200, 50);
+					//App->chunli->move = false;
 				}
 				else if (App->chunli->state == ST_KICK_HARD_STANDING2) {
 					damage_received = 2;
@@ -1342,8 +1422,8 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			}
 			
 		}
+		App->audio->PlayChunk(medium_damage, 1);
 	}
-
 }
 
 bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
@@ -1499,6 +1579,34 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 		if (App->combo->CheckWhirlwindKickP2() == true) {
 			inputs.Push(IN_WHIRLWINDKICK);
 		}
+
+		//Axis
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
+			up = true;
+		}
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE) {
+			down = true;
+		}
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
+			left = true;
+		}
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE) {
+			right = true;
+		}
+
+
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE) {
+			up = false;
+		}
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE) {
+			down = false;
+		}
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE) {
+			left = false;
+		}
+		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE) {
+			right = false;
+		}
 	}
 	
 
@@ -1528,20 +1636,25 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	if (left && right)
 		inputs.Push(IN_LEFT_AND_RIGHT);
 	{
-		if (left)
-			inputs.Push(IN_LEFT_DOWN);
-		if (right)
-			inputs.Push(IN_RIGHT_DOWN);
+		if (left == true) { inputs.Push(IN_LEFT_DOWN); }
+		if (left == false) { inputs.Push(IN_LEFT_UP); }
+		if (right == true) { inputs.Push(IN_RIGHT_DOWN); }
+		if (right == false) { inputs.Push(IN_RIGHT_UP); }
 	}
 
 	if (up && down)
 		inputs.Push(IN_JUMP_AND_CROUCH);
 	else
 	{
-		if (down)
+		if (down == true) {
 			inputs.Push(IN_CROUCH_DOWN);
-		if (up)
+		}
+		if (down == false) {
+			inputs.Push(IN_CROUCH_UP);
+		}
+		if (up == true) {
 			inputs.Push(IN_JUMP);
+		}
 	}
 	return true;
 }
@@ -2344,6 +2457,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					{
 						App->UI->scoreP2 += 500;
 					}
+					position.y = 220;
 				}
 			}
 			break;

@@ -62,7 +62,7 @@ update_status ModuleRender::Update()
 	int speed = 3;
 
 	if (App->input->keyboard[SDL_SCANCODE_G] == true) {
-		StartCameraShake(1000, 500);
+		StartCameraShake(1000, 20);
 	}
 
 	if (shaking == true) {
@@ -222,9 +222,15 @@ void ModuleRender::StartCameraShake(int duration, float magnitude) {
 }
 
 void ModuleRender::UpdateCameraShake() {
-	if (shake_duration + SDL_GetTicks() >= SDL_GetTicks()) {
-		camera_offset.x = rand() % (int)shake_magnitude + 1;
-		camera_offset.y = rand() % (int)shake_magnitude + 1;
+	if (shake_duration + shake_timer > SDL_GetTicks()) {
+		camera_offset.x = (rand() % (int)shake_magnitude * 2 - (int)shake_magnitude);
+		camera_offset.y = (rand() % (int)shake_magnitude * 2 - (int)shake_magnitude);
+	}
+	else {
+		shake_duration = 0;
+		camera_offset.x = 0;
+		camera_offset.y = 0;
+		shaking = false;
 	}
 }
 
