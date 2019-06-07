@@ -1382,11 +1382,11 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			block_damage = 1;
 		}
 		
-		else if (state == ST_CROUCH && MoveKeys.right && App->chunli->position.x < position.x) {
+		else if (state == ST_CROUCH && right && App->chunli->position.x < position.x) {
 			block_damage = 2;
 		}
 
-		else if (state == ST_CROUCH && MoveKeys.left && App->chunli->position.x > position.x) {
+		else if (state == ST_CROUCH && left && App->chunli->position.x > position.x) {
 			block_damage = 2;
 		}
 
@@ -1432,18 +1432,17 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	//Key up
 	if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_UP) {
 		inputs.Push(IN_CROUCH_UP);
-		MoveKeys.down = false;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_UP) {
-		MoveKeys.up = false;
+		return false;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_UP) {
+		left = false;
 		inputs.Push(IN_LEFT_UP);
-		MoveKeys.left = false;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_UP) {
+		right = false;
 		inputs.Push(IN_RIGHT_UP);
-		MoveKeys.right = false;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_J] == KEY_UP) {
 		return false;
@@ -1475,17 +1474,19 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 
 	//Key down
 
-	if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_DOWN) {
-		MoveKeys.up = true;
+	if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_UP] == KEY_REPEAT) {
+		inputs.Push(IN_JUMP);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_DOWN) {
-		MoveKeys.down = true;
+	if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_REPEAT) {
+		inputs.Push(IN_CROUCH_DOWN);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_DOWN) {
-		MoveKeys.left = true;
+	if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
+		left = true;
+		inputs.Push(IN_LEFT_DOWN);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_DOWN) {
-		MoveKeys.right = true;
+	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
+		right = true;
+		inputs.Push(IN_RIGHT_DOWN);
 	}
 	if (App->input->keyboard[SDL_SCANCODE_J] == KEY_DOWN) {
 		inputs.Push(IN_X);
@@ -1496,23 +1497,21 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	if (App->input->keyboard[SDL_SCANCODE_L] == KEY_DOWN) {
 		inputs.Push(IN_LIGHTINGKICK);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_7] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_1] == KEY_DOWN) {
 		inputs.Push(IN_1);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_8] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_2] == KEY_DOWN) {
 		inputs.Push(IN_2);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_9] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_3] == KEY_DOWN) {
 		inputs.Push(IN_3);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_0] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_4] == KEY_DOWN) {
 		inputs.Push(IN_4);
 	}
 
-
-
-
 	//Controller
+
 	if (App->input->Gamepad2 == true) {
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_UP) {
 			return false;
@@ -1524,30 +1523,30 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 			return false;
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_UP) {
-			MoveKeys.up = false;
+			return false;
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_UP) {
 			inputs.Push(IN_CROUCH_UP);
-			MoveKeys.down = false;
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_UP) {
-			inputs.Push(IN_LEFT_UP);
-			MoveKeys.left = false;
+			left = false;
+			inputs.Push(IN_LEFT_UP);;
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_UP) {
+			right = false;
 			inputs.Push(IN_RIGHT_UP);
-			MoveKeys.right = false;
 		}
 
 
 		if (App->combo->CheckPunchP2() == true) {
 			inputs.Push(IN_X);
 		}
-
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+			inputs.Push(IN_C);
+		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_X] == KEY_DOWN) {
 			inputs.Push(IN_1);
 		}
-
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_LEFTSHOULDER] == KEY_DOWN) {
 			inputs.Push(IN_2);
 		}
@@ -1557,20 +1556,19 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 			inputs.Push(IN_4);
 		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
-			inputs.Push(IN_C);
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_REPEAT) {
+			inputs.Push(IN_JUMP);
 		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN) {
-			MoveKeys.up = true;
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_REPEAT) {
+			inputs.Push(IN_CROUCH_DOWN);
 		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN) {
-			MoveKeys.down = true;
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_REPEAT) {
+			left = true;
+			inputs.Push(IN_LEFT_DOWN);
 		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_DOWN) {
-			MoveKeys.left = true;
-		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_DOWN) {
-			MoveKeys.right = true;
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_REPEAT) {
+			right = true;
+			inputs.Push(IN_RIGHT_DOWN);
 		}
 
 		if (App->combo->CheckLightingKickP2() == true) {
@@ -1582,33 +1580,38 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 
 		//Axis
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			MoveAxis.up = true;
+			inputs.Push(IN_JUMP);
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE) {
-			MoveAxis.down = true;
+			inputs.Push(IN_CROUCH_DOWN);
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			MoveAxis.left = true;
+			left = true;
+			inputs.Push(IN_LEFT_DOWN);
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE) {
-			MoveAxis.right = true;
+			right = true;
+			inputs.Push(IN_RIGHT_DOWN);
 		}
 
 
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE) {
-			MoveAxis.up = false;
+
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			MoveAxis.down = false;
+			inputs.Push(IN_CROUCH_UP);
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE) {
-			MoveAxis.left = false;
+			left = false;
+			inputs.Push(IN_LEFT_UP);
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			MoveAxis.right = false;
+			left = false;
+			inputs.Push(IN_RIGHT_UP);
 		}
+
+
 	}
-	
 
 	if (damage_received == 1) {
 		inputs.Push(IN_DAMAGE);
@@ -1625,6 +1628,7 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	if (damage_received == 5) {
 		inputs.Push(IN_DAMAGE_AIR);
 	}
+
 	if (block_damage == 1) {
 		inputs.Push(IN_BLOCK);
 	}
@@ -1632,36 +1636,7 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 		inputs.Push(IN_BLOCK_CROUCH);
 	}
 
-
-	//Keyboard moves logic
-	if (MoveKeys.left && MoveKeys.right)
-		inputs.Push(IN_LEFT_AND_RIGHT);
-	{
-		if (MoveKeys.left == true) { inputs.Push(IN_LEFT_DOWN); }
-		if (MoveKeys.right == true) { inputs.Push(IN_RIGHT_DOWN); }
-	}
-
-	if (MoveKeys.up && MoveKeys.down)
-		inputs.Push(IN_JUMP_AND_CROUCH);
-	else
-	{
-		if (MoveKeys.down == true) {
-			inputs.Push(IN_CROUCH_DOWN);
-		}
-		if (MoveKeys.up == true) {
-			inputs.Push(IN_JUMP);
-		}
-	}
-	//Axis moves logic
-	if (MoveAxis.up == true) { inputs.Push(IN_JUMP); }
-	if (MoveAxis.down == true) { inputs.Push(IN_CROUCH_DOWN); }
-	else if (MoveAxis.down == false) { inputs.Push(IN_CROUCH_UP); }
-	if (MoveAxis.left == true) { inputs.Push(IN_LEFT_DOWN); }
-	else if (MoveAxis.left == false) { inputs.Push(IN_LEFT_UP); }
-	if (MoveAxis.right == true) { inputs.Push(IN_RIGHT_DOWN); }
-	else if (MoveAxis.right == false) { inputs.Push(IN_RIGHT_UP); }
-
-
+	//OMAY GOT, THERE IS NO LOGC HOW CAN THIS BE THIS POSSIBLE, WHAT A MASTER SKILL OF PROGRAMATION
 	return true;
 }
 

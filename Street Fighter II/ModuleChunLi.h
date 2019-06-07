@@ -311,8 +311,9 @@ public:
 	Uint32 whirlwind_timer = 0;
 
 private:
-	MoveBooleans MoveKeys;
-	MoveBooleans MoveAxis;
+
+	bool left = false;
+	bool right = false;
 	int force = 0;
 };
 
