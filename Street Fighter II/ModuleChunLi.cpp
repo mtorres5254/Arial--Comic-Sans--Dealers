@@ -1581,8 +1581,9 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs2>& inputs)
 	{
 		if (SDL_GetTicks() - hadouken_timer > HADOUKEN_TIME2)
 		{
-			inputs.Push(IN_LIGHTNINGKICK_FINISH2);
 			hadouken_timer = 0;
+			inputs.Push(IN_LIGHTNINGKICK_FINISH2);
+			
 		}
 	}
 
@@ -2307,7 +2308,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					{
 						App->UI->scoreP1 += 500;
 					}
-					break;
+					
 			}
 			
 		}
