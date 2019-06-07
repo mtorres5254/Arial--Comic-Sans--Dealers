@@ -1045,7 +1045,7 @@ update_status ModuleChunLi2::Update()
 						if (wkcounter < 15) {
 							wkcounter++;
 						}
-						if (wkcounter >= 15 && wkcounter < 50) {
+						if (wkcounter >= 15 && wkcounter < 48) {
 							wkcounter++;
 							whirlwindMove = true;
 						}
@@ -1054,7 +1054,7 @@ update_status ModuleChunLi2::Update()
 							if (position.x > App->chunli->position.x) { position.x -= 3; }
 							position.y = 190;
 						}
-						if (wkcounter >= 50) {
+						if (wkcounter >= 48) {
 							position.y = 220;
 						}
 						break;
@@ -1433,71 +1433,74 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 
 
 	//Controller
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_UP) {
-		return false;
-	}
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_UP) {
-		return false;
-	}
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_UP) {
-		return false;
-	}
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_UP) {
-		up = false;
-	}
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_UP) {
-		inputs.Push(IN_CROUCH_UP);
-		down = false;
-	}
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_UP) {
-		inputs.Push(IN_LEFT_UP);
-		left = false;
-	}
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_UP) {
-		inputs.Push(IN_RIGHT_UP);
-		right = false;
-	}
+	if (App->input->Gamepad2 == true) {
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_UP) {
+			return false;
+		}
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_UP) {
+			return false;
+		}
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_UP) {
+			return false;
+		}
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_UP) {
+			up = false;
+		}
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_UP) {
+			inputs.Push(IN_CROUCH_UP);
+			down = false;
+		}
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_UP) {
+			inputs.Push(IN_LEFT_UP);
+			left = false;
+		}
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_UP) {
+			inputs.Push(IN_RIGHT_UP);
+			right = false;
+		}
 
 
-	if (App->combo->CheckPunchP2() == true) {
-		inputs.Push(IN_X);
+		if (App->combo->CheckPunchP2() == true) {
+			inputs.Push(IN_X);
+		}
+
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_X] == KEY_DOWN) {
+			inputs.Push(IN_1);
+		}
+
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_LEFTSHOULDER] == KEY_DOWN) {
+			inputs.Push(IN_2);
+		}
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN) {
+			inputs.Push(IN_3);
+		}
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
+			inputs.Push(IN_4);
+		}
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+			inputs.Push(IN_C);
+		}
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN) {
+			up = true;
+		}
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN) {
+			down = true;
+		}
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_DOWN) {
+			left = true;
+		}
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_DOWN) {
+			right = true;
+		}
+
+		if (App->combo->CheckLightingKickP2() == true) {
+			inputs.Push(IN_LIGHTINGKICK);
+		}
+		if (App->combo->CheckWhirlwindKickP2() == true) {
+			inputs.Push(IN_WHIRLWINDKICK);
+		}
 	}
 	
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_X] == KEY_DOWN) {
-		inputs.Push(IN_1);
-	}
-
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_LEFTSHOULDER] == KEY_DOWN) {
-		inputs.Push(IN_2);
-	}
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN) {
-		inputs.Push(IN_3);
-	}
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
-		inputs.Push(IN_4);
-	}
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
-		inputs.Push(IN_C);
-	}
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN) {
-		up = true;
-	}
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN) {
-		down = true;
-	}
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_DOWN) {
-		left = true;
-	}
-	if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_DOWN) {
-		right = true;
-	}
-
-	if (App->combo->CheckLightingKickP2() == true) {
-		inputs.Push(IN_LIGHTINGKICK);
-	}
-	if (App->combo->CheckWhirlwindKickP2() == true) {
-		inputs.Push(IN_WHIRLWINDKICK);
-	}
 
 	if (damage_received == 1) {
 		inputs.Push(IN_DAMAGE);
