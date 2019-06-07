@@ -263,8 +263,10 @@ public:
 	bool prueba = false;
 	int life = 1000;
 	int healthbar;
+	int wkcounter = 0;
 
 	bool move = true;
+	bool whirlwindMove = false;
 
 	chunli_states state;
 
