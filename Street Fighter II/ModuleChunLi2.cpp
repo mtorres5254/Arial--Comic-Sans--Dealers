@@ -1317,6 +1317,24 @@ update_status ModuleChunLi2::Update()
 							App->audio->PlayChunk(death_sound, 1);
 							DeathSoundPlayed = true;
 						}
+
+						if (position.x < App->chunli->position.x)
+							position.x -= 3;
+						else
+							position.x += 3;
+
+						if (onAir && position.y <= 220) {
+							position.y += 5;
+						}
+
+						else if (SDL_GetTicks() - lose_timer < 450) {
+							position.y -= 6;
+						}
+						else if ( position.y<=220) {
+							position.y += 5;
+						}
+						
+
 						break;
 					}				
 										
@@ -1438,7 +1456,6 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 		else {
 			move = false;
 		}
-
 	
 	}
 
@@ -1472,6 +1489,7 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 
 			if (life <= 0) {
 				lose = true;
+				
 			}
 			else if(!lose) {
 				
@@ -1741,6 +1759,7 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 
 	if (lose && state != ST_LOSE) {
 		inputs.Push(IN_LOSE);
+		App->slow->StartSlowdown(2000, 50);
 		lose = false;
 	}
 

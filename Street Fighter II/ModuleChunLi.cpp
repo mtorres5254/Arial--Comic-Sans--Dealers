@@ -840,33 +840,39 @@ update_status ModuleChunLi::Update()
 						crouch.Reset();
 						wkcounter = 0;
 						whirlwindMove = false;
+						onAir = false;
 						move = true;			
 						break;
 					case ST_WALK_FORWARD2:
 						current_animation = &forward;
 						resetanimations();
 						if(move)
-						position.x += speedX;						
+						position.x += speedX;		
+						onAir = false;
 						move = true;
 						break;
 					case ST_WALK_BACKWARD2:
 						current_animation = &backward;
 						resetanimations();
 						if(move)
-						position.x -= speedX;						
+						position.x -= speedX;		
+						onAir = false;
 						move = true;
 						break;
 					case ST_JUMP_NEUTRAL2:								
 						current_animation = &jump_neutral;
+						onAir == true;
 						jump_neutral_logic();													
 						break;
 					case ST_JUMP_FORWARD2:						
 						current_animation = &jump_forward;
-						jump_forward_logic();	
+						jump_forward_logic();
+						onAir == true;
 						break;
 					case ST_JUMP_BACKWARD2:						
 						current_animation = &jump_backwards;
 						jump_backward_logic();	
+						onAir == true;
 						break;
 					case ST_CROUCH2:
 						resetanimations();
@@ -898,64 +904,79 @@ update_status ModuleChunLi::Update()
 						current_animation = &Crouch_hard_kick;
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP2:
-						current_animation = &jump_neutral_punch;		
+						current_animation = &jump_neutral_punch;	
+						onAir == true;
 						jump_neutral_logic();
 						break;
 					case ST_PUNCH_MEDIUM_NEUTRAL_JUMP2:
 						current_animation = &jump_forward_punch_medium;
+						onAir == true;
 						jump_neutral_logic();
 						break;
 					case ST_PUNCH_HARD_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_punch_hard;
+						onAir == true;
 						App->audio->PlayChunk(attack, 1);
 						jump_neutral_logic();	
 						break;
 					case ST_PUNCH_FORWARD_JUMP2:					
 						current_animation = &jump_forward_punch;
+						onAir == true;
 						jump_forward_logic();
 						break;
 					case ST_PUNCH_MEDIUM_FORWARD_JUMP2:
 						current_animation = &jump_forward_punch_medium;
+						onAir == true;
 						jump_forward_logic();
 						break;
 					case ST_PUNCH_HARD_FORWARD_JUMP2:
 						current_animation = &jump_forward_punch_hard;
+						onAir == true;
 						jump_forward_logic();
 						break;
 					case ST_KICK_FORWARD_JUMP2:
 						current_animation = &jump_forward_kick;
+						onAir == true;
 						jump_forward_logic();
 						break;
 					case ST_KICK_MEDIUM_FORWARD_JUMP2:
 						current_animation = &jump_forward_kick_medium;
+						onAir == true;
 						jump_forward_logic();
 						break;
 					case ST_KICK_HARD_FORWARD_JUMP2:
 						current_animation = &jump_forward_kick_hard;
+						onAir == true;
 						jump_forward_logic();
 						break;
 					case ST_PUNCH_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch;
+						onAir == true;
 						jump_backward_logic();
 						break;
 					case ST_PUNCH_MEDIUM_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch_medium;
+						onAir == true;
 						jump_backward_logic();
 						break;
 					case ST_PUNCH_HARD_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch_hard;
+						onAir == true;
 						jump_backward_logic();
 						break;
 					case ST_KICK_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick;
+						onAir == true;
 						jump_backward_logic();
 						break;
 					case ST_KICK_MEDIUM_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick_medium;
+						onAir == true;
 						jump_backward_logic();
 						break;
 					case ST_KICK_HARD_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick_hard;
+						onAir == true;
 						jump_backward_logic();
 						break;
 					case ST_KICK_STANDING2:
@@ -1109,6 +1130,22 @@ update_status ModuleChunLi::Update()
 						{
 							App->audio->PlayChunk(death_sound, 1);
 							DeathSoundPlayed = true;
+						}
+
+						if (position.x < App->chunli2->position.x)
+							position.x -= 3;
+						else
+							position.x += 3;
+
+						if (onAir && position.y <= 220) {
+							position.y += 5;
+						}
+
+						else if (SDL_GetTicks() - lose_timer < 450 && position.y==220) {
+							position.y -= 6;
+						}
+						else if (position.y <= 220) {
+							position.y += 5;
 						}
 						break;
 					}
@@ -1276,6 +1313,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
 			if (life <= 0) {
 				lose = true;
+				
 			}
 
 			else if (!lose) {
@@ -1552,6 +1590,7 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 
 	if (lose && state!=ST_LOSE2) {
 		inputs.Push(IN_LOSE2);
+		App->slow->StartSlowdown(2000, 50);
 		lose = false;
 	}
 	
