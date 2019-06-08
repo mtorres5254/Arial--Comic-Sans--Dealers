@@ -807,7 +807,7 @@ update_status ModuleChunLi2::Update()
 			{
 				lifecondition(current_animation);				
 
-				if (life > 0  && App->chunli->life > 0 ) {
+				if (life >= 0  && App->chunli->life >= 0 ) {
 
 
 					switch (state)
@@ -2615,7 +2615,18 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 		life = 0;
 	}
 
+	if (life == 0)
+	{
+		App->UI->time = 99;
+		App->UI->Counter1 = 9;
+		App->UI->Counter2 = 9;
+		//App->UI->Resultinfo == 2;
 
+	//	App->render->camera.x = 0;
+		//ResetPlayer();
+		
+	}
+	/*
 	if (App->chunli->life <= 0 && App->UI->victorycount == 0) 
 	{
 
@@ -2629,7 +2640,7 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 			App->UI->scoreP2 += App->UI->time*100;
 			App->UI->scoreP2 += this->life;
 			victory.Reset();
-			victorycount++;
+			//victorycount++;
 			acumvictory = 0;
 		}
 	}
@@ -2642,11 +2653,11 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 		}
 		if (acumvictory == 75) {
 			victory1.Reset();
-			victorycount++;
+		//	victorycount++;
 			acumvictory = 0;
 		}
 			
-	}
+	}*/
 }
 
 void ModuleChunLi2::resetanimations() {

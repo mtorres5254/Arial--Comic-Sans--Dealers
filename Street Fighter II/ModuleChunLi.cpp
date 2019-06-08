@@ -807,7 +807,7 @@ update_status ModuleChunLi::Update()
 			{
 				lifecondition(current_animation);
 				
-				if (life > 0  && App->chunli2->life > 0 ) 
+				if (life >= 0  && App->chunli2->life >= 0 ) 
 				{					
 					switch (state)
 					{
@@ -859,10 +859,7 @@ update_status ModuleChunLi::Update()
 						current_animation = &Crouch_medium_punch;
 						crouchAttack = true;
 						break;
-					case ST_PUNCH_MEDIUM_CROUCH2:
-						current_animation = &Crouch_medium_punch;
-						crouchAttack = true;
-						break;
+					
 					case ST_PUNCH_HARD_CROUCH2:
 						current_animation = &Crouch_hard_punch;
 						crouchAttack = true;
@@ -1085,6 +1082,11 @@ update_status ModuleChunLi::Update()
 						block_damage = 0;
 
 						current_animation = &block_crouch;
+						break;
+
+					case ST_VICTORY2:
+
+						current_animation = &block_standing;
 						break;
 					}
 
@@ -1534,6 +1536,10 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 	if (block_damage == 2) {
 		inputs.Push(IN_BLOCK_CROUCH2);
 	}
+	if (win) {
+		inputs.Push(IN_VICTORY2);
+		win = false;
+	}
 
 	//OMAY GOT, THERE IS NO LOGC HOW CAN THIS BE THIS POSSIBLE, WHAT A MASTER SKILL OF PROGRAMATION
 
@@ -1670,6 +1676,15 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs2>& inputs)
 		}
 	}
 
+	if (victory_timer > 0)
+	{
+		if (SDL_GetTicks() - victory_timer > 2000)
+		{
+			inputs.Push(IN_VICTORY_FINISH2);
+			victory_timer = 0;
+		}
+	}
+
 
 	
 
@@ -1718,6 +1733,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			case IN_DAMAGE_HARD2: state = ST_DAMAGE_HARD2; dmg_hard_timer = SDL_GetTicks(); break;
 			case IN_DAMAGE_FALL2: state = ST_DAMAGE_FALL2; dmg_fall_timer = SDL_GetTicks(); break;
 			case IN_WHIRLWINDKICK2: state = ST_WHIRLWIND2; whirlwind_timer = SDL_GetTicks(); break;
+			case IN_VICTORY2: state = ST_VICTORY2; victory_timer = SDL_GetTicks();  break;
 			
 			}
 		}
@@ -1743,6 +1759,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			case IN_DAMAGE_FALL2: state = ST_DAMAGE_FALL2; dmg_fall_timer = SDL_GetTicks(); break;
 			case IN_BLOCK2: state = ST_BLOCK2; block_timer = SDL_GetTicks(); break;
 			case IN_WHIRLWINDKICK2: state = ST_WHIRLWIND2; whirlwind_timer = SDL_GetTicks(); break;
+			case IN_VICTORY2: state = ST_VICTORY2; victory_timer = SDL_GetTicks();  break;
 			}
 		}
 		break;
@@ -1767,6 +1784,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			case IN_DAMAGE_FALL2: state = ST_DAMAGE_FALL2; dmg_fall_timer = SDL_GetTicks(); break;
 			case IN_BLOCK2: state = ST_BLOCK2; block_timer = SDL_GetTicks(); break;
 			case IN_WHIRLWINDKICK2: state = ST_WHIRLWIND2; whirlwind_timer = SDL_GetTicks(); break;
+			case IN_VICTORY2: state = ST_VICTORY2; victory_timer = SDL_GetTicks();  break;
 			}
 		}
 		break;
@@ -2691,6 +2709,22 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			}
 		}
 		break;
+
+		case ST_VICTORY2:
+		{
+			switch (last_input)
+			{
+			case IN_VICTORY_FINISH2:
+				
+				state = ST_IDLE2;
+				win = false;
+				damage_received = 0;
+				App->chunli2->ResetPlayer();
+				ResetPlayer();
+				break;
+			}
+		}
+		break;
 		}
 	}
 	return state;
@@ -2705,7 +2739,22 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 		life = 0;
 	}
 
+	if (App->chunli2->life == 0) {
+		if(state!=ST_VICTORY2)
+		win = true;
+	}
+	if (life == 0)
+	{
+		App->UI->time = 99;
+		App->UI->Counter1 = 9;
+		App->UI->Counter2 = 9;
 
+		//App->UI->Resultinfo == 1;
+
+		//App->render->camera.x = 0;
+	//	ResetPlayer();
+	}
+	/*
 	if (App->chunli2->life <= 0 && App->UI->victorycount == 0) {
 
 		if (acumvictory < 75) {
@@ -2715,7 +2764,7 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 		}
 		if (acumvictory == 75) {
 			victory.Reset();
-			victorycount++;
+			//victorycount++;
 			acumvictory = 0;
 		}
 	}
@@ -2731,10 +2780,10 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 			App->UI->scoreP1 += App->UI->time * 100;
 			App->UI->scoreP1 += this->life;
 			victory1.Reset();
-			victorycount++;
+			//victorycount++;
 			acumvictory = 0;
 		}
-	}
+	}*/
 	
 }
 
