@@ -99,6 +99,7 @@ enum chunli_states2
 
 	ST_WHIRLWIND2,
 	ST_VICTORY2,
+	ST_VICTORY2_2,
 };
 
 enum chunli_inputs2
@@ -149,6 +150,8 @@ enum chunli_inputs2
 
 	IN_VICTORY2,
 	IN_VICTORY_FINISH2,
+	IN_VICTORY2_2,
+	IN_VICTORY2_FINISH_2,
 };
 
 struct MoveBooleans {
@@ -244,6 +247,9 @@ public:
 
 	Animation WhirlwindKick;
 
+	Animation win1;
+	Animation win2;
+
 	Animation Death;
 	Animation damage;
 	Animation damage2;
@@ -268,6 +274,7 @@ public:
 	int acumvictory = 0;
 	bool GodMode = false;
 	bool win=false;
+	bool _win = false;
 	bool death = false;
 	bool onAir = false;
 
@@ -317,6 +324,7 @@ public:
 	Uint32 block_timer = 0;
 	Uint32 whirlwind_timer = 0;
 	Uint32 victory_timer = 0;
+	Uint32 victory2_timer = 0;
 
 private:
 

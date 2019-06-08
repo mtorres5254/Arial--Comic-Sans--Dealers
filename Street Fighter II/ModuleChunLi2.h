@@ -97,6 +97,7 @@ enum chunli_states
 
 	ST_WHIRLWIND,
 	ST_VICTORY,
+	ST_VICTORY2_,
 };
 
 enum chunli_inputs
@@ -117,6 +118,7 @@ enum chunli_inputs
 	IN_DAMAGE_CROUCH,
 	
 	IN_VICTORY,
+	IN_VICTORY2_,
 
 	IN_X,
 	IN_C,
@@ -146,6 +148,7 @@ enum chunli_inputs
 	IN_WHIRLWINDKICK_FINISH,
 
 	IN_VICTORY_FINISH,
+	IN_VICTORY2_FINISH,
 };
 class ModuleChunLi2 : public Module
 {
@@ -237,8 +240,8 @@ public:
 	Animation damage3;
 	Animation damage4;
 	Animation damage5;
-	Animation victory;
-	Animation victory1;
+	Animation win1;
+	Animation win2;
 	iPoint position;
 	Collider* colliders[MAX_COLLIDERS];
 
@@ -252,6 +255,7 @@ public:
 	int acumvictory = 0;
 	bool GodMode = false;
 	bool win = false;
+	bool _win = false;
 	bool crouchAttack = false;
 	bool death = false;
 	bool leftLimit = false;
@@ -299,6 +303,7 @@ public:
 	Uint32 block_timer = 0;
 	Uint32 whirlwind_timer = 0;
 	Uint32 victory_timer = 0;
+	Uint32 victory2_timer = 0;
 	private:
 
 
