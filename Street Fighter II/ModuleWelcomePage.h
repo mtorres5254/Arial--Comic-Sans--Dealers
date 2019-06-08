@@ -19,6 +19,7 @@ public:
 
 public:
 	Animation intro;
+	Animation logo;
 
 	SDL_Texture* graphics = nullptr;
 	Mix_Music* music;
