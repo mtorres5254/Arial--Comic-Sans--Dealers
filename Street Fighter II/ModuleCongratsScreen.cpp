@@ -9,6 +9,7 @@
 #include "ModuleWelcomePage.h"
 #include "ModuleAudio.h"
 #include "ModuleUI.h"
+#include "ModuleContinue.h"
 
 ModuleCongratsScreen::ModuleCongratsScreen()
 {
@@ -50,7 +51,7 @@ update_status ModuleCongratsScreen::Update()
 	//if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) {
 	if(timer>250)
 	{
-		App->fade->FadeToBlack(App->congrats_screen, App->welcome_page, 2.0f);
+		App->fade->FadeToBlack(App->congrats_screen, App->continu, 2.0f);
 	}
 
 	return UPDATE_CONTINUE;

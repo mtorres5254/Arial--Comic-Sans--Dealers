@@ -26,8 +26,10 @@ bool ModuleContinue:: Start() {
 
 	LOG("Loading Continue selection");
 
+
 	Enable();
 	
+	App->render->camera.x = -120;
 	graphics1 = App->textures->Load("Assets/Images/ContinueNumbers.png");
 	graphics2 = App->textures->Load("Assets/Images/ContinuechunLi1.png");
 	music = App->audio->LoadMusic("Assets/Sound/Musics/continue.ogg");
@@ -60,15 +62,17 @@ bool ModuleContinue:: Start() {
 
 update_status ModuleContinue::Update() {
 
+	
+
 	Animation* current_animation1 = &ChunLi;
 	Animation* current_animation2 = &numbers;
 
 	App->render->Blit(graphics2, 200, 70, &(ChunLi.GetCurrentFrame()), 0.92f);
 	App->render->Blit(graphics1, 350, 70, &(numbers.GetCurrentFrame()), 0.92f);
 
-	if (App->input->keyboard[SDL_SCANCODE_ESCAPE] == 1) {
-		LOG("YES0");
-		App->fade->FadeToBlack(App->continu, App->welcome_page, 2.0f);
+	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
+		
+		App->fade->FadeToBlack(App->continu, App->welcome_page, 1.0f);
 		//App->audio->StopMusic(2000);
 
 	}

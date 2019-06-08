@@ -1334,12 +1334,8 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 								
 			}
 
-			if (life <= 0) {
-				lose = true;
-				
-			}
 
-			else if (!lose) {
+			 
 				if (state == ST_WALK_BACKWARD2 || state == ST_WALK_FORWARD2 || state == ST_IDLE2) {
 					if (App->chunli2->state == ST_KICK_HARD_CROUCH || App->chunli2->state == ST_KICK_HARD_NEUTRAL_JUMP) {
 						
@@ -1373,7 +1369,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 				else {
 				
 					damage_received = 5;
-				}
+				
 			}
 			
 		}
@@ -1538,10 +1534,10 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 			}
 
 			if (App->combo->CheckLightingKickP1() == true) {
-				inputs.Push(IN_LIGHTINGKICK2);
+				//inputs.Push(IN_LIGHTINGKICK2);
 			}
 			if (App->combo->CheckWhirlwindKickP1() == true) {
-				inputs.Push(IN_WHIRLWINDKICK2);
+				//inputs.Push(IN_WHIRLWINDKICK2);
 			}
 
 			//Axis

@@ -10,6 +10,7 @@
 #include "ModuleUI.h"
 #include "ModuleLoseScene.h"
 #include "ModuleWelcomePage.h"
+#include "ModuleContinue.h"
 
 ModuleLoseScene::ModuleLoseScene() {
 	background.x = 0;
@@ -52,7 +53,7 @@ update_status ModuleLoseScene::Update() {
 	if (timer > 250)
 	{
 
-		App->fade->FadeToBlack(App->lose_scene, App->welcome_page, 2.0f);
+		App->fade->FadeToBlack(App->lose_scene, App->continu, 2.0f);
 	}
 
 	return UPDATE_CONTINUE;

@@ -154,6 +154,7 @@ update_status ModuleUI:: Update()
 		if(App->chunli->DeathCount==0)
 		victorycount1 = 1;
 	}
+
 	
 	
 	
