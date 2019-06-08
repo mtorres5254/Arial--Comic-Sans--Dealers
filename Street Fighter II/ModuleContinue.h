@@ -1,0 +1,32 @@
+#ifndef _MODULECONTINUE_H_
+#define _MODULECONTINUE_H_
+
+#include "Module.h"
+#include "Animation.h"
+#include "Globals.h"
+
+#include "SDL_mixer/include/SDL_mixer.h"
+#include "SDL/include/SDL.h"
+
+class ModuleContinue : public Module
+{
+public:
+	ModuleContinue();
+	~ModuleContinue();
+
+	bool Start();
+	update_status Update();
+	bool CleanUp();
+
+public:
+
+	SDL_Texture* graphics = nullptr;
+	Mix_Music* music;
+
+	Animation background;
+
+private:
+	
+};
+
+#endif // _MODULECONTINUE_H_
