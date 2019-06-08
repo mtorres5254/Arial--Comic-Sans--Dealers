@@ -45,7 +45,7 @@ bool ModuleChunLi2::Start()
 	light_damage = App->audio->LoadChunk("Asstes/Sound/Effects/light_attack.wav");
 	medium_damage = App->audio->LoadChunk("Assets/Sound/Effects/medium_attack.wav");
 	high_damage = App->audio->LoadChunk("Assets/Sound/Effects/high_attack.wav");
-	attack = App->audio->LoadChunk("Assets/Sound/Effects/attack.wav");
+
 
 	const int idleCollider = 5;//Collider num for the idle animation
 	SDL_Rect idleHitbox[idleCollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 },{ 9,4,51,54 },{ 1,3,45,33 } };
@@ -622,8 +622,14 @@ bool ModuleChunLi2::Start()
 	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
 	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.speed = 0.24f;
-	//WhirlwindKick.loop = true;
+	WhirlwindKick.PushBack1({ 1235,23,109,88 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1113,63,121,48 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1024,30,88,81 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1756, 1, 47, 110 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 363, 437, 72, 86 }, { 20, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.speed = 0.286f;
+	WhirlwindKick.loop = false;
+
 
 	// JUMP NEUTRAL KICK
 
@@ -867,38 +873,38 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_STANDING:
 
 						current_animation = &punch;
-						App->audio->PlayChunk(attack, 1);
+					
 											   						 					  
 						break;
 					case ST_KICK_STANDING:
 
 						current_animation = &kick;
-						App->audio->PlayChunk(attack, 1);
+			
 
 						break;
 
 					case ST_PUNCH_MEDIUM:
 						current_animation = &punch_medium;
-						App->audio->PlayChunk(attack, 1);
+					
 						break;
 
 					case ST_PUNCH_HARD:
 
 						current_animation = &punch_hard;
-						App->audio->PlayChunk(attack, 1);
+				
 						break;
 
 					case ST_KICK_MEDIUM_STANDING:
 
 						current_animation = &kick_medium;
-						App->audio->PlayChunk(attack, 1);
+						
 
 						break;
 
 					case ST_KICK_HARD_STANDING:
 
 						current_animation = &kick_hard;
-						App->audio->PlayChunk(attack, 1);
+				
 
 						break;
 
@@ -906,7 +912,7 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_CROUCH:
 
 						current_animation = &Crouch_punch;
-						App->audio->PlayChunk(attack, 1);
+					
 
 
 						break;
@@ -914,39 +920,39 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_MEDIUM_CROUCH:
 
 						current_animation = &Crouch_medium_punch;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						break;
 
 					case ST_PUNCH_HARD_CROUCH:
 
 						current_animation = &Crouch_hard_punch;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						break;
 
 					case ST_KICK_CROUCH:
 
 						current_animation = &Crouch_kick;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						break;
 					case ST_KICK_MEDIUM_CROUCH:
 
 						current_animation = &Crouch_medium_kick;
-						App->audio->PlayChunk(attack, 1);
+						
 
 						break;
 					case ST_KICK_HARD_CROUCH:
 
 						current_animation = &Crouch_hard_kick;
-						App->audio->PlayChunk(attack, 1);
+						
 
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_punch;
-						App->audio->PlayChunk(attack, 1);
+					
 
 
 						jump_neutral_logic();
@@ -958,7 +964,7 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_MEDIUM_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_punch_medium;
-						App->audio->PlayChunk(attack, 1);
+					
 
 
 						jump_neutral_logic();
@@ -969,7 +975,7 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_HARD_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_punch_hard;
-						App->audio->PlayChunk(attack, 1);
+						
 
 
 						jump_neutral_logic();
@@ -980,7 +986,7 @@ update_status ModuleChunLi2::Update()
 
 
 						current_animation = &jump_forward_punch;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						jump_forward_logic();
 
@@ -990,7 +996,7 @@ update_status ModuleChunLi2::Update()
 
 
 						current_animation = &jump_forward_punch_medium;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						jump_forward_logic();
 
@@ -1000,7 +1006,7 @@ update_status ModuleChunLi2::Update()
 
 
 						current_animation = &jump_forward_punch_hard;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						jump_forward_logic();
 
@@ -1010,7 +1016,7 @@ update_status ModuleChunLi2::Update()
 
 
 						current_animation = &jump_forward_kick;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						jump_forward_logic();
 
@@ -1020,7 +1026,7 @@ update_status ModuleChunLi2::Update()
 
 
 						current_animation = &jump_forward_kick_medium;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						jump_forward_logic();
 
@@ -1030,21 +1036,21 @@ update_status ModuleChunLi2::Update()
 
 
 						current_animation = &jump_forward_kick_hard;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						jump_forward_logic();
 
 						break;
 					case ST_PUNCH_BACKWARD_JUMP:
 						current_animation = &jump_backward_punch;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						jump_backward_logic();
 						break;
 
 					case ST_PUNCH_MEDIUM_BACKWARD_JUMP:
 						current_animation = &jump_backward_punch_medium;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						jump_backward_logic();
 
@@ -1052,21 +1058,21 @@ update_status ModuleChunLi2::Update()
 
 					case ST_PUNCH_HARD_BACKWARD_JUMP:
 						current_animation = &jump_backward_punch_hard;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						jump_backward_logic();
 
 						break;
 					case ST_KICK_BACKWARD_JUMP:
 						current_animation = &jump_backward_kick;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						jump_backward_logic();
 						break;
 
 					case ST_KICK_MEDIUM_BACKWARD_JUMP:
 						current_animation = &jump_backward_kick_medium;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						jump_backward_logic();
 
@@ -1074,7 +1080,7 @@ update_status ModuleChunLi2::Update()
 
 					case ST_KICK_HARD_BACKWARD_JUMP:
 						current_animation = &jump_backward_kick_hard;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						jump_backward_logic();
 
@@ -1102,7 +1108,8 @@ update_status ModuleChunLi2::Update()
 
 							position.y = 190;
 						}
-						if (wkcounter >= 80) {
+						if (wkcounter >= 60) {
+							whirlwindMove = false;
 							position.y = 220;
 						}
 						
@@ -1111,7 +1118,7 @@ update_status ModuleChunLi2::Update()
 					case ST_KICK_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_kick;
-						App->audio->PlayChunk(attack, 1);
+				
 
 						jump_neutral_logic();
 						break;
@@ -1119,7 +1126,7 @@ update_status ModuleChunLi2::Update()
 					case ST_KICK_MEDIUM_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_kick_medium;
-						App->audio->PlayChunk(attack, 1);
+					
 
 						jump_neutral_logic();
 
@@ -1129,7 +1136,7 @@ update_status ModuleChunLi2::Update()
 					case ST_KICK_HARD_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_kick_hard;
-						App->audio->PlayChunk(attack, 1);
+				
 
 
 						jump_neutral_logic();
@@ -1469,9 +1476,7 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	if (App->input->keyboard[SDL_SCANCODE_5] == KEY_UP) {
 		return false;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_6] == KEY_UP) {
-		return false;
-	}
+	
 
 	//Key down
 
@@ -1509,6 +1514,9 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 		inputs.Push(IN_4);
 	}
 
+	if (App->input->keyboard[SDL_SCANCODE_6] == KEY_DOWN) {
+		inputs.Push(IN_WHIRLWINDKICK);
+	}
 
 
 
@@ -1932,7 +1940,6 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 			}
 			break;
 
-
 			case ST_PUNCH_NEUTRAL_JUMP:
 			{
 				switch (last_input)
@@ -1941,7 +1948,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_NEUTRAL;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 200;
+						App->audio->PlayChunk(light_damage, 1);
+						App->UI->scoreP2 += 200;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -1957,7 +1965,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_NEUTRAL;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 200;
+						App->audio->PlayChunk(medium_damage, 1);
+						App->UI->scoreP2 += 200;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -1973,7 +1982,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_NEUTRAL;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 200;
+						App->audio->PlayChunk(high_damage, 1);
+						App->UI->scoreP2+= 200;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -1989,7 +1999,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_NEUTRAL;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 200;
+						App->audio->PlayChunk(light_damage, 1);
+						App->UI->scoreP2 += 200;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2005,7 +2016,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_NEUTRAL;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 200;
+						App->audio->PlayChunk(medium_damage, 1);
+						App->UI->scoreP2 += 200;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2021,7 +2033,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_NEUTRAL;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 200;
+						App->audio->PlayChunk(high_damage, 1);
+						App->UI->scoreP2 += 200;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2037,7 +2050,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_FORWARD;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 100;
+						App->audio->PlayChunk(light_damage, 1);
+						App->UI->scoreP2 += 100;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2053,7 +2067,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_FORWARD;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 100;
+						App->audio->PlayChunk(medium_damage, 1);
+						App->UI->scoreP2 += 100;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2069,7 +2084,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_FORWARD;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 100;
+						App->audio->PlayChunk(high_damage, 1);
+						App->UI->scoreP2 += 100;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2085,7 +2101,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_FORWARD;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 100;
+						App->audio->PlayChunk(light_damage, 1);
+						App->UI->scoreP2 += 100;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2101,7 +2118,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_FORWARD;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 100;
+						App->audio->PlayChunk(medium_damage, 1);
+						App->UI->scoreP2 += 100;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2117,7 +2135,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_FORWARD;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 100;
+						App->audio->PlayChunk(high_damage, 1);
+						App->UI->scoreP2 += 100;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2133,7 +2152,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_BACKWARD;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 100;
+						App->audio->PlayChunk(light_damage, 1);
+						App->UI->scoreP2 += 100;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2148,7 +2168,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_BACKWARD;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 100;
+						App->audio->PlayChunk(medium_damage, 1);
+						App->UI->scoreP2 += 100;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2163,7 +2184,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_BACKWARD;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 100;
+						App->audio->PlayChunk(high_damage, 1);
+						App->UI->scoreP2 += 100;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2179,7 +2201,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_BACKWARD;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 100;
+						App->audio->PlayChunk(light_damage, 1);
+						App->UI->scoreP2 += 100;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2194,7 +2217,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_BACKWARD;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 100;
+						App->audio->PlayChunk(medium_damage, 1);
+						App->UI->scoreP2 += 100;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2209,7 +2233,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_JUMP_BACKWARD;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 100;
+						App->audio->PlayChunk(high_damage, 1);
+						App->UI->scoreP2 += 100;
 					}
 					break;
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2224,7 +2249,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_IDLE;
 					if (App->chunli->damage_received == true)
 					{
-						App->UI->scoreP1 += 100;
+						App->audio->PlayChunk(light_damage, 1);
+						App->UI->scoreP2 += 100;
 					}
 					break;
 				}
@@ -2260,6 +2286,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 					if (App->chunli->damage_received == false)
 					{
+						App->audio->PlayChunk(light_damage, 1);
 						App->UI->scoreP2 += 100;
 					}
 					break;
@@ -2278,6 +2305,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 					if (App->chunli->damage_received == false)
 					{
+						App->audio->PlayChunk(medium_damage, 1);
 						App->UI->scoreP2 += 200;
 					}
 					break;
@@ -2296,6 +2324,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 					if (App->chunli->damage_received == false)
 					{
+						App->audio->PlayChunk(high_damage, 1);
 						App->UI->scoreP2 += 300;
 					}
 					break;
@@ -2314,6 +2343,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 					if (App->chunli->damage_received == false)
 					{
+						App->audio->PlayChunk(light_damage, 1);
 						App->UI->scoreP2 += 100;
 					}
 					break;
@@ -2332,6 +2362,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 					if (App->chunli->damage_received == false)
 					{
+						App->audio->PlayChunk(medium_damage, 1);
 						App->UI->scoreP2 += 200;
 					}
 					break;
@@ -2350,6 +2381,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 					if (App->chunli->damage_received == false)
 					{
+						App->audio->PlayChunk(high_damage, 1);
 						App->UI->scoreP2 += 300;
 					}
 					break;
@@ -2364,6 +2396,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_IDLE;
 					if (App->chunli->damage_received == false)
 					{
+						App->audio->PlayChunk(light_damage, 1);
 						App->UI->scoreP2 += 100;
 					}
 					break;
@@ -2378,6 +2411,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_IDLE;
 					if (App->chunli->damage_received == false)
 					{
+						App->audio->PlayChunk(medium_damage, 1);
 						App->UI->scoreP2 += 200;
 					}
 					break;
@@ -2393,6 +2427,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_IDLE;
 					if (App->chunli->damage_received == false)
 					{
+						App->audio->PlayChunk(high_damage, 1);
 						App->UI->scoreP2 += 300;
 					}
 					break;
@@ -2408,6 +2443,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_IDLE;
 					if (App->chunli->damage_received == false)
 					{
+						App->audio->PlayChunk(medium_damage, 1);
 						App->UI->scoreP2 += 200;
 					}
 					break;
@@ -2425,6 +2461,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_IDLE;
 					if (App->chunli->damage_received == false)
 					{
+						App->audio->PlayChunk(light_damage, 1);
 						App->UI->scoreP2 += 300;
 					}
 					break;
@@ -2440,6 +2477,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_IDLE;
 					if (App->chunli->damage_received == false)
 					{
+						App->audio->PlayChunk(high_damage, 1);
 						App->UI->scoreP2 += 500;
 					}
 					break;
@@ -2455,6 +2493,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_IDLE;
 					if (App->chunli->damage_received == true)
 					{
+						
 						App->UI->scoreP2 += 500;
 					}
 					position.y = 220;

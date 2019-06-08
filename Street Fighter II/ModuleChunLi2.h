@@ -242,7 +242,6 @@ public:
 	Mix_Chunk* light_damage;
 	Mix_Chunk* medium_damage;
 	Mix_Chunk* high_damage;
-	Mix_Chunk* attack;
 
 	int acumvictory = 0;
 	bool GodMode = false;
@@ -264,6 +263,7 @@ public:
 	int jumpHeight = 0;
 	int speed = 1;
 	int damage_received = 0;
+	int hit_conected = 0;
 	int block_damage = 0;
 	bool jumpactive = 0;
 	bool prueba = false;
@@ -275,8 +275,6 @@ public:
 	bool whirlwindMove = false;
 
 	chunli_states state;
-
-
 
 	Uint32 punch_hard_timer = 0;
 	Uint32 punch_medium_timer = 0;

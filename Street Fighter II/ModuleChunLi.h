@@ -275,6 +275,7 @@ public:
 	int jumpHeight = 0;
 	int speed = 1;
 	int damage_received = 0;
+	int hit_conected = 0;
 	int block_damage = 0;
 	bool jumpactive = 0;
 	bool active = false;
@@ -286,6 +287,7 @@ public:
 	int lkcounter = 0;
 	int wkcounter = 0;
 	chunli_states2 state;
+
 
 	Uint32 punch_hard_timer = 0;
 	Uint32 punch_medium_timer = 0;
