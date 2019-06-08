@@ -813,13 +813,14 @@ update_status ModuleChunLi2::Update()
 						wkcounter = 0;
 						whirlwindMove = false;
 						move = true;
+						onAir = false;
 						break;
 
 					case ST_WALK_FORWARD:
 
 						current_animation = &forward;
 						resetanimations();
-
+						onAir = false;
 						if(move)
 						position.x += speedX;
 
@@ -830,14 +831,14 @@ update_status ModuleChunLi2::Update()
 
 						current_animation = &backward;
 						resetanimations();
-
+						onAir = false;
 						if(move)
 						position.x -= speedX;
 
 						move = true;
 						break;
 					case ST_JUMP_NEUTRAL:
-
+						onAir = true;
 						current_animation = &jump_neutral;
 
 						jump_neutral_logic();
@@ -845,7 +846,7 @@ update_status ModuleChunLi2::Update()
 
 					case ST_JUMP_FORWARD:
 
-						
+						onAir = true;
 						current_animation = &jump_forward;
 							
 						jump_forward_logic();
@@ -854,7 +855,7 @@ update_status ModuleChunLi2::Update()
 
 					case ST_JUMP_BACKWARD:
 
-
+						onAir = true;
 						current_animation = &jump_backwards;
 						jump_backward_logic();
 						break;
@@ -953,7 +954,7 @@ update_status ModuleChunLi2::Update()
 						current_animation = &jump_neutral_punch;
 						App->audio->PlayChunk(attack, 1);
 
-
+						onAir = true;
 						jump_neutral_logic();
 
 
@@ -965,7 +966,7 @@ update_status ModuleChunLi2::Update()
 						current_animation = &jump_neutral_punch_medium;
 						App->audio->PlayChunk(attack, 1);
 
-
+						onAir = true;
 						jump_neutral_logic();
 
 
@@ -976,14 +977,14 @@ update_status ModuleChunLi2::Update()
 						current_animation = &jump_neutral_punch_hard;
 						App->audio->PlayChunk(attack, 1);
 
-
+						onAir = true;
 						jump_neutral_logic();
 
 
 						break;
 					case ST_PUNCH_FORWARD_JUMP:
 
-
+						onAir = true;
 						current_animation = &jump_forward_punch;
 						App->audio->PlayChunk(attack, 1);
 
@@ -993,7 +994,7 @@ update_status ModuleChunLi2::Update()
 
 					case ST_PUNCH_MEDIUM_FORWARD_JUMP:
 
-
+						onAir = true;
 						current_animation = &jump_forward_punch_medium;
 						App->audio->PlayChunk(attack, 1);
 
@@ -1003,7 +1004,7 @@ update_status ModuleChunLi2::Update()
 
 					case ST_PUNCH_HARD_FORWARD_JUMP:
 
-
+						onAir = true;
 						current_animation = &jump_forward_punch_hard;
 						App->audio->PlayChunk(attack, 1);
 
@@ -1013,7 +1014,7 @@ update_status ModuleChunLi2::Update()
 
 					case ST_KICK_FORWARD_JUMP:
 
-
+						onAir = true;
 						current_animation = &jump_forward_kick;
 						App->audio->PlayChunk(attack, 1);
 
@@ -1023,7 +1024,7 @@ update_status ModuleChunLi2::Update()
 
 					case ST_KICK_MEDIUM_FORWARD_JUMP:
 
-
+						onAir = true;
 						current_animation = &jump_forward_kick_medium;
 						App->audio->PlayChunk(attack, 1);
 
@@ -1033,7 +1034,7 @@ update_status ModuleChunLi2::Update()
 
 					case ST_KICK_HARD_FORWARD_JUMP:
 
-
+						onAir = true;
 						current_animation = &jump_forward_kick_hard;
 						App->audio->PlayChunk(attack, 1);
 
@@ -1043,14 +1044,14 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_BACKWARD_JUMP:
 						current_animation = &jump_backward_punch;
 						App->audio->PlayChunk(attack, 1);
-
+						onAir = true;
 						jump_backward_logic();
 						break;
 
 					case ST_PUNCH_MEDIUM_BACKWARD_JUMP:
 						current_animation = &jump_backward_punch_medium;
 						App->audio->PlayChunk(attack, 1);
-
+						onAir = true;
 						jump_backward_logic();
 
 						break;
@@ -1058,21 +1059,21 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_HARD_BACKWARD_JUMP:
 						current_animation = &jump_backward_punch_hard;
 						App->audio->PlayChunk(attack, 1);
-
+						onAir = true;
 						jump_backward_logic();
 
 						break;
 					case ST_KICK_BACKWARD_JUMP:
 						current_animation = &jump_backward_kick;
 						App->audio->PlayChunk(attack, 1);
-
+						onAir = true;
 						jump_backward_logic();
 						break;
 
 					case ST_KICK_MEDIUM_BACKWARD_JUMP:
 						current_animation = &jump_backward_kick_medium;
 						App->audio->PlayChunk(attack, 1);
-
+						onAir = true;
 						jump_backward_logic();
 
 						break;
@@ -1080,7 +1081,7 @@ update_status ModuleChunLi2::Update()
 					case ST_KICK_HARD_BACKWARD_JUMP:
 						current_animation = &jump_backward_kick_hard;
 						App->audio->PlayChunk(attack, 1);
-
+						onAir = true;
 						jump_backward_logic();
 
 						break;
@@ -1117,7 +1118,7 @@ update_status ModuleChunLi2::Update()
 
 						current_animation = &jump_neutral_kick;
 						App->audio->PlayChunk(attack, 1);
-
+						onAir = true;
 						jump_neutral_logic();
 						break;
 
@@ -1127,7 +1128,7 @@ update_status ModuleChunLi2::Update()
 						App->audio->PlayChunk(attack, 1);
 
 						jump_neutral_logic();
-
+						onAir = true;
 
 						break;
 
@@ -1135,7 +1136,7 @@ update_status ModuleChunLi2::Update()
 
 						current_animation = &jump_neutral_kick_hard;
 						App->audio->PlayChunk(attack, 1);
-
+						onAir = true;
 
 						jump_neutral_logic();
 
@@ -1344,28 +1345,32 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			if (position.x < App->chunli->position.x)
 				position.x -= 1;
 		}
+		else if (App->chunli->leftLimit && leftLimit) {
+			position.x += 2;
+		}
 		else if (App->chunli->leftLimit == true && state == ST_WALK_BACKWARD && App->chunli->position.y == position.y) {
 			move = false;
 		}
 		
-		else if (App->chunli->leftLimit == true && state == ST_WALK_BACKWARD && App->chunli->position.y>position.y) {
+		else if (App->chunli->leftLimit == true && state == ST_WALK_BACKWARD ) {
 			position.x += 2;
 		}
 
 		else if (App->chunli->leftLimit == true && state == ST_JUMP_BACKWARD) {
-			position.x += 2;
+			move = false;
 		}
 
 		else if (App->chunli->RightLimit == true && state == ST_WALK_FORWARD) {
 			move = false;
 		}
-
-		else if (leftLimit == true && App->chunli->state == ST_WALK_BACKWARD2) {
+		
+		else if (leftLimit == true && App->chunli->state == ST_WALK_BACKWARD2 && !leftLimit) {
 			move = false;
 		}
 		else if (RightLimit == true && App->chunli->state == ST_WALK_FORWARD2) {
 			move = false;
 		}
+		
 
 		else if (state == ST_WALK_BACKWARD && App->chunli->state == ST_WALK_FORWARD2 
 			|| state == ST_WALK_FORWARD && App->chunli->state == ST_WALK_BACKWARD2

@@ -251,6 +251,7 @@ public:
 	bool death = false;
 	bool leftLimit = false;
 	bool RightLimit = false;
+	bool onAir = false;
 
 	int PivotX = 0; 
 	int PivotY = 0;

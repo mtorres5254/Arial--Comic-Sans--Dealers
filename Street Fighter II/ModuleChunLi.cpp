@@ -1221,29 +1221,36 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 				position.x += 1;
 					
 		}
-		else if (App->chunli2->RightLimit == true && state == ST_JUMP_FORWARD2 && App->chunli2->position.y == position.y) {
-			move = false;
-		}
-		else if (App->chunli2->RightLimit == true && state == ST_JUMP_FORWARD2) {
+
+		else if (App->chunli2->RightLimit && RightLimit) {
 			position.x -= 2;
 		}
-		else if (leftLimit == true && App->chunli2->state == ST_WALK_BACKWARD) {
+
+		else if (App->chunli2->RightLimit == true && state == ST_WALK_FORWARD2 && App->chunli2->position.y == position.y) {
+			move = false;
+		}
+		else if (App->chunli2->RightLimit == true && state == ST_WALK_FORWARD2) {
+			position.x -= 2;
+		}
+		else if (leftLimit == true && App->chunli2->state == ST_JUMP_FORWARD2) {
 			move = false;
 		}
 		else if (RightLimit == true && App->chunli2->state == ST_WALK_FORWARD) {
 			move = false;
 		}
-		else if (App->chunli2->leftLimit == true && state == ST_WALK_BACKWARD2) {
+	/*
+		else if (RightLimit == true && App->chunli2->state == ST_WALK_FORWARD && !RightLimit) {
 			move = false;
-		}
+		}*/
 
-		else if (App->chunli2->RightLimit == true && state == ST_WALK_FORWARD2) {
+		else if (leftLimit == true && App->chunli->state == ST_WALK_BACKWARD) {
 			move = false;
 		}
 		else if (state == ST_IDLE2 && (App->chunli2->state == ST_JUMP_FORWARD || App->chunli2->state == ST_JUMP_BACKWARD ||
 			App->chunli2->state == ST_JUMP_NEUTRAL)) {
 			move = false;
 		}
+
 		else if (state == ST_WALK_FORWARD2 && App->chunli2->state == ST_WALK_BACKWARD 
 			|| state == ST_WALK_BACKWARD2 && App->chunli2->state == ST_WALK_FORWARD 
 			|| state==ST_CROUCH2 && App->chunli2->state==ST_WALK_BACKWARD 
