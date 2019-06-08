@@ -19,6 +19,7 @@
 #include "ModuleCombos.h"
 #include "ModuleSlowdown.h"
 #include "ModuleCharacterSelection.h"
+#include "ModuleContinue.h"
 
 Application::Application()
 {
@@ -41,6 +42,7 @@ Application::Application()
 	modules[16] = font = new ModuleFont();
 	modules[17] = slow = new ModuleSlowdown();
 	modules[18] = selectionScene = new ModuleCharacterSelection();
+	modules[19] = continu = new ModuleContinue();
 	
 	intro = false;
 }	

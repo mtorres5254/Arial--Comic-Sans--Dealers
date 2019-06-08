@@ -82,6 +82,7 @@
     <ClInclude Include="ModuleCollision.h" />
     <ClInclude Include="ModuleCombos.h" />
     <ClInclude Include="ModuleCongratsScreen.h" />
+    <ClInclude Include="ModuleContinue.h" />
     <ClInclude Include="ModuleFadeToBlack.h" />
     <ClInclude Include="ModuleFont.h" />
     <ClInclude Include="ModuleInput.h" />
@@ -108,6 +109,7 @@
     <ClCompile Include="ModuleCollision.cpp" />
     <ClCompile Include="ModuleCombos.cpp" />
     <ClCompile Include="ModuleCongratsScreen.cpp" />
+    <ClCompile Include="ModuleContinue.cpp" />
     <ClCompile Include="ModuleFadeToBlack.cpp" />
     <ClCompile Include="ModuleFont.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
