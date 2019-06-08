@@ -15,6 +15,7 @@
 #include "ModuleChunLi2.h"
 #include "Animation.h"
 #include <time.h>
+#include "ModuleContinue.h"
 
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -96,6 +97,7 @@ bool ModuleSceneDhalsim::Start()
 	music = App->audio->LoadMusic("Assets/Sound/Musics/dhalsim.ogg");
 	App->audio->PlayMusic(music, 5000);
 	
+	//App->continu->Disable();
 	App->chunli->Enable();
 	App->chunli2->Enable();
 	App->collision->Enable();
@@ -198,7 +200,7 @@ void ModuleSceneDhalsim::fadeto() {
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
 
-		App->fade->FadeToBlack(App->scene_dhalsim, App->congrats_screen, 2.0f);
+		App->fade->FadeToBlack(App->scene_dhalsim, App->continu, 2.0f);
 		App->audio->StopMusic(2000);
 
 	}
