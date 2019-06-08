@@ -3,8 +3,6 @@
 #include "ModuleInput.h"
 #include "SDL/include/SDL.h"
 #include "ModuleRender.h"
-#include <stdio.h>
-#include <string.h>
 
 ModuleInput::ModuleInput() : Module()
 {
@@ -26,14 +24,10 @@ bool ModuleInput::Init()
 	
 	if (SDL_NumJoysticks() >= 1) {
 		Pad1.Pad = SDL_GameControllerOpen(0);
-		Pads[0] = &Pad1;
-		history->Pads[0] = &Pad1;
 		Gamepad = true;
 	}
 	if (SDL_NumJoysticks() == 2) {
 		Pad2.Pad = SDL_GameControllerOpen(1);
-		Pads[1] = &Pad2;
-		history->Pads[1] = &Pad2;
 		Gamepad2 = true;
 	}
 			
@@ -54,44 +48,28 @@ update_status ModuleInput::PreUpdate()
 {
 	SDL_PumpEvents();
 
-	if (history_count < MAX_HISTORY) {
-		history_count++;
-	}
-	if (history_count == MAX_HISTORY) {
-		history_count = 0;
-	}
-
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 
 	if (Gamepad == false && SDL_NumJoysticks() >= 1) {
 		Pad1.Pad = SDL_GameControllerOpen(0);
-		Pads[0] = &Pad1;
-		history->Pads[0] = &Pad1;
 		Gamepad = true;
 	}
 	if (Gamepad == true && SDL_NumJoysticks() == 0) {
 		SDL_GameControllerClose(Pad1.Pad);
-		Pads[0] = nullptr;
-		history->Pads[1] = nullptr;
 		Gamepad = false;
 	}
 
 	if (Gamepad2 == false && SDL_NumJoysticks() >= 2) {
 		Pad2.Pad = SDL_GameControllerOpen(1);
-		Pads[1] = &Pad2;
-		history->Pads[1] = &Pad2;
 		Gamepad2 = true;
 	}
 	if (Gamepad2 == true && SDL_NumJoysticks() < 2) {
 		SDL_GameControllerClose(Pad2.Pad);
-		Pads[1] = nullptr;
-		history->Pads[1] = nullptr;
 		Gamepad2 = false;
 	}
 	
 	//Gamepad logic
 	if (Gamepad == true) {
-		//GetGamepadButton(&Pad1);
 		for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; i++) {
 			if (SDL_GameControllerGetButton(Pad1.Pad, (SDL_GameControllerButton)i) == 1) {
 				if (Pad1.button_state[i] == KEY_IDLE) {
@@ -116,7 +94,6 @@ update_status ModuleInput::PreUpdate()
 	}
    
 	if (Gamepad2 == true) {
-		//GetGamepadButton
 		for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; i++) {
 			if (SDL_GameControllerGetButton(Pad2.Pad, (SDL_GameControllerButton)i) == 1) {
 				if (Pad2.button_state[i] == KEY_IDLE) {
@@ -160,27 +137,14 @@ update_status ModuleInput::PreUpdate()
 		}
 	}
 
-	if (keyboard[SDL_SCANCODE_ESCAPE])
+	if (keyboard[SDL_SCANCODE_ESCAPE]) {
 		return update_status::UPDATE_STOP;
-
-	if (keyboard[SDL_SCANCODE_O]) {
-		App->render->camera.x += 1;
 	}
-
-	if (keyboard[SDL_SCANCODE_P]) {
-		App->render->camera.x -= 1;
-	}
-
-		
-
+	
 	while (SDL_PollEvent(&event) != 0)
 	{
 		if (event.type == SDL_QUIT) { return update_status::UPDATE_STOP; }
 	}
-	
-
-	memcpy(history[history_count].keyboard, keyboard, sizeof(KEY_STATE)*MAX_KEYS);
-	memcpy(history[history_count].Pads, Pads, sizeof(GamePad)*MAX_PADS);
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -191,16 +155,4 @@ bool ModuleInput::CleanUp()
 	LOG("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER);
 	return true;
-}
-
-History ModuleInput::GetPrevious(int previous) {
-	 History ret;
-	for (int i = 0; i < MAX_PADS; i++) {
-		ret.Pads[i] = history[history_count - previous].Pads[i];
-	}
-	for (int i = 0; i < MAX_KEYS; i++) {
-		ret.keyboard[i] = history[history_count - previous].keyboard[i];
-	}
-	
-	return ret;
 }

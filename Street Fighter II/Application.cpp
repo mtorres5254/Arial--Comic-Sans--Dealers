@@ -59,21 +59,15 @@ bool Application::Init()
 
 	
 	// Player will be enabled on the first update of a new scene
-	//chunli->Disable();
-//	chunli2->Disable();
+    chunli->Disable();
+	chunli2->Disable();
 	// Disable the map that you do not start with
-	//scene_dhalsim->Disable();
+	scene_dhalsim->Disable();
 	lose_scene->Disable();
 	congrats_screen->Disable();
 	collision->Disable();
-//	UI->Disable();
-	selectionScene->Disable();
-	welcome_page->Disable();
-	//FOR TESTING
-	chunli->Enable();
-	chunli2->Enable();
-	scene_dhalsim->Enable();
-	UI->Enable();
+	UI->Disable();
+	selectionScene->Disable();;
 
 	for(int i = 0; i < NUM_MODULES && ret == true; ++i)
 		ret = modules[i]->Init();
