@@ -1419,55 +1419,27 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c1->type == COLLIDER_ENEMY && (c2->type == COLLIDER_PLAYER || c2->type == COLLIDER_NONE))
 	{
+
 		if (state == ST_IDLE) {
 			if (position.x > App->chunli->position.x)
 				position.x += 1;
 			if (position.x < App->chunli->position.x)
 				position.x -= 1;
 		}
+
+		
 		else if (App->chunli->leftLimit && leftLimit) {
 			position.x += 2;
-		}
-		else if (App->chunli->leftLimit == true && state == ST_WALK_BACKWARD && App->chunli->position.y == position.y) {
-			move = false;
 		}
 		
 		else if (App->chunli->leftLimit == true && state == ST_WALK_BACKWARD ) {
 			position.x += 2;
 		}
-
-		else if (App->chunli->leftLimit == true && state == ST_JUMP_BACKWARD) {
-			move = false;
-		}
-
-		else if (App->chunli->RightLimit == true && state == ST_WALK_FORWARD) {
-			move = false;
-		}
-		
-		else if (leftLimit == true && App->chunli->state == ST_WALK_BACKWARD2 && !leftLimit) {
-			move = false;
-		}
-		else if (RightLimit == true && App->chunli->state == ST_WALK_FORWARD2) {
-			move = false;
-		}
-		
-
-		else if (state == ST_WALK_BACKWARD && App->chunli->state == ST_WALK_FORWARD2 
-			|| state == ST_WALK_FORWARD && App->chunli->state == ST_WALK_BACKWARD2
-			|| state == ST_WALK_BACKWARD && App->chunli->state ==  ST_CROUCH2
-			|| state == ST_CROUCH && App->chunli->state== ST_WALK_FORWARD2 
-			|| state == ST_WALK_FORWARD && App->chunli->state == ST_CROUCH2) {
-
-			move = false;
-		}
-		else if (state == ST_WHIRLWIND2) {
-			whirlwindMove = false;
-		}
-		
 		else {
-			move = true;
+			move = false;
 		}
-		
+
+	
 	}
 
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER_ATTACK)
@@ -1482,12 +1454,12 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			App->particle->AddParticle(App->particle->hit, position.x - PivotX + 30, position.y - 70, COLLIDER_NONE, 0);
 		}
 		
-		else if (state == ST_CROUCH && (right || right1 || right2) && App->chunli->position.x < position.x) {
+		else if (state == ST_CROUCH && (right || right1 || right2) && position.x < App->chunli->position.x + App->chunli->PivotX) {
 			block_damage = 2;
 			App->particle->AddParticle(App->particle->hit, position.x - PivotX , position.y - 70, COLLIDER_NONE, 0);
 		}
 
-		else if (state == ST_CROUCH && (left || left1 || left2) && App->chunli->position.x > position.x) {
+		else if (state == ST_CROUCH && (left || left1 || left2) && position.x > App->chunli->position.x + App->chunli->PivotX) {
 			block_damage = 2;
 			App->particle->AddParticle(App->particle->hit, position.x - PivotX+30, position.y - 70, COLLIDER_NONE, 0);
 		}
@@ -1502,34 +1474,44 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 				lose = true;
 			}
 			else if(!lose) {
+				
 				if (state == ST_WALK_BACKWARD || state == ST_WALK_FORWARD || state == ST_IDLE) {
 					if (App->chunli->state == ST_KICK_HARD_CROUCH2 || App->chunli->state == ST_KICK_HARD_NEUTRAL_JUMP2) {
 						damage_received = 3;
 						App->slow->StartSlowdown(JUMP_TIME, 50);
+						
 					}
 					else if (App->chunli->state == ST_WHIRLWIND2) {
 						damage_received = 2;
 						App->slow->StartSlowdown(200, 50);
+						
 						//App->chunli->move = false;
 					}
 					else if (App->chunli->state == ST_KICK_HARD_STANDING2) {
 						damage_received = 2;
 						App->slow->StartSlowdown(400, 50);
+						
 					}
 					else {
 						damage_received = 1;
+						
 					}
 				}
 				else if (state == ST_CROUCH) {
 					damage_received = 4;
+					
 				}
 				else {
 					damage_received = 5;
+				
 				}
 			}
 			
 			
 		}
+
+		if(block_damage ==0)
+			App->particle->AddParticle(App->particle->hit, position.x + PivotX-50, position.y - 70, COLLIDER_NONE, 0);
 		App->audio->PlayChunk(medium_damage, 1);
 	}
 }
