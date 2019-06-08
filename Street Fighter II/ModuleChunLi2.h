@@ -257,6 +257,12 @@ public:
 	Mix_Chunk* high_damage;
 	Mix_Chunk* attack;
 
+	Mix_Chunk* win_sound;
+	Mix_Chunk* death_sound;
+
+	bool DeathSoundPlayed = false;
+	bool WinSoundPlayed = false;
+
 	int acumvictory = 0;
 	bool GodMode = false;
 	int win = 0;	

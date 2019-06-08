@@ -46,6 +46,8 @@ bool ModuleChunLi2::Start()
 	light_damage = App->audio->LoadChunk("Asstes/Sound/Effects/light_attack.wav");
 	medium_damage = App->audio->LoadChunk("Assets/Sound/Effects/medium_attack.wav");
 	high_damage = App->audio->LoadChunk("Assets/Sound/Effects/high_attack.wav");
+	win_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-laugh.wav");
+	death_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-death.wav");
 
 
 	const int idleCollider = 5;//Collider num for the idle animation
@@ -772,7 +774,6 @@ bool ModuleChunLi2::Start()
 	return ret;
 }
 
-
 bool ModuleChunLi2::CleanUp()
 {
 	LOG("Unloading Player textures");
@@ -789,10 +790,14 @@ bool ModuleChunLi2::CleanUp()
 
 	App->audio->UnloadChunk(LightningKick_effect);
 	App->audio->UnloadChunk(WhirlwindKick_effect);
+	App->audio->UnloadChunk(light_damage);
+	App->audio->UnloadChunk(medium_damage);
+	App->audio->UnloadChunk(high_damage);
+	App->audio->UnloadChunk(win_sound);
+	App->audio->UnloadChunk(death_sound);
 
 	return true;
 }
-
 
 update_status ModuleChunLi2::Update()
 {
@@ -1268,8 +1273,6 @@ update_status ModuleChunLi2::Update()
 						if (SDL_GetTicks() - jump_timer > JUMP_TIME / 2) {
 							position.y += 4;
 						}
-
-
 						if (SDL_GetTicks() - jump_timer >= JUMP_TIME / 1.28) {
 							position.y += 5;
 						}
@@ -1278,52 +1281,42 @@ update_status ModuleChunLi2::Update()
 						}
 						move = false;
 						break;
-
 					case ST_BLOCK:
 						block_damage = 0;
 						current_animation = &block_standing;
 						break;
-
 					case ST_BLOCK_CROUCH:
-
 						block_damage = 0;
-
 						current_animation = &block_crouch;
-						break;
-					
-
+						break;				
 					case ST_VICTORY:
-
 						if(App->chunli->state==ST_LOSE2)
 						App->UI->Resultinfo = 2;
-
 						if(victorycount==0)
-							victorycount++;
-						
-					
-						current_animation = &win1;
+							victorycount++;					
+							current_animation = &win1;
 						break;
-
-
 					case ST_VICTORY2_:
-
 						if (App->chunli->state == ST_LOSE2)
 							App->UI->Resultinfo = 2;
-
 						current_animation = &win2;
-						break;
-					
-
+						if (WinSoundPlayed == false) {
+							App->audio->PlayChunk(win_sound, 1);
+							WinSoundPlayed = true;
+						}
+						break;	
 					case ST_LOSE:
 
 						if (SDL_GetTicks() - lose_timer > 2000 && App->chunli->victorycount == 0)
 							App->chunli->win = 1;
-
 						else if (SDL_GetTicks() - lose_timer > 2000 && App->chunli->victorycount == 1)
 							App->chunli->win = 2;
-
-
 						current_animation = &damage3;
+						if (DeathSoundPlayed == false)
+						{
+							App->audio->PlayChunk(death_sound, 1);
+							DeathSoundPlayed = true;
+						}
 						break;
 					}				
 										
@@ -1337,7 +1330,6 @@ update_status ModuleChunLi2::Update()
 		}
 	}
 }
-
 
 void ModuleChunLi2::positionlimits() {
 
@@ -1544,190 +1536,192 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 
 bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 {
-	
-	//Key up
-	if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_UP) {
-		inputs.Push(IN_CROUCH_UP);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_UP) {
-		return false;
-	}
-	if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_UP) {
-		left = false;
-		inputs.Push(IN_LEFT_UP);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_UP) {
-		right = false;
-		inputs.Push(IN_RIGHT_UP);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_J] == KEY_UP) {
-		return false;
-	}
-	if (App->input->keyboard[SDL_SCANCODE_K] == KEY_UP) {
-		return false;
-	}
-	if (App->input->keyboard[SDL_SCANCODE_L] == KEY_UP) {
-		return false;
-	}
-	if (App->input->keyboard[SDL_SCANCODE_7] == KEY_UP) {
-		return false;
-	}
-	if (App->input->keyboard[SDL_SCANCODE_8] == KEY_UP) {
-		return false;
-	}
-	if (App->input->keyboard[SDL_SCANCODE_9] == KEY_UP) {
-		return false;
-	}
-	if (App->input->keyboard[SDL_SCANCODE_0] == KEY_UP) {
-		return false;
-	}
-	if (App->input->keyboard[SDL_SCANCODE_5] == KEY_UP) {
-		return false;
-	}
-	
+	if (App->chunli->life > 0) {
 
-	//Key down
-
-	if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_UP] == KEY_REPEAT) {
-		inputs.Push(IN_JUMP);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_REPEAT) {
-		inputs.Push(IN_CROUCH_DOWN);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
-		left = true;
-		inputs.Push(IN_LEFT_DOWN);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
-		right = true;
-		inputs.Push(IN_RIGHT_DOWN);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_J] == KEY_DOWN) {
-		inputs.Push(IN_X);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_K] == KEY_DOWN) {
-		inputs.Push(IN_C);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_L] == KEY_DOWN) {
-		inputs.Push(IN_LIGHTINGKICK);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_7] == KEY_DOWN) {
-		inputs.Push(IN_1);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_8] == KEY_DOWN) {
-		inputs.Push(IN_2);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_9] == KEY_DOWN) {
-		inputs.Push(IN_3);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_0] == KEY_DOWN) {
-		inputs.Push(IN_4);
-	}
-	if (App->input->keyboard[SDL_SCANCODE_6] == KEY_DOWN) {
-		inputs.Push(IN_WHIRLWINDKICK);
-	}
-
-	//Controller
-
-	if (App->input->Gamepad2 == true) {
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_UP) {
-			return false;
-		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_UP) {
-			return false;
-		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_UP) {
-			return false;
-		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_UP) {
-			return false;
-		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_UP) {
+		//Key up
+		if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_UP) {
 			inputs.Push(IN_CROUCH_UP);
 		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_UP) {
-			left1 = false;
-			inputs.Push(IN_LEFT_UP);;
+		if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_UP) {
+			return false;
 		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_UP) {
-			right1 = false;
+		if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_UP) {
+			left = false;
+			inputs.Push(IN_LEFT_UP);
+		}
+		if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_UP) {
+			right = false;
 			inputs.Push(IN_RIGHT_UP);
 		}
+		if (App->input->keyboard[SDL_SCANCODE_J] == KEY_UP) {
+			return false;
+		}
+		if (App->input->keyboard[SDL_SCANCODE_K] == KEY_UP) {
+			return false;
+		}
+		if (App->input->keyboard[SDL_SCANCODE_L] == KEY_UP) {
+			return false;
+		}
+		if (App->input->keyboard[SDL_SCANCODE_7] == KEY_UP) {
+			return false;
+		}
+		if (App->input->keyboard[SDL_SCANCODE_8] == KEY_UP) {
+			return false;
+		}
+		if (App->input->keyboard[SDL_SCANCODE_9] == KEY_UP) {
+			return false;
+		}
+		if (App->input->keyboard[SDL_SCANCODE_0] == KEY_UP) {
+			return false;
+		}
+		if (App->input->keyboard[SDL_SCANCODE_5] == KEY_UP) {
+			return false;
+		}
 
 
-		if (App->combo->CheckPunchP2() == true) {
-			inputs.Push(IN_X);
-		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
-			inputs.Push(IN_C);
-		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_X] == KEY_DOWN) {
-			inputs.Push(IN_1);
-		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_LEFTSHOULDER] == KEY_DOWN) {
-			inputs.Push(IN_2);
-		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN) {
-			inputs.Push(IN_3);
-		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
-			inputs.Push(IN_4);
-		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_REPEAT) {
+		//Key down
+
+		if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_UP] == KEY_REPEAT) {
 			inputs.Push(IN_JUMP);
 		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_REPEAT) {
+		if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_REPEAT) {
 			inputs.Push(IN_CROUCH_DOWN);
 		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_REPEAT) {
-			left1 = true;
+		if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
+			left = true;
 			inputs.Push(IN_LEFT_DOWN);
 		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_REPEAT) {
-			right1 = true;
+		if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
+			right = true;
 			inputs.Push(IN_RIGHT_DOWN);
 		}
-
-		if (App->combo->CheckLightingKickP2() == true) {
+		if (App->input->keyboard[SDL_SCANCODE_J] == KEY_DOWN) {
+			inputs.Push(IN_X);
+		}
+		if (App->input->keyboard[SDL_SCANCODE_K] == KEY_DOWN) {
+			inputs.Push(IN_C);
+		}
+		if (App->input->keyboard[SDL_SCANCODE_L] == KEY_DOWN) {
 			inputs.Push(IN_LIGHTINGKICK);
 		}
-		if (App->combo->CheckWhirlwindKickP2() == true) {
+		if (App->input->keyboard[SDL_SCANCODE_7] == KEY_DOWN) {
+			inputs.Push(IN_1);
+		}
+		if (App->input->keyboard[SDL_SCANCODE_8] == KEY_DOWN) {
+			inputs.Push(IN_2);
+		}
+		if (App->input->keyboard[SDL_SCANCODE_9] == KEY_DOWN) {
+			inputs.Push(IN_3);
+		}
+		if (App->input->keyboard[SDL_SCANCODE_0] == KEY_DOWN) {
+			inputs.Push(IN_4);
+		}
+		if (App->input->keyboard[SDL_SCANCODE_6] == KEY_DOWN) {
 			inputs.Push(IN_WHIRLWINDKICK);
 		}
 
-		//Axis
-		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			inputs.Push(IN_JUMP);
-		}
-		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE) {
-			inputs.Push(IN_CROUCH_DOWN);
-		}
-		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			left2 = true;
-			inputs.Push(IN_LEFT_DOWN);
-		}
-		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE) {
-			right2 = true;
-			inputs.Push(IN_RIGHT_DOWN);
-		}
+		//Controller
+
+		if (App->input->Gamepad2 == true) {
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_UP) {
+				return false;
+			}
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_UP) {
+				return false;
+			}
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_UP) {
+				return false;
+			}
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_UP) {
+				return false;
+			}
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_UP) {
+				inputs.Push(IN_CROUCH_UP);
+			}
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_UP) {
+				left1 = false;
+				inputs.Push(IN_LEFT_UP);;
+			}
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_UP) {
+				right1 = false;
+				inputs.Push(IN_RIGHT_UP);
+			}
 
 
-		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE) {
+			if (App->combo->CheckPunchP2() == true) {
+				inputs.Push(IN_X);
+			}
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+				inputs.Push(IN_C);
+			}
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_X] == KEY_DOWN) {
+				inputs.Push(IN_1);
+			}
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_LEFTSHOULDER] == KEY_DOWN) {
+				inputs.Push(IN_2);
+			}
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN) {
+				inputs.Push(IN_3);
+			}
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
+				inputs.Push(IN_4);
+			}
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_REPEAT) {
+				inputs.Push(IN_JUMP);
+			}
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_REPEAT) {
+				inputs.Push(IN_CROUCH_DOWN);
+			}
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_REPEAT) {
+				left1 = true;
+				inputs.Push(IN_LEFT_DOWN);
+			}
+			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_REPEAT) {
+				right1 = true;
+				inputs.Push(IN_RIGHT_DOWN);
+			}
+
+			if (App->combo->CheckLightingKickP2() == true) {
+				inputs.Push(IN_LIGHTINGKICK);
+			}
+			if (App->combo->CheckWhirlwindKickP2() == true) {
+				inputs.Push(IN_WHIRLWINDKICK);
+			}
+
+			//Axis
+			if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
+				inputs.Push(IN_JUMP);
+			}
+			if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE) {
+				inputs.Push(IN_CROUCH_DOWN);
+			}
+			if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
+				left2 = true;
+				inputs.Push(IN_LEFT_DOWN);
+			}
+			if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE) {
+				right2 = true;
+				inputs.Push(IN_RIGHT_DOWN);
+			}
+
+
+			if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE) {
+
+			}
+			if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE) {
+				inputs.Push(IN_CROUCH_UP);
+			}
+			if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE) {
+				left2 = false;
+				inputs.Push(IN_LEFT_UP);
+			}
+			if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE) {
+				right2 = false;
+				inputs.Push(IN_RIGHT_UP);
+			}
+
 
 		}
-		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			inputs.Push(IN_CROUCH_UP);
-		}
-		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE) {
-			left2 = false;
-			inputs.Push(IN_LEFT_UP);
-		}
-		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			right2 = false;
-			inputs.Push(IN_RIGHT_UP);
-		}
-
-
 	}
 
 	if (damage_received == 1) {
@@ -1930,6 +1924,7 @@ void ModuleChunLi2::ResetPlayer() {
 
 	life = 1000;
 	position.x = 410; 
+	state = ST_IDLE;
 	App->UI->Resultinfo == 0;
 	if (App->chunli->position.x != 180 || App->chunli->life != 1000) {
 		ActiveDeath = 0;
@@ -1939,6 +1934,8 @@ void ModuleChunLi2::ResetPlayer() {
 		App->UI->Counter2 = 9;
 		App->UI->Resultinfo = 0;
 	}
+	WinSoundPlayed = false;
+	DeathSoundPlayed = false;
 }
 
 chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
