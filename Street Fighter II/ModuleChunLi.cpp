@@ -1103,12 +1103,12 @@ update_status ModuleChunLi::Update()
 						break;
 
 					case ST_VICTORY2:
-
+						App->UI->Resultinfo = 1;
 						current_animation = &win1;
 						break;
 
 					case ST_VICTORY2_2:
-
+						App->UI->Resultinfo = 1;
 						current_animation = &win2;
 						break;
 					}
@@ -2761,6 +2761,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				win1.Reset();
 				state = ST_IDLE2;
 				win = false;
+				acumvictory++;
 				damage_received = 0;
 				App->chunli2->ResetPlayer();
 				ResetPlayer();
@@ -2801,9 +2802,9 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 	}
 
 	if (App->chunli2->life == 0) {
-		/*if (state != ST_VICTORY2)
-			win = true;*/
-		if (state != ST_VICTORY2_2)
+		if (state != ST_VICTORY2 && acumvictory==0)
+			win = true;
+		if (state != ST_VICTORY2_2 && acumvictory==1)
 			_win = true;
 	}
 	if (life == 0)
