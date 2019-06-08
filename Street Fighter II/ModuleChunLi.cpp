@@ -1112,6 +1112,7 @@ update_status ModuleChunLi::Update()
 						current_animation = &win1;
 						break;
 					case ST_VICTORY2_2:
+
 						if (App->chunli2->state == ST_LOSE)
 							App->UI->Resultinfo = 1;						
 						current_animation = &win2;
@@ -1119,6 +1120,7 @@ update_status ModuleChunLi::Update()
 							App->audio->PlayChunk(win_sound, 1);
 							WinSoundPlayed = true;
 						}
+						
 						break;
 					case ST_LOSE2:						
 						if (SDL_GetTicks() - lose_timer >2000 && App->chunli2->victorycount==0)
@@ -1137,14 +1139,14 @@ update_status ModuleChunLi::Update()
 						else
 							position.x += 3;
 
-						if (onAir && position.y <= 220) {
+						if (onAir && position.y <= 225) {
 							position.y += 5;
 						}
 
 						else if (SDL_GetTicks() - lose_timer < 450 && position.y==220) {
 							position.y -= 6;
 						}
-						else if (position.y <= 220) {
+						else if (position.y <= 225) {
 							position.y += 5;
 						}
 						break;
@@ -1765,6 +1767,7 @@ void ModuleChunLi::ResetPlayer() {
 
 	life = 1000;
 	position.x = 180; //Returns to its original position
+	position.y = 220;
 	state = ST_IDLE2;
 	App->UI->Resultinfo == 0;
 	if (App->chunli2->position.x != 300 || App->chunli2->life != 1000) {

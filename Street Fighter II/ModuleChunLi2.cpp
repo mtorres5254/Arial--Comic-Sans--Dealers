@@ -1323,14 +1323,14 @@ update_status ModuleChunLi2::Update()
 						else
 							position.x += 3;
 
-						if (onAir && position.y <= 220) {
+						if (onAir && position.y <= 225) {
 							position.y += 5;
 						}
 
 						else if (SDL_GetTicks() - lose_timer < 450) {
 							position.y -= 6;
 						}
-						else if ( position.y<=220) {
+						else if ( position.y<=225) {
 							position.y += 5;
 						}
 						
@@ -1925,6 +1925,7 @@ void ModuleChunLi2::ResetPlayer() {
 
 	life = 1000;
 	position.x = 410; 
+	position.y = 220;
 	state = ST_IDLE;
 	App->UI->Resultinfo == 0;
 	if (App->chunli->position.x != 180 || App->chunli->life != 1000) {
