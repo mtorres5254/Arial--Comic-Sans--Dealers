@@ -14,6 +14,7 @@
 #include "ModuleSceneDhalsim.h"
 #include "ModuleCombos.h"
 #include "ModuleSlowdown.h"
+#include"ModuleFadeToBlack.h"
 
 
 
@@ -811,7 +812,7 @@ update_status ModuleChunLi2::Update()
 
 			if (force < idleForce)
 			{
-				state = ST_IDLE;
+				state = ST_UNKNOWN;
 				force++;
 			}
 			else
@@ -824,9 +825,7 @@ update_status ModuleChunLi2::Update()
 			{
 				lifecondition(current_animation);				
 
-				if (life >= 0  && App->chunli->life >= 0 ) {
-
-
+							
 					switch (state)
 					{
 					case ST_IDLE:
@@ -1298,26 +1297,37 @@ update_status ModuleChunLi2::Update()
 						if(App->chunli->state==ST_LOSE2)
 						App->UI->Resultinfo = 2;
 
+						if(victorycount==0)
+							victorycount++;
+						
+					
 						current_animation = &win1;
 						break;
 
 
 					case ST_VICTORY2_:
-						//App->UI->Resultinfo = 2;
+
+						if (App->chunli->state == ST_LOSE2)
+							App->UI->Resultinfo = 2;
+
 						current_animation = &win2;
 						break;
 					
 
 					case ST_LOSE:
 
-						if (SDL_GetTicks() - lose_timer > 2000)
-							App->chunli->win = true;
+						if (SDL_GetTicks() - lose_timer > 2000 && App->chunli->victorycount == 0)
+							App->chunli->win = 1;
+
+						else if (SDL_GetTicks() - lose_timer > 2000 && App->chunli->victorycount == 1)
+							App->chunli->win = 2;
+
 
 						current_animation = &damage3;
 						break;
-					}
-
-				}
+					}				
+										
+				
 				current_state = state;
 
 				colliders_and_blit(current_animation);
@@ -1743,9 +1753,14 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 		inputs.Push(IN_BLOCK_CROUCH);
 	}
 
-	if (win && App->chunli->state==ST_LOSE2) {
+	if (win==1 && App->chunli->state==ST_LOSE2) {
 		inputs.Push(IN_VICTORY);
-		win = false;
+		win = 0;
+	}
+
+	if (win == 2 && App->chunli->state == ST_LOSE2) {
+		inputs.Push(IN_VICTORY2_);
+		win = 0;
 	}
 
 	if (lose && state != ST_LOSE) {
@@ -1894,7 +1909,7 @@ void ModuleChunLi2::internal_input(p2Qeue<chunli_inputs>& inputs)
 	}
 	if (victory2_timer > 0)
 	{
-		if (SDL_GetTicks() - victory2_timer > 1000)
+		if (SDL_GetTicks() - victory2_timer > 2000)
 		{
 			inputs.Push(IN_VICTORY2_FINISH);
 			victory2_timer = 0;
@@ -2943,8 +2958,10 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				{
 				case IN_VICTORY_FINISH:					
 					state = ST_IDLE;
-					win = false;					
+					win = 0;
+					
 					ResetPlayer();
+					
 					break;
 				}
 			}
@@ -2956,7 +2973,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				{
 				case IN_VICTORY2_FINISH:
 
-				
+					state = ST_IDLE;
+					win = 0;
+					ResetPlayer();
 					break;
 				}
 			}
@@ -2968,7 +2987,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				{
 				case IN_LOSE_FINISH:
 					state = ST_IDLE;
-					App->chunli->win = false;
+					App->chunli->win = 0;
 					ResetPlayer();
 					break;
 				}

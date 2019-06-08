@@ -1106,18 +1106,28 @@ update_status ModuleChunLi::Update()
 						if (App->chunli2->state == ST_LOSE)
 							App->UI->Resultinfo = 1;
 
+						if (victorycount == 0)
+							victorycount++;
+
 						current_animation = &win1;
 						break;
 
 					case ST_VICTORY2_2:
-						App->UI->Resultinfo = 1;
+
+						if (App->chunli2->state == ST_LOSE)
+							App->UI->Resultinfo = 1;
+						
 						current_animation = &win2;
 						break;
 
 					case ST_LOSE2:
 						
-						if (SDL_GetTicks() - lose_timer >2000)
-						App->chunli2->win = true;
+						if (SDL_GetTicks() - lose_timer >2000 && App->chunli2->victorycount==0)
+							App->chunli2->win = 1;
+
+						else if (SDL_GetTicks() - lose_timer > 2000 && App->chunli2->victorycount == 1)
+							App->chunli2->win = 2;
+
 
 						current_animation = &damage3;
 						break;
@@ -1582,9 +1592,14 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 		inputs.Push(IN_BLOCK_CROUCH2);
 	}
 	
-	if (win && App->chunli2->state == ST_LOSE) {
+	if (win==1 && App->chunli2->state == ST_LOSE) {
 		inputs.Push(IN_VICTORY2);
-		win = false;
+		win = 0;
+	}
+
+	if (win == 2 && App->chunli2->state == ST_LOSE) {
+		inputs.Push(IN_VICTORY2_2);
+		win = 0;
 	}
 
 	if (lose && state!=ST_LOSE2) {
@@ -2799,7 +2814,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			{
 			case IN_VICTORY_FINISH2:
 				state = ST_IDLE2;
-				win = false;
+				win = 0;
 				ResetPlayer();
 				
 				break;
@@ -2814,7 +2829,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			{
 			case IN_VICTORY2_FINISH_2:
 
-				
+				state = ST_IDLE2;
+				win = 0;
+				ResetPlayer();
 				break;
 			}
 		}
@@ -2826,7 +2843,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			{
 			case IN_LOSE_FINISH2:	
 				state = ST_IDLE2;
-				App->chunli2->win = false;
+				App->chunli2->win = 0;
 				ResetPlayer();
 				
 				

@@ -279,9 +279,9 @@ public:
 
 	int acumvictory = 0;
 	bool GodMode = false;
-	bool win=false;
+	int win=0;
 	bool lose = false;
-	bool _win = false;
+
 	bool death = false;
 	bool onAir = false;
 

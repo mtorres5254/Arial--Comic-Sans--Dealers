@@ -259,7 +259,7 @@ public:
 
 	int acumvictory = 0;
 	bool GodMode = false;
-	bool win = false;
+	int win = 0;	
 	bool lose = false;
 	bool crouchAttack = false;
 	bool death = false;
@@ -287,7 +287,7 @@ public:
 	int life = 1000;
 	int healthbar;
 	int wkcounter = 0;
-
+	bool fade = true;
 	bool move = true;
 	bool whirlwindMove = false;
 
