@@ -1304,6 +1304,13 @@ update_status ModuleChunLi2::Update()
 							App->audio->PlayChunk(win_sound, 1);
 							WinSoundPlayed = true;
 						}
+
+						if (win2.current_frame < 2) {
+							position.y -= 2;
+						}
+						else if (win2.current_frame > 2 && position.y <= 220) {
+							position.y += 2;
+						}
 						break;	
 					case ST_LOSE:
 
