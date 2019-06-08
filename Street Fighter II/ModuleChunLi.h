@@ -146,6 +146,14 @@ enum chunli_inputs2
 
 	IN_BLOCK_FINISH2,
 };
+
+struct MoveBooleans {
+	bool left = false;
+	bool right = false;
+	bool down = false;
+	bool up = false;
+};
+
 class ModuleChunLi : public Module
 {
 public:
@@ -282,6 +290,7 @@ public:
 	int life = 1000;
 	int healthbar;
 
+	bool crouchAttack = false;
 	bool move = true;
 	bool whirlwindMove = false;
 	int lkcounter = 0;
@@ -305,10 +314,14 @@ public:
 	Uint32 whirlwind_timer = 0;
 
 private:
+
 	bool left = false;
+	bool left1 = false;
+	bool left2 = false;
 	bool right = false;
-	bool down = false;
-	bool up = false;	
+	bool right1 = false;
+	bool right2 = false;
+	
 	int force = 0;
 };
 

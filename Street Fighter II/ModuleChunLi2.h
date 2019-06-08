@@ -246,6 +246,7 @@ public:
 	int acumvictory = 0;
 	bool GodMode = false;
 
+	bool crouchAttack = false;
 	bool death = false;
 	bool leftLimit = false;
 	bool RightLimit = false;
@@ -292,11 +293,15 @@ public:
 	Uint32 whirlwind_timer = 0;
 
 	private:
+
+
 		bool left = false;
+		bool left1 = false;
+		bool left2 = false;
 		bool right = false;
-		bool down = false;
-		bool up = false;
-		int force = 0;
+		bool right1 = false;
+		bool right2 = false;
+	int force = 0;
 
 };
 

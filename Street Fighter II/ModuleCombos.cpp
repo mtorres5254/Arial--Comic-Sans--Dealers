@@ -113,10 +113,10 @@ bool ModuleCombos::CheckWhirlwindKickP1() {
 		switch (whirlwindKickCount) 
 		{
 		case 0:
-			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_IDLE || App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE) {
+			if (App->chunli->state == ST_CROUCH2) {
 				HoldWKP1++;
 			}
-			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_UP || (App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE && App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE)) {
+			if (App->chunli->state == ST_IDLE2) {
 				if (HoldWKP1 > 10) {
 					HoldWKP1 = 0;
 					whirlwindKickCount++;
@@ -143,10 +143,10 @@ bool ModuleCombos::CheckWhirlwindKickP2() {
 	if (actual_frameP2WK <= WHIRLWINDKICK) {
 		switch (whirlwindKickCount2) {
 		case 0:
-			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_IDLE || App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE) {
+			if (App->chunli2->state == ST_CROUCH) {
 				HoldWKP2++;
 			}
-			if(App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_UP || (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE)) {
+			if (App->chunli2->state == ST_IDLE) {
 				if (HoldWKP2 > 10) {
 					HoldWKP2 = 0;
 					whirlwindKickCount2++;

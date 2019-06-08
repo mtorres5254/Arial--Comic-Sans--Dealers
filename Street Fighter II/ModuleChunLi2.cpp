@@ -607,19 +607,19 @@ bool ModuleChunLi2::Start()
 	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
 	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
 	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
 	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 0);
+	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
 	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1235,23,109,88 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
@@ -912,7 +912,7 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_CROUCH:
 
 						current_animation = &Crouch_punch;
-					
+						crouchAttack = true;
 
 
 						break;
@@ -920,34 +920,34 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_MEDIUM_CROUCH:
 
 						current_animation = &Crouch_medium_punch;
-					
+						crouchAttack = true;
 
 						break;
 
 					case ST_PUNCH_HARD_CROUCH:
 
 						current_animation = &Crouch_hard_punch;
-					
+						crouchAttack = true;
+
 
 						break;
 
 					case ST_KICK_CROUCH:
 
 						current_animation = &Crouch_kick;
-					
+						crouchAttack = true;
 
 						break;
 					case ST_KICK_MEDIUM_CROUCH:
 
 						current_animation = &Crouch_medium_kick;
-						
+						crouchAttack = true;
+
 
 						break;
 					case ST_KICK_HARD_CROUCH:
 
 						current_animation = &Crouch_hard_kick;
-						
-
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP:
 
@@ -1326,11 +1326,11 @@ void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 	
 
 	SDL_Rect shadowrect = { 6,8,71,15 };
-	if (position.x < App->chunli->position.x && !RightLimit || (leftLimit && position.y==220)) {
+	if (position.x < App->chunli->position.x + App->chunli->PivotX && !RightLimit || (leftLimit && position.y==220)) {
 		
 		App->render->Blit(graphics, position.x -PivotX, position.y - r.h, &r);
 	}
-	if (position.x > App->chunli->position.x && (!leftLimit || position.y !=220) || RightLimit) {
+	if (position.x > App->chunli->position.x + App->chunli->PivotX && (!leftLimit || position.y !=220) || RightLimit) {
 	
 		App->render->BlitSym(graphics, position.x-(r.w-PivotX), position.y  - r.h, &r);
 	}
@@ -1338,7 +1338,7 @@ void ModuleChunLi2::colliders_and_blit(Animation* current_animation) {
 
 void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 
-	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER)
+	if (c1->type == COLLIDER_ENEMY && (c2->type == COLLIDER_PLAYER || c2->type == COLLIDER_NONE))
 	{
 		if (state == ST_IDLE) {
 			if (position.x > App->chunli->position.x)
@@ -1346,8 +1346,16 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			if (position.x < App->chunli->position.x)
 				position.x -= 1;
 		}
-		else if (App->chunli->leftLimit == true && state == ST_WALK_BACKWARD) {
+		else if (App->chunli->leftLimit == true && state == ST_WALK_BACKWARD && App->chunli->position.y == position.y) {
 			move = false;
+		}
+		
+		else if (App->chunli->leftLimit == true && state == ST_WALK_BACKWARD && App->chunli->position.y>position.y) {
+			position.x += 2;
+		}
+
+		else if (App->chunli->leftLimit == true && state == ST_JUMP_BACKWARD) {
+			position.x += 2;
 		}
 
 		else if (App->chunli->RightLimit == true && state == ST_WALK_FORWARD) {
@@ -1382,19 +1390,23 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER_ATTACK)
 	{
 
-		if (state == ST_WALK_FORWARD && position.x>App->chunli->position.x) {
+		if (state == ST_WALK_FORWARD && position.x>App->chunli->position.x && !App->chunli->crouchAttack) {
 			block_damage = 1;
+			App->particle->AddParticle(App->particle->hit, position.x - PivotX, position.y - 70, COLLIDER_NONE, 0);
 		}
-		else if (state == ST_WALK_BACKWARD && position.x < App->chunli->position.x) {
+		else if (state == ST_WALK_BACKWARD && position.x < App->chunli->position.x && !App->chunli->crouchAttack) {
 			block_damage = 1;
+			App->particle->AddParticle(App->particle->hit, position.x - PivotX + 30, position.y - 70, COLLIDER_NONE, 0);
 		}
 		
-		else if (state == ST_CROUCH && right && App->chunli->position.x < position.x) {
+		else if (state == ST_CROUCH && (right || right1 || right2) && App->chunli->position.x < position.x) {
 			block_damage = 2;
+			App->particle->AddParticle(App->particle->hit, position.x - PivotX , position.y - 70, COLLIDER_NONE, 0);
 		}
 
-		else if (state == ST_CROUCH && left && App->chunli->position.x > position.x) {
+		else if (state == ST_CROUCH && (left || left1 || left2) && App->chunli->position.x > position.x) {
 			block_damage = 2;
+			App->particle->AddParticle(App->particle->hit, position.x - PivotX+30, position.y - 70, COLLIDER_NONE, 0);
 		}
 
 		else {			
@@ -1439,18 +1451,17 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	//Key up
 	if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_UP) {
 		inputs.Push(IN_CROUCH_UP);
-		down = false;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_UP) {
-		up = false;
+		return false;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_UP) {
-		inputs.Push(IN_LEFT_UP);
 		left = false;
+		inputs.Push(IN_LEFT_UP);
 	}
 	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_UP) {
-		inputs.Push(IN_RIGHT_UP);
 		right = false;
+		inputs.Push(IN_RIGHT_UP);
 	}
 	if (App->input->keyboard[SDL_SCANCODE_J] == KEY_UP) {
 		return false;
@@ -1461,16 +1472,16 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	if (App->input->keyboard[SDL_SCANCODE_L] == KEY_UP) {
 		return false;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_1] == KEY_UP) {
+	if (App->input->keyboard[SDL_SCANCODE_7] == KEY_UP) {
 		return false;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_2] == KEY_UP) {
+	if (App->input->keyboard[SDL_SCANCODE_8] == KEY_UP) {
 		return false;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_3] == KEY_UP) {
+	if (App->input->keyboard[SDL_SCANCODE_9] == KEY_UP) {
 		return false;
 	}
-	if (App->input->keyboard[SDL_SCANCODE_4] == KEY_UP) {
+	if (App->input->keyboard[SDL_SCANCODE_0] == KEY_UP) {
 		return false;
 	}
 	if (App->input->keyboard[SDL_SCANCODE_5] == KEY_UP) {
@@ -1480,17 +1491,19 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 
 	//Key down
 
-	if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_DOWN) {
-		up = true;
+	if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_UP] == KEY_REPEAT) {
+		inputs.Push(IN_JUMP);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_DOWN) {
-		down = true;
+	if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_REPEAT) {
+		inputs.Push(IN_CROUCH_DOWN);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
 		left = true;
+		inputs.Push(IN_LEFT_DOWN);
 	}
-	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_DOWN || App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
 		right = true;
+		inputs.Push(IN_RIGHT_DOWN);
 	}
 	if (App->input->keyboard[SDL_SCANCODE_J] == KEY_DOWN) {
 		inputs.Push(IN_X);
@@ -1513,14 +1526,12 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	if (App->input->keyboard[SDL_SCANCODE_0] == KEY_DOWN) {
 		inputs.Push(IN_4);
 	}
-
 	if (App->input->keyboard[SDL_SCANCODE_6] == KEY_DOWN) {
 		inputs.Push(IN_WHIRLWINDKICK);
 	}
 
-
-
 	//Controller
+
 	if (App->input->Gamepad2 == true) {
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_UP) {
 			return false;
@@ -1532,30 +1543,30 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 			return false;
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_UP) {
-			up = false;
+			return false;
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_UP) {
 			inputs.Push(IN_CROUCH_UP);
-			down = false;
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_UP) {
-			inputs.Push(IN_LEFT_UP);
-			left = false;
+			left1 = false;
+			inputs.Push(IN_LEFT_UP);;
 		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_UP) {
+			right1 = false;
 			inputs.Push(IN_RIGHT_UP);
-			right = false;
 		}
 
 
 		if (App->combo->CheckPunchP2() == true) {
 			inputs.Push(IN_X);
 		}
-
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
+			inputs.Push(IN_C);
+		}
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_X] == KEY_DOWN) {
 			inputs.Push(IN_1);
 		}
-
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_LEFTSHOULDER] == KEY_DOWN) {
 			inputs.Push(IN_2);
 		}
@@ -1565,20 +1576,19 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 			inputs.Push(IN_4);
 		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN) {
-			inputs.Push(IN_C);
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_REPEAT) {
+			inputs.Push(IN_JUMP);
 		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN) {
-			up = true;
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_REPEAT) {
+			inputs.Push(IN_CROUCH_DOWN);
 		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN) {
-			down = true;
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_REPEAT) {
+			left1 = true;
+			inputs.Push(IN_LEFT_DOWN);
 		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_DOWN) {
-			left = true;
-		}
-		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_DOWN) {
-			right = true;
+		if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_REPEAT) {
+			right1 = true;
+			inputs.Push(IN_RIGHT_DOWN);
 		}
 
 		if (App->combo->CheckLightingKickP2() == true) {
@@ -1590,33 +1600,38 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 
 		//Axis
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			up = true;
+			inputs.Push(IN_JUMP);
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE) {
-			down = true;
+			inputs.Push(IN_CROUCH_DOWN);
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			left = true;
+			left2 = true;
+			inputs.Push(IN_LEFT_DOWN);
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE) {
-			right = true;
+			right2 = true;
+			inputs.Push(IN_RIGHT_DOWN);
 		}
 
 
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE) {
-			up = false;
+
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			down = false;
+			inputs.Push(IN_CROUCH_UP);
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE) {
-			left = false;
+			left2 = false;
+			inputs.Push(IN_LEFT_UP);
 		}
 		if (App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE && App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE_NEGATIVE) {
-			right = false;
+			right2 = false;
+			inputs.Push(IN_RIGHT_UP);
 		}
+
+
 	}
-	
 
 	if (damage_received == 1) {
 		inputs.Push(IN_DAMAGE);
@@ -1633,6 +1648,7 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 	if (damage_received == 5) {
 		inputs.Push(IN_DAMAGE_AIR);
 	}
+
 	if (block_damage == 1) {
 		inputs.Push(IN_BLOCK);
 	}
@@ -1640,30 +1656,7 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 		inputs.Push(IN_BLOCK_CROUCH);
 	}
 
-
-	if (left && right)
-		inputs.Push(IN_LEFT_AND_RIGHT);
-	{
-		if (left == true) { inputs.Push(IN_LEFT_DOWN); }
-		if (left == false) { inputs.Push(IN_LEFT_UP); }
-		if (right == true) { inputs.Push(IN_RIGHT_DOWN); }
-		if (right == false) { inputs.Push(IN_RIGHT_UP); }
-	}
-
-	if (up && down)
-		inputs.Push(IN_JUMP_AND_CROUCH);
-	else
-	{
-		if (down == true) {
-			inputs.Push(IN_CROUCH_DOWN);
-		}
-		if (down == false) {
-			inputs.Push(IN_CROUCH_UP);
-		}
-		if (up == true) {
-			inputs.Push(IN_JUMP);
-		}
-	}
+	//OMAY GOT, THERE IS NO LOGC HOW CAN THIS BE THIS POSSIBLE, WHAT A MASTER SKILL OF PROGRAMATION
 	return true;
 }
 
@@ -2289,6 +2282,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 						App->audio->PlayChunk(light_damage, 1);
 						App->UI->scoreP2 += 100;
 					}
+					crouchAttack = false;
 					break;
 				}
 			}
@@ -2308,6 +2302,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 						App->audio->PlayChunk(medium_damage, 1);
 						App->UI->scoreP2 += 200;
 					}
+					crouchAttack = false;
 					break;
 				}
 			}
@@ -2327,6 +2322,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 						App->audio->PlayChunk(high_damage, 1);
 						App->UI->scoreP2 += 300;
 					}
+					crouchAttack = false;
 					break;
 				}
 			}
@@ -2346,6 +2342,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 						App->audio->PlayChunk(light_damage, 1);
 						App->UI->scoreP2 += 100;
 					}
+					crouchAttack = false;
 					break;
 				}
 			}
@@ -2365,6 +2362,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 						App->audio->PlayChunk(medium_damage, 1);
 						App->UI->scoreP2 += 200;
 					}
+					crouchAttack = false;
 					break;
 				}
 			}
@@ -2384,6 +2382,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 						App->audio->PlayChunk(high_damage, 1);
 						App->UI->scoreP2 += 300;
 					}
+					
 					break;
 				}
 			}
