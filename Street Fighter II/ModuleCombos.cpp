@@ -16,7 +16,8 @@ ModuleCombos::~ModuleCombos()
 {}
 
 bool ModuleCombos::Init() {
-	LOG("Init ModuleCOMBOS");
+
+	LOG("Init Module COMBOS");
 
 	return true;
 }
@@ -26,9 +27,7 @@ bool ModuleCombos::CleanUp() {
 	return true;
 }
 
-update_status ModuleCombos::Update() {
-
-	
+update_status ModuleCombos::Update() {	
 
 	return update_status::UPDATE_CONTINUE;
 }

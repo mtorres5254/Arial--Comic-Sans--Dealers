@@ -14,8 +14,8 @@
 #include "ModuleChunLi.h"
 #include "ModuleChunLi2.h"
 #include "Animation.h"
-#include <time.h>
 #include "ModuleContinue.h"
+#include "ModuleCombos.h"
 
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -100,6 +100,7 @@ bool ModuleSceneDhalsim::Start()
 	//App->continu->Disable();
 	App->chunli->Enable();
 	App->chunli2->Enable();
+	App->combo->Enable();
 	App->collision->Enable();
 	App->UI->Enable();
 
@@ -113,8 +114,10 @@ bool ModuleSceneDhalsim::CleanUp()
 
 	App->textures->Unload(graphics);
 	App->audio->UnloadMusic(music);
+
 	App->chunli->Disable();
 	App->chunli2->Disable();
+	App->combo->Disable();
 	App->collision->Disable();
 	App->UI->Disable();
 

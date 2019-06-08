@@ -72,6 +72,7 @@ update_status ModuleWelcomePage::Update()
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1 || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_START] == 1 || (int)intro.current_frame == 23) {
 		App->fade->FadeToBlack(App->welcome_page, App->scene_dhalsim);
+		App->audio->StopMusic(250);
 	}
 
 	return UPDATE_CONTINUE;

@@ -2,14 +2,15 @@
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
-#include "SDL/include/SDL.h"
 #include "ModuleRender.h"
 #include "ModuleChunLi.h"
 #include "ModuleChunLi2.h"
 #include "ModuleUI.h"
 #include "ModuleInput.h"
 #include "ModuleSceneDhalsim.h"
-#include <string.h>
+
+
+#include "SDL/include/SDL.h"
 
 
 
@@ -73,12 +74,6 @@ bool ModuleUI::Start()
 	font_id = App->font->Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890 ", 1);
 	font_Rounds = App->font->Load("Assets/Images/font_round.png", "r123", 2);
 
-	VoiceRound = App->audio->LoadChunk("Assets/Sound/Round.wav");
-	Voice1 = App->audio->LoadChunk("Assets/Sound/1.wav");
-	Voice2 = App->audio->LoadChunk("Assets/Sound/2.wav");
-	Voice3 = App->audio->LoadChunk("Assets/Sound/3.wav");
-	VoiceFight = App->audio->LoadChunk("Assets/Sound/Fight.wav");
-
 	timenow = SDL_GetTicks();
 	time = 99;
 	Counter1 = 9; //unit
@@ -95,6 +90,7 @@ bool ModuleUI::CleanUp()
 	LOG("Unloading UI graphics");
 
 	App->textures->Unload(graphics1);
+
 	App->font->UnLoad(font_id);
 	App->font->UnLoad(font_Rounds);
 
@@ -112,13 +108,6 @@ update_status ModuleUI:: Update()
 	}
 	else if (App->input->keyboard[SDL_SCANCODE_F7] == KEY_DOWN && GamepadInfo == true) {
 		GamepadInfo = false;
-	}
-
-	if (App->input->keyboard[SDL_SCANCODE_F8] == KEY_DOWN && Historyinfo == false) {
-		Historyinfo = true;
-	}
-	else if (App->input->keyboard[SDL_SCANCODE_F8] == KEY_DOWN && Historyinfo == true) {
-		Historyinfo = false;
 	}
 	
 	//Render

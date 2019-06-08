@@ -1630,6 +1630,7 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 		//Controller
 
 		if (App->input->Gamepad2 == true) {
+
 			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_UP) {
 				return false;
 			}

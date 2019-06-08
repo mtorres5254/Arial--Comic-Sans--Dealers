@@ -5,7 +5,6 @@
 #include "Animation.h"
 #include "ModuleFont.h"
 #include "Globals.h"
-#include "p2Point.h"
 
 #include "SDL_mixer/include/SDL_mixer.h"
 
@@ -55,17 +54,9 @@ public:
 
 	int scoreP1, scoreP2;
 
-
 	bool GamepadInfo = false;
-	bool Historyinfo = false;
 	bool Round_Start = false;
 	int Resultinfo = -1;
-
-	Mix_Chunk* VoiceRound;
-	Mix_Chunk* Voice1;
-	Mix_Chunk* Voice2;
-	Mix_Chunk* Voice3;
-	Mix_Chunk* VoiceFight;
 
 private:
 	int six, five, four, three, two, one;

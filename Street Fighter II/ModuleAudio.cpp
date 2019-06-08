@@ -35,6 +35,8 @@ bool ModuleAudio::Init()
 		ret = false;
 	}
 
+	Mix_Volume(1, 50);
+
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
 	{
 		LOG("Mix_OpenAudio: %s\n", Mix_GetError());
@@ -53,10 +55,11 @@ bool ModuleAudio::CleanUp()
 			Mix_FreeMusic(musics[i]);
 		}
 	}
+
+	Mix_FadeOutChannel(-1, 1);
+
 	for (int i = MAX_EFFECTS; i > 0; i--) {
-		if (effects[i] != nullptr) {
-			//Mix_FreeChunk(effects[i]);
-		}
+		UnloadChunk(effects[i]);
 	}
 	
 
@@ -124,17 +127,18 @@ bool ModuleAudio::UnloadMusic(Mix_Music *music)
 // Load new effect from file path
 Mix_Chunk* const ModuleAudio::LoadChunk(const char* path)
 {
-	Mix_Chunk* effect;
+	int ret = 0;
 
-	effect = Mix_LoadWAV(path);
-
-	for (int i = 0; i < MAX_AUDIOS; i++) {
+	for (int i = 0; i < MAX_EFFECTS; i++) {
 		if (effects[i] == nullptr) {
-			effects[i] = effect;
+			effects[i] = Mix_LoadWAV(path);
+			ret = i;
 			break;
 		}
 	}
-	return effect;
+	
+
+	return effects[ret];
 }
 
 bool ModuleAudio::UnloadChunk(Mix_Chunk *effect)
@@ -147,13 +151,12 @@ bool ModuleAudio::UnloadChunk(Mix_Chunk *effect)
 		{
 			if (effects[i] == effect)
 			{
+				Mix_FreeChunk(effect);
 				effects[i] = nullptr;
 				ret = true;
 				break;
 			}
 		}
-	//	Mix_FreeChunk(effect);
 	}
-
 	return ret;
 }
