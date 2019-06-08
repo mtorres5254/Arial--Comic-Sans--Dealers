@@ -21,33 +21,10 @@
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModuleChunLi2::ModuleChunLi2()
-{}
-
-ModuleChunLi2::~ModuleChunLi2()
-{}
-
-// Load assets
-bool ModuleChunLi2::Start()
 {
-
-	bool ret = true;
-
-	graphics = App->textures->Load("Assets/Images/ChunLi2.png"); // arcade version
-	shadow = App->textures->Load("Assets/Images/shadow.png");
-	position.x = 395;
-	position.y = 220;
-
-	
 	// idle animation (arcade sprite sheet)
 
-	//Effects
-	LightningKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_yap.wav");
-	WhirlwindKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_kick.wav");
-	light_damage = App->audio->LoadChunk("Asstes/Sound/Effects/light_attack.wav");
-	medium_damage = App->audio->LoadChunk("Assets/Sound/Effects/medium_attack.wav");
-	high_damage = App->audio->LoadChunk("Assets/Sound/Effects/high_attack.wav");
-	win_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-laugh.wav");
-	death_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-death.wav");
+	
 
 
 	const int idleCollider = 5;//Collider num for the idle animation
@@ -136,7 +113,7 @@ bool ModuleChunLi2::Start()
 	jump_neutral.speed = 0.21f;
 	jump_neutral.loop = false;
 
-	
+
 
 	const int jumpfcollider1 = 1;//Collider num for the idle animation
 	SDL_Rect jumpfhitbox1[jumpfcollider1] = { { 32, 55, 37, 39 } };
@@ -594,7 +571,7 @@ bool ModuleChunLi2::Start()
 
 	//Wirlhwind Kick
 
-	
+
 	const int wkcollider = 2;//Collider num for the WhirlwindKick animation
 	SDL_Rect wkhitbox[wkcollider] = { {25,41,31,49},{30,55,37,39} };
 	COLLIDER_TYPE wkCollType[wkcollider] = { {COLLIDER_ENEMY},{COLLIDER_ENEMY} };
@@ -763,6 +740,31 @@ bool ModuleChunLi2::Start()
 	win2.PushBack1({ 1416,740,58,116 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	win2.speed = 0.1f;
 	win2.loop = false;
+}
+
+ModuleChunLi2::~ModuleChunLi2()
+{}
+
+// Load assets
+bool ModuleChunLi2::Start()
+{
+
+	bool ret = true;
+
+	graphics = App->textures->Load("Assets/Images/ChunLi2.png"); // arcade version
+	shadow = App->textures->Load("Assets/Images/shadow.png");
+	position.x = 395;
+	position.y = 220;
+
+	//Effects
+	LightningKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_yap.wav");
+	WhirlwindKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_kick.wav");
+	light_damage = App->audio->LoadChunk("Asstes/Sound/Effects/light_attack.wav");
+	medium_damage = App->audio->LoadChunk("Assets/Sound/Effects/medium_attack.wav");
+	high_damage = App->audio->LoadChunk("Assets/Sound/Effects/high_attack.wav");
+	win_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-laugh.wav");
+	death_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-death.wav");
+	
 
 	//Start functions to reset player
 	ResetPlayer();
@@ -801,6 +803,22 @@ bool ModuleChunLi2::CleanUp()
 
 update_status ModuleChunLi2::Update()
 {
+
+	if (GodMode)//deletes all the collision boxes if in god mode
+	{
+		for (int i = 0; i < MAX_COLLIDERS; i++)
+		{
+			if (colliders[i] != nullptr)
+				colliders[i]->to_delete = true;
+		}
+	}
+	for (int i = 0; i < MAX_COLLIDERS; i++)//deletes all the hitboxes at the start of the frame
+	{
+		if (colliders[i] != nullptr) {
+			colliders[i]->to_delete = true;
+			colliders[i] = nullptr;
+		}
+	}
 	Animation* current_animation = &idle;
 	p2Qeue<chunli_inputs> inputs;
 	chunli_states current_state = ST_UNKNOWN;

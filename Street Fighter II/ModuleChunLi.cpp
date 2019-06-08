@@ -21,33 +21,8 @@
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModuleChunLi::ModuleChunLi()
- {}
-
-ModuleChunLi::~ModuleChunLi()
-{}
-
-// Load assets
-bool ModuleChunLi::Start()
-{
+ {
 	
-	
-	bool ret = true;
-
-	graphics = App->textures->Load("Assets/Images/ChunLi.png"); // arcade version
-	shadow = App->textures->Load("Assets/Images/shadow.png");
-
-	position.x = 180;
-	position.y = 220;
-
-	//Effects
-	LightningKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_yap.wav");
-	WhirlwindKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_kick.wav");
-	light_damage = App->audio->LoadChunk("Asstes/Sound/Effects/light_attack.wav");
-	medium_damage = App->audio->LoadChunk("Assets/Sound/Effects/medium_attack.wav");
-	high_damage = App->audio->LoadChunk("Assets/Sound/Effects/high_attack.wav");
-	win_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-laugh.wav");
-	death_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-death.wav");
- 
 
 	// idle animation (arcade sprite sheet)
 	const int idleCollider = 5;//Collider num for the idle animation
@@ -80,7 +55,7 @@ bool ModuleChunLi::Start()
 	forward.PushBack1({ 790, 433, 60, 90 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback, {});
 	forward.PushBack1({ 726, 434, 63, 89 }, { 32,2 }, fwdcollider, fwdhitbox, fwdCollType, fwdCallback, {});
 	forward.speed = 0.2f;
-	
+
 
 	//Backward
 
@@ -185,7 +160,7 @@ bool ModuleChunLi::Start()
 	Module* punchCallback2[punchcollider2] = { { this },{ this },{ this },{ this },{ this }, {this} };
 	punch.PushBack1({ 139, 533, 78, 87 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
 	punch.PushBack1({ 218, 531, 101, 89 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
-	punch.PushBack1({ 320, 524, 87, 96 }, {32,2 }, punchcollider2, punchhitbox2, punchCollType2, punchCallback2, 4);
+	punch.PushBack1({ 320, 524, 87, 96 }, { 32,2 }, punchcollider2, punchhitbox2, punchCollType2, punchCallback2, 4);
 	punch.PushBack1({ 218, 531, 101, 89 }, { 32, 2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
 	punch.PushBack1({ 139, 533, 78, 87 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, {});
 
@@ -198,10 +173,10 @@ bool ModuleChunLi::Start()
 	const int punchmcollider = 5;
 	SDL_Rect punchmhitbox[punchmcollider] = { { 29, 3, 75, 37 },{ 47, 35, 39, 33 },{59, 64, 31, 21 }, {62,55,81,13} };
 	COLLIDER_TYPE punchmCollType[punchmcollider] = { { COLLIDER_PLAYER },{ COLLIDER_PLAYER },{ COLLIDER_PLAYER }, {COLLIDER_PLAYER_ATTACK} };
-	Module* punchmCallback[punchmcollider] = {{ this },{ this },{ this }, {this} };
+	Module* punchmCallback[punchmcollider] = { { this },{ this },{ this }, {this} };
 
-	punch_medium.PushBack1({ 408, 536, 101, 84 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback,  12);
-	punch_medium.PushBack1({ 510, 539, 119, 81 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback,  12);
+	punch_medium.PushBack1({ 408, 536, 101, 84 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 12);
+	punch_medium.PushBack1({ 510, 539, 119, 81 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 12);
 	punch_medium.PushBack1({ 630,539, 143,81 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 12);
 	punch_medium.PushBack1({ 630,539, 143,81 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 12);
 	punch_medium.PushBack1({ 630,539, 143,81 }, { 32,2 }, punchmcollider, punchmhitbox, punchmCollType, punchmCallback, 12);
@@ -210,7 +185,7 @@ bool ModuleChunLi::Start()
 
 	punch_medium.speed = 0.3f;
 	punch_medium.loop = false;
-	
+
 
 	//Hard punch animation 	
 
@@ -226,8 +201,8 @@ bool ModuleChunLi::Start()
 	punch_hard.PushBack1({ 876, 541, 119, 79 }, { 32,2 }, punchcollider, punchhitbox, punchCollType, punchCallback, 16);
 	punch_hard.PushBack1({ 774, 536, 101, 84 }, { 32,2 }, punchhcollider2, punchhhitbox2, punchhCollType2, punchhCallback2, 16);
 	punch_hard.speed = 0.2f;
-	punch_hard.loop = false;	
-	
+	punch_hard.loop = false;
+
 
 	//kick
 
@@ -281,23 +256,23 @@ bool ModuleChunLi::Start()
 
 	kick_hard.PushBack1({ 830,636,102,83 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
 	kick_hard.PushBack1({ 933, 638, 70, 81 }, { 32,2 }, kickcollider, kickhitbox, kickCollType, kickCallback, {});
-	
+
 	kick_hard.speed = 0.15f;
 	kick_hard.loop = false;
 
-	
+
 	//crouch punch
 	const int crhpnchcollider = 5;//Collider num for the crouch punch animation
 	SDL_Rect crhpnchhitbox[crhpnchcollider] = { { 30, 48, 23, 19 },{ 17, 29, 22, 27 },{ 38, 29, 29, 24 },{ 0, 0, 40, 29 },{ 40, 0, 34, 32 } };
 	COLLIDER_TYPE crchpnchCollType[crhpnchcollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER} };
 	Module* crhpnchCallback[crhpnchcollider] = { {this},{this},{this},{this},{this} };
-	
+
 	const int crhpnchcollider2 = 6;
-	SDL_Rect crhpnchhitbox2[crhpnchcollider2] = { { 30, 48, 23, 19 },{ 17, 29, 22, 27 },{ 38, 29, 29, 24 },{ 0, 0, 40, 29 },{ 40, 0, 34, 32 },{52, 38, 56, 12}};
+	SDL_Rect crhpnchhitbox2[crhpnchcollider2] = { { 30, 48, 23, 19 },{ 17, 29, 22, 27 },{ 38, 29, 29, 24 },{ 0, 0, 40, 29 },{ 40, 0, 34, 32 },{52, 38, 56, 12} };
 	COLLIDER_TYPE crchpnchCollType2[crhpnchcollider2] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER}, {COLLIDER_PLAYER_ATTACK} };
 	Module* crhpnchCallback2[crhpnchcollider2] = { {this},{this},{this},{this},{this} };
-	
-	
+
+
 	Crouch_punch.PushBack1({ 368, 839, 71, 66 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
 	Crouch_punch.PushBack1({ 518, 841, 107, 64 }, { 32, 2 }, crhpnchcollider2, crhpnchhitbox2, crchpnchCollType2, crhpnchCallback2, 6);
 	Crouch_punch.PushBack1({ 440, 839, 77, 66 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
@@ -329,7 +304,7 @@ bool ModuleChunLi::Start()
 	Crouch_hard_punch.PushBack1({ 751, 838, 80, 67 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
 	Crouch_hard_punch.PushBack1({ 832, 838, 100, 67 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
 	Crouch_hard_punch.PushBack1({ 626, 838, 124, 67 }, { 32, 2 }, crhpnchcollider3, crhpnchhitbox3, crchpnchCollType3, crhpnchCallback3, 16);
-	Crouch_hard_punch.PushBack1({ 626, 838, 124, 67 }, { 32, 2 }, crhpnchcollider3, crhpnchhitbox3, crchpnchCollType3, crhpnchCallback3,16);
+	Crouch_hard_punch.PushBack1({ 626, 838, 124, 67 }, { 32, 2 }, crhpnchcollider3, crhpnchhitbox3, crchpnchCollType3, crhpnchCallback3, 16);
 	Crouch_hard_punch.PushBack1({ 626, 838, 124, 67 }, { 32, 2 }, crhpnchcollider3, crhpnchhitbox3, crchpnchCollType3, crhpnchCallback3, 16);
 	Crouch_hard_punch.PushBack1({ 832, 838, 100, 67 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
 	Crouch_hard_punch.PushBack1({ 751, 838, 80, 67 }, { 32, 2 }, crhpnchcollider, crhpnchhitbox, crchpnchCollType, crhpnchCallback, {});
@@ -354,7 +329,7 @@ bool ModuleChunLi::Start()
 	Crouch_kick.PushBack1({ 265, 976, 107, 48 }, { 32, 2 }, crhcollider4, crhhitbox4, crchCollType4, crhCallback4, 8);
 	Crouch_kick.PushBack1({ 265, 976, 107, 48 }, { 32, 2 }, crhcollider4, crhhitbox4, crchCollType4, crhCallback4, 8);
 	Crouch_kick.PushBack1({ 265, 976, 107, 48 }, { 32, 2 }, crhcollider4, crhhitbox4, crchCollType4, crhCallback4, 8);
-	
+
 
 	Crouch_kick.speed = 0.25f;
 	Crouch_kick.loop = false;
@@ -374,7 +349,7 @@ bool ModuleChunLi::Start()
 	Crouch_medium_kick.PushBack1({ 373, 961, 77, 63 }, { 32, 2 }, crhcollider5, crhhitbox5, crchCollType5, crhCallback5, {});
 	Crouch_medium_kick.PushBack1({ 451, 969, 115, 55 }, { 32, 2 }, crhcollider6, crhhitbox6, crchCollType6, crhCallback6, 10);
 	Crouch_medium_kick.PushBack1({ 567, 962, 76, 62 }, { 32, 2 }, crhcollider5, crhhitbox5, crchCollType5, crhCallback5, {});
-	
+
 
 	Crouch_medium_kick.speed = 0.20f;
 	Crouch_medium_kick.loop = false;
@@ -382,18 +357,18 @@ bool ModuleChunLi::Start()
 	// Crouch kick hard
 
 	const int crhcollider1 = 4;//Collider num for the crouch animation
-	SDL_Rect crhhitbox1[crhcollider1] = { { 7, 3, 37, 51 },{ 8, 31, 35, 25 },{ 10, 43, 31, 21 },{ 49, 32, 55, 31 }};
+	SDL_Rect crhhitbox1[crhcollider1] = { { 7, 3, 37, 51 },{ 8, 31, 35, 25 },{ 10, 43, 31, 21 },{ 49, 32, 55, 31 } };
 	COLLIDER_TYPE crchCollType1[crhcollider1] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER} };
-	Module* crhCallback1[crhcollider1] = { {this},{this},{this},{this}};
+	Module* crhCallback1[crhcollider1] = { {this},{this},{this},{this} };
 
 	const int crhcollider2 = 5;//Collider num for the crouch animation
 	SDL_Rect crhhitbox2[crhcollider2] = { { 7, 3, 37, 51 },{ 8, 31, 35, 25 },{ 18, 43, 31, 21 },{ 57, 32, 55, 31 },{ 46, 32, 89, 33 } };
 	COLLIDER_TYPE crchCollType2[crhcollider2] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER_ATTACK} };
 	Module* crhCallback2[crhcollider2] = { {this},{this},{this},{this},{this} };
-	
+
 	Crouch_hard_kick.PushBack1({ 644, 962, 72, 62 }, { 32, 2 }, crhcollider1, crhhitbox1, crchCollType1, crhCallback1, {});
 	Crouch_hard_kick.PushBack1({ 717, 960, 60, 64 }, { 32, 2 }, crhcollider1, crhhitbox1, crchCollType1, crhCallback1, {});
-	Crouch_hard_kick.PushBack1({ 796, 951, 128, 73 }, { 32, 2 }, crhcollider2, crhhitbox2, crchCollType2, crhCallback2,14);
+	Crouch_hard_kick.PushBack1({ 796, 951, 128, 73 }, { 32, 2 }, crhcollider2, crhhitbox2, crchCollType2, crhCallback2, 14);
 	Crouch_hard_kick.PushBack1({ 717, 960, 60, 64 }, { 32, 2 }, crhcollider1, crhhitbox1, crchCollType1, crhCallback1, {});
 	Crouch_hard_kick.PushBack1({ 644, 962, 72, 62 }, { 32, 2 }, crhcollider1, crhhitbox1, crchCollType1, crhCallback1, {});
 	Crouch_hard_kick.PushBack1({ 147, 839, 72, 65 }, { 32, 2 }, crhcollider1, crhhitbox1, crchCollType1, crhCallback1, {});
@@ -403,11 +378,11 @@ bool ModuleChunLi::Start()
 
 	//punch neutral jump
 
-	
+
 
 	const int jumppunchcollider = 6;
 	SDL_Rect jumppunchhitbox[jumppunchcollider] = { { 5, 53, 37, 19 },{ 2, 4, 51, 54 },{ 9, 55, 37, 39 },{ 20, 86, 31, 21 },{ 8, 68, 31, 27 }, {29,30,53,35} };
-	COLLIDER_TYPE jumppunchCollType[jumppunchcollider] = { {COLLIDER_PLAYER},{COLLIDER_NONE},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER}, {COLLIDER_PLAYER_ATTACK} }; 
+	COLLIDER_TYPE jumppunchCollType[jumppunchcollider] = { {COLLIDER_PLAYER},{COLLIDER_NONE},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER}, {COLLIDER_PLAYER_ATTACK} };
 	Module* jumppunchCallback[jumppunchcollider] = { {this},{this},{this},{this},{this},{this} };
 
 	jump_neutral_punch.PushBack1({ 1966, 22, 66,89 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
@@ -515,7 +490,7 @@ bool ModuleChunLi::Start()
 
 	//KICK forward jump hard 
 
-	
+
 	const int jumpkCollider = 6;//Collider num for the crouch animation
 	SDL_Rect jumpkhitbox[jumpkCollider] = { { 7, 3, 37, 51 },{ 8, 31, 35, 25 },{ 18, 43, 31, 21 },{ 57, 32, 55, 31 },{ 46, 32, 89, 33 }, {29,45,61,41} };
 	COLLIDER_TYPE jumpkCollType[jumpkCollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER_ATTACK} };
@@ -566,24 +541,24 @@ bool ModuleChunLi::Start()
 	jump_backward_kick_hard.PushBack1({ 1450, 126, 57, 95 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
 	jump_backward_kick_hard.speed = 0.25f;
 	jump_backward_kick_hard.loop = false;
-	
+
 	//Lightning Kick
 
 	const int lkcollider = 9;//Collider num for the idle animation
 	SDL_Rect lkhitbox[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33} , {91,66,31,15}, {57,19,71,39}, {90,42,51,25} , {48,4,83,29} };
 	COLLIDER_TYPE lkCollType[lkcollider] = { {COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER},{COLLIDER_PLAYER}, {COLLIDER_PLAYER_ATTACK }, {COLLIDER_PLAYER_ATTACK }, {COLLIDER_PLAYER_ATTACK }, {COLLIDER_PLAYER_ATTACK } };
 	Module* lkCallback[lkcollider] = { {this},{this},{this},{this},{this},{this},{this},{this},{this} };
-	
+
 	SDL_Rect lkhitbox1[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {57,19,71,39} };
 	SDL_Rect lkhitbox2[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {90,42,51,25} };
 	SDL_Rect lkhitbox3[lkcollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33}, {48,4,83,29} };
 
-	LightningKick.PushBack1({ 1537, 226, 107, 99}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 15);
-	LightningKick.PushBack1({ 1645,222 , 123, 103}, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
-	LightningKick.PushBack1({ 1769, 230, 119, 95}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 15);
+	LightningKick.PushBack1({ 1537, 226, 107, 99 }, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 15);
+	LightningKick.PushBack1({ 1645,222 , 123, 103 }, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
+	LightningKick.PushBack1({ 1769, 230, 119, 95 }, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 15);
 	LightningKick.PushBack1({ 1889, 230, 136,95 }, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
-	LightningKick.PushBack1({ 1025, 355, 120, 93}, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 15);
-	LightningKick.PushBack1({ 1146, 353, 152, 95}, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
+	LightningKick.PushBack1({ 1025, 355, 120, 93 }, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 15);
+	LightningKick.PushBack1({ 1146, 353, 152, 95 }, { 32, 2 }, idleCollider, idleHitbox, idleCollType, idleCallBack, {});
 	LightningKick.PushBack1({ 1300, 355, 101, 93 }, { 32, 2 }, lkcollider, lkhitbox, lkCollType, lkCallback, 15);
 	LightningKick.speed = 0.2f;
 	LightningKick.loop = true;
@@ -601,16 +576,16 @@ bool ModuleChunLi::Start()
 	Module* wkCallback1[wkcollider1] = { {this},{this},{this} };
 
 
-	WhirlwindKick.PushBack1({1402,326,55,122}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({1458,333,55,115}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({1514,375,101,73}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({1616,376,54,71}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({1671,375,101,73}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({1773,379,149,69}, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
-	WhirlwindKick.PushBack1({1920,379,96,69}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({1024,477,48,68}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({1073,476,86,69}, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.PushBack1({1160,475,146,70}, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
+	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1773,379,149,69 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
+	WhirlwindKick.PushBack1({ 1920,379,96,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1024,477,48,68 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1073,476,86,69 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
 	WhirlwindKick.PushBack1({ 1514,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1616,376,54,71 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1671,375,101,73 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
@@ -639,7 +614,7 @@ bool ModuleChunLi::Start()
 	jump_neutral_kick.PushBack1({ 1592,122,63,99 }, { 32, 2 }, jumpkCollider, jumpkhitbox, jumpkCollType, jumpkCallback, 10);
 	jump_neutral_kick.PushBack1({ 1656,128,86,93 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
 	jump_neutral_kick.PushBack1({ 1450, 126, 57, 95 }, { 32, 2 }, jumpcollider, jumphitbox, jumpCollType, jumpCallback, {});
-	
+
 	jump_neutral_kick.speed = 0.25f;
 	jump_neutral_kick.loop = false;
 
@@ -676,7 +651,7 @@ bool ModuleChunLi::Start()
 	jump_neutral_kick_hard.loop = false;
 
 
-	
+
 	//damage animation 
 	const int dmgCollider = 5;//Collider num for the idle animation
 	SDL_Rect dmgHitbox[dmgCollider] = { { 14, 71, 31, 21 },{ 3, 37, 35, 41 },{ 16, 3, 37, 71 }, {9,4,51,54 },{1,3,45,33} };
@@ -684,12 +659,12 @@ bool ModuleChunLi::Start()
 	Module* dmgCallBack[dmgCollider] = { {this},{this},{this},{this},{this} };
 
 	damage.PushBack1({ 1307,465,72,80 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
-	damage.PushBack1({ 1385, 458, 79, 87}, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
-	damage.PushBack1({ 1465, 458, 76, 87}, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
-	damage.PushBack1({ 1542, 462, 72, 83}, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage.PushBack1({ 1385, 458, 79, 87 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage.PushBack1({ 1465, 458, 76, 87 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
+	damage.PushBack1({ 1542, 462, 72, 83 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage.speed = 0.1f;
 	damage.loop = false;
-	
+
 	//damage animation 
 
 	damage2.PushBack1({ 1804,453,73,92 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
@@ -699,7 +674,7 @@ bool ModuleChunLi::Start()
 	damage2.loop = false;
 
 	//damage animation
-	
+
 	damage3.PushBack1({ 1825,556,95,76 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage3.PushBack1({ 1921, 572, 83, 60 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage3.PushBack1({ 1024, 681, 117, 48 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
@@ -718,7 +693,7 @@ bool ModuleChunLi::Start()
 	damage4.PushBack1({ 1350,562,72,69 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage4.PushBack1({ 1423, 560, 73, 71 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage4.PushBack1({ 1497, 564, 76, 67 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
-	damage4.PushBack1({ 1574, 570, 92, 61 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});	
+	damage4.PushBack1({ 1574, 570, 92, 61 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage4.speed = 0.2f;
 	damage4.loop = false;
 
@@ -734,10 +709,10 @@ bool ModuleChunLi::Start()
 	damage5.PushBack1({ 1142, 691, 139, 38 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	damage5.speed = 0.1f;
 	damage5.loop = false;
-	
+
 	//Block standing 
-	
-	block_standing.PushBack1({ 1667,546,84,85 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});	
+
+	block_standing.PushBack1({ 1667,546,84,85 }, { 32, 2 }, dmgCollider, dmgHitbox, dmgCollType, dmgCallBack, {});
 	block_standing.speed = 0.1f;
 	block_standing.loop = false;
 
@@ -765,6 +740,33 @@ bool ModuleChunLi::Start()
 	win2.speed = 0.1f;
 	win2.loop = false;
 
+}
+
+ModuleChunLi::~ModuleChunLi()
+{}
+
+// Load assets
+bool ModuleChunLi::Start()
+{
+	
+	//Effects
+	LightningKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_yap.wav");
+	WhirlwindKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_kick.wav");
+	light_damage = App->audio->LoadChunk("Asstes/Sound/Effects/light_attack.wav");
+	medium_damage = App->audio->LoadChunk("Assets/Sound/Effects/medium_attack.wav");
+	high_damage = App->audio->LoadChunk("Assets/Sound/Effects/high_attack.wav");
+	win_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-laugh.wav");
+	death_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-death.wav");
+
+	bool ret = true;
+
+	graphics = App->textures->Load("Assets/Images/ChunLi.png"); // arcade version
+	shadow = App->textures->Load("Assets/Images/shadow.png");
+
+	position.x = 180;
+	position.y = 220;
+
+	
 	//Start functions to reset player
 	ResetPlayer();
 	Death.Reset();
@@ -803,6 +805,23 @@ bool ModuleChunLi::CleanUp()
 
 update_status ModuleChunLi::Update()
 {
+
+	if (GodMode)//deletes all the collision boxes if in god mode
+	{
+		for (int i = 0; i < MAX_COLLIDERS; i++)
+		{
+			if (colliders[i] != nullptr)
+				colliders[i]->to_delete = true;
+		}
+	}
+	for (int i = 0; i < MAX_COLLIDERS; i++)//deletes all the hitboxes at the start of the frame
+	{
+		if (colliders[i] != nullptr) {
+			colliders[i]->to_delete = true;
+			colliders[i] = nullptr;
+		}
+	}
+
 	Animation* current_animation = &idle;
 	p2Qeue<chunli_inputs2> inputs;
 
