@@ -98,6 +98,8 @@ enum chunli_states
 	ST_WHIRLWIND,
 	ST_VICTORY,
 	ST_VICTORY2_,
+
+	ST_LOSE,
 };
 
 enum chunli_inputs
@@ -116,7 +118,7 @@ enum chunli_inputs
 	IN_DAMAGE_FALL,
 	IN_DAMAGE_AIR,
 	IN_DAMAGE_CROUCH,
-	
+
 	IN_VICTORY,
 	IN_VICTORY2_,
 
@@ -149,6 +151,9 @@ enum chunli_inputs
 
 	IN_VICTORY_FINISH,
 	IN_VICTORY2_FINISH,
+
+	IN_LOSE,
+	IN_LOSE_FINISH,
 };
 class ModuleChunLi2 : public Module
 {
@@ -255,7 +260,7 @@ public:
 	int acumvictory = 0;
 	bool GodMode = false;
 	bool win = false;
-	bool _win = false;
+	bool lose = false;
 	bool crouchAttack = false;
 	bool death = false;
 	bool leftLimit = false;
@@ -304,6 +309,7 @@ public:
 	Uint32 whirlwind_timer = 0;
 	Uint32 victory_timer = 0;
 	Uint32 victory2_timer = 0;
+	Uint32 lose_timer = 0;
 	private:
 
 

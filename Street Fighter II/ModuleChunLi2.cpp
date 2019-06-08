@@ -1293,18 +1293,29 @@ update_status ModuleChunLi2::Update()
 						break;
 					
 
-					case ST_VICTORY:					
+					case ST_VICTORY:
+
+						if(App->chunli->state==ST_LOSE2)
 						App->UI->Resultinfo = 2;
+
 						current_animation = &win1;
 						break;
 
 
 					case ST_VICTORY2_:
-						App->UI->Resultinfo = 2;
+						//App->UI->Resultinfo = 2;
 						current_animation = &win2;
 						break;
-					}
+					
 
+					case ST_LOSE:
+
+						if (SDL_GetTicks() - lose_timer > 2000)
+							App->chunli->win = true;
+
+						current_animation = &damage3;
+						break;
+					}
 
 				}
 				current_state = state;
@@ -1485,30 +1496,36 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 				life = aux - App->chunli->dmg;
 			}
 
-			if (state == ST_WALK_BACKWARD || state == ST_WALK_FORWARD || state == ST_IDLE) {
-				if (App->chunli->state == ST_KICK_HARD_CROUCH2 || App->chunli->state == ST_KICK_HARD_NEUTRAL_JUMP2) {
-					damage_received = 3;
-					App->slow->StartSlowdown(JUMP_TIME, 50);
+			if (life <= 0) {
+				lose = true;
+			}
+			else if(!lose) {
+				if (state == ST_WALK_BACKWARD || state == ST_WALK_FORWARD || state == ST_IDLE) {
+					if (App->chunli->state == ST_KICK_HARD_CROUCH2 || App->chunli->state == ST_KICK_HARD_NEUTRAL_JUMP2) {
+						damage_received = 3;
+						App->slow->StartSlowdown(JUMP_TIME, 50);
+					}
+					else if (App->chunli->state == ST_WHIRLWIND2) {
+						damage_received = 2;
+						App->slow->StartSlowdown(200, 50);
+						//App->chunli->move = false;
+					}
+					else if (App->chunli->state == ST_KICK_HARD_STANDING2) {
+						damage_received = 2;
+						App->slow->StartSlowdown(400, 50);
+					}
+					else {
+						damage_received = 1;
+					}
 				}
-				else if (App->chunli->state == ST_WHIRLWIND2) {
-					damage_received = 2;
-					App->slow->StartSlowdown(200, 50);
-					//App->chunli->move = false;
-				}
-				else if (App->chunli->state == ST_KICK_HARD_STANDING2) {
-					damage_received = 2;
-					App->slow->StartSlowdown(400, 50);
+				else if (state == ST_CROUCH) {
+					damage_received = 4;
 				}
 				else {
-					damage_received = 1;
+					damage_received = 5;
 				}
 			}
-			else if (state == ST_CROUCH) {
-				damage_received = 4;
-			}
-			else{
-				damage_received = 5;
-			}
+			
 			
 		}
 		App->audio->PlayChunk(medium_damage, 1);
@@ -1726,9 +1743,14 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 		inputs.Push(IN_BLOCK_CROUCH);
 	}
 
-	if (win) {
+	if (win && App->chunli->state==ST_LOSE2) {
 		inputs.Push(IN_VICTORY);
 		win = false;
+	}
+
+	if (lose && state != ST_LOSE) {
+		inputs.Push(IN_LOSE);
+		lose = false;
 	}
 
 
@@ -1872,19 +1894,28 @@ void ModuleChunLi2::internal_input(p2Qeue<chunli_inputs>& inputs)
 	}
 	if (victory2_timer > 0)
 	{
-		if (SDL_GetTicks() - victory2_timer > 2000)
+		if (SDL_GetTicks() - victory2_timer > 1000)
 		{
 			inputs.Push(IN_VICTORY2_FINISH);
 			victory2_timer = 0;
 		}
 	}
+	if (lose_timer > 0)
+	{
+		if (SDL_GetTicks() - lose_timer > 4000)
+		{
+			inputs.Push(IN_LOSE_FINISH);
+			lose_timer = 0;
+		}
+	}
+
 }
 
 void ModuleChunLi2::ResetPlayer() {
 
 	life = 1000;
 	position.x = 410; 
-	
+	App->UI->Resultinfo == 0;
 	if (App->chunli->position.x != 180 || App->chunli->life != 1000) {
 		ActiveDeath = 0;
 		App->chunli->ResetPlayer();
@@ -1928,6 +1959,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_WHIRLWINDKICK: state = ST_WHIRLWIND; whirlwind_timer = SDL_GetTicks(); break;
 				case IN_VICTORY: state = ST_VICTORY; victory_timer = SDL_GetTicks(); break;
 				case IN_VICTORY2_: state = ST_VICTORY2_; victory2_timer = SDL_GetTicks(); break;
+				case IN_LOSE: state = ST_LOSE; lose_timer = SDL_GetTicks();  break;
 				}
 			}
 			break;
@@ -1954,6 +1986,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_WHIRLWINDKICK: state = ST_WHIRLWIND; whirlwind_timer = SDL_GetTicks(); break;
 				case IN_VICTORY: state = ST_VICTORY; victory_timer = SDL_GetTicks(); break;
 				case IN_VICTORY2_: state = ST_VICTORY2_; victory2_timer = SDL_GetTicks(); break;
+				case IN_LOSE: state = ST_LOSE; lose_timer = SDL_GetTicks();  break;
 				}
 			}
 			break;
@@ -1980,6 +2013,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_WHIRLWINDKICK: state = ST_WHIRLWIND; whirlwind_timer = SDL_GetTicks(); break;
 				case IN_VICTORY: state = ST_VICTORY; victory_timer = SDL_GetTicks(); break;
 				case IN_VICTORY2_: state = ST_VICTORY2_; victory2_timer = SDL_GetTicks(); break;
+				case IN_LOSE: state = ST_LOSE; lose_timer = SDL_GetTicks();  break;
 				}
 			}
 			break;
@@ -1996,6 +2030,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_3:state = ST_KICK_MEDIUM_NEUTRAL_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
 				case IN_4:state = ST_KICK_HARD_NEUTRAL_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
 				case IN_DAMAGE_AIR:state = ST_DAMAGE_AIR; dmg_fall_timer = SDL_GetTicks(); break;
+				case IN_LOSE: state = ST_LOSE; lose_timer = SDL_GetTicks();  break;
 				}
 			}
 			break;
@@ -2012,6 +2047,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_3: state = ST_KICK_MEDIUM_FORWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
 				case IN_4: state = ST_KICK_HARD_FORWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
 				case IN_DAMAGE_AIR:state = ST_DAMAGE_AIR; dmg_fall_timer = SDL_GetTicks(); break;
+				case IN_LOSE: state = ST_LOSE; lose_timer = SDL_GetTicks();  break;
 				
 				}
 			}
@@ -2029,6 +2065,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_3: state = ST_KICK_MEDIUM_BACKWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
 				case IN_4: state = ST_KICK_HARD_BACKWARD_JUMP; punch_neutral_jump_timer = SDL_GetTicks(); break;
 				case IN_DAMAGE_AIR:state = ST_DAMAGE_AIR; dmg_fall_timer = SDL_GetTicks(); break;
+				case IN_LOSE: state = ST_LOSE; lose_timer = SDL_GetTicks();  break;
 				}
 			}
 			break;
@@ -2532,6 +2569,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_BLOCK_CROUCH: state = ST_BLOCK_CROUCH; block_timer = SDL_GetTicks(); break;
 				case IN_VICTORY: state = ST_VICTORY; victory_timer = SDL_GetTicks(); break;
 				case IN_VICTORY2_: state = ST_VICTORY2_; victory2_timer = SDL_GetTicks(); break;
+				case IN_LOSE: state = ST_LOSE; lose_timer = SDL_GetTicks();  break;
 				}
 			}
 			break;
@@ -2905,6 +2943,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				{
 				case IN_VICTORY_FINISH:					
 					state = ST_IDLE;
+					win = false;					
 					ResetPlayer();
 					break;
 				}
@@ -2918,6 +2957,19 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_VICTORY2_FINISH:
 
 				
+					break;
+				}
+			}
+			break;
+
+			case ST_LOSE:
+			{
+				switch (last_input)
+				{
+				case IN_LOSE_FINISH:
+					state = ST_IDLE;
+					App->chunli->win = false;
+					ResetPlayer();
 					break;
 				}
 			}
@@ -2942,45 +2994,13 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 		App->UI->time = 99;
 		App->UI->Counter1 = 9;
 		App->UI->Counter2 = 9;
-		//App->UI->Resultinfo == 2;
-
-	//	App->render->camera.x = 0;
-		//ResetPlayer();
+		lose = true;
 		
 	}
-	
-	/*
-	if (App->chunli->life <= 0 && App->UI->victorycount == 0) 
-	{
-
-		if (acumvictory < 75) {
-			current_animation = &victory;
-			App->UI->Resultinfo = 2;
-			acumvictory++;
-		}
-		if (acumvictory == 75) 
-		{
-			App->UI->scoreP2 += App->UI->time*100;
-			App->UI->scoreP2 += this->life;
-			victory.Reset();
-			//victorycount++;
-			acumvictory = 0;
-		}
+	else {
+		lose = false;
 	}
-	if (App->chunli->life <= 0 && App->UI->victorycount == 1) {
-
-		if (acumvictory < 75) {
-			current_animation = &victory1;
-			App->UI->Resultinfo = 2;
-			acumvictory++;
-		}
-		if (acumvictory == 75) {
-			victory1.Reset();
-		//	victorycount++;
-			acumvictory = 0;
-		}
-			
-	}*/
+	
 }
 
 void ModuleChunLi2::resetanimations() {
@@ -3033,6 +3053,7 @@ void ModuleChunLi2::resetanimations() {
 	jump_backward_kick_hard.Reset();
 
 	WhirlwindKick.Reset();
+	win1.Reset();
 }
 
 void ModuleChunLi2::debugcommands() {
