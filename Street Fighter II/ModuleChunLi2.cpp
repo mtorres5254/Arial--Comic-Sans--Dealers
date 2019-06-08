@@ -1730,10 +1730,6 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 		inputs.Push(IN_VICTORY);
 		win = false;
 	}
-	if (_win) {
-		inputs.Push(IN_VICTORY2_);
-		_win = false;
-	}
 
 
 	//OMAY GOT, THERE IS NO LOGC HOW CAN THIS BE THIS POSSIBLE, WHAT A MASTER SKILL OF PROGRAMATION
@@ -1888,6 +1884,7 @@ void ModuleChunLi2::ResetPlayer() {
 
 	life = 1000;
 	position.x = 410; 
+	
 	if (App->chunli->position.x != 180 || App->chunli->life != 1000) {
 		ActiveDeath = 0;
 		App->chunli->ResetPlayer();
@@ -2669,17 +2666,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 			{
 				switch (last_input)
 				{
-				case IN_VICTORY_FINISH:
-
-					win1.Reset();
+				case IN_VICTORY_FINISH:					
 					state = ST_IDLE;
-					win = false;
-					acumvictory++;
-
-					damage_received = 0;
-					App->chunli->ResetPlayer();
 					ResetPlayer();
-					
 					break;
 				}
 			}
@@ -2691,13 +2680,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				{
 				case IN_VICTORY2_FINISH:
 
-					win2.Reset();
-					state = ST_IDLE;
-					_win = false;
-					acumvictory == 0;
-					damage_received = 0;
-					App->chunli->ResetPlayer();
-					ResetPlayer();
+				
 					break;
 				}
 			}
@@ -2728,16 +2711,7 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 		//ResetPlayer();
 		
 	}
-
-	if (App->chunli->life == 0) {
-		
-		if (state != ST_VICTORY && acumvictory==0)
-			win = true;
-			
-		if (state != ST_VICTORY2_ && acumvictory==1)
-			_win = true;
-		
-	}
+	
 	/*
 	if (App->chunli->life <= 0 && App->UI->victorycount == 0) 
 	{
