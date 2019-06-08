@@ -44,7 +44,7 @@ bool ModuleChunLi::Start()
 	light_damage = App->audio->LoadChunk("Asstes/Sound/Effects/light_attack.wav");
 	medium_damage = App->audio->LoadChunk("Assets/Sound/Effects/medium_attack.wav");
 	high_damage = App->audio->LoadChunk("Assets/Sound/Effects/high_attack.wav");
-	attack = App->audio->LoadChunk("Assets/Sound/Effects/attack.wav");
+
 
 	// idle animation (arcade sprite sheet)
 	const int idleCollider = 5;//Collider num for the idle animation
@@ -618,8 +618,13 @@ bool ModuleChunLi::Start()
 	WhirlwindKick.PushBack1({ 1160,475,146,70 }, { 0, 30 }, wkcollider1, wkhitbox1, wkCollType1, wkCallback1, 15);
 	WhirlwindKick.PushBack1({ 1458,333,55,115 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
 	WhirlwindKick.PushBack1({ 1402,326,55,122 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
-	WhirlwindKick.speed = 0.24f;
-	//WhirlwindKick.loop = true;
+	WhirlwindKick.PushBack1({ 1235,23,109,88 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1113,63,121,48 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1024,30,88,81 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 1756, 1, 47, 110 }, { 0, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.PushBack1({ 363, 437, 72, 86 }, { 20, 30 }, wkcollider, wkhitbox, wkCollType, wkCallback, 0);
+	WhirlwindKick.speed = 0.286f;
+	WhirlwindKick.loop = false;
 
 
 	// JUMP NEUTRAL KICK
@@ -768,7 +773,6 @@ bool ModuleChunLi::CleanUp()
 	App->audio->UnloadChunk(light_damage);
 	App->audio->UnloadChunk(medium_damage);
 	App->audio->UnloadChunk(high_damage);
-	App->audio->UnloadChunk(attack);
 
 	return true;
 }
@@ -847,45 +851,39 @@ update_status ModuleChunLi::Update()
 						break;
 					case ST_PUNCH_STANDING2:						
 						current_animation = &punch;		
-						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_PUNCH_CROUCH2:
 						current_animation = &Crouch_punch;		
-						App->audio->PlayChunk(attack, 1);
+						break;
+					case ST_PUNCH_MEDIUM_CROUCH2:
+						current_animation = &Crouch_medium_punch;
 						crouchAttack = true;
 						break;
 					case ST_PUNCH_MEDIUM_CROUCH2:
 						current_animation = &Crouch_medium_punch;
-						App->audio->PlayChunk(attack, 1);
 						crouchAttack = true;
 						break;
 					case ST_PUNCH_HARD_CROUCH2:
 						current_animation = &Crouch_hard_punch;
-						App->audio->PlayChunk(attack, 1);
 						crouchAttack = true;
 						break;
 					case ST_KICK_CROUCH2:
 						current_animation = &Crouch_kick;
-						App->audio->PlayChunk(attack, 1);
 						crouchAttack = true;
 						break;
 					case ST_KICK_MEDIUM_CROUCH2:
 						current_animation = &Crouch_medium_kick;
-						App->audio->PlayChunk(attack, 1);
 						crouchAttack = true;
 						break;
 					case ST_KICK_HARD_CROUCH2:
 						current_animation = &Crouch_hard_kick;
-						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_punch;		
-						App->audio->PlayChunk(attack, 1);
 						jump_neutral_logic();
 						break;
 					case ST_PUNCH_MEDIUM_NEUTRAL_JUMP2:
 						current_animation = &jump_forward_punch_medium;
-						App->audio->PlayChunk(attack, 1);
 						jump_neutral_logic();
 						break;
 					case ST_PUNCH_HARD_NEUTRAL_JUMP2:
@@ -895,83 +893,66 @@ update_status ModuleChunLi::Update()
 						break;
 					case ST_PUNCH_FORWARD_JUMP2:					
 						current_animation = &jump_forward_punch;
-						App->audio->PlayChunk(attack, 1);
 						jump_forward_logic();
 						break;
 					case ST_PUNCH_MEDIUM_FORWARD_JUMP2:
 						current_animation = &jump_forward_punch_medium;
-						App->audio->PlayChunk(attack, 1);
 						jump_forward_logic();
 						break;
 					case ST_PUNCH_HARD_FORWARD_JUMP2:
 						current_animation = &jump_forward_punch_hard;
-						App->audio->PlayChunk(attack, 1);
 						jump_forward_logic();
 						break;
 					case ST_KICK_FORWARD_JUMP2:
 						current_animation = &jump_forward_kick;
-						App->audio->PlayChunk(attack, 1);
 						jump_forward_logic();
 						break;
 					case ST_KICK_MEDIUM_FORWARD_JUMP2:
 						current_animation = &jump_forward_kick_medium;
-						App->audio->PlayChunk(attack, 1);
 						jump_forward_logic();
 						break;
 					case ST_KICK_HARD_FORWARD_JUMP2:
 						current_animation = &jump_forward_kick_hard;
-						App->audio->PlayChunk(attack, 1);
 						jump_forward_logic();
 						break;
 					case ST_PUNCH_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch;
-						App->audio->PlayChunk(attack, 1);
 						jump_backward_logic();
 						break;
 					case ST_PUNCH_MEDIUM_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch_medium;
-						App->audio->PlayChunk(attack, 1);
 						jump_backward_logic();
 						break;
 					case ST_PUNCH_HARD_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch_hard;
-						App->audio->PlayChunk(attack, 1);
 						jump_backward_logic();
 						break;
 					case ST_KICK_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick;
-						App->audio->PlayChunk(attack, 1);
 						jump_backward_logic();
 						break;
 					case ST_KICK_MEDIUM_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick_medium;
-						App->audio->PlayChunk(attack, 1);
 						jump_backward_logic();
 						break;
 					case ST_KICK_HARD_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick_hard;
-						App->audio->PlayChunk(attack, 1);
 						jump_backward_logic();
 						break;
 					case ST_KICK_STANDING2:
 						current_animation = &kick;
-						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_PUNCH_MEDIUM2:
 						current_animation = &punch_medium;
-						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_PUNCH_HARD2:						
 						current_animation = &punch_hard;
-						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_KICK_MEDIUM_STANDING2:
 						current_animation = &kick_medium;
-						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_KICK_HARD_STANDING2:
 						current_animation = &kick_hard;
-						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_LIGHTNINGKICK2:
 						current_animation = &LightningKick;	
@@ -995,24 +976,22 @@ update_status ModuleChunLi::Update()
 							
 							position.y = 190;
 						}
-						if (wkcounter >= 80) {
+						if (wkcounter >= 60) {
+							whirlwindMove = false;
 							position.y = 220;
 						}
 						break;
 					case ST_KICK_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_kick;
 						jump_neutral_logic();
-						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_KICK_MEDIUM_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_kick_medium;
 						jump_neutral_logic();
-						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_KICK_HARD_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_kick_hard;
 						jump_neutral_logic();
-						App->audio->PlayChunk(attack, 1);
 						break;
 					case ST_DAMAGE2:
 						current_animation = &damage;
@@ -1424,6 +1403,11 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 	if (App->input->keyboard[SDL_SCANCODE_4] == KEY_DOWN) {
 		inputs.Push(IN_4_2);
 	}
+
+	if (App->input->keyboard[SDL_SCANCODE_5] == KEY_DOWN) {
+		inputs.Push(IN_WHIRLWINDKICK2);
+	}
+	
 
 	//Controller
 
@@ -1840,297 +1824,482 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 
 		case ST_PUNCH_NEUTRAL_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(light_damage, 1);
+				App->UI->scoreP1 += 200;
+				hit_conected++;
+			}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_NEUTRAL2; 
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 200;
+				if (hit_conected = 1) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
-
+			case IN_JUMP_FINISH2: 
+				state = ST_IDLE2; 
+				if (hit_conected = 1) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
 
 		case ST_PUNCH_MEDIUM_NEUTRAL_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(medium_damage, 1);
+				App->UI->scoreP1 += 200;
+				hit_conected++;
+			}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_NEUTRAL2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 200;
+				if (hit_conected > 1) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2: 
+				state = ST_IDLE2; 
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
 
 		case ST_PUNCH_HARD_NEUTRAL_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(medium_damage, 1);
+				App->UI->scoreP1 += 200;
+				hit_conected++;
+			}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_NEUTRAL2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 200;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2: 
+				state = ST_IDLE2; 
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
 
 		case ST_KICK_NEUTRAL_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(light_damage, 1);
+				App->UI->scoreP1 += 200;
+				hit_conected++;
+			}
+
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_NEUTRAL2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 200;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2:
+				state = ST_IDLE2; 
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				} 
+				break;
 			}
 		}
 		break;
 
 		case ST_KICK_MEDIUM_NEUTRAL_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(medium_damage, 1);
+				App->UI->scoreP1 += 200;
+				hit_conected++;
+			}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_NEUTRAL2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 200;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2: 
+				state = ST_IDLE2;
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				} 
+				break;
 			}
 		}
 		break;
 
 		case ST_KICK_HARD_NEUTRAL_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(high_damage, 1);
+				App->UI->scoreP1 += 200;
+				hit_conected++;
+			}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_NEUTRAL2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 200;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2: 
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				state = ST_IDLE2; break;
 			}
 		}
 		break;
 
 		case ST_PUNCH_FORWARD_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(light_damage, 1);
+				App->UI->scoreP1 += 100;
+				hit_conected++;
+			}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2: 
 				state = ST_JUMP_FORWARD2; 
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 100;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2: 
+				state = ST_IDLE2; 
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
 
 		case ST_PUNCH_MEDIUM_FORWARD_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(medium_damage, 1);
+				App->UI->scoreP1 += 100;
+				hit_conected++;
+			}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_FORWARD2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 100;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2:
+				state = ST_IDLE2;
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
 
 		case ST_PUNCH_HARD_FORWARD_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(high_damage, 1);
+				App->UI->scoreP1 += 100;
+				hit_conected++;
+			}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_FORWARD2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 100;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2: 
+				state = ST_IDLE2;
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
 
 		case ST_KICK_FORWARD_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(light_damage, 1);
+				App->UI->scoreP1 += 100;
+				hit_conected++;
+			}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_FORWARD2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 100;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2: 
+				state = ST_IDLE2;
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
 
 		case ST_KICK_MEDIUM_FORWARD_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(medium_damage, 1);
+				App->UI->scoreP1 += 100;
+				hit_conected++;
+			}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_FORWARD2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 100;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2: 
+				state = ST_IDLE2;
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
 
 		case ST_KICK_HARD_FORWARD_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(high_damage, 1);
+				App->UI->scoreP1 += 100;
+				hit_conected++;
+			}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_FORWARD2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 100;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2: 
+				state = ST_IDLE2; 
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
 
 		case ST_PUNCH_BACKWARD_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(light_damage, 1);
+				App->UI->scoreP1 += 100;
+				hit_conected++;
+			}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2: 
 				state = ST_JUMP_BACKWARD2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 100;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2: 
+				state = ST_IDLE2;
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
 		case ST_PUNCH_MEDIUM_BACKWARD_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(medium_damage, 1);
+				App->UI->scoreP1 += 100;
+				hit_conected++;
+			}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_BACKWARD2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 100;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2: 
+				state = ST_IDLE2; 
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
 		case ST_PUNCH_HARD_BACKWARD_JUMP2:
-		{
+		{	
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+				{
+					App->audio->PlayChunk(high_damage, 1);
+					App->UI->scoreP1 += 100;
+					hit_conected++;
+				}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_BACKWARD2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 100;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2: 
+				state = ST_IDLE2; 
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
 
 		case ST_KICK_BACKWARD_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+				{
+					App->audio->PlayChunk(light_damage, 1);
+					App->UI->scoreP1 += 100;
+					hit_conected++;
+				}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_BACKWARD2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 100;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2: 
+				state = ST_IDLE2; 
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
 		case ST_KICK_MEDIUM_BACKWARD_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+				{
+					App->audio->PlayChunk(light_damage, 1);
+					App->UI->scoreP1 += 100;
+					hit_conected++;
+				}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_BACKWARD2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 100;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2:
+				state = ST_IDLE2;
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
 		case ST_KICK_HARD_BACKWARD_JUMP2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+				{
+					App->audio->PlayChunk(high_damage, 1);
+					App->UI->scoreP1 += 100;
+					hit_conected++;
+				}
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_BACKWARD2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 100;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
-			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
+			case IN_JUMP_FINISH2: 
+				state = ST_IDLE2; 
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
 		case ST_PUNCH_STANDING2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+				{
+					App->audio->PlayChunk(light_damage, 1);
+					App->UI->scoreP1 += 100;
+					hit_conected++;
+				}
+			
 			switch (last_input)
 			{
 			case IN_PUNCH_FINISH2: 
 				state = ST_IDLE2;
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 100;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
 			}
@@ -2157,6 +2326,12 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		
 		case ST_PUNCH_CROUCH2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+				{
+					App->audio->PlayChunk(light_damage, 1);
+					App->UI->scoreP1 += 100;
+					hit_conected++;
+				}
 			switch (last_input)
 			{
 			case IN_PUNCH_HARD_FINISH2:
@@ -2164,10 +2339,8 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_CROUCH2;
 				else
 					state = ST_IDLE2;
-
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 100;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				crouchAttack = false;
 				break;
@@ -2176,6 +2349,12 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		break;
 		case ST_PUNCH_MEDIUM_CROUCH2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+				{
+					App->audio->PlayChunk(medium_damage, 1);
+					App->UI->scoreP1 += 200;
+					hit_conected++;
+				}
 			switch (last_input)
 			{
 			case IN_PUNCH_HARD_FINISH2:
@@ -2183,10 +2362,8 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_CROUCH2;
 				else
 					state = ST_IDLE2;
-
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 200;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				crouchAttack = false;
 				break;
@@ -2195,6 +2372,12 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		break;
 		case ST_PUNCH_HARD_CROUCH2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+				{
+					App->audio->PlayChunk(high_damage, 1);
+					App->UI->scoreP1 += 300;
+					hit_conected++;
+				}
 			switch (last_input)
 			{
 			case IN_PUNCH_HARD_FINISH2:
@@ -2202,10 +2385,8 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_CROUCH2;
 				else
 					state = ST_IDLE2;
-
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 300;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				crouchAttack = false;
 				break;
@@ -2214,6 +2395,12 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		break;
 		case ST_KICK_CROUCH2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+				{
+					App->audio->PlayChunk(light_damage, 1);
+					App->UI->scoreP1 += 100;
+					hit_conected++;
+				}
 			switch (last_input)
 			{
 				case IN_PUNCH_MEDIUM_FINISH2:
@@ -2221,10 +2408,8 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_CROUCH2;
 				else
 					state = ST_IDLE2;
-
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 100;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				crouchAttack = false;
 				break;
@@ -2233,6 +2418,12 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		break;
 		case ST_KICK_MEDIUM_CROUCH2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+				{
+					App->audio->PlayChunk(medium_damage, 1);
+					App->UI->scoreP1 += 200;
+					hit_conected++;
+				}
 			switch (last_input)
 			{
 			case IN_PUNCH_MEDIUM_FINISH2:
@@ -2240,10 +2431,8 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_CROUCH2;
 				else
 					state = ST_IDLE2;
-
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 200;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				crouchAttack = false;
 				break;
@@ -2252,6 +2441,12 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		break;
 		case ST_KICK_HARD_CROUCH2:
 		{
+				if (App->chunli2->damage_received > 0 && hit_conected == 0)
+				{
+					App->audio->PlayChunk(high_damage, 1);
+					App->UI->scoreP1 += 300;
+					hit_conected++;
+				}
 			switch (last_input)
 			{
 			case IN_KICK_HARD_FINISH2:
@@ -2259,10 +2454,8 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_CROUCH2;
 				else
 					state = ST_IDLE2;
-
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 300;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
 			}
@@ -2270,13 +2463,18 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		break;
 		case ST_KICK_STANDING2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+					{
+						App->audio->PlayChunk(light_damage, 1);
+						App->UI->scoreP1 += 100;
+						hit_conected++;
+					}
 			switch (last_input)
 			{
 				case IN_KICK_FINISH2: 
 					state = ST_IDLE2; 
-					if (App->chunli2->damage_received == true)
-					{
-						App->UI->scoreP1 += 100;
+					if (hit_conected > 0) {
+						hit_conected = 0;
 					}
 					break;
 			}
@@ -2285,13 +2483,18 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 
 		case ST_KICK_MEDIUM_STANDING2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+					{
+						App->audio->PlayChunk(medium_damage, 1);
+						App->UI->scoreP1 += 200;
+						hit_conected++;
+					}
 			switch (last_input)
 			{
 				case IN_KICK_MEDIUM_FINISH2: 
 					state = ST_IDLE2; 
-					if (App->chunli2->damage_received == true)
-					{
-						App->UI->scoreP1 += 200;
+					if (hit_conected > 0) {
+						hit_conected = 0;
 					}
 					break;
 			}
@@ -2300,13 +2503,18 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 
 		case ST_KICK_HARD_STANDING2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+					{
+						App->audio->PlayChunk(high_damage, 1);
+						App->UI->scoreP1 += 300;
+						hit_conected++;
+					}
 			switch (last_input)
 			{
 				case IN_KICK_HARD_FINISH2: 
 					state = ST_IDLE2;
-					if (App->chunli2->damage_received == true)
-					{
-						App->UI->scoreP1 += 300;
+					if (hit_conected > 0) {
+						hit_conected = 0;
 					}
 					break;
 			}
@@ -2314,13 +2522,18 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		break;
 		case ST_LIGHTNINGKICK2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+					{
+						App->audio->PlayChunk(high_damage, 1);
+						App->UI->scoreP1 += 500;
+						hit_conected++;
+					}
 			switch (last_input)
 			{
-				case IN_LIGHTNINGKICK_FINISH2: 
-					state = ST_IDLE2; 
-					if (App->chunli2->damage_received == true)
-					{
-						App->UI->scoreP1 += 500;
+				case IN_LIGHTNINGKICK_FINISH2:
+					state = ST_IDLE2;
+					if (hit_conected > 0) {
+						hit_conected = 0;
 					}
 					
 			}
@@ -2329,13 +2542,18 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		break;
 		case ST_WHIRLWIND2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+				{
+				    App->audio->PlayChunk(high_damage, 1);
+					App->UI->scoreP1 += 500;
+					hit_conected++;
+				}
 			switch (last_input)
-			{
+			{	
 			case IN_WHIRLWINDKICK2_FINISH2:
 				state = ST_IDLE2;
-				if(App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 500;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				position.y = 220;
 			}
@@ -2343,13 +2561,18 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		break;
 		case ST_PUNCH_MEDIUM2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(medium_damage, 1);
+				App->UI->scoreP1 += 200;
+				hit_conected++;
+			}
 			switch (last_input)
 			{
 			case IN_PUNCH_MEDIUM_FINISH2: 
 				state = ST_IDLE2; 
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 200;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
 			}
@@ -2360,25 +2583,36 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 
 		case ST_PUNCH_HARD2:
 		{
+			if (App->chunli2->damage_received > 0 && hit_conected == 0)
+			{
+				App->audio->PlayChunk(high_damage, 1);
+				App->UI->scoreP1 += 300;
+				hit_conected++;
+			}
 			switch (last_input)
 			{
 			case IN_PUNCH_HARD_FINISH2: 
 				state = ST_IDLE2; 
-				if (App->chunli2->damage_received == true)
-				{
-					App->UI->scoreP1 += 300;
+				if (hit_conected > 0) {
+					hit_conected = 0;
 				}
 				break;
 			}
-			
 		}
 		break;
 
 		case ST_DAMAGE2:
 		{
+			
 			switch (last_input)
 			{
-			case IN_DAMAGE_FINISH2:state = ST_IDLE2; damage_received = 0; break;
+			case IN_DAMAGE_FINISH2:
+				state = ST_IDLE2; 
+				damage_received = 0;
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
@@ -2387,7 +2621,13 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_DAMAGE_FINISH2:state = ST_IDLE2; damage_received = 0; break;
+			case IN_DAMAGE_FINISH2:
+				state = ST_IDLE2; 
+				damage_received = 0; 
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 		break;
@@ -2395,7 +2635,13 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_DAMAGE_FINISH2:state = ST_IDLE2; damage_received = 0; break;
+			case IN_DAMAGE_FINISH2:
+				state = ST_IDLE2;
+				damage_received = 0;
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 
@@ -2403,7 +2649,13 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_DAMAGE_FINISH2:state = ST_IDLE2; damage_received = 0; break;
+			case IN_DAMAGE_FINISH2:
+				state = ST_IDLE2; 
+				damage_received = 0;
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				break;
 			}
 		}
 
@@ -2429,7 +2681,13 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-				case IN_DAMAGE_FINISH2:state = ST_IDLE2; damage_received = 0; break;
+				case IN_DAMAGE_FINISH2:
+					state = ST_IDLE2; 
+					damage_received = 0; 
+					if (hit_conected > 0) {
+						hit_conected = 0;
+					}
+					break;
 			}
 		}
 		break;
