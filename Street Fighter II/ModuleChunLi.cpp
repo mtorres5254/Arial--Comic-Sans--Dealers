@@ -770,7 +770,7 @@ bool ModuleChunLi::Start()
 	Death.Reset();
 	DeathCount = 0;
 	victorycount = 0;
-	force = 0;
+
 	
 	return ret;
 }
@@ -816,15 +816,11 @@ update_status ModuleChunLi::Update()
 		while (external_input(inputs))
 		{
 			internal_input(inputs);
-			if (force < idleForce)
-			{
-				state = ST_IDLE2;
-				force++;
-			}
-			else
-			{
-				state = process_fsm(inputs);
-			}			
+			
+			
+			
+			state = process_fsm(inputs);
+						
 			
 			if (state != current_state)
 			{
@@ -1121,6 +1117,12 @@ update_status ModuleChunLi::Update()
 							WinSoundPlayed = true;
 						}
 						
+						if (win2.current_frame < 2) {
+							position.y -= 2;
+						}
+						else if (win2.current_frame > 2 && position.y<=220) {
+							position.y += 2;
+						}
 						break;
 					case ST_LOSE2:						
 						if (SDL_GetTicks() - lose_timer >2000 && App->chunli2->victorycount==0)
@@ -1365,7 +1367,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 
 bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 {	
-
+	
 	if (App->chunli2->life > 0) {
 		//Key up
 		if (App->input->keyboard[SDL_SCANCODE_S] == KEY_UP) {

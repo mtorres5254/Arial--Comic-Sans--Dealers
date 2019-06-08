@@ -338,7 +338,6 @@ public:
 	Uint32 victory_timer = 0;
 	Uint32 victory2_timer = 0;
 	Uint32 lose_timer = 0;
-private:
 
 	bool left = false;
 	bool left1 = false;
@@ -346,8 +345,7 @@ private:
 	bool right = false;
 	bool right1 = false;
 	bool right2 = false;
-	
-	int force = 0;
+
 };
 
 #endif
