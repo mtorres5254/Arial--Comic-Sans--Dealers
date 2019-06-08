@@ -1260,10 +1260,9 @@ update_status ModuleChunLi2::Update()
 						if (position.y >= 220) {
 							position.y = 220;
 						}
-
-
 						move = false;
 						break;
+
 					case ST_BLOCK:
 						block_damage = 0;
 						current_animation = &block_standing;
@@ -1274,6 +1273,12 @@ update_status ModuleChunLi2::Update()
 						block_damage = 0;
 
 						current_animation = &block_crouch;
+						break;
+					
+
+					case ST_VICTORY:					
+
+						current_animation = &block_standing;
 						break;
 					}
 
@@ -1697,6 +1702,11 @@ bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 		inputs.Push(IN_BLOCK_CROUCH);
 	}
 
+	if (win) {
+		inputs.Push(IN_VICTORY);
+		win = false;
+	}
+
 	//OMAY GOT, THERE IS NO LOGC HOW CAN THIS BE THIS POSSIBLE, WHAT A MASTER SKILL OF PROGRAMATION
 	return true;
 }
@@ -1826,6 +1836,15 @@ void ModuleChunLi2::internal_input(p2Qeue<chunli_inputs>& inputs)
 			whirlwind_timer = 0;
 		}
 	}
+
+	if (victory_timer > 0)
+	{
+		if (SDL_GetTicks() - victory_timer > 2000)
+		{
+			inputs.Push(IN_VICTORY_FINISH);
+			victory_timer = 0;
+		}
+	}
 }
 
 void ModuleChunLi2::ResetPlayer() {
@@ -1873,6 +1892,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_DAMAGE_HARD: state = ST_DAMAGE_HARD; dmg_hard_timer = SDL_GetTicks(); break;
 				case IN_DAMAGE_FALL: state = ST_DAMAGE_FALL; dmg_fall_timer = SDL_GetTicks(); break;
 				case IN_WHIRLWINDKICK: state = ST_WHIRLWIND; whirlwind_timer = SDL_GetTicks(); break;
+				case IN_VICTORY: state = ST_VICTORY; victory_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -1897,6 +1917,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_DAMAGE_FALL: state = ST_DAMAGE_FALL; dmg_fall_timer = SDL_GetTicks(); break;
 				case IN_BLOCK: state = ST_BLOCK; block_timer = SDL_GetTicks(); break;
 				case IN_WHIRLWINDKICK: state = ST_WHIRLWIND; whirlwind_timer = SDL_GetTicks(); break;
+				case IN_VICTORY: state = ST_VICTORY; victory_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -1921,6 +1942,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_DAMAGE_FALL: state = ST_DAMAGE_FALL; dmg_fall_timer = SDL_GetTicks(); break;
 				case IN_BLOCK: state = ST_BLOCK; block_timer = SDL_GetTicks(); break;
 				case IN_WHIRLWINDKICK: state = ST_WHIRLWIND; whirlwind_timer = SDL_GetTicks(); break;
+				case IN_VICTORY: state = ST_VICTORY; victory_timer = SDL_GetTicks(); break;
 				}
 			}
 			break;
@@ -2600,6 +2622,22 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				}
 			}
 			break;
+
+			case ST_VICTORY:
+			{
+				switch (last_input)
+				{
+				case IN_VICTORY_FINISH:
+
+					state = ST_IDLE;
+					win = false;
+					damage_received = 0;
+					App->chunli->ResetPlayer();
+					ResetPlayer();
+					break;
+				}
+			}
+			break;
 			}
 		
 	}
@@ -2625,6 +2663,11 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 	//	App->render->camera.x = 0;
 		//ResetPlayer();
 		
+	}
+
+	if (App->chunli->life == 0) {
+		if (state != ST_VICTORY)
+			win = true;
 	}
 	/*
 	if (App->chunli->life <= 0 && App->UI->victorycount == 0) 
