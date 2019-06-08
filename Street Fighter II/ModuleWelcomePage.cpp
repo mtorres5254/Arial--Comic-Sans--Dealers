@@ -66,7 +66,7 @@ bool ModuleWelcomePage::CleanUp()
 update_status ModuleWelcomePage::Update()
 {	
 
-	App->render->Blit(graphics, 0, 0, &intro.GetCurrentFrame);
+	App->render->Blit(graphics, 0, 0, &intro.GetCurrentFrame());
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1 || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_START] == 1) {
 		App->fade->FadeToBlack(App->welcome_page, App->scene_dhalsim);

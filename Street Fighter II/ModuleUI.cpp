@@ -129,25 +129,8 @@ update_status ModuleUI:: Update()
 		GamepadDebug();
 	}
 
-	if (Historyinfo == true) {
-		HistoryDebug();
-	}
-	/*
-	if (Round_Start == true) {
-		Rounds();
-	}
-	*/
 	if (Resultinfo >= 0) {
 		Result();
-	}
-	for (int i = 0; i < 20; i++) {
-		if (Hispos[i].occuped == true) {
-			Hispos[i].count++;
-			if (Hispos[i].count >= 300) {
-				Hispos[i].occuped = false;
-				Hispos[i].count = 0;
-			}
-		}
 	}
 
 	App->font->BlitText(30, 43, font_id, "chun");
@@ -721,25 +704,6 @@ void ModuleUI::GamepadDebug() {
 	}	
 }
 
-void ModuleUI::HistoryDebug() {
-	for (int i = 0; i < 20; i++) {
-		Hispos[i].Positions = new SDL_Point({0, 150 - (14 * i)});
-	}
-	for (int a = 0; a < SDL_CONTROLLER_BUTTON_MAX; a++) {
-		for (int i = 0; i < MAX_HISTORY; i++) {
-			if (App->input->history[i].keyboard[a] != KEY_IDLE) {
-				if (App->input->history[i].keyboard[a] != App->input->history[i].keyboard[a]) {
-					for (int j = 0; j < 20; j++) {
-						if (Hispos[j].occuped == false) {
-							App->font->BlitText(Hispos[j].Positions->x, Hispos[j].Positions->y, font_id, "hola");
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
 void ModuleUI::Result() {
 	switch (Resultinfo)
 	{
@@ -755,19 +719,5 @@ void ModuleUI::Result() {
 		break;
 	}
 
-}
-
-void ModuleUI::Rounds() {
-	/*
-	if (App->chunli->victorycount == 0 && App->chunli2->victorycount == 0)
-	    App->font->BlitText(SCREEN_WIDTH / 2 - 45, 75, font_Rounds, "r 1");
-
-	if ((App->chunli->victorycount == 1 && App->chunli2->victorycount == 0)|| (App->chunli->victorycount == 0 && App->chunli2->victorycount == 1))
-		App->font->BlitText(SCREEN_WIDTH / 2 - 45, 75, font_Rounds, "r 2");
-	
-	if (App->chunli->victorycount == 1 && App->chunli2->victorycount == 1)
-	    App->font->BlitText(SCREEN_WIDTH / 2 - 45, 75, font_Rounds, "r 3");
-		*/
-	
 }
 

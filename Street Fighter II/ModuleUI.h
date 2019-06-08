@@ -13,12 +13,6 @@
 
 struct SDL_Texture;
 
-struct HistoryPosition{
-	SDL_Point* Positions;
-	bool occuped = false;
-	uint count = 0;
-};
-
 class ModuleUI : public Module
 {
 public:
@@ -32,17 +26,13 @@ public:
 	void Counter();
 	void PointsP1();
 	void PointsP2();
-	void Rounds();
 	void Result();
 	void GamepadDebug();
-	void HistoryDebug();
 
 public:
 
 	SDL_Texture* graphics1 = nullptr;
 	SDL_Texture* graphics2 = nullptr;
-
-	HistoryPosition Hispos[20];
 
 	SDL_Rect HealthBar1;
 	SDL_Rect RedBar1;
