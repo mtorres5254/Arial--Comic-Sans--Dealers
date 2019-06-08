@@ -20,10 +20,13 @@ public:
 
 public:
 
-	SDL_Texture* graphics = nullptr;
+	
+	SDL_Texture* graphics1 = nullptr;
+	SDL_Texture* graphics2 = nullptr;
 	Mix_Music* music;
 
-	Animation background;
+	Animation numbers;
+	Animation ChunLi;
 
 private:
 	

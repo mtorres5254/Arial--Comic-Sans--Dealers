@@ -67,6 +67,7 @@ bool Application::Init()
 	congrats_screen->Disable();
 	collision->Disable();
 //	UI->Disable();
+	continu->Disable();
 	selectionScene->Disable();
 	welcome_page->Disable();
 	//FOR TESTING
