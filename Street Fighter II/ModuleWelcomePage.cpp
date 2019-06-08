@@ -20,7 +20,7 @@ ModuleWelcomePage::ModuleWelcomePage()
 	intro.PushBack({ 1551,0,384,224 });
 	intro.PushBack({ 0,227,384,224 });
 	intro.PushBack({ 390,230,384,224 });
-	intro.PushBack({777,230,384,224 });
+	intro.PushBack({ 777,230,384,224 });
 	intro.PushBack({ 1167,230,384,224 });
 	intro.PushBack({ 1557,230,384,224 });
 	intro.PushBack({ 0,460,384,224 });
