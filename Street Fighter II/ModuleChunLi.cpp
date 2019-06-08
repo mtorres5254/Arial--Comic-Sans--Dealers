@@ -14,6 +14,7 @@
 #include "ModuleSceneDhalsim.h"
 #include "ModuleCombos.h"
 #include "ModuleSlowdown.h"
+#include "ModuleFadeToBlack.h"
 
 
 
@@ -2831,10 +2832,13 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 
 				state = ST_IDLE2;
 				win = 0;
-				ResetPlayer();
+				victorycount++;
+				ResetPlayer();			
+		
 				break;
 			}
 		}
+
 		break;
 
 		case ST_LOSE2:
@@ -2844,8 +2848,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			case IN_LOSE_FINISH2:	
 				state = ST_IDLE2;
 				App->chunli2->win = 0;
-				ResetPlayer();
 				
+				ResetPlayer();
+			
 				
 				break;
 			}

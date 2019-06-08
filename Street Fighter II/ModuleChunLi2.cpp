@@ -2975,6 +2975,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 					state = ST_IDLE;
 					win = 0;
+					victorycount++;
 					ResetPlayer();
 					break;
 				}
@@ -2988,6 +2989,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_LOSE_FINISH:
 					state = ST_IDLE;
 					App->chunli->win = 0;
+					if (victorycount < 2)
 					ResetPlayer();
 					break;
 				}
@@ -3072,7 +3074,7 @@ void ModuleChunLi2::resetanimations() {
 	jump_backward_kick_hard.Reset();
 
 	WhirlwindKick.Reset();
-	win1.Reset();
+	//win1.Reset();
 }
 
 void ModuleChunLi2::debugcommands() {
