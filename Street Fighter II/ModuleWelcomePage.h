@@ -6,6 +6,7 @@
 #include "Globals.h"
 
 #include "SDL_mixer/include/SDL_mixer.h"
+#include "SDL/include/SDL.h"
 
 class ModuleWelcomePage : public Module
 {
@@ -18,10 +19,14 @@ public:
 	bool CleanUp();
 
 public:
-	Animation intro;
-	Animation logo;
+	SDL_Rect fons;
+	SDL_Rect persona1;
+	SDL_Rect persona2;
+
+	Animation Apersones;
 
 	SDL_Texture* graphics = nullptr;
+	SDL_Texture* persones = nullptr;
 	Mix_Music* music;
 };
 

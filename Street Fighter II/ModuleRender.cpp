@@ -213,6 +213,15 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
 	return ret;
 }
 
+bool ModuleRender::RectBlit(const SDL_Rect& rect, SDL_Texture* texture) {
+
+
+
+	SDL_RenderCopy(App->render->renderer, texture, &rect, NULL);
+
+	return true;
+}
+
 void ModuleRender::StartCameraShake(int duration, float magnitude) {
 	shaking = true;
 

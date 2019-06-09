@@ -22,6 +22,7 @@ public:
 	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed = 1.0f, bool use_camera = true);
 	bool BlitSym(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed = 1.0f, bool use_camera = true);
 	bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera = true);
+	bool RectBlit(const SDL_Rect& rect, SDL_Texture* texture);
 
 	void StartCameraShake(int duration, float magnitude);
 	void UpdateCameraShake();
