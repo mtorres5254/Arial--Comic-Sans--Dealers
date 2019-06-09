@@ -15,7 +15,7 @@
 #include "ModuleCombos.h"
 #include "ModuleSlowdown.h"
 #include"ModuleFadeToBlack.h"
-#include "ModuleLoseScene.h"
+#include "ModuleCongratsScreen.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
@@ -1467,11 +1467,12 @@ update_status ModuleChunLi2::Update()
 
 
 						if (SDL_GetTicks() - lose_timer > 9000 && App->chunli->state == ST_VICTORY2)
-							App->fade->FadeToBlack(App->UI, App->UI, 2.0f);
+							App->fade->FadeToBlack(App->combo, App->combo, 2.0f);
 
 						else if (SDL_GetTicks() - lose_timer > 9000 && App->chunli->state == ST_VICTORY2_2) {
 							App->audio->StopMusic(250);
-							App->fade->FadeToBlack(App->scene_dhalsim, App->lose_scene, 2.0f);
+
+							App->fade->FadeToBlack(App->scene_dhalsim, App->congrats_screen, 2.0f);
 						}
 
 						if (position.x < App->chunli->position.x)
@@ -3364,7 +3365,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 					state = ST_IDLE;
 					win = 3;
-					victorycount++;
+					//victorycount++;
 					ResetPlayer();
 					if (hit_conected > 0) {
 						hit_conected = 0;
@@ -3482,7 +3483,8 @@ void ModuleChunLi2::resetanimations() {
 	jump_backward_kick_hard.Reset();
 
 	WhirlwindKick.Reset();
-	//win1.Reset();
+	win1.Reset();
+	win2.Reset();
 }
 
 void ModuleChunLi2::debugcommands() {

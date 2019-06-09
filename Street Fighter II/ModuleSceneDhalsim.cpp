@@ -174,6 +174,7 @@ update_status ModuleSceneDhalsim::Update()
 
 void ModuleSceneDhalsim::roundpoints() {
 
+	/*
 	if (App->UI->time <= 0) {
 		if (App->chunli->life > App->chunli2->life) {
 			App->chunli2->life = 0;
@@ -186,7 +187,7 @@ void ModuleSceneDhalsim::roundpoints() {
 			App->chunli->victorycount++;
 			App->chunli2->victorycount++;
 		}
-	}
+	}*/
 }
 
 void ModuleSceneDhalsim::fadeto() {

@@ -1309,7 +1309,7 @@ update_status ModuleChunLi::Update()
 						}
 
 						if (SDL_GetTicks() - lose_timer > 9000 && App->chunli2->state==ST_VICTORY)
-						App->fade->FadeToBlack(App->UI, App->UI, 2.0f);
+						App->fade->FadeToBlack(App->combo, App->combo, 2.0f);
 
 						else if (SDL_GetTicks() - lose_timer > 9000 && App->chunli2->state == ST_VICTORY2_) {
 							App->audio->StopMusic(250);
@@ -3234,7 +3234,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			case IN_VICTORY2_FINISH_2:
 				state = ST_IDLE2;
 				win = 3;
-				victorycount++;
+				//victorycount++;
 				ResetPlayer();			
 				if (hit_conected > 0) {
 					hit_conected = 0;
@@ -3302,6 +3302,7 @@ void ModuleChunLi::resetanimations() {
 	sound = 0;
 	WinSoundPlayed = false;
 	DeathSoundPlayed = false;
+	win1.Reset();
 	win2.Reset();
 	ignore = 0;
 
