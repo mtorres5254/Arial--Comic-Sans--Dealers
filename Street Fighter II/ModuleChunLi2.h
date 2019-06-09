@@ -254,9 +254,11 @@ public:
 	Mix_Chunk* light_damage;
 	Mix_Chunk* medium_damage;
 	Mix_Chunk* high_damage;
-	Mix_Chunk* attack;
+	Mix_Chunk* wind;
 
 	Mix_Chunk* win_sound;
+	Mix_Chunk* syou;
+	Mix_Chunk* swin;
 	Mix_Chunk* death_sound;
 
 	bool DeathSoundPlayed = false;
@@ -271,11 +273,12 @@ public:
 	bool leftLimit = false;
 	bool RightLimit = false;
 	bool onAir = false;
-
+	int sound = 0;
 	int PivotX = 0; 
 	int PivotY = 0;
 	int dmg = 0;
 
+	int ignore = 0;
 	int DeathCount = 0;
 	int ActiveDeath = 0;
 	int victorycount = 0;
@@ -285,6 +288,7 @@ public:
 	int jumpHeight = 0;
 	int speed = 1;
 	int damage_received = 0;
+	int hit_started = 0;
 	int hit_conected = 0;
 	int block_damage = 0;
 	bool jumpactive = 0;

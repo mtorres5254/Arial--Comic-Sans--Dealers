@@ -17,7 +17,6 @@
 #include"ModuleFadeToBlack.h"
 
 
-
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModuleChunLi2::ModuleChunLi2()
@@ -762,9 +761,11 @@ bool ModuleChunLi2::Start()
 	light_damage = App->audio->LoadChunk("Asstes/Sound/Effects/light_attack.wav");
 	medium_damage = App->audio->LoadChunk("Assets/Sound/Effects/medium_attack.wav");
 	high_damage = App->audio->LoadChunk("Assets/Sound/Effects/high_attack.wav");
+	wind = App->audio->LoadChunk("Assets/Sound/Effects/wind.wav");
 	win_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-laugh.wav");
 	death_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-death.wav");
-	
+	syou= App->audio->LoadChunk("Assets/Sound/Effects/you.wav");
+	swin = App->audio->LoadChunk("Assets/Sound/Effects/win.wav");
 
 	//Start functions to reset player
 	ResetPlayer();
@@ -796,9 +797,11 @@ bool ModuleChunLi2::CleanUp()
 	App->audio->UnloadChunk(light_damage);
 	App->audio->UnloadChunk(medium_damage);
 	App->audio->UnloadChunk(high_damage);
+	App->audio->UnloadChunk(wind);
 	App->audio->UnloadChunk(win_sound);
 	App->audio->UnloadChunk(death_sound);
-
+	App->audio->UnloadChunk(syou);
+	App->audio->UnloadChunk(swin);
 	return true;
 }
 
@@ -914,38 +917,56 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_STANDING:
 
 						current_animation = &punch;
-					
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+					}
 											   						 					  
 						break;
 					case ST_KICK_STANDING:
 
 						current_animation = &kick;
-			
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 
 						break;
 
 					case ST_PUNCH_MEDIUM:
 						current_animation = &punch_medium;
-					
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						break;
 
 					case ST_PUNCH_HARD:
 
 						current_animation = &punch_hard;
-				
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						break;
 
 					case ST_KICK_MEDIUM_STANDING:
 
 						current_animation = &kick_medium;
-						
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 
 						break;
 
 					case ST_KICK_HARD_STANDING:
 
 						current_animation = &kick_hard;
-				
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 
 						break;
 
@@ -954,13 +975,20 @@ update_status ModuleChunLi2::Update()
 
 						current_animation = &Crouch_punch;
 						crouchAttack = true;
-
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 
 						break;
 
 					case ST_PUNCH_MEDIUM_CROUCH:
 
 						current_animation = &Crouch_medium_punch;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						crouchAttack = true;
 
 						break;
@@ -968,6 +996,10 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_HARD_CROUCH:
 
 						current_animation = &Crouch_hard_punch;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						crouchAttack = true;
 
 
@@ -976,12 +1008,20 @@ update_status ModuleChunLi2::Update()
 					case ST_KICK_CROUCH:
 
 						current_animation = &Crouch_kick;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						crouchAttack = true;
 
 						break;
 					case ST_KICK_MEDIUM_CROUCH:
 
 						current_animation = &Crouch_medium_kick;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						crouchAttack = true;
 
 
@@ -989,11 +1029,18 @@ update_status ModuleChunLi2::Update()
 					case ST_KICK_HARD_CROUCH:
 
 						current_animation = &Crouch_hard_kick;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_punch;
-					
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 
 						onAir = true;
 						jump_neutral_logic();
@@ -1005,7 +1052,10 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_MEDIUM_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_punch_medium;
-					
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 
 						onAir = true;
 						jump_neutral_logic();
@@ -1016,7 +1066,10 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_HARD_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_punch_hard;
-						
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 
 						onAir = true;
 						jump_neutral_logic();
@@ -1027,7 +1080,10 @@ update_status ModuleChunLi2::Update()
 
 						onAir = true;
 						current_animation = &jump_forward_punch;
-					
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 
 						jump_forward_logic();
 
@@ -1037,7 +1093,10 @@ update_status ModuleChunLi2::Update()
 
 						onAir = true;
 						current_animation = &jump_forward_punch_medium;
-					
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 
 						jump_forward_logic();
 
@@ -1047,7 +1106,10 @@ update_status ModuleChunLi2::Update()
 
 						onAir = true;
 						current_animation = &jump_forward_punch_hard;
-					
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 
 						jump_forward_logic();
 
@@ -1057,7 +1119,10 @@ update_status ModuleChunLi2::Update()
 
 						onAir = true;
 						current_animation = &jump_forward_kick;
-					
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 
 						jump_forward_logic();
 
@@ -1067,7 +1132,10 @@ update_status ModuleChunLi2::Update()
 
 						onAir = true;
 						current_animation = &jump_forward_kick_medium;
-					
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 
 						jump_forward_logic();
 
@@ -1077,7 +1145,10 @@ update_status ModuleChunLi2::Update()
 
 						onAir = true;
 						current_animation = &jump_forward_kick_hard;
-					
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 
 						jump_forward_logic();
 
@@ -1085,7 +1156,10 @@ update_status ModuleChunLi2::Update()
 					case ST_PUNCH_BACKWARD_JUMP:
 						current_animation = &jump_backward_punch;
 
-						App->audio->PlayChunk(attack, 1);
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir = true;
 
 					
@@ -1096,8 +1170,10 @@ update_status ModuleChunLi2::Update()
 
 					case ST_PUNCH_MEDIUM_BACKWARD_JUMP:
 						current_animation = &jump_backward_punch_medium;
-
-						App->audio->PlayChunk(attack, 1);
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir = true;
 
 					
@@ -1109,8 +1185,10 @@ update_status ModuleChunLi2::Update()
 
 					case ST_PUNCH_HARD_BACKWARD_JUMP:
 						current_animation = &jump_backward_punch_hard;
-
-						App->audio->PlayChunk(attack, 1);
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir = true;
 
 					
@@ -1122,7 +1200,10 @@ update_status ModuleChunLi2::Update()
 					case ST_KICK_BACKWARD_JUMP:
 						current_animation = &jump_backward_kick;
 
-						App->audio->PlayChunk(attack, 1);
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir = true;
 
 					
@@ -1134,7 +1215,10 @@ update_status ModuleChunLi2::Update()
 					case ST_KICK_MEDIUM_BACKWARD_JUMP:
 						current_animation = &jump_backward_kick_medium;
 
-						App->audio->PlayChunk(attack, 1);
+						if(hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir = true;
 
 					
@@ -1146,8 +1230,10 @@ update_status ModuleChunLi2::Update()
 
 					case ST_KICK_HARD_BACKWARD_JUMP:
 						current_animation = &jump_backward_kick_hard;
-
-						App->audio->PlayChunk(attack, 1);
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir = true;
 
 					
@@ -1190,7 +1276,10 @@ update_status ModuleChunLi2::Update()
 
 						current_animation = &jump_neutral_kick;
 
-						App->audio->PlayChunk(attack, 1);
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir = true;
 
 						jump_neutral_logic();
@@ -1199,7 +1288,10 @@ update_status ModuleChunLi2::Update()
 					case ST_KICK_MEDIUM_NEUTRAL_JUMP:
 
 						current_animation = &jump_neutral_kick_medium;
-					
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 
 						jump_neutral_logic();
 						onAir = true;
@@ -1210,7 +1302,10 @@ update_status ModuleChunLi2::Update()
 
 						current_animation = &jump_neutral_kick_hard;
 
-						App->audio->PlayChunk(attack, 1);
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						};
 						onAir = true;
 
 				
@@ -1312,16 +1407,40 @@ update_status ModuleChunLi2::Update()
 						if(App->chunli->state==ST_LOSE2)
 						App->UI->Resultinfo = 2;
 						if(victorycount==0)
-							victorycount++;					
+							victorycount++;		
+
+						if (sound < 30) {
+							if (sound == 1)
+								App->audio->PlayChunk(syou, 1);
+							sound++;
+						}
+						else if (sound == 30) {
+							App->audio->PlayChunk(swin, 1);
+							sound++;
+						}
 							current_animation = &win1;
 						break;
 					case ST_VICTORY2_:
-						if (App->chunli->state == ST_LOSE2)
+						if (App->chunli->state == ST_LOSE2) {
+
 							App->UI->Resultinfo = 2;
-						current_animation = &win2;
+							current_animation = &win2;
+						}
+
 						if (WinSoundPlayed == false) {
-							App->audio->PlayChunk(win_sound, 1);
+							App->audio->PlayChunk(win_sound, 1);								
+
 							WinSoundPlayed = true;
+						}
+
+						if (sound < 30) {
+							if (sound == 1)
+								App->audio->PlayChunk(syou, 1);
+							sound++;
+						}
+						else if (sound == 30) {
+							App->audio->PlayChunk(swin, 1);
+							sound++;
 						}
 
 						if (win2.current_frame < 2) {
@@ -1332,6 +1451,8 @@ update_status ModuleChunLi2::Update()
 						}
 						break;	
 					case ST_LOSE:
+
+						ignore = 1;
 
 						if (SDL_GetTicks() - lose_timer > 2000 && App->chunli->victorycount == 0)
 							App->chunli->win = 1;
@@ -1497,12 +1618,12 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			App->particle->AddParticle(App->particle->hit, position.x - PivotX + 30, position.y - 70, COLLIDER_NONE, 0);
 		}
 		
-		else if (state == ST_CROUCH && (right || right1 || right2) && position.x < App->chunli->position.x + App->chunli->PivotX) {
+		else if (state == ST_CROUCH && (right || right1 || right2) && position.x > App->chunli->position.x + App->chunli->PivotX) {
 			block_damage = 2;
 			App->particle->AddParticle(App->particle->hit, position.x - PivotX , position.y - 70, COLLIDER_NONE, 0);
 		}
 
-		else if (state == ST_CROUCH && (left || left1 || left2) && position.x > App->chunli->position.x + App->chunli->PivotX) {
+		else if (state == ST_CROUCH && (left || left1 || left2) && position.x < App->chunli->position.x + App->chunli->PivotX) {
 			block_damage = 2;
 			App->particle->AddParticle(App->particle->hit, position.x - PivotX+30, position.y - 70, COLLIDER_NONE, 0);
 		}
@@ -1962,8 +2083,7 @@ void ModuleChunLi2::ResetPlayer() {
 		App->UI->Counter2 = 9;
 		App->UI->Resultinfo = 0;
 	}
-	WinSoundPlayed = false;
-	DeathSoundPlayed = false;
+	
 }
 
 chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
@@ -1979,6 +2099,12 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 			case ST_IDLE2:
 			{
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				switch (last_input)
 				{
 
@@ -2006,6 +2132,12 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 			case ST_WALK_FORWARD:
 			{
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				switch (last_input)
 				{
 				case IN_RIGHT_UP: state = ST_IDLE; break;
@@ -2033,6 +2165,12 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 			case ST_WALK_BACKWARD:
 			{
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
 				switch (last_input)
 				{
 				case IN_LEFT_UP: state = ST_IDLE; break;
@@ -2060,6 +2198,12 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 			case ST_JUMP_NEUTRAL:
 			{
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
 				switch (last_input)
 				{
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2077,6 +2221,12 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 			case ST_JUMP_FORWARD:
 			{
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
 				switch (last_input)
 				{
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2095,6 +2245,12 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 			case ST_JUMP_BACKWARD:
 			{
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				switch (last_input)
 				{
 				case IN_JUMP_FINISH: state = ST_IDLE; break;
@@ -2125,11 +2281,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH: 
 					state = ST_IDLE; 
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2151,11 +2313,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH: 
 					state = ST_IDLE;
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2177,11 +2345,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH: 
 					state = ST_IDLE;
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2203,11 +2377,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH: 
 					state = ST_IDLE; 
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2229,11 +2409,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH:
 					state = ST_IDLE;
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2255,11 +2441,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH:
 					state = ST_IDLE; 
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2281,11 +2473,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH:
 					state = ST_IDLE; 
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2307,11 +2505,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH:
 					state = ST_IDLE; 
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2333,11 +2537,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH: 
 					state = ST_IDLE; 
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2359,11 +2569,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH: 
 					state = ST_IDLE;
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2385,11 +2601,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH: 
 					state = ST_IDLE; 
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2411,11 +2633,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH: 
 					state = ST_IDLE; 
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2437,11 +2665,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH:
 					state = ST_IDLE;
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2462,11 +2696,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH:
 					state = ST_IDLE; 
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2487,11 +2727,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH:
 					state = ST_IDLE;
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2513,11 +2759,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH:
 					state = ST_IDLE;
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2538,11 +2790,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH:
 					state = ST_IDLE;
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2563,11 +2821,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				case IN_JUMP_FINISH: 
 					state = ST_IDLE; 
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2588,6 +2852,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				}
 			}
@@ -2595,6 +2862,12 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 
 			case ST_CROUCH:
 			{
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				switch (last_input)
 				{
 				case IN_CROUCH_UP: state = ST_IDLE; break;
@@ -2631,6 +2904,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					crouchAttack = false;
 					break;
 				}
@@ -2653,6 +2929,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 						state = ST_IDLE;
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					crouchAttack = false;
 					break;
@@ -2677,6 +2956,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					crouchAttack = false;
 					break;
 				}
@@ -2700,7 +2982,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
-					
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					crouchAttack = false;
 					break;
 				}
@@ -2723,6 +3007,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 						state = ST_IDLE;
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					
 					crouchAttack = false;
@@ -2748,6 +3035,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				}
 			}
@@ -2767,6 +3057,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				}
 			}
@@ -2785,6 +3078,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_IDLE;
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2806,6 +3102,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				}
 			}
@@ -2825,6 +3124,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_IDLE;
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2848,6 +3150,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				}
 
@@ -2867,6 +3172,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					state = ST_IDLE;
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2888,6 +3196,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					position.y = 220;
 				}
 			}
@@ -2902,6 +3213,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					damage_received = 0;
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2918,6 +3232,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				}
 			}
@@ -2931,6 +3248,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					damage_received = 0; 
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 				}
@@ -2947,6 +3267,9 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				}
 			}
@@ -2954,7 +3277,16 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 			{
 				switch (last_input)
 				{
-				case IN_BLOCK_FINISH:state = ST_IDLE; block_damage = 0; break;
+				case IN_BLOCK_FINISH:
+					state = ST_IDLE;
+					block_damage = 0;
+					if (hit_conected > 0) {
+						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
+					break;
 				}
 			}
 			break;
@@ -2963,7 +3295,16 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 			{
 				switch (last_input)
 				{
-				case IN_BLOCK_FINISH:state = ST_IDLE; block_damage = 0; break;
+				case IN_BLOCK_FINISH:
+					state = ST_IDLE; 
+					block_damage = 0; 
+					if (hit_conected > 0) {
+						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
+					break;
 				}
 			}
 			break;
@@ -2972,7 +3313,16 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 			{
 				switch (last_input)
 				{
-				case IN_DAMAGE_FINISH:state = ST_IDLE; damage_received = 0; break;
+				case IN_DAMAGE_FINISH:
+					state = ST_IDLE; 
+					damage_received = 0;
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
+					if (hit_conected > 0) {
+						hit_conected = 0;
+					}
+					break;
 				}
 			}
 			break;
@@ -2983,10 +3333,15 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				{
 				case IN_VICTORY_FINISH:					
 					state = ST_IDLE;
-					win = 0;
+					win = 3;
 					
 					ResetPlayer();
-					
+					if (hit_conected > 0) {
+						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 				}
 			}
@@ -2999,9 +3354,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_VICTORY2_FINISH:
 
 					state = ST_IDLE;
-					win = 0;
+					win = 3;
 					victorycount++;
 					ResetPlayer();
+					if (hit_conected > 0) {
+						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
+
+					//ResetPlayer();
 					break;
 				}
 			}
@@ -3013,9 +3376,17 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				{
 				case IN_LOSE_FINISH:
 					state = ST_IDLE;
-					App->chunli->win = 0;
+				
+
 					if (victorycount < 2)
 					ResetPlayer();
+					if (hit_conected > 0) {
+						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
+				//	ResetPlayer();
 					break;
 				}
 			}
@@ -3035,7 +3406,7 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 		life = 0;
 	}
 
-	if (life == 0)
+	if (life == 0 && App->chunli->state != ST_VICTORY2 && App->chunli->state != ST_VICTORY2_2 && App->chunli->victorycount != 2)
 	{
 		lose = true;	
 	}
@@ -3048,6 +3419,13 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 void ModuleChunLi2::resetanimations() {
 
 	damage_received = 0;
+
+	sound = 0;
+	WinSoundPlayed = false;
+	DeathSoundPlayed = false;
+	win2.Reset();
+	win = 0;
+	ignore = 0;
 
 	jump_neutral.Reset();
 	jump_forward.Reset();

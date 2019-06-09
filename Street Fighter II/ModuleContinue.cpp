@@ -14,7 +14,7 @@
 #include "ModuleAudio.h"
 #include "ModuleFont.h"
 #include "ModuleUI.h"
-
+#include "ModuleCharacterSelection.h"
 ModuleContinue::ModuleContinue() {
 
 }
@@ -41,6 +41,7 @@ bool ModuleContinue:: Start() {
 	number6 = App->audio->LoadChunk("Assets/Sound/Effects/6.wav");
 	number7 = App->audio->LoadChunk("Assets/Sound/Effects/7.wav");
 	number8 = App->audio->LoadChunk("Assets/Sound/Effects/8.wav");
+	yata = App->audio->LoadChunk("Assets/Sound/Effects/chunLi_yata.wav");
 	number9 = App->audio->LoadChunk("Assets/Sound/Effects/9.wav");
 	gameover = App->audio->LoadChunk("Assets/Sound/Effects/gameover.wav");
 	continuechange= App->audio->LoadChunk("Assets/Sound/Effects/continue-change.wav");
@@ -266,9 +267,9 @@ update_status ModuleContinue::Update() {
 	}
 	
 
-	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
-		
-		App->fade->FadeToBlack(App->continu, App->welcome_page, 1.0f);
+	if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1 || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_START] == 1) {
+		App->audio->PlayChunk(yata, 1);
+		App->fade->FadeToBlack(App->continu, App->selectionScene, 1.0f);
 		
 
 	}
@@ -296,6 +297,7 @@ bool ModuleContinue::CleanUp() {
 	App->audio->UnloadChunk(continuechange);
 	App->audio->UnloadChunk(scream);
 	App->audio->UnloadChunk(gameover);
+	App->audio->UnloadChunk(yata);
 	App->font->UnLoad(font_id);
 	return true;
 }

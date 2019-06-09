@@ -748,17 +748,19 @@ ModuleChunLi::~ModuleChunLi()
 // Load assets
 bool ModuleChunLi::Start()
 {
-	
+	bool ret = true;
 	//Effects
 	LightningKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_yap.wav");
 	WhirlwindKick_effect = App->audio->LoadChunk("Assets/Sound/Effects/chunli_kick.wav");
 	light_damage = App->audio->LoadChunk("Asstes/Sound/Effects/light_attack.wav");
 	medium_damage = App->audio->LoadChunk("Assets/Sound/Effects/medium_attack.wav");
 	high_damage = App->audio->LoadChunk("Assets/Sound/Effects/high_attack.wav");
+	wind = App->audio->LoadChunk("Assets/Sound/Effects/Wind.wav");
 	win_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-laugh.wav");
 	death_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-death.wav");
-
-	bool ret = true;
+	syou = App->audio->LoadChunk("Assets/Sound/Effects/you.wav");
+	swin = App->audio->LoadChunk("Assets/Sound/Effects/win.wav");
+	
 
 	graphics = App->textures->Load("Assets/Images/ChunLi.png"); // arcade version
 	shadow = App->textures->Load("Assets/Images/shadow.png");
@@ -797,8 +799,11 @@ bool ModuleChunLi::CleanUp()
 	App->audio->UnloadChunk(light_damage);
 	App->audio->UnloadChunk(medium_damage);
 	App->audio->UnloadChunk(high_damage);
+	App->audio->UnloadChunk(wind);
 	App->audio->UnloadChunk(win_sound);
 	App->audio->UnloadChunk(death_sound);
+	App->audio->UnloadChunk(syou);
+	App->audio->UnloadChunk(swin);
 
 	return true;
 }
@@ -894,120 +899,227 @@ update_status ModuleChunLi::Update()
 						current_animation = &crouch;					
 						break;
 					case ST_PUNCH_STANDING2:						
-						current_animation = &punch;		
+						current_animation = &punch;	
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						break;
 					case ST_PUNCH_CROUCH2:
-						current_animation = &Crouch_punch;		
+						current_animation = &Crouch_punch;	
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						break;
 					case ST_PUNCH_MEDIUM_CROUCH2:
 						current_animation = &Crouch_medium_punch;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						crouchAttack = true;
 						break;					
 					case ST_PUNCH_HARD_CROUCH2:
 						current_animation = &Crouch_hard_punch;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						crouchAttack = true;
 						break;
 					case ST_KICK_CROUCH2:
 						current_animation = &Crouch_kick;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						crouchAttack = true;
 						break;
 					case ST_KICK_MEDIUM_CROUCH2:
 						current_animation = &Crouch_medium_kick;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						crouchAttack = true;
 						break;
 					case ST_KICK_HARD_CROUCH2:
 						current_animation = &Crouch_hard_kick;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						break;
 					case ST_PUNCH_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_punch;	
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir == true;
 						jump_neutral_logic();
 						break;
 					case ST_PUNCH_MEDIUM_NEUTRAL_JUMP2:
 						current_animation = &jump_forward_punch_medium;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir == true;
 						jump_neutral_logic();
 						break;
 					case ST_PUNCH_HARD_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_punch_hard;
 						onAir == true;
-						App->audio->PlayChunk(attack, 1);
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						jump_neutral_logic();	
 						break;
 					case ST_PUNCH_FORWARD_JUMP2:					
 						current_animation = &jump_forward_punch;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir == true;
 						jump_forward_logic();
 						break;
 					case ST_PUNCH_MEDIUM_FORWARD_JUMP2:
 						current_animation = &jump_forward_punch_medium;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir == true;
 						jump_forward_logic();
 						break;
 					case ST_PUNCH_HARD_FORWARD_JUMP2:
 						current_animation = &jump_forward_punch_hard;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir == true;
 						jump_forward_logic();
 						break;
 					case ST_KICK_FORWARD_JUMP2:
 						current_animation = &jump_forward_kick;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir == true;
 						jump_forward_logic();
 						break;
 					case ST_KICK_MEDIUM_FORWARD_JUMP2:
 						current_animation = &jump_forward_kick_medium;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir == true;
 						jump_forward_logic();
 						break;
 					case ST_KICK_HARD_FORWARD_JUMP2:
 						current_animation = &jump_forward_kick_hard;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir == true;
 						jump_forward_logic();
 						break;
 					case ST_PUNCH_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir == true;
 						jump_backward_logic();
 						break;
 					case ST_PUNCH_MEDIUM_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch_medium;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir == true;
 						jump_backward_logic();
 						break;
 					case ST_PUNCH_HARD_BACKWARD_JUMP2:
 						current_animation = &jump_backward_punch_hard;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir == true;
 						jump_backward_logic();
 						break;
 					case ST_KICK_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir == true;
 						jump_backward_logic();
 						break;
 					case ST_KICK_MEDIUM_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick_medium;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir == true;
 						jump_backward_logic();
 						break;
 					case ST_KICK_HARD_BACKWARD_JUMP2:
 						current_animation = &jump_backward_kick_hard;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						onAir == true;
 						jump_backward_logic();
 						break;
 					case ST_KICK_STANDING2:
 						current_animation = &kick;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						break;
 					case ST_PUNCH_MEDIUM2:
 						current_animation = &punch_medium;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						break;
 					case ST_PUNCH_HARD2:						
 						current_animation = &punch_hard;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						break;
 					case ST_KICK_MEDIUM_STANDING2:
 						current_animation = &kick_medium;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						break;
 					case ST_KICK_HARD_STANDING2:
 						current_animation = &kick_hard;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						break;
 					case ST_LIGHTNINGKICK2:
 						current_animation = &LightningKick;	
@@ -1038,14 +1150,26 @@ update_status ModuleChunLi::Update()
 						break;
 					case ST_KICK_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_kick;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						jump_neutral_logic();
 						break;
 					case ST_KICK_MEDIUM_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_kick_medium;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						jump_neutral_logic();
 						break;
 					case ST_KICK_HARD_NEUTRAL_JUMP2:
 						current_animation = &jump_neutral_kick_hard;
+						if (hit_started == 0) {
+							App->audio->PlayChunk(wind, 1);
+							hit_started++;
+						}
 						jump_neutral_logic();
 						break;
 					case ST_DAMAGE2:
@@ -1124,18 +1248,41 @@ update_status ModuleChunLi::Update()
 							App->UI->Resultinfo = 1;
 						if (victorycount == 0)
 							victorycount++;
+
+						if (sound < 30) {
+							if (sound == 1)
+								App->audio->PlayChunk(syou, 1);
+							sound++;
+						}
+						else if (sound == 30) {
+							App->audio->PlayChunk(swin, 1);
+							sound++;
+						}
 						current_animation = &win1;
 						break;
 					case ST_VICTORY2_2:
 
-						if (App->chunli2->state == ST_LOSE)
-							App->UI->Resultinfo = 1;						
-						current_animation = &win2;
+						if (App->chunli2->state == ST_LOSE) {
+							App->UI->Resultinfo = 1;
+							current_animation = &win2;
+						}		
+
+						
+
 						if (WinSoundPlayed == false) {
 							App->audio->PlayChunk(win_sound, 1);
 							WinSoundPlayed = true;
 						}
 						
+						if (sound < 30) {
+							if (sound == 1)
+								App->audio->PlayChunk(syou, 1);
+							sound++;
+						}
+						else if (sound == 30) {
+							App->audio->PlayChunk(swin, 1);
+							sound++;
+						}
 						if (win2.current_frame < 2) {
 							position.y -= 2;
 						}
@@ -1143,7 +1290,10 @@ update_status ModuleChunLi::Update()
 							position.y += 2;
 						}
 						break;
-					case ST_LOSE2:						
+					case ST_LOSE2:	
+
+						ignore = 1;
+
 						if (SDL_GetTicks() - lose_timer >2000 && App->chunli2->victorycount==0)
 							App->chunli2->win = 1;
 						else if (SDL_GetTicks() - lose_timer > 2000 && App->chunli2->victorycount == 1)
@@ -1799,8 +1949,7 @@ void ModuleChunLi::ResetPlayer() {
 		App->UI->Counter2 = 9;
 		App->UI->Resultinfo = 0;
 	}
-	WinSoundPlayed = false;
-	DeathSoundPlayed = false;
+	
 }
 
 chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
@@ -1814,6 +1963,12 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 		case ST_IDLE2:
 		{
+			if (hit_conected > 0) {
+				hit_conected = 0;
+			}
+			if (hit_started > 0) {
+				hit_started = 0;
+			}
 			switch (last_input)
 
 			{
@@ -1842,6 +1997,12 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 
 		case ST_WALK_FORWARD2:
 		{
+			if (hit_conected > 0) {
+				hit_conected = 0;
+			}
+			if (hit_started> 0) {
+				hit_started = 0;
+			}
 			switch (last_input)
 			{
 			case IN_RIGHT_UP2: state = ST_IDLE2; break;
@@ -1869,6 +2030,12 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 
 		case ST_WALK_BACKWARD2:
 		{
+			if (hit_conected > 0) {
+				hit_conected = 0;
+			}
+			if (hit_started> 0) {
+				hit_started = 0;
+			}
 			switch (last_input)
 			{
 			case IN_LEFT_UP2: state = ST_IDLE2; break;
@@ -1896,6 +2063,12 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 
 		case ST_JUMP_NEUTRAL2:
 		{
+			if (hit_conected > 0) {
+				hit_conected = 0;
+			}
+			if (hit_started > 0) {
+				hit_started = 0;
+			}
 			switch (last_input)
 			{
 			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
@@ -1915,6 +2088,12 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 
 		case ST_JUMP_FORWARD2:
 		{
+			if (hit_conected > 0) {
+				hit_conected = 0;
+			}
+			if (hit_started > 0) {
+				hit_started = 0;
+			}
 			switch (last_input)
 			{
 			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
@@ -1933,6 +2112,12 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 
 		case ST_JUMP_BACKWARD2:
 		{
+			if (hit_conected > 0) {
+				hit_conected = 0;
+			}
+			if (hit_started > 0) {
+				hit_started = 0;
+			}
 			switch (last_input)
 			{
 			case IN_JUMP_FINISH2: state = ST_IDLE2; break;
@@ -1960,14 +2145,20 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_NEUTRAL2; 
-				if (hit_conected = 1) {
+				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			case IN_JUMP_FINISH2: 
 				state = ST_IDLE2; 
-				if (hit_conected = 1) {
+				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -1986,14 +2177,20 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			{
 			case IN_PUNCH_FINISH2:
 				state = ST_JUMP_NEUTRAL2;
-				if (hit_conected > 1) {
+				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			case IN_JUMP_FINISH2: 
 				state = ST_IDLE2; 
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2015,11 +2212,17 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2: 
 				state = ST_IDLE2; 
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2042,12 +2245,18 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2:
 				state = ST_IDLE2; 
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				} 
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			}
 		}
@@ -2068,12 +2277,18 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2: 
 				state = ST_IDLE2;
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				} 
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			}
 		}
@@ -2094,10 +2309,16 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2: 
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				state = ST_IDLE2; break;
 			}
@@ -2119,11 +2340,17 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2: 
 				state = ST_IDLE2; 
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2145,11 +2372,17 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2:
 				state = ST_IDLE2;
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2171,11 +2404,17 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2: 
 				state = ST_IDLE2;
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2197,11 +2436,17 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2: 
 				state = ST_IDLE2;
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2223,11 +2468,17 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2: 
 				state = ST_IDLE2;
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2249,11 +2500,17 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2: 
 				state = ST_IDLE2; 
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2275,11 +2532,17 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2: 
 				state = ST_IDLE2;
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2300,11 +2563,17 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2: 
 				state = ST_IDLE2; 
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2325,11 +2594,17 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2: 
 				state = ST_IDLE2; 
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2351,11 +2626,17 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2: 
 				state = ST_IDLE2; 
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2376,11 +2657,17 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2:
 				state = ST_IDLE2;
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2401,11 +2688,17 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			case IN_JUMP_FINISH2: 
 				state = ST_IDLE2; 
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2427,6 +2720,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			}
 		}
@@ -2434,6 +2730,12 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 
 		case ST_CROUCH2:
 		{
+			if (hit_conected > 0) {
+				hit_conected = 0;
+			}
+			if (hit_started > 0) {
+				hit_started = 0;
+			}
 			switch (last_input)
 			{
 			case IN_CROUCH_UP2: state = ST_IDLE2; break;
@@ -2471,6 +2773,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				crouchAttack = false;
 				break;
 			}
@@ -2493,6 +2798,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_IDLE2;
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				crouchAttack = false;
 				break;
@@ -2517,6 +2825,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				crouchAttack = false;
 				break;
 			}
@@ -2539,6 +2850,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_IDLE2;
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				crouchAttack = false;
 				break;
@@ -2563,6 +2877,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				crouchAttack = false;
 				break;
 			}
@@ -2586,6 +2903,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			}
 		}
@@ -2604,6 +2924,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_IDLE2; 
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					break;
 			}
@@ -2625,6 +2948,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 			}
 		}
@@ -2645,6 +2971,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 			}
 		}
@@ -2663,6 +2992,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					state = ST_IDLE2;
 					if (hit_conected > 0) {
 						hit_conected = 0;
+					}
+					if (hit_started > 0) {
+						hit_started = 0;
 					}
 					
 			}
@@ -2684,6 +3016,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				position.y = 220;
 			}
 		}
@@ -2702,6 +3037,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				state = ST_IDLE2; 
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2725,6 +3063,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			}
 		}
@@ -2741,6 +3082,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			}
 		}
@@ -2756,6 +3100,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			}
 		}
@@ -2769,6 +3116,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				damage_received = 0;
 				if (hit_conected > 0) {
 					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
 				}
 				break;
 			}
@@ -2784,6 +3134,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			}
 		}
@@ -2792,7 +3145,16 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_BLOCK_FINISH2:state = ST_IDLE2; block_damage = 0; break;
+			case IN_BLOCK_FINISH2:
+				state = ST_IDLE2; 
+				block_damage = 0;
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
+				break;
 			}
 		}
 		break;
@@ -2801,7 +3163,16 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_BLOCK_FINISH2:state = ST_IDLE2; block_damage = 0; break;
+			case IN_BLOCK_FINISH2:
+				state = ST_IDLE2; 
+				block_damage = 0; 
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
+				break;
 			}
 		}
 		break;
@@ -2816,6 +3187,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}
+					if (hit_started > 0) {
+						hit_started = 0;
+					}
 					break;
 			}
 		}
@@ -2827,8 +3201,15 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			{
 			case IN_VICTORY_FINISH2:
 				state = ST_IDLE2;
-				win = 0;
+				win = 3;
 				ResetPlayer();
+
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			}
 		}
@@ -2841,9 +3222,15 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			{
 			case IN_VICTORY2_FINISH_2:
 				state = ST_IDLE2;
-				win = 0;
+				win = 3;
 				victorycount++;
-				ResetPlayer();
+				ResetPlayer();			
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
 				break;
 			}
 		}
@@ -2856,9 +3243,16 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			{
 			case IN_LOSE_FINISH2:	
 				state = ST_IDLE2;
-				App->chunli2->win = 0;
-				
-				ResetPlayer();
+				//App->chunli2->win = 0;
+				if (hit_conected > 0) {
+					hit_conected = 0;
+				}
+				if (hit_started > 0) {
+					hit_started = 0;
+				}
+				if(victorycount<2)
+				//ResetPlayer();
+
 				break;
 			}
 		}
@@ -2878,8 +3272,9 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 		life = 0;		
 	}
 	
-	if (life == 0)
-	{		
+
+	if (life == 0 && state!=ST_LOSE2 && App->chunli2->state!=ST_VICTORY && App->chunli2->state != ST_VICTORY2_ && App->chunli2->victorycount!=2)
+	{
 		lose = true;	
 	}
 	else {
@@ -2893,6 +3288,13 @@ void ModuleChunLi::resetanimations() {
 
 	damage_received = 0;
 	
+	win = 0;
+	sound = 0;
+	WinSoundPlayed = false;
+	DeathSoundPlayed = false;
+	win2.Reset();
+	ignore = 0;
+
 	jump_neutral.Reset();
 	jump_forward.Reset();
 	jump_backwards.Reset();
