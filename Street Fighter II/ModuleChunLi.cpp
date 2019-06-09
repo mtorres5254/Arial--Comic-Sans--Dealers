@@ -1388,6 +1388,10 @@ void ModuleChunLi::positionlimits() {
 		position.x = App->chunli2->position.x + SCREEN_WIDTH - 130;
 	}
 
+	if (leftLimit == true && RightLimit == true && state == ST_JUMP_FORWARD2 && state == ST_JUMP_BACKWARD2) {
+		speedX = -1;
+	}
+
 }
 
 void ModuleChunLi::colliders_and_blit(Animation* current_animation) {
@@ -1447,7 +1451,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 			if (position.x < App->chunli2->position.x)
 				position.x -= 1;
 			else if (position.x > App->chunli2->position.x)
-				App->chunli2->position.x -= 1;
+				position.x += 1;
 					
 		}
 
@@ -1463,7 +1467,6 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 			move = false;
 		}
 	}	
-
 
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_ENEMY_SHOT)
 	{

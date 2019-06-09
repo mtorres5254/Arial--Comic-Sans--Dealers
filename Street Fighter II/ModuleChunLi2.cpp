@@ -1623,6 +1623,8 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 	
 	}
 
+
+
 	if (c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_PLAYER_ATTACK)
 	{
 

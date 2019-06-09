@@ -3,11 +3,6 @@ layout: default
 ---
 
 
-![master](https://github.com/mtorres5254/Arial--Comic-Sans--Dealers/blob/master/Wiki/Logo/Street_Fighter_II_The_World_Warrior_Logo.png)
-
-
-
-
 #### Introduction
 
 We are a small team of 4 studients of Videogames Development carrer in UPC of Terrassa. As a final proyect for the first year
