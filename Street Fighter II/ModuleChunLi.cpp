@@ -1779,9 +1779,7 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 		App->slow->StartSlowdown(2000, 50);
 		lose = false;
 	}
-	
 
-	//OMAY GOT, THERE IS NO LOGC HOW CAN THIS BE THIS POSSIBLE, WHAT A MASTER SKILL OF PROGRAMATION
 
 	return true;
 }

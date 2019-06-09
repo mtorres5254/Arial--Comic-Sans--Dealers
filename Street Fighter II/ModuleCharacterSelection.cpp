@@ -87,7 +87,7 @@ bool ModuleCharacterSelection::CleanUp()
 
 update_status ModuleCharacterSelection::Update()
 {
-	if (VersusScrenn == false) {
+
 		SDL_Rect MapDest = { 65,20,250,110 };
 		SDL_Rect CharacterDest = { 117,140,150,75 }; //37 x 37
 
@@ -216,33 +216,12 @@ update_status ModuleCharacterSelection::Update()
 			App->render->RectBlit2Sym(graphics, &ChunLi, &Character2Dest);
 			App->render->RectBlit2(graphics, &Plane, &PlaneDest);
 			App->audio->PlayChunk(plane_effect, 1);
-			//App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
-			VersusScrenn = true;
+			App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
 		}
 
 		App->render->RectBlit2(graphics, &P1Pointer.GetCurrentFrame(), &P1PpointerDest);
 		App->render->RectBlit2(graphics, &P2Pointer.GetCurrentFrame(), &P2PointerDest);
-	}
-
-	if (VersusScrenn == true) {
-		/*if (VersusTime == false) {
-			App->audio->StopMusic(300);
-			App->audio->PlayChunk(versus_effect, 1);
-			VersusTime = true;
-			time = SDL_GetTicks();
-	    }
-
-		versus = { 0,0,390,288 };
-
-		if (time + 5000 < SDL_GetTicks()) {
-			App->render->RectBlit(versus, versus_graphics);
-		}
-
-		if (time + 10000 > SDL_GetTicks()) {
-			App->fade->FadeToBlack(this, App->scene_dhalsim, 2.0f);
-			App->audio->StopMusic(250);
-		}*/
-	}
+	
 	
 	if (App->input->keyboard[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_START] == KEY_DOWN) {
 		App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
