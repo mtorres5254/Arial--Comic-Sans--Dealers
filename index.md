@@ -47,5 +47,4 @@ https://github.com/Avilgor
 
 https://github.com/juanha2
 
-![foto](https://github.com/mtorres5254/Arial--Comic-Sans--Dealers/blob/master/Wiki/Logo/Foto%20equip.jpg)
-<img src="https://github.com/mtorres5254/Arial--Comic-Sans--Dealers/blob/master/Wiki/Logo/Foto%20equip.jpg">
+<img src="https://github.com/mtorres5254/Arial--Comic-Sans--Dealers/blob/master/Wiki/Logo/Foto%20equip.jpg" width = "400" height = "341">
