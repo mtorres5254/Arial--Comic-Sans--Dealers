@@ -770,8 +770,8 @@ void ModuleUI::calculateBonus(int player)
 	{
 		p1life = App->chunli->life*3*10;
 		p1time = time * 100;
-		//LOG("time: %d", p1time);
-		//LOG("life: %d", p1life);
+		LOG("time: %d", p1time);
+		LOG("life: %d", p1life);
 	}
 	else
 	{
@@ -784,7 +784,7 @@ void ModuleUI::calculateBonus(int player)
 
 void ModuleUI::showScreen(int x, int y,int num)
 {
-	int fiveScore = num / 10000 % 10;
+	int fiveScore = num / 10000;
 	int fourScore = num / 1000 % 10;
 	int threeScore = num / 100 % 10;
 	int twoScore = num / 10 % 10;
@@ -793,136 +793,37 @@ void ModuleUI::showScreen(int x, int y,int num)
 	switch (oneScore)
 	{
 	case 9:
-		App->font->BlitText(x- 70, y, font_id, "9");
+		App->font->BlitText(x, y, font_id, "9");
 		break;
 	case 8:
-		App->font->BlitText(x- 70, y, font_id, "8");
+		App->font->BlitText(x, y, font_id, "8");
 		break;
 	case 7:
-		App->font->BlitText(x- 70, y, font_id, "7");
+		App->font->BlitText(x, y, font_id, "7");
 		break;
 	case 6:
-		App->font->BlitText(x- 70, y, font_id, "6");
+		App->font->BlitText(x, y, font_id, "6");
 		break;
 	case 5:
-		App->font->BlitText(x- 70, y, font_id, "5");
+		App->font->BlitText(x, y, font_id, "5");
 		break;
 	case 4:
-		App->font->BlitText(x-70, y, font_id, "4");
+		App->font->BlitText(x, y, font_id, "4");
 		break;
 	case 3:
-		App->font->BlitText(x-70, y, font_id, "3");
+		App->font->BlitText(x, y, font_id, "3");
 		break;
 	case 2:
-		App->font->BlitText(x-70, y, font_id, "2");
+		App->font->BlitText(x, y, font_id, "2");
 		break;
 	case 1:
-		App->font->BlitText(x-70, y, font_id, "1");
+		App->font->BlitText(x, y, font_id, "1");
 		break;
 	case 0:
-		App->font->BlitText(x - 70, y, font_id, "0");			
+		App->font->BlitText(x, y, font_id, "0");			
 		break;
 	}
 	switch (twoScore)
-	{
-	case 9:
-		App->font->BlitText(x-56, y, font_id, "9");
-		break;
-	case 8:
-		App->font->BlitText(x- 56, y, font_id, "8");
-		break;
-	case 7:
-		App->font->BlitText(x- 56, y, font_id, "7");
-		break;
-	case 6:
-		App->font->BlitText(x- 56, y, font_id, "6");
-		break;
-	case 5:
-		App->font->BlitText(x- 56, y, font_id, "5");
-		break;
-	case 4:
-		App->font->BlitText(x- 56, y, font_id, "4");
-		break;
-	case 3:
-		App->font->BlitText(x- 56, y, font_id, "3");
-		break;
-	case 2:
-		App->font->BlitText(x- 56, y, font_id, "2");
-		break;
-	case 1:
-		App->font->BlitText(x- 56, y, font_id, "1");
-		break;
-	case 0:
-		App->font->BlitText(x - 56, y, font_id, "0");			
-		break;
-	}
-	switch (threeScore)
-	{
-	case 9:
-		App->font->BlitText(x- 42, y, font_id, "9");
-		break;
-	case 8:
-		App->font->BlitText(x- 42, y, font_id, "8");
-		break;
-	case 7:
-		App->font->BlitText(x- 42, y, font_id, "7");
-		break;
-	case 6:
-		App->font->BlitText(x- 42, y, font_id, "6");
-		break;
-	case 5:
-		App->font->BlitText(x- 42, y, font_id, "5");
-		break;
-	case 4:
-		App->font->BlitText(x- 42, y, font_id, "4");
-		break;
-	case 3:
-		App->font->BlitText(x- 42, y, font_id, "3");
-		break;
-	case 2:
-		App->font->BlitText(x- 42, y, font_id, "2");
-		break;
-	case 1:
-		App->font->BlitText(x- 42, y, font_id, "1");
-		break;
-	case 0:
-		App->font->BlitText(x - 42, y, font_id, "0");		
-		break;
-	}
-	switch (fourScore)
-	{
-	case 9:
-		App->font->BlitText(x - 28, y, font_id, "9");
-		break;
-	case 8:
-		App->font->BlitText(x - 28, y, font_id, "8");
-		break;
-	case 7:
-		App->font->BlitText(x - 28, y, font_id, "7");
-		break;
-	case 6:
-		App->font->BlitText(x - 28, y, font_id, "6");
-		break;
-	case 5:
-		App->font->BlitText(x - 28, y, font_id, "5");
-		break;
-	case 4:
-		App->font->BlitText(x - 28, y, font_id, "4");
-		break;
-	case 3:
-		App->font->BlitText(x - 28, y, font_id, "3");
-		break;
-	case 2:
-		App->font->BlitText(x - 28, y, font_id, "2");
-		break;
-	case 1:
-		App->font->BlitText(x - 28, y, font_id, "1");
-		break;
-	case 0:
-		App->font->BlitText(x - 28, y, font_id, "0");	
-		break;
-	}
-	switch (fiveScore)
 	{
 	case 9:
 		App->font->BlitText(x - 14, y, font_id, "9");
@@ -940,7 +841,7 @@ void ModuleUI::showScreen(int x, int y,int num)
 		App->font->BlitText(x - 14, y, font_id, "5");
 		break;
 	case 4:
-		App->font->BlitText(x - 14, y, font_id, "4");
+		App->font->BlitText(x- 42, y, font_id, "4");
 		break;
 	case 3:
 		App->font->BlitText(x - 14, y, font_id, "3");
@@ -949,10 +850,109 @@ void ModuleUI::showScreen(int x, int y,int num)
 		App->font->BlitText(x - 14, y, font_id, "2");
 		break;
 	case 1:
-		App->font->BlitText(x - 14, y, font_id, "1");
+		App->font->BlitText(x- 14, y, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(x - 14, y, font_id, "0");
+		break;
+	}
+	switch (threeScore)
+	{
+	case 9:
+		App->font->BlitText(x- 28, y, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(x- 28, y, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(x- 28, y, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(x- 28, y, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(x- 28, y, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(x- 28, y, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(x- 28, y, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(x- 28, y, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(x- 28, y, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(x - 28, y, font_id, "0");		
+		break;
+	}
+	switch (fourScore)
+	{
+	case 9:
+		App->font->BlitText(x - 42, y, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(x - 42, y, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(x - 42, y, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(x - 42, y, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(x - 42, y, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(x - 42, y, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(x - 42, y, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(x - 42, y, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(x - 42, y, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(x - 42, y, font_id, "0");
+		break;
+	}
+	switch (fiveScore)
+	{
+	case 9:
+		App->font->BlitText(x - 56, y, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(x - 56, y, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(x - 56, y, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(x - 56, y, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(x - 56, y, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(x - 56, y, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(x-56, y, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(x-56, y, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(x-56, y, font_id, "1");
 		break;
 	case 0:		
-		App->font->BlitText(x - 14, y, font_id, "0");				
+		//App->font->BlitText(x - 14, y, font_id, "0");				
 		break;
 	}
 	/*switch (sixScore)
