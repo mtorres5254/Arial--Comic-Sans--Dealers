@@ -15,6 +15,7 @@
 #include "ModuleCombos.h"
 #include "ModuleSlowdown.h"
 #include "ModuleFadeToBlack.h"
+#include "ModuleLoseScene.h"
 
 
 
@@ -1307,6 +1308,14 @@ update_status ModuleChunLi::Update()
 							DeathSoundPlayed = true;
 						}
 
+						if (SDL_GetTicks() - lose_timer > 9000 && App->chunli2->state==ST_VICTORY)
+						App->fade->FadeToBlack(App->UI, App->UI, 2.0f);
+
+						else if (SDL_GetTicks() - lose_timer > 9000 && App->chunli2->state == ST_VICTORY2_) {
+							App->audio->StopMusic(250);
+							App->fade->FadeToBlack(App->scene_dhalsim, App->lose_scene, 2.0f);
+						}
+						
 						if (position.x < App->chunli2->position.x)
 							position.x -= 3;
 						else
@@ -3252,9 +3261,8 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				if (hit_started > 0) {
 					hit_started = 0;
 				}
-				if(victorycount<2)
-				//ResetPlayer();
-
+				
+				
 				break;
 			}
 		}

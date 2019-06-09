@@ -15,7 +15,7 @@
 #include "ModuleCombos.h"
 #include "ModuleSlowdown.h"
 #include"ModuleFadeToBlack.h"
-
+#include "ModuleLoseScene.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
@@ -1463,6 +1463,15 @@ update_status ModuleChunLi2::Update()
 						{
 							App->audio->PlayChunk(death_sound, 1);
 							DeathSoundPlayed = true;
+						}
+
+
+						if (SDL_GetTicks() - lose_timer > 9000 && App->chunli->state == ST_VICTORY2)
+							App->fade->FadeToBlack(App->UI, App->UI, 2.0f);
+
+						else if (SDL_GetTicks() - lose_timer > 9000 && App->chunli->state == ST_VICTORY2_2) {
+							App->audio->StopMusic(250);
+							App->fade->FadeToBlack(App->scene_dhalsim, App->lose_scene, 2.0f);
 						}
 
 						if (position.x < App->chunli->position.x)

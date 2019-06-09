@@ -801,6 +801,7 @@ void ModuleUI::Result()
 					showScreen(SCREEN_WIDTH / 2 + 75, 115, aux);
 				}*/
 			}
+
 		}
 		break;
 	default:
