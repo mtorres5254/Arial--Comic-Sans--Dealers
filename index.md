@@ -17,7 +17,7 @@ The success of Street Fighter II is credited with popularizing the fighting game
 
 You can watch our first video gameplay here!
 
-
+<video src="video.mp4" width="1080" heigth="1024"></video>
 
 ### Release
 
