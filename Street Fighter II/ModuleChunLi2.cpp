@@ -1933,7 +1933,7 @@ void ModuleChunLi2::internal_input(p2Qeue<chunli_inputs>& inputs)
 	}
 	if (lose_timer > 0)
 	{
-		if (SDL_GetTicks() - lose_timer > 4000)
+		if (SDL_GetTicks() - lose_timer > 8000)
 		{
 			inputs.Push(IN_LOSE_FINISH);
 			lose_timer = 0;

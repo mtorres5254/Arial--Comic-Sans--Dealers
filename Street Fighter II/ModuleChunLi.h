@@ -345,6 +345,9 @@ public:
 	bool right = false;
 	bool right1 = false;
 	bool right2 = false;
+	bool victoryRound1 = false;
+	bool victoryRound2 = false;
+	//int bonusPoints = 0;
 
 };
 
