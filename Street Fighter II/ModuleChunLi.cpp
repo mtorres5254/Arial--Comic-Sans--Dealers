@@ -1443,7 +1443,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 			if (position.x < App->chunli2->position.x)
 				position.x -= 1;
 			else if (position.x > App->chunli2->position.x)
-				position.x += 1;
+				App->chunli2->position.x -= 1;
 					
 		}
 
