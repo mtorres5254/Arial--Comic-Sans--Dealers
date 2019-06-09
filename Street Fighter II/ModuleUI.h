@@ -51,7 +51,8 @@ public:
 	Mix_Chunk* s3;
 	Mix_Chunk* sFight;
 
-
+	int timer = 0;
+	bool round = false;
 	int victorycount=0;
 	int victorycount1 = 0;
 	int font_id;

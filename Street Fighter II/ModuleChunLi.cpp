@@ -1543,7 +1543,7 @@ void ModuleChunLi::OnCollision(Collider* c1, Collider* c2) {
 bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 {	
 	
-	if (App->chunli2->life > 0) {
+	if (App->chunli2->life > 0 && App->UI->round == false) {
 		//Key up
 		if (App->input->keyboard[SDL_SCANCODE_S] == KEY_UP) {
 			inputs.Push(IN_CROUCH_UP2);
@@ -1694,10 +1694,10 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 			}
 
 			if (App->combo->CheckLightingKickP1() == true) {
-				//inputs.Push(IN_LIGHTINGKICK2);
+				inputs.Push(IN_LIGHTINGKICK2);
 			}
 			if (App->combo->CheckWhirlwindKickP1() == true) {
-				//inputs.Push(IN_WHIRLWINDKICK2);
+				inputs.Push(IN_WHIRLWINDKICK2);
 			}
 
 			//Axis

@@ -182,33 +182,40 @@ void ModuleUI::Counter()
 	if (timenow > 0)
 	{
 		if(App->chunli->lose == false && App->chunli2->lose == false)
+
 		if (SDL_GetTicks() - timenow > 1000) 
-		{			
-			time--;
-			
-			Counter1--;
-			if (Counter1 == -1) {
-				Counter1 = 9;
-				Counter2--;
+		{		
+			if (!round) {
+				time--;
 
-				if (Counter2 <= 0) {
-					Counter2 = 0;
+				Counter1--;
+				if (Counter1 == -1) {
+					Counter1 = 9;
+					Counter2--;
+
+					if (Counter2 <= 0) {
+						Counter2 = 0;
+					}
+
 				}
-
-			}		
-			timenow = SDL_GetTicks();		
+				timenow = SDL_GetTicks();
+			}
+				
 		}
 	}
-	if (Counter2 == 9 && Counter1 == 9 && (App->chunli->life > 0 && App->chunli2->life > 0)) {
-		if (App->chunli->victorycount == 0 && App->chunli2->victorycount == 0) {
+	if (time==99 && (App->chunli->life > 0 && App->chunli2->life > 0)) {
+		/*
+		if (App->chunli->victorycount == 0 && App->chunli2->victorycount == 0 && timer <120) {
 			App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 1");
 			App->font->BlitText(SCREEN_WIDTH / 2 - 47, 115, font2, "BATTLE 01");
-		}
-		/*
-		else  if ((App->chunli->victorycount == 1 && App->chunli2->victorycount != 1)
+			round = true;
+			timer++;
+		}		
+		else if ((App->chunli->victorycount == 1 && App->chunli2->victorycount != 1)
 			|| (App->chunli->victorycount != 1 && App->chunli2->victorycount == 1)) {
 			App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 2");
 			App->font->BlitText(SCREEN_WIDTH / 2 - 47, 115, font2, "BATTLE 01");
+			round = true;
 		}
 		else  if (App->chunli->victorycount == 1 && App->chunli2->victorycount == 1) {
 			App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 3");
@@ -217,9 +224,15 @@ void ModuleUI::Counter()
 		else {
 			Counter1 = 9;
 			Counter2 = 9;
-		}*/
+		}
+		else if (timer > 120) {
+			round == false;
+		}
+		*/
+	}	
+	else {
+		round = false;
 	}
-
 
 	switch (Counter2)
 	{
