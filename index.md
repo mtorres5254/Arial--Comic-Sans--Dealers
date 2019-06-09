@@ -44,7 +44,7 @@ https://github.com/juanha2
 
 <div class="figure">
   <source>
-<img src="Wiki/Logo/Foto%20equip.jpg" width = "800" height = "700" class ="inline"></img>
+<img src="Wiki/Logo/Foto%20equip.jpg" width = "800" height = "700" class ="inline">
 
 <p>
 <H1>Video gameplay</H1>
