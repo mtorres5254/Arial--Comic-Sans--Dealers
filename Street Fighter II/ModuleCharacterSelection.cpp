@@ -76,15 +76,20 @@ update_status ModuleCharacterSelection::Update()
 {
 	SDL_Rect MapDest = { 65,20,250,110 };
 	SDL_Rect CharacterDest = { 117,140,150,75 }; //37 x 37
+
+	SDL_Rect Character2;
+	SDL_Rect Character2Dest = { 309,134,75,75 };
+
+	SDL_Rect Character1;
+	SDL_Rect Character1Dest = { 10,134,75,75 };
+
 	App->render->DrawQuad({ 0,0,SCREEN_WIDTH,SCREEN_HEIGHT }, 0, 0, 108, 255);
 	App->render->RectBlit2(graphics, &Map, &MapDest);
 	App->render->RectBlit2(graphics, &Characters, &CharacterDest);
 
 	//P1 character slector
 	if (P1selected == false) {
-		
-		SDL_Rect Character1;
-		SDL_Rect Character1Dest = {10,134,75,75};
+
 
 		if (App->input->keyboard[SDL_SCANCODE_W] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN || App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
 			if (P1PpointerDest.y == 171) { P1PpointerDest.y = 134; App->audio->PlayChunk(character_effect, 1); }
@@ -132,9 +137,6 @@ update_status ModuleCharacterSelection::Update()
 
 	//P2 character slector
 	if (P2selected == false) {
-
-		SDL_Rect Character2;
-		SDL_Rect Character2Dest = {309,134,75,75};
 
 		if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN || App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
 			if (P2PointerDest.y == 171) { P2PointerDest.y = 134; App->audio->PlayChunk(character_effect, 1); }
@@ -185,6 +187,10 @@ update_status ModuleCharacterSelection::Update()
 		App->render->RectBlit2(graphics, &Plane, &PlaneDest);
 		App->audio->PlayChunk(plane_effect, 1);
 		App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
+
+		App->render->RectBlit2Sym(graphics, &Character2, &Character2Dest);
+		App->render->RectBlit2(graphics, &Character1, &Character1Dest);
+
 		App->audio->StopMusic(250);
 	}
 
