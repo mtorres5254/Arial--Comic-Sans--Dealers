@@ -3,7 +3,7 @@ layout: default
 ---
 
 
-![Logo](https://github.com/mtorres5254/Arial--Comic-Sans--Dealers/blob/master/Wiki/Logo/Street_Fighter_II_The_World_Warrior_Logo.png)
+![master](https://github.com/mtorres5254/Arial--Comic-Sans--Dealers/blob/master/Wiki/Logo/Street_Fighter_II_The_World_Warrior_Logo.png)
 
 
 

@@ -1495,7 +1495,7 @@ update_status ModuleChunLi2::Update()
 							position.y -= 6;
 						}
 						else if ( position.y<=225) {
-							position.y += 5;
+							position.y += 7;
 						}
 						
 
