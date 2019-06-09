@@ -48,4 +48,4 @@ https://github.com/Avilgor
 https://github.com/juanha2
 
 <div class="figure">
-<img src="Wiki/Logo/Foto%20equip.jpg" width = "400" height = "341">
+<td><img src="Wiki/Logo/Foto%20equip.jpg" width = "400" height = "341" class ="inline"></tg>
