@@ -225,24 +225,16 @@ void ModuleUI::Counter()
 				if (App->chunli->victorycount == 1 && App->chunli2->victorycount == 1)
 					App->audio->PlayChunk(s3, 1);
 			}
-			if (timer < 100) {
-				if (App->chunli->victorycount == 0 && App->chunli2->victorycount == 0)
-					App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 1");
-				if ((App->chunli->victorycount == 1 && App->chunli2->victorycount == 0) || (App->chunli->victorycount == 0 && App->chunli2->victorycount == 1))
-					App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 2");
-				if (App->chunli->victorycount == 1 && App->chunli2->victorycount == 1)
-					App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 3");
-
-			}
 			if (timer == 100) {
 				App->audio->PlayChunk(sFight, 1);
-
 			}		
-			if (timer >= 100) {
-				App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font2, "FIGHT!");
-			}
 			
-			
+			if (App->chunli->victorycount == 0 && App->chunli2->victorycount == 0)
+			App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 1");
+			if ((App->chunli->victorycount == 1 && App->chunli2->victorycount == 0)||(App->chunli->victorycount == 0 && App->chunli2->victorycount == 1))
+				App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 2");
+			if (App->chunli->victorycount == 1 && App->chunli2->victorycount == 1)
+				App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 3");
 
 
 			App->font->BlitText(SCREEN_WIDTH / 2 - 47, 115, font2, "BATTLE 01");

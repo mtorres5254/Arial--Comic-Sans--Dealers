@@ -1917,7 +1917,7 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs2>& inputs)
 	if (victory_timer > 0)
 	{
 		victoryRound1 = true;
-		if (SDL_GetTicks() - victory_timer > 8000)
+		if (SDL_GetTicks() - victory_timer > 8100)
 		{
 			inputs.Push(IN_VICTORY_FINISH2);
 			victory_timer = 0;
