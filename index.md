@@ -8,7 +8,7 @@ layout: default
 
 
 
-# Introduction
+#### Introduction
 
 We are a small team of 4 studients of Videogames Development carrer in UPC of Terrassa. As a final proyect for the first year
 we made a little tribute to Capcom's game "Street Fighter 2" (Arcade version).
@@ -18,7 +18,7 @@ In our version you will be able to play a versus game. Both players using Chun L
 ### Video Gameplay 
 
 
-## Release
+### Release
 [Latest Release](https://github.com/mtorres5254/Arial--Comic-Sans--Dealers/releases)
 
 * * *
