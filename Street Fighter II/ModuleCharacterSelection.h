@@ -38,16 +38,25 @@ public:
 	SDL_Rect Zangief;
 	SDL_Rect ChunLi;
 
+	SDL_Rect versus;
+
 	bool P1selected = false;
 	bool P2selected = false;
+	bool VersusScrenn = false;
+	bool VersusTime = false;
+
+	Uint32 time;
 
 	SDL_Texture* graphics = nullptr;
+	SDL_Texture* versus_graphics = nullptr;
 
 	Mix_Music* music;
 
 	Mix_Chunk* character_effect;
 	Mix_Chunk* map_effect;
 	Mix_Chunk* plane_effect;
+
+	Mix_Chunk* versus_effect;
 };
 
 #endif 
