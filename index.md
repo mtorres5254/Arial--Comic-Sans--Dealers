@@ -17,7 +17,7 @@ The success of Street Fighter II is credited with popularizing the fighting game
 
 You can watch our first video gameplay here!
 
-<video src="video.mp4" width="1080" heigth="1024"></video>
+<iframe width="510" heigt="412" src="https://www.youtube.com/watch?v=RxJETsIhQ-A" frameborder="0" allowfullscreen></iframe>
 
 ### Release
 
@@ -48,4 +48,5 @@ https://github.com/Avilgor
 https://github.com/juanha2
 
 <div class="figure">
+  <source>
 <img src="Wiki/Logo/Foto%20equip.jpg" width = "800" height = "700" class ="inline">
