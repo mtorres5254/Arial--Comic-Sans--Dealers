@@ -318,16 +318,19 @@ public:
 	Uint32 victory_timer = 0;
 	Uint32 victory2_timer = 0;
 	Uint32 lose_timer = 0;
+	bool victoryRound1 = false;
+	bool victoryRound2 = false;
+
 	private:
 
-
-		bool left = false;
-		bool left1 = false;
-		bool left2 = false;
-		bool right = false;
-		bool right1 = false;
-		bool right2 = false;
+	bool left = false;
+	bool left1 = false;
+	bool left2 = false;
+	bool right = false;
+	bool right1 = false;
+	bool right2 = false;
 	int force = 0;
+	
 
 };
 
