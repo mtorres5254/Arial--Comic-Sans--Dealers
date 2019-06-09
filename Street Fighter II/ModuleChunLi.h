@@ -273,7 +273,8 @@ public:
 	Mix_Chunk* medium_damage;
 	Mix_Chunk* high_damage;
 	Mix_Chunk* wind;
-
+	Mix_Chunk* syou;
+	Mix_Chunk* swin;
 	Mix_Chunk* win_sound;
 	Mix_Chunk* death_sound;
 
@@ -286,10 +287,10 @@ public:
 	bool GodMode = false;
 	int win=0;
 	bool lose = false;
-
+	int ignore = 0;
 	bool death = false;
 	bool onAir = false;
-
+	int sound = 0;
 	int PivotX = 0;
 	int PivotY = 0;
 	int dmg = 0;
@@ -346,7 +347,8 @@ public:
 	bool right = false;
 	bool right1 = false;
 	bool right2 = false;
-
+	bool victoryRound1 = false;
+	bool victoryRound2 = false;
 };
 
 #endif

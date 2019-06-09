@@ -257,6 +257,8 @@ public:
 	Mix_Chunk* wind;
 
 	Mix_Chunk* win_sound;
+	Mix_Chunk* syou;
+	Mix_Chunk* swin;
 	Mix_Chunk* death_sound;
 
 	bool DeathSoundPlayed = false;
@@ -271,11 +273,12 @@ public:
 	bool leftLimit = false;
 	bool RightLimit = false;
 	bool onAir = false;
-
+	int sound = 0;
 	int PivotX = 0; 
 	int PivotY = 0;
 	int dmg = 0;
 
+	int ignore = 0;
 	int DeathCount = 0;
 	int ActiveDeath = 0;
 	int victorycount = 0;
@@ -316,16 +319,19 @@ public:
 	Uint32 victory_timer = 0;
 	Uint32 victory2_timer = 0;
 	Uint32 lose_timer = 0;
+	bool victoryRound1 = false;
+	bool victoryRound2 = false;
+
 	private:
 
-
-		bool left = false;
-		bool left1 = false;
-		bool left2 = false;
-		bool right = false;
-		bool right1 = false;
-		bool right2 = false;
+	bool left = false;
+	bool left1 = false;
+	bool left2 = false;
+	bool right = false;
+	bool right1 = false;
+	bool right2 = false;
 	int force = 0;
+	
 
 };
 

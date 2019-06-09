@@ -698,10 +698,46 @@ void ModuleUI::Result() {
 	switch (Resultinfo)
 	{
 	case 1:
-		App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_id, "p1 wins");
+		if (SDL_GetTicks() - App->chunli2->lose_timer < 4000)
+		{
+			App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_id, "p1 wins");
+		}		
+		if (App->chunli->victoryRound1 == true || App->chunli->victoryRound2 == true)
+		{
+			if (SDL_GetTicks() - App->chunli2->lose_timer > 4000)
+			{
+				App->font->BlitText(SCREEN_WIDTH / 2 - 100, 65, font_id, "time");
+			}
+			if (SDL_GetTicks() - App->chunli2->lose_timer > 5000)
+			{
+				App->font->BlitText(SCREEN_WIDTH / 2 - 100, 85, font_id, "life");
+			}
+			if (SDL_GetTicks() - App->chunli2->lose_timer > 6000)
+			{
+				App->font->BlitText(SCREEN_WIDTH / 2 - 100, 105, font_id, "bonus");
+			}
+		}
 		break;
 	case 2:
-		App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_id, "p2 wins");
+		if (SDL_GetTicks() - App->chunli->lose_timer < 4000)
+		{
+			App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_id, "p2 wins");
+		}
+		if (App->chunli2->victoryRound1 == true || App->chunli2->victoryRound2 == true)
+		{
+			if (SDL_GetTicks() - App->chunli->lose_timer > 4000)
+			{
+				App->font->BlitText(SCREEN_WIDTH / 2 - 100, 65, font_id, "time");
+			}
+			if (SDL_GetTicks() - App->chunli->lose_timer > 5000)
+			{
+				App->font->BlitText(SCREEN_WIDTH / 2 - 100, 85, font_id, "life");
+			}
+			if (SDL_GetTicks() - App->chunli->lose_timer > 6000)
+			{
+				App->font->BlitText(SCREEN_WIDTH / 2 - 100, 105, font_id, "bonus");
+			}
+		}
 		break;
 	default:
 		App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_id, " ");

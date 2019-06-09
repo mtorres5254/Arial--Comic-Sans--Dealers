@@ -17,7 +17,6 @@
 #include"ModuleFadeToBlack.h"
 
 
-
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModuleChunLi2::ModuleChunLi2()
@@ -765,7 +764,8 @@ bool ModuleChunLi2::Start()
 	wind = App->audio->LoadChunk("Assets/Sound/Effects/wind.wav");
 	win_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-laugh.wav");
 	death_sound = App->audio->LoadChunk("Assets/Sound/Effects/chunli-death.wav");
-	
+	syou= App->audio->LoadChunk("Assets/Sound/Effects/you.wav");
+	swin = App->audio->LoadChunk("Assets/Sound/Effects/win.wav");
 
 	//Start functions to reset player
 	ResetPlayer();
@@ -773,7 +773,8 @@ bool ModuleChunLi2::Start()
 	DeathCount = 0;
 	victorycount = 0;
 	force = 0;
-	
+	victoryRound1 = false;
+	victoryRound2 = false;
 	return ret;
 }
 
@@ -799,7 +800,8 @@ bool ModuleChunLi2::CleanUp()
 	App->audio->UnloadChunk(wind);
 	App->audio->UnloadChunk(win_sound);
 	App->audio->UnloadChunk(death_sound);
-
+	App->audio->UnloadChunk(syou);
+	App->audio->UnloadChunk(swin);
 	return true;
 }
 
@@ -1405,16 +1407,40 @@ update_status ModuleChunLi2::Update()
 						if(App->chunli->state==ST_LOSE2)
 						App->UI->Resultinfo = 2;
 						if(victorycount==0)
-							victorycount++;					
+							victorycount++;		
+
+						if (sound < 30) {
+							if (sound == 1)
+								App->audio->PlayChunk(syou, 1);
+							sound++;
+						}
+						else if (sound == 30) {
+							App->audio->PlayChunk(swin, 1);
+							sound++;
+						}
 							current_animation = &win1;
 						break;
 					case ST_VICTORY2_:
-						if (App->chunli->state == ST_LOSE2)
+						if (App->chunli->state == ST_LOSE2) {
+
 							App->UI->Resultinfo = 2;
-						current_animation = &win2;
+							current_animation = &win2;
+						}
+
 						if (WinSoundPlayed == false) {
-							App->audio->PlayChunk(win_sound, 1);
+							App->audio->PlayChunk(win_sound, 1);								
+
 							WinSoundPlayed = true;
+						}
+
+						if (sound < 30) {
+							if (sound == 1)
+								App->audio->PlayChunk(syou, 1);
+							sound++;
+						}
+						else if (sound == 30) {
+							App->audio->PlayChunk(swin, 1);
+							sound++;
 						}
 
 						if (win2.current_frame < 2) {
@@ -1425,6 +1451,8 @@ update_status ModuleChunLi2::Update()
 						}
 						break;	
 					case ST_LOSE:
+
+						ignore = 1;
 
 						if (SDL_GetTicks() - lose_timer > 2000 && App->chunli->victorycount == 0)
 							App->chunli->win = 1;
@@ -1590,12 +1618,12 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 			App->particle->AddParticle(App->particle->hit, position.x - PivotX + 30, position.y - 70, COLLIDER_NONE, 0);
 		}
 		
-		else if (state == ST_CROUCH && (right || right1 || right2) && position.x < App->chunli->position.x + App->chunli->PivotX) {
+		else if (state == ST_CROUCH && (right || right1 || right2) && position.x > App->chunli->position.x + App->chunli->PivotX) {
 			block_damage = 2;
 			App->particle->AddParticle(App->particle->hit, position.x - PivotX , position.y - 70, COLLIDER_NONE, 0);
 		}
 
-		else if (state == ST_CROUCH && (left || left1 || left2) && position.x > App->chunli->position.x + App->chunli->PivotX) {
+		else if (state == ST_CROUCH && (left || left1 || left2) && position.x < App->chunli->position.x + App->chunli->PivotX) {
 			block_damage = 2;
 			App->particle->AddParticle(App->particle->hit, position.x - PivotX+30, position.y - 70, COLLIDER_NONE, 0);
 		}
@@ -2011,23 +2039,27 @@ void ModuleChunLi2::internal_input(p2Qeue<chunli_inputs>& inputs)
 
 	if (victory_timer > 0)
 	{
-		if (SDL_GetTicks() - victory_timer > 2000)
+		victoryRound1 = true;
+		if (SDL_GetTicks() - victory_timer > 8000)
 		{
 			inputs.Push(IN_VICTORY_FINISH);
 			victory_timer = 0;
+			victoryRound1 = false;
 		}
 	}
 	if (victory2_timer > 0)
 	{
-		if (SDL_GetTicks() - victory2_timer > 2000)
+		victoryRound2 = true;
+		if (SDL_GetTicks() - victory2_timer > 8000)
 		{
 			inputs.Push(IN_VICTORY2_FINISH);
 			victory2_timer = 0;
+			victoryRound2 = false;
 		}
 	}
 	if (lose_timer > 0)
 	{
-		if (SDL_GetTicks() - lose_timer > 4000)
+		if (SDL_GetTicks() - lose_timer > 8000)
 		{
 			inputs.Push(IN_LOSE_FINISH);
 			lose_timer = 0;
@@ -2051,8 +2083,7 @@ void ModuleChunLi2::ResetPlayer() {
 		App->UI->Counter2 = 9;
 		App->UI->Resultinfo = 0;
 	}
-	WinSoundPlayed = false;
-	DeathSoundPlayed = false;
+	
 }
 
 chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
@@ -3302,7 +3333,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				{
 				case IN_VICTORY_FINISH:					
 					state = ST_IDLE;
-					win = 0;
+					win = 3;
 					
 					ResetPlayer();
 					if (hit_conected > 0) {
@@ -3323,7 +3354,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_VICTORY2_FINISH:
 
 					state = ST_IDLE;
-					win = 0;
+					win = 3;
 					victorycount++;
 					ResetPlayer();
 					if (hit_conected > 0) {
@@ -3332,6 +3363,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_started > 0) {
 						hit_started = 0;
 					}
+
+					//ResetPlayer();
 					break;
 				}
 			}
@@ -3343,7 +3376,8 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				{
 				case IN_LOSE_FINISH:
 					state = ST_IDLE;
-					App->chunli->win = 0;
+				
+
 					if (victorycount < 2)
 					ResetPlayer();
 					if (hit_conected > 0) {
@@ -3352,6 +3386,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 					if (hit_started > 0) {
 						hit_started = 0;
 					}
+				//	ResetPlayer();
 					break;
 				}
 			}
@@ -3371,7 +3406,7 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 		life = 0;
 	}
 
-	if (life == 0)
+	if (life == 0 && App->chunli->state != ST_VICTORY2 && App->chunli->state != ST_VICTORY2_2 && App->chunli->victorycount != 2)
 	{
 		App->UI->time = 99;
 		App->UI->Counter1 = 9;
@@ -3388,6 +3423,13 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 void ModuleChunLi2::resetanimations() {
 
 	damage_received = 0;
+
+	sound = 0;
+	WinSoundPlayed = false;
+	DeathSoundPlayed = false;
+	win2.Reset();
+	win = 0;
+	ignore = 0;
 
 	jump_neutral.Reset();
 	jump_forward.Reset();
