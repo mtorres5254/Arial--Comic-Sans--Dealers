@@ -45,8 +45,9 @@ https://github.com/juanha2
 <div class="figure">
   <source>
 <img src="Wiki/Logo/Foto%20equip.jpg" width = "800" height = "700" class ="inline"></img>
- 
-<strong>Video gameplay</strong>
+ <p>
+<H1>Video gameplay</H1>
+  </p>
 
 You can watch our first video gameplay here!
 
