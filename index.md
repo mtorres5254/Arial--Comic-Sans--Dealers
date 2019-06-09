@@ -18,7 +18,9 @@ The success of Street Fighter II is credited with popularizing the fighting game
 
 Now we're launching the alpha version (1.0) of our game, if you want to try it, check the complete release clicking on this link:
 
-[Latest Release](https://github.com/mtorres5254/Arial--Comic-Sans--Dealers/releases)
+[Download our latest releases](https://github.com/mtorres5254/Arial--Comic-Sans--Dealers/releases/download/1.0/Street.Fighter.II.-.Arial.Comic.Sans.Dealer.zip)
+
+[Watch all our others Releases](https://github.com/mtorres5254/Arial--Comic-Sans--Dealers/releases)
 
 * * *
 
