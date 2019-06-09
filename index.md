@@ -5,10 +5,11 @@ layout: default
 
 #### Introduction
 
-We are a small team of 4 studients of Videogames Development carrer in UPC of Terrassa. As a final proyect for the first year
-we made a little tribute to Capcom's game "Street Fighter 2" (Arcade version).
+We are a group of students willing to develop and try to recreate as close as posible one of the most famous arcace videogames of all time: "Street Fighter 2: The World Warrior".
 
-In our version you will be able to play a versus game. Both players using Chun Li and playing in Dhalsim Stage.
+Street Fighter II: The World Warrior is an arcade fighting game produced by Capcom originally released in 1991. This sequel of Street Fighter offers a selection of multiple playabale characters, each with their own unique fighting style and special moves.
+
+The success of Street Fighter II is credited with popularizing the fighting game genre as well as the arcade game industry. It appears on several lists of the greatest video games of all time.
 
 ### Video Gameplay 
 
@@ -19,6 +20,8 @@ In our version you will be able to play a versus game. Both players using Chun L
 * * *
 
 ### Team Members
+
+![alt text](https://github.com/mtorres5254/Arial--Comic-Sans--Dealers/blob/master/Wiki/Logo/Foto%20equip.jpg)
 
 > [Martí Torres](https://github.com/mtorres5254)
 >
