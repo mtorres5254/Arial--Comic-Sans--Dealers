@@ -13,13 +13,6 @@ Street Fighter II: The World Warrior is an arcade fighting game produced by Capc
 
 The success of Street Fighter II is credited with popularizing the fighting game genre as well as the arcade game industry. It appears on several lists of the greatest video games of all time.
 
-### Video Gameplay 
-
-You can watch our first video gameplay here!
-
- <video width="1024" height="780" controls>
-  <source src="video.mp4" type="video/mp4">
-  <controls>
 
 ### Release
 
@@ -52,3 +45,11 @@ https://github.com/juanha2
 <div class="figure">
   <source>
 <img src="Wiki/Logo/Foto%20equip.jpg" width = "800" height = "700" class ="inline">
+ 
+ ### Video Gameplay 
+
+You can watch our first video gameplay here!
+
+ <video width="1024" height="780" controls>
+  <source src="video.mp4" type="video/mp4">
+  <controls>
