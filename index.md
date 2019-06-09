@@ -3,12 +3,12 @@ layout: default
 ---
 
 
-![Branching](https://github.com/mtorres5254/Arial--Comic-Sans--Dealers/blob/master/Wiki/Logo/Street_Fighter_II_The_World_Warrior_Logo.png)
+![Logo](https://github.com/mtorres5254/Arial--Comic-Sans--Dealers/blob/master/Wiki/Logo/Street_Fighter_II_The_World_Warrior_Logo.png)
 
 
 
 
-# Introduction
+#### Introduction
 
 We are a small team of 4 studients of Videogames Development carrer in UPC of Terrassa. As a final proyect for the first year
 we made a little tribute to Capcom's game "Street Fighter 2" (Arcade version).
@@ -18,7 +18,7 @@ In our version you will be able to play a versus game. Both players using Chun L
 ### Video Gameplay 
 
 
-## Release
+### Release
 [Latest Release](https://github.com/mtorres5254/Arial--Comic-Sans--Dealers/releases)
 
 * * *
@@ -26,6 +26,9 @@ In our version you will be able to play a versus game. Both players using Chun L
 ### Team Members
 
 > [Martí Torres](https://github.com/mtorres5254)
+>
 > [Xavi Trillo](https://github.com/xatrilu)
+>
 > [Adrià Ávila](https://github.com/Avilgor)
+>
 > [Juan Hernández](https://github.com/juanha2)

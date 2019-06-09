@@ -775,6 +775,7 @@ bool ModuleChunLi2::Start()
 	force = 0;
 	victoryRound1 = false;
 	victoryRound2 = false;
+	
 	return ret;
 }
 
@@ -863,6 +864,7 @@ update_status ModuleChunLi2::Update()
 						whirlwindMove = false;
 						move = true;
 						onAir = false;
+					
 						break;
 
 					case ST_WALK_FORWARD:
@@ -1458,7 +1460,9 @@ update_status ModuleChunLi2::Update()
 							App->chunli->win = 1;
 						else if (SDL_GetTicks() - lose_timer > 2000 && App->chunli->victorycount == 1)
 							App->chunli->win = 2;
+
 						current_animation = &damage3;
+
 						if (DeathSoundPlayed == false)
 						{
 							App->audio->PlayChunk(death_sound, 1);
@@ -1466,8 +1470,11 @@ update_status ModuleChunLi2::Update()
 						}
 
 
-						if (SDL_GetTicks() - lose_timer > 9000 && App->chunli->state == ST_VICTORY2)
+						if (SDL_GetTicks() - lose_timer > 9000 && App->chunli->state == ST_VICTORY2) {
 							App->fade->FadeToBlack(App->combo, App->combo, 2.0f);
+							
+						}
+							
 
 						else if (SDL_GetTicks() - lose_timer > 9000 && App->chunli->state == ST_VICTORY2_2) {
 							App->audio->StopMusic(250);
@@ -3386,10 +3393,14 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				{
 				case IN_LOSE_FINISH:
 					state = ST_IDLE;
-				
+					
+					
+					if(App->chunli->victorycount==2)
+					App->chunli->bug == 1;
 
 					if (victorycount < 2)
-					ResetPlayer();
+						ResetPlayer();
+					
 					if (hit_conected > 0) {
 						hit_conected = 0;
 					}

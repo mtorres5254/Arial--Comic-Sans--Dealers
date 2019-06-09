@@ -322,6 +322,7 @@ public:
 	int wkcounter = 0;
 	chunli_states2 state;
 
+	int bug = 0;
 
 	Uint32 punch_hard_timer = 0;
 	Uint32 punch_medium_timer = 0;
