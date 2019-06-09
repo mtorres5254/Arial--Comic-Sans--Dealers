@@ -2,6 +2,7 @@
 #define __MODULECHARACTERSELECTION_H__
 
 #include "Module.h"
+#include "Animation.h"
 #include "Globals.h"
 
 #include "SDL_mixer/include/SDL_mixer.h"
@@ -20,9 +21,9 @@ public:
 
 	SDL_Rect Map;
 	SDL_Rect Characters;
-	SDL_Rect P1Pointer;
+	Animation P1Pointer;
 	SDL_Rect P1PpointerDest;
-	SDL_Rect P2Pointer;
+	Animation P2Pointer;
 	SDL_Rect P2PointerDest;
 	SDL_Rect Plane;
 	SDL_Rect P1CharacterDest;

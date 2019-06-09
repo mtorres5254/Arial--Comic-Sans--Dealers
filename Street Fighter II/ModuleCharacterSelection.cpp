@@ -1,5 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
+#include "Animation.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleInput.h"
@@ -17,9 +18,19 @@ ModuleCharacterSelection::ModuleCharacterSelection()
 {
 	Map = { 32,7,581,337 };
 	Characters = { 40,405,352,234 }; // 37 x 37
-	P1Pointer = { 447,406,87,131 };
+
+	P1Pointer.PushBack({ 447,406,87,131 });
+	P1Pointer.PushBack({ 1000,1000,87,131 });
+	P1Pointer.speed = 0.2f;
+	P1Pointer.loop = true;
+
 	P1PpointerDest = { 116,134,40,45 };
-	P2Pointer = { 550,526,87,132 };
+
+	P2Pointer.PushBack({ 550,526,87,132 });
+	P2Pointer.PushBack({ 1000,1000,87,132 });
+	P2Pointer.speed = 0.2f;
+	P2Pointer.loop = true;
+
 	P2PointerDest = { 227,171,40,45 };
 	Plane = { 569,442,47,47 };
 
@@ -52,8 +63,8 @@ bool ModuleCharacterSelection::Start()
 	P2PointerDest = { 227,171,40,45 };
 	P1PpointerDest = { 116,134,40,45 };
 
-	bool P1selected = false;
-	bool P2selected = false;
+	P1selected = false;
+	P2selected = false;
 
 	App->render->camera.x = App->render->camera.y = 0;
 
@@ -66,8 +77,6 @@ bool ModuleCharacterSelection::CleanUp()
 
 	App->textures->Unload(graphics);
 	App->audio->UnloadMusic(music);
-	bool P1selected = false;
-	bool P2selected = false;
 
 	return true;
 }
@@ -83,7 +92,8 @@ update_status ModuleCharacterSelection::Update()
 	SDL_Rect Character1;
 	SDL_Rect Character1Dest = { 10,134,75,75 };
 
-	App->render->DrawQuad({ 0,0,SCREEN_WIDTH,SCREEN_HEIGHT }, 0, 0, 108, 255);
+	
+ App->render->DrawQuad({ 0,0,SCREEN_WIDTH,SCREEN_HEIGHT }, 0, 0, 108, 255);
 	App->render->RectBlit2(graphics, &Map, &MapDest);
 	App->render->RectBlit2(graphics, &Characters, &CharacterDest);
 
@@ -129,10 +139,11 @@ update_status ModuleCharacterSelection::Update()
 
 		//Character select
 		if (App->input->keyboard[SDL_SCANCODE_X] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
-			P1selected = true;
-			App->audio->PlayChunk(map_effect, 1);
+			if (P1PpointerDest.x == 153 && P1PpointerDest.y == 171) {
+				P1selected = true;
+				App->audio->PlayChunk(map_effect, 1);
+			}
 		}
-		App->render->RectBlit2(graphics, &Character1, &Character1Dest);
 	}
 
 	//P2 character slector
@@ -176,29 +187,36 @@ update_status ModuleCharacterSelection::Update()
 
 		//Character select
 		if (App->input->keyboard[SDL_SCANCODE_J] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
-			P2selected = true;
-			App->audio->PlayChunk(map_effect, 1);
+			if (P2PointerDest.x == 153 && P2PointerDest.y == 171) {
+				P2selected = true;
+				App->audio->PlayChunk(map_effect, 1);
+			}
 		}
-		App->render->RectBlit2Sym(graphics, &Character2, &Character2Dest);
 	}
+
+	App->render->RectBlit2Sym(graphics, &Character2, &Character2Dest);
+	App->render->RectBlit2(graphics, &Character1, &Character1Dest);
 	
+	if (P1selected == true) {
+		App->render->RectBlit2(graphics, &ChunLi, &Character1Dest);
+	}
+	if (P2selected == true) {
+		App->render->RectBlit2Sym(graphics, &ChunLi, &Character2Dest);
+	}
+
 	if (P1selected == true && P2selected == true) {
-		SDL_Rect PlaneDest = {170,30,20,20};
+
+		SDL_Rect PlaneDest = {130,60,20,20};
+		App->render->RectBlit2(graphics, &ChunLi, &Character1Dest);
+		App->render->RectBlit2Sym(graphics, &ChunLi, &Character2Dest);
 		App->render->RectBlit2(graphics, &Plane, &PlaneDest);
 		App->audio->PlayChunk(plane_effect, 1);
 		App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
-
-		App->render->RectBlit2Sym(graphics, &Character2, &Character2Dest);
-		App->render->RectBlit2(graphics, &Character1, &Character1Dest);
-
 		App->audio->StopMusic(250);
 	}
 
-
-	App->render->RectBlit2(graphics, &P1Pointer, &P1PpointerDest);
-	App->render->RectBlit2(graphics, &P2Pointer, &P2PointerDest);
-
-
+	App->render->RectBlit2(graphics, &P1Pointer.GetCurrentFrame(), &P1PpointerDest);
+	App->render->RectBlit2(graphics, &P2Pointer.GetCurrentFrame(), &P2PointerDest);
 	
 	if (App->input->keyboard[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_START] == KEY_DOWN) {
 		App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
