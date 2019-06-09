@@ -257,6 +257,8 @@ public:
 	Mix_Chunk* attack;
 
 	Mix_Chunk* win_sound;
+	Mix_Chunk* syou;
+	Mix_Chunk* swin;
 	Mix_Chunk* death_sound;
 
 	bool DeathSoundPlayed = false;
@@ -271,11 +273,12 @@ public:
 	bool leftLimit = false;
 	bool RightLimit = false;
 	bool onAir = false;
-
+	int sound = 0;
 	int PivotX = 0; 
 	int PivotY = 0;
 	int dmg = 0;
 
+	int ignore = 0;
 	int DeathCount = 0;
 	int ActiveDeath = 0;
 	int victorycount = 0;

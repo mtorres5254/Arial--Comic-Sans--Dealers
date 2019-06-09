@@ -51,6 +51,7 @@ public:
 	Mix_Chunk* continuechange;
 	Mix_Chunk* scream;
 	Mix_Chunk* gameover;
+	Mix_Chunk* yata;
 	int redscreen = 0;
     int stop = false;
 	Animation numbers;
