@@ -138,6 +138,15 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 	return ret;
 }
 
+bool ModuleRender::RectBlit2(SDL_Texture* texture, SDL_Rect* section, SDL_Rect* dsrect)
+{
+	bool ret = true;
+
+	SDL_RenderCopy(renderer, texture, section, dsrect);
+
+	return ret;
+}
+
 // Blit to screen on an rotation angle of 90 degrees
 bool ModuleRender::BlitSym(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed, bool use_camera)
 {
@@ -215,11 +224,11 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
 
 bool ModuleRender::RectBlit(const SDL_Rect& rect, SDL_Texture* texture) {
 
+	bool ret = true;
 
+	if (SDL_RenderCopy(App->render->renderer, texture, &rect, NULL) == -1) { ret = false; }
 
-	SDL_RenderCopy(App->render->renderer, texture, &rect, NULL);
-
-	return true;
+	return ret;
 }
 
 void ModuleRender::StartCameraShake(int duration, float magnitude) {

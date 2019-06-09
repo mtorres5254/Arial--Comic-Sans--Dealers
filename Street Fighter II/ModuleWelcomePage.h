@@ -20,10 +20,12 @@ public:
 
 public:
 	SDL_Rect fons;
+	SDL_Rect personesRect;
 	SDL_Rect persona1;
 	SDL_Rect persona2;
 
-	Animation Apersones;
+	Animation persones_relax;
+	Animation persones_attack;
 
 	SDL_Texture* graphics = nullptr;
 	SDL_Texture* persones = nullptr;

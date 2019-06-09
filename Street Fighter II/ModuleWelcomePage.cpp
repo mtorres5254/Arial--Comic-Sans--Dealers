@@ -13,9 +13,13 @@
 
 ModuleWelcomePage::ModuleWelcomePage()
 {
-	fons.h = 384;
-	fons.w = 224;
-	fons.x = fons.y = 0;
+	fons = { 0,608,714,397 };
+	personesRect = { 49,134,285,90 };
+
+	persones_relax.PushBack({ 24,34,533,162 });
+	persones_relax.PushBack({ 24,24,533,162 });
+	persones_relax.speed = 0.02f;
+	persones_relax.loop = true;
 }
 
 ModuleWelcomePage::~ModuleWelcomePage()
@@ -47,6 +51,8 @@ update_status ModuleWelcomePage::Update()
 {	
 
 	App->render->RectBlit( fons,graphics);
+
+	App->render->RectBlit2(persones,&persones_relax.GetCurrentFrame(), &personesRect);
 
 	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1 || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_START] == 1) {
 		App->fade->FadeToBlack(App->welcome_page, App->scene_dhalsim);
