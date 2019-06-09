@@ -772,7 +772,8 @@ bool ModuleChunLi2::Start()
 	DeathCount = 0;
 	victorycount = 0;
 	force = 0;
-	
+	victoryRound1 = false;
+	victoryRound2 = false;
 	return ret;
 }
 
@@ -1917,18 +1918,22 @@ void ModuleChunLi2::internal_input(p2Qeue<chunli_inputs>& inputs)
 
 	if (victory_timer > 0)
 	{
-		if (SDL_GetTicks() - victory_timer > 2000)
+		victoryRound1 = true;
+		if (SDL_GetTicks() - victory_timer > 8000)
 		{
 			inputs.Push(IN_VICTORY_FINISH);
 			victory_timer = 0;
+			victoryRound1 = false;
 		}
 	}
 	if (victory2_timer > 0)
 	{
-		if (SDL_GetTicks() - victory2_timer > 2000)
+		victoryRound2 = true;
+		if (SDL_GetTicks() - victory2_timer > 8000)
 		{
 			inputs.Push(IN_VICTORY2_FINISH);
 			victory2_timer = 0;
+			victoryRound2 = false;
 		}
 	}
 	if (lose_timer > 0)

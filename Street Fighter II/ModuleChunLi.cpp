@@ -772,7 +772,6 @@ bool ModuleChunLi::Start()
 	Death.Reset();
 	DeathCount = 0;
 	victorycount = 0;
-	//bonusPoints = 0;
 	victoryRound1 = false;
 	victoryRound2 = false;
 	
@@ -807,32 +806,6 @@ bool ModuleChunLi::CleanUp()
 
 update_status ModuleChunLi::Update()
 {
-	//bonusPoints++;
-	//LOG("Count: %d",bonusPoints);
-
-	if (victoryRound1 == true)
-	{
-		if (SDL_GetTicks() - App->chunli2->lose_timer > 8000)
-		{
-			state = ST_IDLE2;
-			win = 0;
-			ResetPlayer();
-			victoryRound1 = false;
-		}
-	}
-
-	if (victoryRound2 == true)
-	{
-		if (SDL_GetTicks() - App->chunli2->lose_timer > 8000)
-		{
-			state = ST_IDLE2;
-			win = 0;
-			victorycount++;
-			ResetPlayer();
-			victoryRound2 = false;
-		}
-	}
-
 	if (GodMode)//deletes all the collision boxes if in god mode
 	{
 		for (int i = 0; i < MAX_COLLIDERS; i++)
@@ -1206,7 +1179,6 @@ update_status ModuleChunLi::Update()
 
 				colliders_and_blit(current_animation);
 				
-
 				return UPDATE_CONTINUE;
 			}
 		}
@@ -1778,24 +1750,28 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs2>& inputs)
 
 	if (victory_timer > 0)
 	{
-		if (SDL_GetTicks() - victory_timer > 2000)
+		victoryRound1 = true;
+		if (SDL_GetTicks() - victory_timer > 8000)
 		{
 			inputs.Push(IN_VICTORY_FINISH2);
 			victory_timer = 0;
+			victoryRound1 = false;
 		}
 	}
 	if (victory2_timer > 0)
 	{
-		if (SDL_GetTicks() - victory2_timer > 2000)
+		victoryRound2 = true;
+		if (SDL_GetTicks() - victory2_timer > 8000)
 		{
 			inputs.Push(IN_VICTORY2_FINISH_2);
 			victory2_timer = 0;
+			victoryRound2 = false;
 		}
 	}
 
 	if (lose_timer > 0)
 	{
-		if (SDL_GetTicks() - lose_timer > 4000)
+		if (SDL_GetTicks() - lose_timer > 8000)
 		{
 			inputs.Push(IN_LOSE_FINISH2);
 			lose_timer = 0;
@@ -2849,9 +2825,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			switch (last_input)
 			{
 			case IN_VICTORY_FINISH2:
-				//state = ST_IDLE2;
-				victoryRound1 = true;
-				//bonusPoints = 0;								
+				state = ST_IDLE2;
+				win = 0;
+				ResetPlayer();
 				break;
 			}
 		}
@@ -2863,9 +2839,10 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			switch (last_input)
 			{
 			case IN_VICTORY2_FINISH_2:
-				//state = ST_IDLE2;
-				victoryRound2 = true;
-				//bonusPoints = 0;	
+				state = ST_IDLE2;
+				win = 0;
+				victorycount++;
+				ResetPlayer();
 				break;
 			}
 		}
