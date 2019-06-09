@@ -1761,6 +1761,7 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs2>& inputs)
 	if (victory2_timer > 0)
 	{
 		victoryRound2 = true;
+		
 		if (SDL_GetTicks() - victory2_timer > 8000)
 		{
 			inputs.Push(IN_VICTORY2_FINISH_2);
@@ -2858,8 +2859,6 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 				App->chunli2->win = 0;
 				
 				ResetPlayer();
-			
-				
 				break;
 			}
 		}
@@ -2880,12 +2879,8 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 	}
 	
 	if (life == 0)
-	{
-		App->UI->time = 99;
-		App->UI->Counter1 = 9;
-		App->UI->Counter2 = 9;
-		lose = true;
-		
+	{		
+		lose = true;	
 	}
 	else {
 		lose = false;

@@ -27,6 +27,8 @@ public:
 	void PointsP2();
 	void Result();
 	void GamepadDebug();
+	void showScreen(int x, int y, int num);
+	void calculateBonus(int Player);
 
 public:
 
@@ -52,8 +54,9 @@ public:
 	int Counter2;
 	int timenow;
 
-	int scoreP1, scoreP2;
-
+	int scoreP1=0, scoreP2=0;
+	int p1time = 0, p1life = 0;
+	int p2time = 0, p2life = 0;
 	bool GamepadInfo = false;
 	bool Round_Start = false;
 	int Resultinfo = -1;

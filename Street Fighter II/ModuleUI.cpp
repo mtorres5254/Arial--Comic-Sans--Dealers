@@ -81,6 +81,10 @@ bool ModuleUI::Start()
 	
 	scoreP1 = 000000;
 	scoreP2 = 000000;
+	p1time = 0;
+	p1life = 0;
+	p2time = 0;
+	p2life = 0;
 
 	return ret;
 }
@@ -163,10 +167,12 @@ update_status ModuleUI:: Update()
 
 
 void ModuleUI::Counter() 
-{
+{	
 	if (timenow > 0)
 	{
-		if (SDL_GetTicks() - timenow > 1000) {			
+		if(App->chunli->lose == false && App->chunli2->lose == false)
+		if (SDL_GetTicks() - timenow > 1000) 
+		{			
 			time--;
 			
 			Counter1--;
@@ -694,48 +700,59 @@ void ModuleUI::GamepadDebug() {
 	}	
 }
 
-void ModuleUI::Result() {
+void ModuleUI::Result()
+{
 	switch (Resultinfo)
 	{
 	case 1:
 		if (SDL_GetTicks() - App->chunli2->lose_timer < 4000)
 		{
+			calculateBonus(1);
 			App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_id, "p1 wins");
 		}		
 		if (App->chunli->victoryRound1 == true || App->chunli->victoryRound2 == true)
 		{
 			if (SDL_GetTicks() - App->chunli2->lose_timer > 4000)
 			{
-				App->font->BlitText(SCREEN_WIDTH / 2 - 100, 65, font_id, "time");
+				App->font->BlitText(SCREEN_WIDTH / 2 - 75, 65, font_id, "time");
+				showScreen(SCREEN_WIDTH / 2 + 75, 65, p1time);
 			}
 			if (SDL_GetTicks() - App->chunli2->lose_timer > 5000)
 			{
-				App->font->BlitText(SCREEN_WIDTH / 2 - 100, 85, font_id, "life");
+				App->font->BlitText(SCREEN_WIDTH / 2 - 75, 85, font_id, "life");
+				showScreen(SCREEN_WIDTH / 2 + 75, 85, p1life);
 			}
 			if (SDL_GetTicks() - App->chunli2->lose_timer > 6000)
 			{
-				App->font->BlitText(SCREEN_WIDTH / 2 - 100, 105, font_id, "bonus");
+				App->font->BlitText(SCREEN_WIDTH / 2 - 75, 115, font_id, "bonus");
+				showScreen(SCREEN_WIDTH / 2 + 75, 115, p1life+p1time);
+				scoreP1 += p1time + p1life;
 			}
 		}
 		break;
 	case 2:
 		if (SDL_GetTicks() - App->chunli->lose_timer < 4000)
 		{
+			calculateBonus(2);
 			App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_id, "p2 wins");
 		}
 		if (App->chunli2->victoryRound1 == true || App->chunli2->victoryRound2 == true)
 		{
 			if (SDL_GetTicks() - App->chunli->lose_timer > 4000)
 			{
-				App->font->BlitText(SCREEN_WIDTH / 2 - 100, 65, font_id, "time");
+				App->font->BlitText(SCREEN_WIDTH / 2 - 75, 65, font_id, "time");
+				showScreen(SCREEN_WIDTH / 2 + 75, 65, p2time);
 			}
 			if (SDL_GetTicks() - App->chunli->lose_timer > 5000)
 			{
-				App->font->BlitText(SCREEN_WIDTH / 2 - 100, 85, font_id, "life");
+				App->font->BlitText(SCREEN_WIDTH / 2 - 75, 85, font_id, "life");
+				showScreen(SCREEN_WIDTH / 2 + 75, 85, p2life);
 			}
 			if (SDL_GetTicks() - App->chunli->lose_timer > 6000)
 			{
-				App->font->BlitText(SCREEN_WIDTH / 2 - 100, 105, font_id, "bonus");
+				App->font->BlitText(SCREEN_WIDTH / 2 - 75, 115, font_id, "bonus");
+				showScreen(SCREEN_WIDTH / 2 + 75, 115, p2time+p2life);
+				scoreP2 += p2time + p2life;
 			}
 		}
 		break;
@@ -747,3 +764,228 @@ void ModuleUI::Result() {
 
 }
 
+void ModuleUI::calculateBonus(int player)
+{
+	if (player == 1)
+	{
+		p1life = App->chunli->life*3*10;
+		p1time = time * 100;
+		//LOG("time: %d", p1time);
+		//LOG("life: %d", p1life);
+	}
+	else
+	{
+		p2life = App->chunli2->life*3*10;
+		p2time = time * 100;
+		//LOG("time: %d", p2time);
+		//LOG("life: %d", p2life);
+	}
+}
+
+void ModuleUI::showScreen(int x, int y,int num)
+{
+	int fiveScore = num / 10000 % 10;
+	int fourScore = num / 1000 % 10;
+	int threeScore = num / 100 % 10;
+	int twoScore = num / 10 % 10;
+	int oneScore = num % 10;
+
+	switch (oneScore)
+	{
+	case 9:
+		App->font->BlitText(x- 70, y, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(x- 70, y, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(x- 70, y, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(x- 70, y, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(x- 70, y, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(x-70, y, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(x-70, y, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(x-70, y, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(x-70, y, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(x - 70, y, font_id, "0");			
+		break;
+	}
+	switch (twoScore)
+	{
+	case 9:
+		App->font->BlitText(x-56, y, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(x- 56, y, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(x- 56, y, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(x- 56, y, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(x- 56, y, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(x- 56, y, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(x- 56, y, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(x- 56, y, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(x- 56, y, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(x - 56, y, font_id, "0");			
+		break;
+	}
+	switch (threeScore)
+	{
+	case 9:
+		App->font->BlitText(x- 42, y, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(x- 42, y, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(x- 42, y, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(x- 42, y, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(x- 42, y, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(x- 42, y, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(x- 42, y, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(x- 42, y, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(x- 42, y, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(x - 42, y, font_id, "0");		
+		break;
+	}
+	switch (fourScore)
+	{
+	case 9:
+		App->font->BlitText(x - 28, y, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(x - 28, y, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(x - 28, y, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(x - 28, y, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(x - 28, y, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(x - 28, y, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(x - 28, y, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(x - 28, y, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(x - 28, y, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(x - 28, y, font_id, "0");	
+		break;
+	}
+	switch (fiveScore)
+	{
+	case 9:
+		App->font->BlitText(x - 14, y, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(x - 14, y, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(x - 14, y, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(x - 14, y, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(x - 14, y, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(x - 14, y, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(x - 14, y, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(x - 14, y, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(x - 14, y, font_id, "1");
+		break;
+	case 0:		
+		App->font->BlitText(x - 14, y, font_id, "0");				
+		break;
+	}
+	/*switch (sixScore)
+	{
+	case 9:
+		App->font->BlitText(x, y, font_id, "9");
+		break;
+	case 8:
+		App->font->BlitText(x, y, font_id, "8");
+		break;
+	case 7:
+		App->font->BlitText(x, y, font_id, "7");
+		break;
+	case 6:
+		App->font->BlitText(x, y, font_id, "6");
+		break;
+	case 5:
+		App->font->BlitText(x, y, font_id, "5");
+		break;
+	case 4:
+		App->font->BlitText(x, y, font_id, "4");
+		break;
+	case 3:
+		App->font->BlitText(x, y, font_id, "3");
+		break;
+	case 2:
+		App->font->BlitText(x, y, font_id, "2");
+		break;
+	case 1:
+		App->font->BlitText(x, y, font_id, "1");
+		break;
+	case 0:
+		App->font->BlitText(x, y, font_id, "0");
+		break;
+	}*/
+}

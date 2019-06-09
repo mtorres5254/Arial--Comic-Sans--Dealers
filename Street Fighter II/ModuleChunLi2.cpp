@@ -3037,11 +3037,7 @@ void ModuleChunLi2::lifecondition(Animation* current_animation) {
 
 	if (life == 0)
 	{
-		App->UI->time = 99;
-		App->UI->Counter1 = 9;
-		App->UI->Counter2 = 9;
-		lose = true;
-		
+		lose = true;	
 	}
 	else {
 		lose = false;
