@@ -1,7 +1,7 @@
 ﻿# Arial Comic-Sans Dealers
 We are a group of students willing to develop and try to recreate as close as posible one of the most famous arcace videogames of all time: "Street Fighter 2: The World Warrior".
 
-You can find the project at https://github.com/mtorres5254/Arial--Comic-Sans--Dealers
+You can find more info in our project at https://github.com/mtorres5254/Arial--Comic-Sans--Dealers
 
 Link to our Web Page : https://mtorres5254.github.io/Arial--Comic-Sans--Dealers/
 
