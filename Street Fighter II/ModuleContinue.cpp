@@ -270,8 +270,10 @@ update_status ModuleContinue::Update() {
 	if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1 || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_START] == 1) {
 		App->audio->PlayChunk(yata, 1);
 		App->fade->FadeToBlack(App->continu, App->selectionScene, 1.0f);
-		
+	}
 
+	if (App->input->keyboard[SDL_SCANCODE_F9] == 1) {
+		App->fade->FadeToBlack(App->continu, App->welcome_page, 1.0f);
 	}
 
 	return UPDATE_CONTINUE;

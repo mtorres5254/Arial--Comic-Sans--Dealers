@@ -137,7 +137,7 @@ update_status ModuleInput::PreUpdate()
 		}
 	}
 
-	if (keyboard[SDL_SCANCODE_ESCAPE]) {
+	if (keyboard[SDL_SCANCODE_ESCAPE] == KEY_DOWN || Pad1.button_state[SDL_CONTROLLER_BUTTON_BACK] == KEY_DOWN || Pad2.button_state[SDL_CONTROLLER_BUTTON_BACK] == KEY_DOWN) {
 		return update_status::UPDATE_STOP;
 	}
 	

@@ -223,7 +223,7 @@ update_status ModuleCharacterSelection::Update()
 		App->render->RectBlit2(graphics, &P2Pointer.GetCurrentFrame(), &P2PointerDest);
 	
 	
-	if (App->input->keyboard[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_START] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_F9] == KEY_DOWN) {
 		App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
 		App->audio->StopMusic(250);
 	}

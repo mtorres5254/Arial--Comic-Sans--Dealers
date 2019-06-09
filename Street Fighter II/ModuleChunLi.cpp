@@ -3365,11 +3365,11 @@ void ModuleChunLi::resetanimations() {
 
 void ModuleChunLi::debugcommands() {
 
-	if (App->input->keyboard[SDL_SCANCODE_F6] == KEY_DOWN) {
+	if (App->input->keyboard[SDL_SCANCODE_F3] == KEY_DOWN) {
 		life = 0;
 	}
 
-	if (App->input->keyboard[SDL_SCANCODE_F3] == KEY_DOWN)
+	if (App->input->keyboard[SDL_SCANCODE_F2] == KEY_DOWN)
 	{
 		if (!GodMode) {
 			for (int i = 0; i < MAX_COLLIDERS; i++)

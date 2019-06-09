@@ -49,10 +49,11 @@ update_status ModuleLoseScene::Update() {
 	App->render->Blit(graphics, 0, 0, &background);
 	timer++;
 
-	//if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) 
 	if (timer > 250)
 	{
-
+		App->fade->FadeToBlack(App->lose_scene, App->continu, 2.0f);
+	}
+	if (App->input->keyboard[SDL_SCANCODE_F9] == 1) {
 		App->fade->FadeToBlack(App->lose_scene, App->continu, 2.0f);
 	}
 

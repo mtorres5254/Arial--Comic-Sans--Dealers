@@ -97,7 +97,6 @@ bool ModuleSceneDhalsim::Start()
 	music = App->audio->LoadMusic("Assets/Sound/Musics/dhalsim.ogg");
 	App->audio->PlayMusic(music, 5000);
 	
-	//App->continu->Disable();
 	App->chunli->Enable();
 	App->chunli2->Enable();
 	App->combo->Enable();
@@ -169,6 +168,10 @@ update_status ModuleSceneDhalsim::Update()
 		
 	}
 
+	if (App->input->keyboard[SDL_SCANCODE_F9] == KEY_DOWN) {
+		App->fade->FadeToBlack(this, App->congrats_screen, 2.0f);
+	}
+
 	return UPDATE_CONTINUE;
 }
 
@@ -202,11 +205,4 @@ void ModuleSceneDhalsim::fadeto() {
 		App->fade->FadeToBlack(App->scene_dhalsim, App->congrats_screen, 2.0f);
 		App->audio->StopMusic(250);
 	}*/
-
-	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1) {
-
-		App->fade->FadeToBlack(App->scene_dhalsim, App->continu, 2.0f);
-		App->audio->StopMusic(2000);
-
-	}
 }

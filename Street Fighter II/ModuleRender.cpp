@@ -61,14 +61,6 @@ update_status ModuleRender::Update()
 {
 	int speed = 3;
 
-	if (App->input->keyboard[SDL_SCANCODE_G] == true) {
-		StartCameraShake(1000, 20);
-	}
-
-	if (shaking == true) {
-		UpdateCameraShake();
-	}
-
 	return update_status::UPDATE_CONTINUE;
 }
 

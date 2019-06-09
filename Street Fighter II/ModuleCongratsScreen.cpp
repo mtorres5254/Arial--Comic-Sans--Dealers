@@ -10,6 +10,7 @@
 #include "ModuleAudio.h"
 #include "ModuleUI.h"
 #include "ModuleContinue.h"
+#include "ModuleLoseScene.h"
 
 ModuleCongratsScreen::ModuleCongratsScreen()
 {
@@ -48,10 +49,13 @@ update_status ModuleCongratsScreen::Update()
 	timer++;
 	App->render->Blit(graphics, 0, 0, &background);
 
-	//if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1) {
 	if(timer>250)
 	{
 		App->fade->FadeToBlack(App->congrats_screen, App->continu, 2.0f);
+	}
+
+	if (App->input->keyboard[SDL_SCANCODE_F9] == 1) {
+		App->fade->FadeToBlack(App->congrats_screen, App->lose_scene, 2.0f);
 	}
 
 	return UPDATE_CONTINUE;

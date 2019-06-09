@@ -28,10 +28,6 @@ update_status ModuleSlowdown::PostUpdate()
 		UpdateSlowdown();
 	}
 
-	if (App->input->keyboard[SDL_SCANCODE_F9] == KEY_DOWN) {
-		StartSlowdown(3000, 30);
-	}
-
 	return UPDATE_CONTINUE;
 }
 void ModuleSlowdown::StartSlowdown(int duration, int magnitude)
