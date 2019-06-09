@@ -1,4 +1,4 @@
-# Arial Comic-Sans Dealers
+﻿# Arial Comic-Sans Dealers
 We are a group of students willing to develop and try to recreate as close as posible one of the most famous arcace videogames of all time: "Street Fighter 2: The World Warrior".
 
 You can find the project at https://github.com/mtorres5254/Arial--Comic-Sans--Dealers
@@ -14,7 +14,7 @@ The success of Street Fighter II is credited with popularizing the fighting game
 # Team Members
 Project made by:
 
-* Martí Torres
+* Martí Torres 
 
 https://github.com/mtorres5254
 
@@ -46,56 +46,55 @@ In order to play you just need to execute the file called "StreetFighter2.exe".
 # Usage
 # Inputs
 
-* Player 1:
-A and D - Move left and right
+We recommend to play with GamePad in order to get the full experience of the game.
 
-  W - Jump
+* Player 1 and 2 (GamePad):
 
-  S - Crouch
+	Joystick/GamePad - Basic movement  
 
-  X - Punch
+  A 	button - Punch(light)
+  X 	button - Punch(mid)
+  B 	button - Kick(light)  
+  Y 	button - Kick(mid)  
+  Leftshoulder button - Punch(high)  
+  Rightshoulder button - Kick(high)  
+  Start button - Start and select  
+  Select button - Exit game  
 
-  C - Kick
+* Combos
 
-  V - Special Attack
+	Lightning Kick - Repeatdly press any kick button
+	Whirlwind Kick - Press down 2 seconds + idle + any kick button
+	
+* Player 1(KeyBoard):
 
-* Player 2:
- 
-  Left and right arrows - Move left and right
+	AWSD	- Basic movement
+	X - Punch(light)
+	1 - Punch(mid)
+	2 - Punch(high)
+	C - Kick(light)
+	3 - Kick(mid)
+	4 - Kick(high)
 
-  Up arrow - Jump
+* Player 2 (KeyBoard):
 
-  Down arrow - Crouch
+	Arrow keys	- Basic movement
+	J - Punch(light)
+	7 - Punch(mid)
+	8 - Punch(high)
+	K - Kick(light)
+	8 - Kick(mid)
+	9 - Kick(high)
 
-  J - Punch
+* Debug Commands:
+	F1 -  Collision boxes
+	F2 -  GodMode player1
+	F3 -  InstantDeath player1
+	F4 -  GodMode player2
+	F5 -  InstantDeath player 2
+	F9 -  Jump to next screen
+	
 
-  K - Kick
-
-  L - Special Attack
-
- * Debug Mode:
- 
-    F1 - View collision boxes
-
-    F2 - GodMode Player 2
-
-    F3 - GodMode Player 1
-    
-    F4 - Direct Lose 
-    
-    F5 - Direct Win
-  
-  * Special Inputs
-  
-    ESC - Quit Game
-  
-    ENTER KEY (RETURN) - Start Game, SceneSwitching
-  
-
-# Credits
-Special thanks go out to:
-
-The Gamusinos Fighters group (for sharing sprites). Link to their project: https://github.com/Rengrow/Street-Fighter-II-Gamusinos-Fighters-
 
 # License
 
@@ -145,7 +144,7 @@ This notice may not be removed or altered from any source distribution.
 * Implement of crouch 
 * Game size: 9.81MB
 
-## Version 0.4.5
+## Version 0.5 (Prototype)
 * Camera follow players
 * Payer 2 animations and movements
 * Health bars and damage
@@ -155,3 +154,48 @@ This notice may not be removed or altered from any source distribution.
 * New animations()
 * Music for each scene
 * Game size: 11.2MB
+
+## Version 0.6
+
+* Reset of a lot of features
+* NEW COLLIDER SYSTEM
+* NEW ANIMATION SYSTEM
+* chun li implemented
+* dhalsim stage implemented
+* Game size: 12MB
+
+## Version 0.7
+
+* Camera limits redone
+* GamePad function
+* Recolor chunli2
+* Game size: 12.5MB
+
+## Version 0.8
+
+* Multiple GamePads
+* Input buffering implemented
+* Graphics update (shadows)
+* OnCollisionchanges
+* Input system redone
+* Game size: 15MB
+
+## Version 0.9
+
+* Camera shake added
+* Slowdown added
+* More attacks implemented
+* Game size: 16MB
+
+## Version Pre-1.0 (Alpha)
+
+* Win/Lose condition perfectioned
+* Intro and end scenes
+* Added particles and all sound effects
+* Plenty of bugs solved
+* Game size: 19.8MB
+
+# Credits
+Special thanks go out to:
+
+The Gamusinos Fighters group (for sharing sprites). Link to their project: https://github.com/Rengrow/Street-Fighter-II-Gamusinos-Fighters-
