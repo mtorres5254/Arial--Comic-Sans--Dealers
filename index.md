@@ -44,7 +44,7 @@ https://github.com/juanha2
 
 <div class="figure">
   <source>
-<img src="Wiki/Logo/Foto%20equip.jpg" width = "800" height = "700" class ="inline">
+<img src="Wiki/Logo/Foto%20equip.jpg" width = "800" height = "700" class ="inline"></img>
  
  ### Video Gameplay 
 
@@ -53,3 +53,4 @@ You can watch our first video gameplay here!
  <video width="1024" height="780" controls>
   <source src="video.mp4" type="video/mp4">
   <controls>
+ </video>
