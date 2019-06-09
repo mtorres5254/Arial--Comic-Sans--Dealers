@@ -1245,9 +1245,9 @@ update_status ModuleChunLi::Update()
 						current_animation = &block_crouch;
 						break;
 					case ST_VICTORY2:
+
 						if (App->chunli2->state == ST_LOSE)
 							App->UI->Resultinfo = 1;
-
 						
 						if (victorycount == 0)
 							victorycount++;
@@ -1301,17 +1301,21 @@ update_status ModuleChunLi::Update()
 							App->chunli2->win = 1;
 						else if (SDL_GetTicks() - lose_timer > 2000 && App->chunli2->victorycount == 1)
 							App->chunli2->win = 2;
+
 						current_animation = &damage3;
+
 						if (DeathSoundPlayed == false)
 						{
 							App->audio->PlayChunk(death_sound, 1);
 							DeathSoundPlayed = true;
 						}
 
+
 						if (SDL_GetTicks() - lose_timer > 9000 && App->chunli2->state==ST_VICTORY)
 						App->fade->FadeToBlack(App->combo, App->combo, 2.0f);
 
 						else if (SDL_GetTicks() - lose_timer > 9000 && App->chunli2->state == ST_VICTORY2_) {
+							move = false;
 							App->audio->StopMusic(250);
 							App->fade->FadeToBlack(App->scene_dhalsim, App->lose_scene, 2.0f);
 						}
@@ -1762,7 +1766,7 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 		win = 0;
 	}
 
-	if (win == 2 && App->chunli2->state == ST_LOSE) {
+	if (win == 2 && App->chunli2->state == ST_LOSE && App->UI->time!=99 && bug == 0) {
 		inputs.Push(IN_VICTORY2_2);
 		win = 0;
 	}
@@ -3212,7 +3216,9 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			{
 			case IN_VICTORY_FINISH2:
 				state = ST_IDLE2;
+				
 				win = 3;
+				
 				ResetPlayer();
 
 				if (hit_conected > 0) {
@@ -3254,7 +3260,7 @@ chunli_states2 ModuleChunLi:: process_fsm(p2Qeue<chunli_inputs2>& inputs)
 			{
 			case IN_LOSE_FINISH2:	
 				state = ST_IDLE2;
-				//App->chunli2->win = 0;
+			
 				if (hit_conected > 0) {
 					hit_conected = 0;
 				}
@@ -3297,13 +3303,12 @@ void ModuleChunLi::lifecondition(Animation* current_animation) {
 void ModuleChunLi::resetanimations() {
 
 	damage_received = 0;
-	
-	win = 0;
+
 	sound = 0;
 	WinSoundPlayed = false;
 	DeathSoundPlayed = false;
-	win1.Reset();
 	win2.Reset();
+	win = 0;
 	ignore = 0;
 
 	jump_neutral.Reset();
@@ -3318,7 +3323,6 @@ void ModuleChunLi::resetanimations() {
 	Crouch_punch.Reset();
 	kick.Reset();
 	LightningKick.Reset();
-	WhirlwindKick.Reset();
 	punch_medium.Reset();
 	punch_hard.Reset();
 	kick_medium.Reset();
@@ -3352,7 +3356,9 @@ void ModuleChunLi::resetanimations() {
 	jump_backward_kick_medium.Reset();
 	jump_backward_kick_hard.Reset();
 
-	block_standing.Reset();
+	WhirlwindKick.Reset();
+	win1.Reset();
+	win2.Reset();
 	
 }
 
