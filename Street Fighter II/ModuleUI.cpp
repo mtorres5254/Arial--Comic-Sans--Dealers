@@ -80,6 +80,7 @@ bool ModuleUI::Start()
 	s1 = App->audio->LoadChunk("Assets/Sound/Effects/1.wav");
 	s2 = App->audio->LoadChunk("Assets/Sound/Effects/2.wav");
 	s3 = App->audio->LoadChunk("Assets/Sound/Effects/3.wav");
+	sRound = App->audio->LoadChunk("Assets/Sound/Effects/Round.wav");
 
 	time = 99;
 	Counter1 = 9; //unit
@@ -91,6 +92,7 @@ bool ModuleUI::Start()
 	p1life = 0;
 	p2time = 0;
 	p2life = 0;
+	round1 = 0;
 
 	return ret;
 }
@@ -109,6 +111,7 @@ bool ModuleUI::CleanUp()
 	App->audio->UnloadChunk(s2);
 	App->audio->UnloadChunk(s3);
 	App->audio->UnloadChunk(sFight);
+	App->audio->UnloadChunk(sRound);
 	return true;
 }
 
@@ -199,37 +202,60 @@ void ModuleUI::Counter()
 
 				}
 				timenow = SDL_GetTicks();
+				timer = 0;
 			}
 				
 		}
 	}
-	if (time==99 && (App->chunli->life > 0 && App->chunli2->life > 0)) {
-		/*
-		if (App->chunli->victorycount == 0 && App->chunli2->victorycount == 0 && timer <120) {
-			App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 1");
+
+	if (time==99) {
+		
+		if (timer <120) {
+			
+			
+			if (timer == 0) {
+				
+				App->audio->PlayChunk(sRound, 1);
+			}
+			if (timer == 40) {
+				if (App->chunli->victorycount == 0 && App->chunli2->victorycount == 0)
+				App->audio->PlayChunk(s1, 1);
+				if ((App->chunli->victorycount == 1 && App->chunli2->victorycount == 0) || (App->chunli->victorycount == 0 && App->chunli2->victorycount == 1))
+				App->audio->PlayChunk(s2, 1);
+				if (App->chunli->victorycount == 1 && App->chunli2->victorycount == 1)
+					App->audio->PlayChunk(s3, 1);
+			}
+			if (timer < 100) {
+				if (App->chunli->victorycount == 0 && App->chunli2->victorycount == 0)
+					App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 1");
+				if ((App->chunli->victorycount == 1 && App->chunli2->victorycount == 0) || (App->chunli->victorycount == 0 && App->chunli2->victorycount == 1))
+					App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 2");
+				if (App->chunli->victorycount == 1 && App->chunli2->victorycount == 1)
+					App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 3");
+
+			}
+			if (timer == 100) {
+				App->audio->PlayChunk(sFight, 1);
+
+			}		
+			if (timer >= 100) {
+				App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font2, "FIGHT!");
+			}
+			
+			
+
+
 			App->font->BlitText(SCREEN_WIDTH / 2 - 47, 115, font2, "BATTLE 01");
 			round = true;
 			timer++;
-		}		
-		else if ((App->chunli->victorycount == 1 && App->chunli2->victorycount != 1)
-			|| (App->chunli->victorycount != 1 && App->chunli2->victorycount == 1)) {
-			App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 2");
-			App->font->BlitText(SCREEN_WIDTH / 2 - 47, 115, font2, "BATTLE 01");
-			round = true;
-		}
-		else  if (App->chunli->victorycount == 1 && App->chunli2->victorycount == 1) {
-			App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 3");
-			App->font->BlitText(SCREEN_WIDTH / 2 - 47, 115, font2, "BATTLE 01");
-		}
+		}	
+
 		else {
-			Counter1 = 9;
-			Counter2 = 9;
+			round = false;
+			timer = 0;
 		}
-		else if (timer > 120) {
-			round == false;
-		}
-		*/
 	}	
+
 	else {
 		round = false;
 	}
