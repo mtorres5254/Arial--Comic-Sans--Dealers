@@ -48,6 +48,7 @@ bool ModuleCombos::CheckPunchP2() {
 
 bool ModuleCombos::CheckLightingKickP1() {
 	actual_frameP1LK++;
+	bool ret = false;
 	if (actual_frameP1LK <= LIGHTNINGKICK) {
 		switch (lightimgKickCount)
 		{
@@ -64,7 +65,7 @@ bool ModuleCombos::CheckLightingKickP1() {
 		case 2:
 			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 				lightimgKickCount = 0;
-				return true;
+				ret = true;
 			}
 			break;
 		}
@@ -72,12 +73,13 @@ bool ModuleCombos::CheckLightingKickP1() {
 	else {
 		actual_frameP1LK = 0;
 		lightimgKickCount = 0;
-		return false;
 	}
+	return ret;
 }
 
 bool ModuleCombos::CheckLightingKickP2() {
 	actual_frameP2LK++;
+	bool ret = false;
 	if (actual_frameP2LK <= LIGHTNINGKICK) {
 		switch (lightimgKickCount2)
 		{
@@ -94,7 +96,7 @@ bool ModuleCombos::CheckLightingKickP2() {
 		case 2:
 			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 				lightimgKickCount2 = 0;
-				return true;
+				ret = true;
 			}
 			break;
 		}
@@ -102,12 +104,13 @@ bool ModuleCombos::CheckLightingKickP2() {
 	else {
 		actual_frameP2LK = 0;
 		lightimgKickCount2 = 0;
-		return false;
 	}
+	return ret;
 }
 
 bool ModuleCombos::CheckWhirlwindKickP1() {
 	actual_frameP1WK++;
+	bool ret = false;
 	if (actual_frameP1WK <= WHIRLWINDKICK) {
 		switch (whirlwindKickCount) 
 		{
@@ -125,7 +128,7 @@ bool ModuleCombos::CheckWhirlwindKickP1() {
 		case 1:
 			if (App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 				whirlwindKickCount = 0;
-				return true;
+				ret = true;
 			}
 			break;
 		}
@@ -133,12 +136,13 @@ bool ModuleCombos::CheckWhirlwindKickP1() {
 	else {
 		actual_frameP1WK = 0;
 		whirlwindKickCount = 0;
-		return false;
 	}
+	return ret;
 }
 
 bool ModuleCombos::CheckWhirlwindKickP2() {
 	actual_frameP2WK++;
+	bool ret = false;
 	if (actual_frameP2WK <= WHIRLWINDKICK) {
 		switch (whirlwindKickCount2) {
 		case 0:
@@ -155,7 +159,7 @@ bool ModuleCombos::CheckWhirlwindKickP2() {
 		case 1:
 			if (App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_B] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_Y] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_RIGHTSHOULDER] == KEY_DOWN) {
 				whirlwindKickCount2 = 0;
-				return true;
+				ret = true;
 			}
 			break;			
 		}
@@ -163,6 +167,6 @@ bool ModuleCombos::CheckWhirlwindKickP2() {
 	else {
 		actual_frameP2WK = 0;
 		whirlwindKickCount2 = 0;
-		return false;
 	}
+	return ret;
 }
