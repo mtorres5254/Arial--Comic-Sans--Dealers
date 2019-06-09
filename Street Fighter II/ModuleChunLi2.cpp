@@ -3396,10 +3396,7 @@ chunli_states ModuleChunLi2::process_fsm(p2Qeue<chunli_inputs>& inputs)
 				case IN_LOSE_FINISH:
 					state = ST_IDLE;
 					
-					
-					if(App->chunli->victorycount==2)
-					App->chunli->bug == 1;
-
+			
 					if (victorycount < 2)
 						ResetPlayer();
 					

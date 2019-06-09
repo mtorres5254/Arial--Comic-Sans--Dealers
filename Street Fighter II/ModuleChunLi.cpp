@@ -1769,7 +1769,7 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 		win = 0;
 	}
 
-	if (win == 2 && App->chunli2->state == ST_LOSE && App->UI->time!=99 && bug == 0) {
+	if (win == 2 && App->chunli2->state == ST_LOSE ) {
 		inputs.Push(IN_VICTORY2_2);
 		win = 0;
 	}
