@@ -1688,7 +1688,7 @@ void ModuleChunLi2::OnCollision(Collider* c1, Collider* c2) {
 
 bool ModuleChunLi2::external_input(p2Qeue<chunli_inputs>& inputs)
 {
-	if (App->chunli->life > 0) {
+	if (App->chunli->life > 0 && App->UI->round==false) {
 
 		//Key up
 		if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_UP) {
