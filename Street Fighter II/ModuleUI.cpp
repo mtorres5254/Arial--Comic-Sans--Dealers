@@ -725,8 +725,16 @@ void ModuleUI::Result()
 			if (SDL_GetTicks() - App->chunli2->lose_timer > 6000)
 			{
 				App->font->BlitText(SCREEN_WIDTH / 2 - 75, 115, font_id, "bonus");
-				showScreen(SCREEN_WIDTH / 2 + 75, 115, p1life+p1time);
-				scoreP1 += p1time + p1life;
+				//if (App->chunli2->lose_timer > 7000)
+				//{
+					showScreen(SCREEN_WIDTH / 2 + 75, 115, p1time + p1life);
+				/*}
+				else
+				{
+					aux += (p1time + p1life) / 1000;
+					showScreen(SCREEN_WIDTH / 2 + 75, 115, aux);
+				}*/
+				
 			}
 		}
 		break;
@@ -751,14 +759,22 @@ void ModuleUI::Result()
 			if (SDL_GetTicks() - App->chunli->lose_timer > 6000)
 			{
 				App->font->BlitText(SCREEN_WIDTH / 2 - 75, 115, font_id, "bonus");
-				showScreen(SCREEN_WIDTH / 2 + 75, 115, p2time+p2life);
-				scoreP2 += p2time + p2life;
+				//if(App->chunli->lose_timer > 7000)
+				//{
+					showScreen(SCREEN_WIDTH / 2 + 75, 115, p2time + p2life);
+				/*}				
+				else
+				{
+					aux += (p2time + p2life) / 1000;
+					showScreen(SCREEN_WIDTH / 2 + 75, 115, aux);
+				}*/
 			}
 		}
 		break;
 	default:
 		App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_id, " ");
 		Resultinfo = -1;
+		ScoreAdded = false;
 		break;
 	}
 
@@ -770,15 +786,21 @@ void ModuleUI::calculateBonus(int player)
 	{
 		p1life = App->chunli->life*3*10;
 		p1time = time * 100;
-		LOG("time: %d", p1time);
-		LOG("life: %d", p1life);
+		if (ScoreAdded == false)
+		{
+			scoreP1 += p1time + p1life;
+			ScoreAdded = true;
+		}
 	}
 	else
 	{
 		p2life = App->chunli2->life*3*10;
 		p2time = time * 100;
-		//LOG("time: %d", p2time);
-		//LOG("life: %d", p2life);
+		if (ScoreAdded == false)
+		{
+			scoreP2 += p2time + p2life;
+			ScoreAdded = true;
+		}
 	}
 }
 

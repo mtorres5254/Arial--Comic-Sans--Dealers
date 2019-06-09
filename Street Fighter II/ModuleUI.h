@@ -60,6 +60,8 @@ public:
 	bool GamepadInfo = false;
 	bool Round_Start = false;
 	int Resultinfo = -1;
+	bool ScoreAdded = false;
+	int aux=0;
 
 private:
 	int six, five, four, three, two, one;
