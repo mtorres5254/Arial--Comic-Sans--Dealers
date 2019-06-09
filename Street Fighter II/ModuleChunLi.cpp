@@ -1694,10 +1694,10 @@ bool ModuleChunLi::external_input(p2Qeue<chunli_inputs2>& inputs)
 			}
 
 			if (App->combo->CheckLightingKickP1() == true) {
-				//inputs.Push(IN_LIGHTINGKICK2);
+				inputs.Push(IN_LIGHTINGKICK2);
 			}
 			if (App->combo->CheckWhirlwindKickP1() == true) {
-				//inputs.Push(IN_WHIRLWINDKICK2);
+				inputs.Push(IN_WHIRLWINDKICK2);
 			}
 
 			//Axis
