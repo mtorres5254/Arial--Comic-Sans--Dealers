@@ -48,4 +48,4 @@ https://github.com/Avilgor
 https://github.com/juanha2
 
 <div class="figure">
-<img src="https://github.com/mtorres5254/Arial--Comic-Sans--Dealers/blob/master/Wiki/Logo/Foto%20equip.jpg" width = "400" height = "341">
+<img src="Wiki/Logo/Foto%20equip.jpg" width = "400" height = "341">
