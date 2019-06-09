@@ -153,8 +153,7 @@ update_status ModuleWelcomePage::Update()
 		App->render->DrawQuad(fons, 0, 0, 0, 255);
 
 		if (logo_anim == false) {
-			App->render->Blit(logo_texture, 220, 100, &logo.GetCurrentFrame(), 1.0f);
-			if ((int)logo.current_frame == 9) { logo_anim = true; }
+			logo_anim = true;
 		}
 		if (logo_anim == true) {
 			App->render->RectBlit2(persones, &logo_Rect, &logo_RectDest);
