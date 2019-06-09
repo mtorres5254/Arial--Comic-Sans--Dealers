@@ -18,23 +18,35 @@ public:
 
 public:
 
-	SDL_Rect background;
+	SDL_Rect Map;
+	SDL_Rect Characters;
 	SDL_Rect P1Pointer;
+	SDL_Rect P1PpointerDest;
 	SDL_Rect P2Pointer;
+	SDL_Rect P2PointerDest;
+	SDL_Rect Plane;
+	SDL_Rect P1CharacterDest;
+	SDL_Rect P2CharacterDest;
 
-	bool map=false,p1=false,p2=false;
+	SDL_Rect Ryu;
+	SDL_Rect Ken;
+	SDL_Rect Blanka;
+	SDL_Rect Guile;
+	SDL_Rect EHonda;
+	SDL_Rect Dhalsim;
+	SDL_Rect Zangief;
+	SDL_Rect ChunLi;
+
+	bool P1selected = false;
+	bool P2selected = false;
 
 	SDL_Texture* graphics = nullptr;
-	SDL_Texture* ui = nullptr;
-	SDL_Texture* versus = nullptr;
+
 	Mix_Music* music;
+
 	Mix_Chunk* character_effect;
 	Mix_Chunk* map_effect;
 	Mix_Chunk* plane_effect;
-
-private:
-	int frame=0;
-	bool selected;
 };
 
 #endif 

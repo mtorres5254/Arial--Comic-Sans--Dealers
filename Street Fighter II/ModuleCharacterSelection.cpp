@@ -15,25 +15,22 @@
 
 ModuleCharacterSelection::ModuleCharacterSelection()
 {
-	//Background
-	background.x = 0;
-	background.y = 0;
-	background.h = SCREEN_HEIGHT;
-	background.w = SCREEN_WIDTH;
+	Map = { 32,7,581,337 };
+	Characters = { 40,405,352,234 }; // 37 x 37
+	P1Pointer = { 447,406,87,131 };
+	P1PpointerDest = { 116,134,40,45 };
+	P2Pointer = { 550,526,87,132 };
+	P2PointerDest = { 227,171,40,45 };
+	Plane = { 569,442,47,47 };
 
-	//P1Pointer
-	P1Pointer.x = 14;
-	P1Pointer.y = 7;
-	P1Pointer.w = 38;
-	P1Pointer.h = 45;
-
-	//P2Pointer
-	P2Pointer.x = 63;
-	P2Pointer.y = 50;
-	P2Pointer.w = 38;
-	P2Pointer.h = 45;
-
-	selected = false;
+	Ryu = {649,250,167,223};
+	Ken = {829,720,160,213};
+	ChunLi = {649,734,158,199};
+	Dhalsim = {648,26,147,211};
+	Zangief = {825,58,155,179};
+	EHonda = {828,255,166,218};
+	Guile = {829,478,160,225};
+	Blanka = {649,486,167,199};
 }
 
 ModuleCharacterSelection::~ModuleCharacterSelection()
@@ -44,14 +41,20 @@ bool ModuleCharacterSelection::Start()
 {
 	LOG("Loading characters selection");
 
-	graphics = App->textures->Load("Assets/Images/Player_Select.png"); 
-	ui = App->textures->Load("Assets/Images/PlayerSelector.png");
-	versus = App->textures->Load("Assets/Images/Versus.png");
+	graphics = App->textures->Load("Assets/Images/character-selection.png");
 	music = App->audio->LoadMusic("Assets/Sound/Musics/PlayerSelect.ogg");
 	App->audio->PlayMusic(music, 300);
+
 	character_effect = App->audio->LoadChunk("Assets/Sound/Effects/character_selection.wav");
     map_effect = App->audio->LoadChunk("Assets/Sound/Effects/map_selection.wav");
 	plane_effect = App->audio->LoadChunk("Assets/Sound/Effects/plane.wav");
+
+	P2PointerDest = { 227,171,40,45 };
+	P1PpointerDest = { 116,134,40,45 };
+
+	bool P1selected = false;
+	bool P2selected = false;
+
 	App->render->camera.x = App->render->camera.y = 0;
 
 	return true;
@@ -60,101 +63,141 @@ bool ModuleCharacterSelection::Start()
 bool ModuleCharacterSelection::CleanUp()
 {
 	LOG("Unloading Selection page");
-	selected = false;
-	map = false;
-	p1 = false;
-	p2 = false;
-	frame = 0;
+
 	App->textures->Unload(graphics);
-	App->textures->Unload(ui);
-	App->textures->Unload(versus);
 	App->audio->UnloadMusic(music);
+	bool P1selected = false;
+	bool P2selected = false;
 
 	return true;
 }
 
 update_status ModuleCharacterSelection::Update()
 {
-	if (selected == false)
-	{
-		App->render->Blit(graphics, 0, 0, &background, 0, 0);
-	}
-	else
-	{
-		App->render->Blit(versus, 0, 0, &background, 0, 0);
-		if (frame == 120)
-		{
-			App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
-			App->audio->StopMusic(250);
+	SDL_Rect MapDest = { 65,20,250,110 };
+	SDL_Rect CharacterDest = { 117,140,150,75 }; //37 x 37
+	App->render->DrawQuad({ 0,0,SCREEN_WIDTH,SCREEN_HEIGHT }, 0, 0, 108, 255);
+	App->render->RectBlit2(graphics, &Map, &MapDest);
+	App->render->RectBlit2(graphics, &Characters, &CharacterDest);
+
+	//P1 character slector
+	if (P1selected == false) {
+		
+		SDL_Rect Character1;
+		SDL_Rect Character1Dest = {10,134,75,75};
+
+		if (App->input->keyboard[SDL_SCANCODE_W] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN || App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
+			if (P1PpointerDest.y == 171) { P1PpointerDest.y = 134; App->audio->PlayChunk(character_effect, 1); }
 		}
+		if (App->input->keyboard[SDL_SCANCODE_S] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN || App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE) {
+			if (P1PpointerDest.y == 134) { P1PpointerDest.y = 171; App->audio->PlayChunk(character_effect, 1); }
+		}
+		if (App->input->keyboard[SDL_SCANCODE_A] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_DOWN || App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
+			if (P1PpointerDest.x == 116) {/*NOTHING*/ }
+			else if (P1PpointerDest.x == 153) { P1PpointerDest.x -= 37; App->audio->PlayChunk(character_effect, 1); }
+			else if (P1PpointerDest.x == 190) { P1PpointerDest.x -= 37; App->audio->PlayChunk(character_effect, 1); }
+			else if (P1PpointerDest.x == 227) { P1PpointerDest.x -= 37; App->audio->PlayChunk(character_effect, 1); }
+		}
+		if (App->input->keyboard[SDL_SCANCODE_D] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_DOWN || App->input->Pad1.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE) {
+			if (P1PpointerDest.x == 116) { P1PpointerDest.x += 37; App->audio->PlayChunk(character_effect, 1); }
+			else if (P1PpointerDest.x == 153) { P1PpointerDest.x += 37; App->audio->PlayChunk(character_effect, 1); }
+			else if (P1PpointerDest.x == 190) { P1PpointerDest.x += 37; App->audio->PlayChunk(character_effect, 1); }
+			else if (P1PpointerDest.x == 227) { /*NOTHING*/ }
+		}
+
+		if (P1PpointerDest.x == 116) {
+			if (P1PpointerDest.y == 134) { Character1 = Ryu; }
+			if (P1PpointerDest.y == 171) { Character1 = Ken; }
+		}
+		if (P1PpointerDest.x == 153) {
+			if (P1PpointerDest.y == 134) { Character1 = EHonda; }
+			if (P1PpointerDest.y == 171) { Character1 = ChunLi; }
+		}
+		if (P1PpointerDest.x == 190) {
+			if (P1PpointerDest.y == 134) { Character1 = Blanka; }
+			if (P1PpointerDest.y == 171) { Character1 = Zangief; }
+		}
+		if (P1PpointerDest.x == 227) {
+			if (P1PpointerDest.y == 134) { Character1 = Guile; }
+			if (P1PpointerDest.y == 171) { Character1 = Dhalsim; }
+		}
+
+		//Character select
+		if (App->input->keyboard[SDL_SCANCODE_X] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
+			P1selected = true;
+			App->audio->PlayChunk(map_effect, 1);
+		}
+		App->render->RectBlit2(graphics, &Character1, &Character1Dest);
 	}
 
-	if (map == false && selected==false)
-	{
-		if (p1 == true)
-		{
-			App->render->Blit(ui, 157, 175, &P1Pointer,0,0);
+	//P2 character slector
+	if (P2selected == false) {
+
+		SDL_Rect Character2;
+		SDL_Rect Character2Dest = {309,134,75,75};
+
+		if (App->input->keyboard[SDL_SCANCODE_UP] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_UP] == KEY_DOWN || App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
+			if (P2PointerDest.y == 171) { P2PointerDest.y = 134; App->audio->PlayChunk(character_effect, 1); }
 		}
-		else
-		{
-			if (frame == 4)
-			{
-				App->render->Blit(ui, 157, 175, &P1Pointer,0,0);				
-			}
+		if (App->input->keyboard[SDL_SCANCODE_DOWN] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_DOWN] == KEY_DOWN || App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTY] > JOYSTICK_DEAD_ZONE) {
+			if (P2PointerDest.y == 134) { P2PointerDest.y = 171; App->audio->PlayChunk(character_effect, 1); }
+		}
+		if (App->input->keyboard[SDL_SCANCODE_LEFT] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_LEFT] == KEY_DOWN || App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] < JOYSTICK_DEAD_ZONE_NEGATIVE) {
+			if (P2PointerDest.x == 116) {/*NOTHING*/ }
+			else if (P2PointerDest.x == 153) { P2PointerDest.x -= 37; App->audio->PlayChunk(character_effect, 1); }
+			else if (P2PointerDest.x == 190) { P2PointerDest.x -= 37; App->audio->PlayChunk(character_effect, 1); }
+			else if (P2PointerDest.x == 227) { P2PointerDest.x -= 37; App->audio->PlayChunk(character_effect, 1); }
+		}
+		if (App->input->keyboard[SDL_SCANCODE_RIGHT] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] == KEY_DOWN || App->input->Pad2.axis_state[SDL_CONTROLLER_AXIS_LEFTX] > JOYSTICK_DEAD_ZONE) {
+			if (P2PointerDest.x == 116) { P2PointerDest.x += 37; App->audio->PlayChunk(character_effect, 1); }
+			else if (P2PointerDest.x == 153) { P2PointerDest.x += 37; App->audio->PlayChunk(character_effect, 1); }
+			else if (P2PointerDest.x == 190) { P2PointerDest.x += 37; App->audio->PlayChunk(character_effect, 1); }
+			else if (P2PointerDest.x == 227) { /*NOTHING*/ }
 		}
 
-
-		if (p2 == true)
-		{
-			App->render->Blit(ui, 157, 175, &P2Pointer,0,0);
+		if (P2PointerDest.x == 116) {
+			if (P2PointerDest.y == 134) { Character2 = Ryu; }
+			if (P2PointerDest.y == 171) { Character2 = Ken; }
 		}
-		else
-		{
-			if (frame == 4)
-			{
-				App->render->Blit(ui, 157, 175, &P2Pointer,0,0);
-			}
-		}			
+		if (P2PointerDest.x == 153) {
+			if (P2PointerDest.y == 134) { Character2 = EHonda; }
+			if (P2PointerDest.y == 171) { Character2 = ChunLi; }
+		}
+		if (P2PointerDest.x == 190) {
+			if (P2PointerDest.y == 134) { Character2 = Blanka; }
+			if (P2PointerDest.y == 171) { Character2 = Zangief; }
+		}
+		if (P2PointerDest.x == 227) {
+			if (P2PointerDest.y == 134) { Character2 = Guile; }
+			if (P2PointerDest.y == 171) { Character2 = Dhalsim; }
+		}
+
+		//Character select
+		if (App->input->keyboard[SDL_SCANCODE_J] == KEY_DOWN || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
+			P2selected = true;
+			App->audio->PlayChunk(map_effect, 1);
+		}
+		App->render->RectBlit2Sym(graphics, &Character2, &Character2Dest);
 	}
-	else
-	{
-		if (frame == 4 && selected==false)
-		{
-			App->render->Blit(ui, 123, 45, &P1Pointer,0,0);
-			frame = 0;
-		}		
-	}	
-	if (frame == 4 && selected == false) frame = 0;
-	frame++;
 	
-	if (p1 == true && p2 == true)
-	{
-		map = true;
-	}
-
-	if (App->input->keyboard[SDL_SCANCODE_X] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) 
-	{
-		p1 = true;
-		App->audio->PlayChunk(character_effect, 1);
-	}
-
-	if (App->input->keyboard[SDL_SCANCODE_J] == KEY_DOWN  || App->input->Pad2.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) 
-	{
-		p2 = true;
-		App->audio->PlayChunk(character_effect, 1);
-	}
-
-	if ((App->input->keyboard[SDL_SCANCODE_X] == KEY_DOWN && map == true || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) && map==true)
-	{		
-		selected = true;	
-		App->audio->PlayChunk(map_effect, 1);
-	}
-
-	////Temporal////
-	if (App->input->keyboard[SDL_SCANCODE_SPACE] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_A] == KEY_DOWN) {
+	if (P1selected == true && P2selected == true) {
+		SDL_Rect PlaneDest = {170,30,20,20};
+		App->render->RectBlit2(graphics, &Plane, &PlaneDest);
+		App->audio->PlayChunk(plane_effect, 1);
 		App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
 		App->audio->StopMusic(250);
 	}
-	//////////////
+
+
+	App->render->RectBlit2(graphics, &P1Pointer, &P1PpointerDest);
+	App->render->RectBlit2(graphics, &P2Pointer, &P2PointerDest);
+
+
+	
+	if (App->input->keyboard[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_START] == KEY_DOWN) {
+		App->fade->FadeToBlack(App->selectionScene, App->scene_dhalsim, 2.0f);
+		App->audio->StopMusic(250);
+	}
+	
 	return UPDATE_CONTINUE;
 }

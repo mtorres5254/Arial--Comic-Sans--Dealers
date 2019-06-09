@@ -147,6 +147,15 @@ bool ModuleRender::RectBlit2(SDL_Texture* texture, SDL_Rect* section, SDL_Rect* 
 	return ret;
 }
 
+bool ModuleRender::RectBlit2Sym(SDL_Texture* texture, SDL_Rect* section, SDL_Rect* dsrect)
+{
+	bool ret = true;
+
+	SDL_RenderCopyEx(renderer, texture, section, dsrect, 0, NULL, SDL_FLIP_HORIZONTAL);
+
+	return ret;
+}
+
 // Blit to screen on an rotation angle of 90 degrees
 bool ModuleRender::BlitSym(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed, bool use_camera)
 {

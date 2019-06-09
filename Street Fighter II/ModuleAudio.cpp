@@ -35,7 +35,7 @@ bool ModuleAudio::Init()
 		ret = false;
 	}
 
-	Mix_Volume(1, 50);
+	Mix_Volume(1, 700);
 
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
 	{
