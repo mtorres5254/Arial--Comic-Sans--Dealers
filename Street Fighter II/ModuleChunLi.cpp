@@ -1246,6 +1246,8 @@ update_status ModuleChunLi::Update()
 					case ST_VICTORY2:
 						if (App->chunli2->state == ST_LOSE)
 							App->UI->Resultinfo = 1;
+
+						
 						if (victorycount == 0)
 							victorycount++;
 
@@ -1922,7 +1924,7 @@ void ModuleChunLi::internal_input(p2Qeue<chunli_inputs2>& inputs)
 
 	if (lose_timer > 0)
 	{
-		if (SDL_GetTicks() - lose_timer > 8000)
+		if (SDL_GetTicks() - lose_timer > 10000)
 		{
 			inputs.Push(IN_LOSE_FINISH2);
 			lose_timer = 0;

@@ -45,10 +45,18 @@ public:
 
 	Animation KOanim;
 
+	Mix_Chunk* sRound;
+	Mix_Chunk* s1;
+	Mix_Chunk* s2;
+	Mix_Chunk* s3;
+	Mix_Chunk* sFight;
+
+
 	int victorycount=0;
 	int victorycount1 = 0;
 	int font_id;
 	int font_Rounds;
+	int font2;
 	int time;
 	int Counter1;
 	int Counter2;

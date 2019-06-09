@@ -1,4 +1,4 @@
-#include "Globals.h"
+﻿#include "Globals.h"
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
@@ -71,10 +71,16 @@ bool ModuleUI::Start()
 	bool ret = true;
 
 	graphics1 = App->textures->Load("Assets/Images/Battle_HUD.png"); 
-	font_id = App->font->Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890 ", 1);
-	font_Rounds = App->font->Load("Assets/Images/font_round.png", "r123", 2);
-
+	font_id = App->font->Load("Assets/Images/font1.png", "abcdefghijklmnopqrstuvwxyz.+-1234567890 ", 1);	
+	font_Rounds = App->font->Load("Assets/Images/font_round.png", "DNORU0123456789 ", 2);
+	font2 = App->font->Load("Assets/Images/font2.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~'!@#$%^&*()-_+=[]{}| :;��<>,./?", 3);
 	timenow = SDL_GetTicks();
+
+	sFight = App->audio->LoadChunk("Assets/Sound/Effects/Fight.wav");
+	s1 = App->audio->LoadChunk("Assets/Sound/Effects/1.wav");
+	s2 = App->audio->LoadChunk("Assets/Sound/Effects/2.wav");
+	s3 = App->audio->LoadChunk("Assets/Sound/Effects/3.wav");
+
 	time = 99;
 	Counter1 = 9; //unit
 	Counter2 = 9; //tens
@@ -97,7 +103,12 @@ bool ModuleUI::CleanUp()
 
 	App->font->UnLoad(font_id);
 	App->font->UnLoad(font_Rounds);
-
+	App->font->UnLoad(font2);
+	
+	App->audio->UnloadChunk(s1);
+	App->audio->UnloadChunk(s2);
+	App->audio->UnloadChunk(s3);
+	App->audio->UnloadChunk(sFight);
 	return true;
 }
 
@@ -188,6 +199,27 @@ void ModuleUI::Counter()
 			timenow = SDL_GetTicks();		
 		}
 	}
+	if (Counter2 == 9 && Counter1 == 9 && (App->chunli->life > 0 && App->chunli2->life > 0)) {
+		if (App->chunli->victorycount == 0 && App->chunli2->victorycount == 0) {
+			App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 1");
+			App->font->BlitText(SCREEN_WIDTH / 2 - 47, 115, font2, "BATTLE 01");
+		}
+		/*
+		else  if ((App->chunli->victorycount == 1 && App->chunli2->victorycount != 1)
+			|| (App->chunli->victorycount != 1 && App->chunli2->victorycount == 1)) {
+			App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 2");
+			App->font->BlitText(SCREEN_WIDTH / 2 - 47, 115, font2, "BATTLE 01");
+		}
+		else  if (App->chunli->victorycount == 1 && App->chunli2->victorycount == 1) {
+			App->font->BlitText(SCREEN_WIDTH / 2 - 45, 85, font_Rounds, "ROUND 3");
+			App->font->BlitText(SCREEN_WIDTH / 2 - 47, 115, font2, "BATTLE 01");
+		}
+		else {
+			Counter1 = 9;
+			Counter2 = 9;
+		}*/
+	}
+
 
 	switch (Counter2)
 	{
