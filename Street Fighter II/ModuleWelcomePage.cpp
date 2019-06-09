@@ -179,8 +179,13 @@ update_status ModuleWelcomePage::Update()
 
 	if (App->input->keyboard[SDL_SCANCODE_RETURN] == 1 || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_START] == 1) {
 		App->audio->StopMusic(300);
-		App->fade->FadeToBlack(App->welcome_page, App->scene_dhalsim);
+		App->fade->FadeToBlack(App->welcome_page, App->selectionScene);
 	}
+	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1 || App->input->Pad1.button_state[SDL_CONTROLLER_BUTTON_X] == 1) {   // TREURE ABANS D?ENVIAR
+		App->audio->StopMusic(300);
+		App->fade->FadeToBlack(App->welcome_page, App->selectionScene);
+	}
+
 
 	return UPDATE_CONTINUE;
 }
